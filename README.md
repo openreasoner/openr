@@ -6,7 +6,7 @@
 
 - Data + PRM
 
-- further improvement (RL-like) for LLM/RM
+- Training (RL-like) for LLM
 
 ## References
 
