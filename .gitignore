@@ -1,0 +1,10 @@
+*.*~
+__pycache__/
+*.pkl
+**/*.egg-info
+.python-version
+.idea/
+.vscode/
+.DS_Store
+_build/
+results/
