@@ -2,11 +2,11 @@
 
 ## Two-week plan ?
 
-- Inference
+- Inference (mcts-like)
 
-- Data
+- Data + PRM
 
-- Model 
+- further improvement (RL-like) for LLM/RM
 
 ## References
 
