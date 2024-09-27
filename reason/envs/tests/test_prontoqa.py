@@ -1,4 +1,4 @@
-from tsllm.envs.prontoqa.env import (
+from envs.prontoqa.env import (
     PrOntoQAEnv,
     COT_EXAMPLES,
     COT_TASK_DESC,
@@ -43,7 +43,7 @@ if __name__ == "__main__":
     tokenizer = AutoTokenizer.from_pretrained("meta-llama/Llama-2-7b-hf")
 
     print("\n\n====== default sft dataset ============")
-    from tsllm.envs import get_default_sft_data_builder, get_env_datasets
+    from envs import get_default_sft_data_builder, get_env_datasets
 
     train_ds, _ = get_env_datasets("prontoqa")
     q2idx_dict = {}
@@ -62,7 +62,7 @@ if __name__ == "__main__":
     print("Len sft_data: {}\nsft_data[0]:\n{}".format(len(sft_data), sft_data[0]))
 
     print("\n\n====== default critic dataset ============")
-    from tsllm.envs import get_default_critic_data_builder
+    from envs import get_default_critic_data_builder
 
     critic_data = get_default_critic_data_builder("prontoqa")(
         "tsllm/envs/prontoqa/train_data/train.jsonl",

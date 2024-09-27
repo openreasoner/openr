@@ -1,8 +1,8 @@
 import torch
 from typing import Union, List
-from tsllm.model import ValueHeadedLLM
-from tsllm.model.modeling_actor_critic import AutoModelForCausalLMWithValueHead
-from tsllm.llm.text_generation import llm_gen_ct2
+from model import ValueHeadedLLM
+from model.modeling_actor_critic import AutoModelForCausalLMWithValueHead
+from llm.text_generation import llm_gen_ct2
 from transformers import AutoTokenizer
 import re
 import numpy as np

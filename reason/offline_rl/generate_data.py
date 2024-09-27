@@ -10,11 +10,11 @@ import os
 from tqdm import tqdm
 import argparse
 import jsonlines
-from tsllm.distributed.utils import print_rank_0
-from tsllm.llm.text_generation import llm_gen_ct2
-from tsllm.llm.ct2_utils import OnlineHfConverter
-from tsllm.envs import get_env_datasets, get_default_query_str_builder, get_env_answer_checker
-from tsllm.argparse_utils import list_of_ints, str2bool
+from distributed.utils import print_rank_0
+from llm.text_generation import llm_gen_ct2
+from llm.ct2_utils import OnlineHfConverter
+from envs import get_env_datasets, get_default_query_str_builder, get_env_answer_checker
+from argparse_utils import list_of_ints, str2bool
 from importlib import import_module
 
 

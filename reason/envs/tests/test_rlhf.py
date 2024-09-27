@@ -1,5 +1,5 @@
-from tsllm.envs.rlhf.env import RLHF_TokenEnv, PROBLEM_FORMAT_STR, SEP
-from tsllm.envs.rlhf.prompt import COT_EXAMPLES, COT_TASK_DESC
+from envs.rlhf.env import RLHF_TokenEnv, PROBLEM_FORMAT_STR, SEP
+from envs.rlhf.prompt import COT_EXAMPLES, COT_TASK_DESC
 import pytest
 
 if __name__ == "__main__":
@@ -35,7 +35,7 @@ if __name__ == "__main__":
     from transformers import AutoTokenizer
     tokenizer = AutoTokenizer.from_pretrained("vicgalle/gpt2-open-instruct-v1")
     print("\n\n====== default sft dataset ============")
-    from tsllm.envs import get_default_sft_data_builder, get_env_datasets
+    from envs import get_default_sft_data_builder, get_env_datasets
     train_ds, _  = get_env_datasets("game24")
     q2idx_dict = {}
     for idx, problem_inst in enumerate(train_ds):
@@ -54,7 +54,7 @@ if __name__ == "__main__":
     print("Len sft_data: {}\nsft_data[0]:\n{}".format(len(sft_data), sft_data[0]))
 
     print("\n\n====== default critic dataset ============")
-    from tsllm.envs import get_default_critic_data_builder
+    from envs import get_default_critic_data_builder
     critic_data = get_default_critic_data_builder("rlhf")(
         "tsllm/envs/game24/train_data/train_dedup.jsonl",
         q2idx_dict,

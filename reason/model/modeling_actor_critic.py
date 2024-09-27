@@ -6,8 +6,8 @@ import torch
 from torch import nn
 import transformers
 from transformers.modeling_outputs import ModelOutput
-from tsllm.model.modeling_base import PreTrainedModelWrapper
-from tsllm.model.utils import findattr
+from model.modeling_base import PreTrainedModelWrapper
+from model.utils import findattr
 from peft import PeftConfig
 
 

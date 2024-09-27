@@ -1,8 +1,8 @@
 import json
 from argparse import ArgumentParser
-from tsllm.argparse_utils import str2bool
+from argparse_utils import str2bool
 
-from tsllm.offline_rl.utils import load_jsonl, write_to_jsonl
+from offline_rl.utils import load_jsonl, write_to_jsonl
 
 if __name__ == "__main__":
     parser = ArgumentParser()

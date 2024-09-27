@@ -1,4 +1,4 @@
-from tsllm.envs.game24.env import (
+from envs.game24.env import (
     Game24Env,
     COT_EXAMPLES,
     COT_TASK_DESC,
@@ -44,7 +44,7 @@ if __name__ == "__main__":
     tokenizer = AutoTokenizer.from_pretrained("meta-llama/Llama-2-7b-hf")
 
     print("\n\n====== default sft dataset ============")
-    from tsllm.envs import get_default_sft_data_builder, get_env_datasets
+    from envs import get_default_sft_data_builder, get_env_datasets
     train_ds, _  = get_env_datasets("game24")
     q2idx_dict = {}
     for idx, problem_inst in enumerate(train_ds):
@@ -64,7 +64,7 @@ if __name__ == "__main__":
 
 
     print("\n\n====== default critic dataset ============")
-    from tsllm.envs import get_default_critic_data_builder
+    from envs import get_default_critic_data_builder
     critic_data = get_default_critic_data_builder("game24")(
         "tsllm/envs/game24/train_data/train_dedup.jsonl",
         q2idx_dict,

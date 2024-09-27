@@ -1,8 +1,8 @@
 from typing import Optional
-from tsllm.envs.base_env import CoTEnv
-from tsllm.inference.evaluation.vote_utils import MAJORITY_VOTE
-from tsllm.mcts.tree import MCTS
-from tsllm.mcts.utils import get_root
+from envs.base_env import CoTEnv
+from inference.evaluation.vote_utils import MAJORITY_VOTE
+from mcts.tree import MCTS
+from mcts.utils import get_root
 import time
 
 

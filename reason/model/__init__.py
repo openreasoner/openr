@@ -1,9 +1,9 @@
 import os
 from typing import Optional, Union
 import torch
-from tsllm.distributed.utils import print_with_rank
-from tsllm.model.modeling_prm import ValueHeadedLLM
-from tsllm.model.modeling_actor_critic import AutoModelForCausalLMWithValueHead
+from distributed.utils import print_with_rank
+from model.modeling_prm import ValueHeadedLLM
+from model.modeling_actor_critic import AutoModelForCausalLMWithValueHead
 
 
 def load_critic_model(

@@ -3,30 +3,30 @@ import os
 from pathlib import Path
 from typing import List, Optional
 import torch.distributed as dist
-from tsllm.distributed.utils import print_with_rank, init_distributed, gather_scalar
+from distributed.utils import print_with_rank, init_distributed, gather_scalar
 from transformers import AutoTokenizer, pipeline
 import torch
 from functools import partial
-from tsllm.envs import get_env_datasets, get_default_query_str_builder
-from tsllm.envs.rlhf.prompt import PROBLEM_FORMAT_STR
-from tsllm.inference.trajectory_collector import _mcts_rollout_v1, _mcts_rollout_v2
-from tsllm.inference.value import value_fn
+from envs import get_env_datasets, get_default_query_str_builder
+from envs.rlhf.prompt import PROBLEM_FORMAT_STR
+from inference.trajectory_collector import _mcts_rollout_v1, _mcts_rollout_v2
+from inference.value import value_fn
 import json
-from tsllm.llm.ct2_utils import load_ct2_model
-from tsllm.mcts.utils import get_root
-from tsllm.model import load_critic_model
-from tsllm.model.modeling_actor_critic import AutoModelForCausalLMWithValueHead
+from llm.ct2_utils import load_ct2_model
+from mcts.utils import get_root
+from model import load_critic_model
+from model.modeling_actor_critic import AutoModelForCausalLMWithValueHead
 import torch
 import jsonlines
-from tsllm.llm.text_generation import llm_gen_ct2
+from llm.text_generation import llm_gen_ct2
 import time
 import numpy as np
 from tqdm import tqdm
-from tsllm.mcts.tree import MCTS
+from mcts.tree import MCTS
 from dataclasses import dataclass
 from argparse import ArgumentParser
 import ctranslate2
-from tsllm.inference.value import value_fn_rlhf
+from inference.value import value_fn_rlhf
 
 import time
 import importlib

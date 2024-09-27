@@ -19,7 +19,7 @@ from peft import (
     PeftModel,
 )
 
-from tsllm.distributed.utils import print_rank_0, print_with_rank
+from distributed.utils import print_rank_0, print_with_rank
 
 
 class PreTrainedModelWrapper(nn.Module, transformers.utils.PushToHubMixin):

@@ -1,6 +1,6 @@
 import torch
 from typing import Union, List
-from tsllm.model import ValueHeadedLLM
+from model import ValueHeadedLLM
 from transformers import AutoTokenizer
 import re
 import numpy as np

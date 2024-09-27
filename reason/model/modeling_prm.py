@@ -7,7 +7,7 @@ import torch.nn as nn
 from transformers import AutoModel
 import transformers
 from transformers.modeling_outputs import ModelOutput
-from tsllm.model.modeling_base import PreTrainedModelWrapper
+from model.modeling_base import PreTrainedModelWrapper
 
 
 @dataclass

@@ -4,7 +4,7 @@ import numpy as np
 import copy
 import pdb
 import torch
-from tsllm.distributed.utils import print_with_rank
+from distributed.utils import print_with_rank
 from transformers import PreTrainedTokenizer
 
 INVALID_ANS = "[invalid]"

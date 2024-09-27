@@ -10,8 +10,8 @@ import numpy as np
 import torch
 import torch.nn as nn
 from typing import List, Dict, Any, Optional, Tuple, Union, Callable, Type
-from tsllm.distributed.utils import print_rank_0, print_with_rank
-from tsllm.envs.base_env import CoTEnv
+from distributed.utils import print_rank_0, print_with_rank
+from envs.base_env import CoTEnv
 import pdb
 from tqdm import tqdm
 import heapq

@@ -1,7 +1,7 @@
 from typing import Dict, Optional, Union, Callable
 import numpy as np
-from tsllm.distributed.utils import print_with_rank
-from tsllm.offline_rl.utils import load_jsonl
+from distributed.utils import print_with_rank
+from offline_rl.utils import load_jsonl
 from transformers import PreTrainedTokenizer
 from pathlib import Path
 from torch.utils.data import Dataset

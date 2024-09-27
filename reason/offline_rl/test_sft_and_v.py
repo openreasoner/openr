@@ -1,29 +1,29 @@
 from pathlib import Path
 from typing import Dict, List, Optional
 import torch.distributed as dist
-from tsllm.argparse_utils import str2bool
-from tsllm.distributed.utils import (
+from argparse_utils import str2bool
+from distributed.utils import (
     print_rank_0,
     print_with_rank,
     init_distributed,
     gather_scalar,
 )
-from tsllm.envs import get_env_datasets, get_default_query_str_builder
-from tsllm.inference.trajectory_collector import _mcts_rollout_v1
-from tsllm.inference.value import value_fn
-from tsllm.inference.lm_self_value import tot_value_fn
-from tsllm.llm.ct2_utils import load_ct2_model
-from tsllm.mcts.utils import get_root
-from tsllm.model import load_critic_model
-from tsllm.llm.text_generation import llm_gen_ct2
-from tsllm.mcts.tree import MCTS
-from tsllm.inference.evaluation.vote_utils import (
+from envs import get_env_datasets, get_default_query_str_builder
+from inference.trajectory_collector import _mcts_rollout_v1
+from inference.value import value_fn
+from inference.lm_self_value import tot_value_fn
+from llm.ct2_utils import load_ct2_model
+from mcts.utils import get_root
+from model import load_critic_model
+from llm.text_generation import llm_gen_ct2
+from mcts.tree import MCTS
+from inference.evaluation.vote_utils import (
     AGG_FN_MAP,
     MAJORITY_VOTE,
     ORM_VOTE,
     ORM_MAX,
 )
-from tsllm.envs.base_env import INVALID_ANS
+from envs.base_env import INVALID_ANS
 from transformers import AutoTokenizer
 import torch
 from functools import partial

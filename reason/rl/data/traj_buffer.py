@@ -4,8 +4,8 @@ import torch.nn.functional as F
 from torch.utils.data import Dataset, DataLoader
 from functools import partial
 from torch.nn.utils.rnn import pad_sequence
-from tsllm.distributed.utils import print_rank_0, print_with_rank
-from tsllm.rl.data.node_types_new import TrajBatch, TrajInstance
+from distributed.utils import print_rank_0, print_with_rank
+from rl.data.node_types_new import TrajBatch, TrajInstance
 import bisect
 import json
 import os

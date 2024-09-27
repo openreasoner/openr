@@ -2,8 +2,8 @@ from typing import List, Sequence
 import torch
 import torch.nn.functional as F
 from torch.utils.data import Dataset, DataLoader
-from tsllm.distributed.utils import print_with_rank
-from tsllm.rl.data.node_types import TimeStep, Trajectory, MCTSBatch
+from distributed.utils import print_with_rank
+from rl.data.node_types import TimeStep, Trajectory, MCTSBatch
 from functools import partial
 from torch.nn.utils.rnn import pad_sequence
 

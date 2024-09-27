@@ -4,7 +4,7 @@ import torch
 from torchtyping import TensorType
 from typing import Optional, Sequence, List
 from transformers import AutoTokenizer
-from tsllm.distributed.utils import print_with_rank, print_rank_0
+from distributed.utils import print_with_rank, print_rank_0
 
 
 def _tokenize_fn(s, tokenizer, drop_bos: bool = False):

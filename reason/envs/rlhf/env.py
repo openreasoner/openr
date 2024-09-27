@@ -3,7 +3,7 @@ import re
 from typing import List
 import numpy as np
 from transformers import PreTrainedTokenizer
-from tsllm.envs.base_env import TokenEnv
+from envs.base_env import TokenEnv
 from .prompt import PROBLEM_FORMAT_STR, SEP
 
 class RLHF_TokenEnv(TokenEnv):

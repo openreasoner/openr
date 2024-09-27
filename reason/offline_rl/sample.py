@@ -2,7 +2,7 @@ import json
 import random
 from argparse import ArgumentParser
 
-from tsllm.offline_rl.utils import load_jsonl, write_to_jsonl
+from offline_rl.utils import load_jsonl, write_to_jsonl
 
 
 def sample_dicts(data, n):

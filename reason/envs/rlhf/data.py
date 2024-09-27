@@ -2,8 +2,8 @@ from transformers import AutoTokenizer
 from datasets import load_dataset, load_from_disk
 import json
 import numpy as np
-from tsllm.distributed.utils import print_with_rank
-from tsllm.offline_rl.utils import load_jsonl
+from distributed.utils import print_with_rank
+from offline_rl.utils import load_jsonl
 from .prompt import PROBLEM_FORMAT_STR, SEP
 from .env import RLHF_TokenEnv
 

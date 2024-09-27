@@ -9,9 +9,9 @@ from accelerate import Accelerator
 from transformers import AutoTokenizer, AutoModelForCausalLM
 import transformers
 import torch
-from tsllm.distributed.utils import print_with_rank
-from tsllm.rl.trainer.opt_utils import get_optimizer_class
-from tsllm.rl.trainer.utils import flatten_dict, get_distributed_config, get_git_tag
+from distributed.utils import print_with_rank
+from rl.trainer.opt_utils import get_optimizer_class
+from rl.trainer.utils import flatten_dict, get_distributed_config, get_git_tag
 
 
 class BaseMCTSTrainer(ABC):

@@ -1,8 +1,8 @@
 import re
 from typing import Optional
 import sympy
-from tsllm.distributed.utils import print_with_rank
-from tsllm.envs.base_env import CoTEnv, NoLegalActionException, INVALID_ANS
+from distributed.utils import print_with_rank
+from envs.base_env import CoTEnv, NoLegalActionException, INVALID_ANS
 import numpy as np
 from .prompt import COT_EXAMPLES, COT_TASK_DESC, PROBLEM_FORMAT_STR, SEP
 import jsonlines

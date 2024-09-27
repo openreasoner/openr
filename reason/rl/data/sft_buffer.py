@@ -4,7 +4,7 @@ import torch.nn.functional as F
 from torch.utils.data import Dataset, DataLoader
 from functools import partial
 from torch.nn.utils.rnn import pad_sequence
-from tsllm.rl.data.node_types import SftBatch, SftInstance
+from rl.data.node_types import SftBatch, SftInstance
 
 
 def collate_fn(

@@ -2,7 +2,7 @@ import copy
 import re
 from typing import List, Optional
 import numpy as np
-from tsllm.envs.base_env import CoTEnv, NoLegalActionException, INVALID_ANS
+from envs.base_env import CoTEnv, NoLegalActionException, INVALID_ANS
 from .prompt import COT_EXAMPLES, COT_TASK_DESC, PROBLEM_FORMAT_STR, SEP
 
 ANS_RE = re.compile(r"The answer is (\-?[0-9\.\,]+)")
