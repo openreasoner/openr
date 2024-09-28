@@ -1,0 +1,89 @@
+2024-09-28 13:35:19 | INFO | math_shepherd_model_worker | args: Namespace(host='0.0.0.0', port=40010, worker_address='http://0.0.0.0:40010', controller_address='http://0.0.0.0:28777', model_path='/hpc2ssd/JH_DATA/spooler/qxiao183/workspace/hf_models//peiyi9979/math-shepherd-mistral-7b-prm', revision='main', device='cuda', gpus=None, num_gpus=1, max_gpu_memory=None, dtype=None, load_8bit=False, cpu_offloading=False, gptq_ckpt=None, gptq_wbits=16, gptq_groupsize=-1, gptq_act_order=False, awq_ckpt=None, awq_wbits=16, awq_groupsize=-1, enable_exllama=False, exllama_max_seq_len=4096, exllama_gpu_split=None, exllama_cache_8bit=False, enable_xft=False, xft_max_seq_len=4096, xft_dtype=None, model_names=None, conv_template=None, embed_in_truncate=False, limit_worker_concurrency=5, stream_interval=2, no_register=False, seed=None, debug=False, ssl=False)
+2024-09-28 13:35:19 | INFO | math_shepherd_model_worker | Loading the model ['math-shepherd-mistral-7b-prm'] on worker e5f48fac ...
+2024-09-28 13:35:19 | ERROR | stderr | Loading checkpoint shards:   0%|                          | 0/2 [00:00<?, ?it/s]
+2024-09-28 13:35:25 | ERROR | stderr | Loading checkpoint shards:  50%|█████████         | 1/2 [00:05<00:05,  5.68s/it]
+2024-09-28 13:35:29 | ERROR | stderr | Loading checkpoint shards: 100%|██████████████████| 2/2 [00:09<00:00,  4.72s/it]
+2024-09-28 13:35:29 | ERROR | stderr | Loading checkpoint shards: 100%|██████████████████| 2/2 [00:09<00:00,  4.87s/it]
+2024-09-28 13:35:29 | ERROR | stderr | 
+2024-09-28 13:35:36 | ERROR | stderr | [32mINFO[0m:     Started server process [[36m823770[0m]
+2024-09-28 13:35:36 | ERROR | stderr | [32mINFO[0m:     Waiting for application startup.
+2024-09-28 13:35:36 | ERROR | stderr | [32mINFO[0m:     Application startup complete.
+2024-09-28 13:35:36 | ERROR | stderr | [32mINFO[0m:     Uvicorn running on [1mhttp://0.0.0.0:40010[0m (Press CTRL+C to quit)
+2024-09-28 13:36:28 | INFO | stdout | [32mINFO[0m:     127.0.0.1:34686 - "[1mPOST /worker_value_inference HTTP/1.1[0m" [91m500 Internal Server Error[0m
+2024-09-28 13:36:28 | ERROR | stderr | [31mERROR[0m:    Exception in ASGI application
+2024-09-28 13:36:28 | ERROR | stderr | Traceback (most recent call last):
+2024-09-28 13:36:28 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/uvicorn/protocols/http/httptools_impl.py", line 401, in run_asgi
+2024-09-28 13:36:28 | ERROR | stderr |     result = await app(  # type: ignore[func-returns-value]
+2024-09-28 13:36:28 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/uvicorn/middleware/proxy_headers.py", line 70, in __call__
+2024-09-28 13:36:28 | ERROR | stderr |     return await self.app(scope, receive, send)
+2024-09-28 13:36:28 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/fastapi/applications.py", line 1054, in __call__
+2024-09-28 13:36:28 | ERROR | stderr |     await super().__call__(scope, receive, send)
+2024-09-28 13:36:28 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/applications.py", line 113, in __call__
+2024-09-28 13:36:28 | ERROR | stderr |     await self.middleware_stack(scope, receive, send)
+2024-09-28 13:36:28 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/middleware/errors.py", line 187, in __call__
+2024-09-28 13:36:28 | ERROR | stderr |     raise exc
+2024-09-28 13:36:28 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/middleware/errors.py", line 165, in __call__
+2024-09-28 13:36:28 | ERROR | stderr |     await self.app(scope, receive, _send)
+2024-09-28 13:36:28 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+2024-09-28 13:36:28 | ERROR | stderr |     await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+2024-09-28 13:36:28 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+2024-09-28 13:36:28 | ERROR | stderr |     raise exc
+2024-09-28 13:36:28 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+2024-09-28 13:36:28 | ERROR | stderr |     await app(scope, receive, sender)
+2024-09-28 13:36:28 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 715, in __call__
+2024-09-28 13:36:28 | ERROR | stderr |     await self.middleware_stack(scope, receive, send)
+2024-09-28 13:36:28 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 735, in app
+2024-09-28 13:36:28 | ERROR | stderr |     await route.handle(scope, receive, send)
+2024-09-28 13:36:28 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 288, in handle
+2024-09-28 13:36:28 | ERROR | stderr |     await self.app(scope, receive, send)
+2024-09-28 13:36:28 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 76, in app
+2024-09-28 13:36:28 | ERROR | stderr |     await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+2024-09-28 13:36:28 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+2024-09-28 13:36:28 | ERROR | stderr |     raise exc
+2024-09-28 13:36:28 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+2024-09-28 13:36:28 | ERROR | stderr |     await app(scope, receive, sender)
+2024-09-28 13:36:28 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 73, in app
+2024-09-28 13:36:28 | ERROR | stderr |     response = await f(request)
+2024-09-28 13:36:28 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/fastapi/routing.py", line 301, in app
+2024-09-28 13:36:28 | ERROR | stderr |     raw_response = await run_endpoint_function(
+2024-09-28 13:36:28 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/fastapi/routing.py", line 212, in run_endpoint_function
+2024-09-28 13:36:28 | ERROR | stderr |     return await dependant.call(**values)
+2024-09-28 13:36:28 | ERROR | stderr |   File "/hpc2ssd/JH_DATA/spooler/qxiao183/workspace/ziyu/open_reasoner/FastChat_tsllm/fastchat/serve/base_model_worker.py", line 216, in value_inference
+2024-09-28 13:36:28 | ERROR | stderr |     output = await asyncio.to_thread(worker.value_inference_gate, params)
+2024-09-28 13:36:28 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/asyncio/threads.py", line 25, in to_thread
+2024-09-28 13:36:28 | ERROR | stderr |     return await loop.run_in_executor(None, func_call)
+2024-09-28 13:36:28 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/concurrent/futures/thread.py", line 58, in run
+2024-09-28 13:36:28 | ERROR | stderr |     result = self.fn(*self.args, **self.kwargs)
+2024-09-28 13:36:28 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+2024-09-28 13:36:28 | ERROR | stderr |     return func(*args, **kwargs)
+2024-09-28 13:36:28 | ERROR | stderr |   File "/hpc2ssd/JH_DATA/spooler/qxiao183/workspace/ziyu/open_reasoner/FastChat_tsllm/fastchat/serve/math_shepherd_model_worker.py", line 122, in value_inference_gate
+2024-09-28 13:36:28 | ERROR | stderr |     value = [
+2024-09-28 13:36:28 | ERROR | stderr |   File "/hpc2ssd/JH_DATA/spooler/qxiao183/workspace/ziyu/open_reasoner/FastChat_tsllm/fastchat/serve/math_shepherd_model_worker.py", line 123, in <listcomp>
+2024-09-28 13:36:28 | ERROR | stderr |     _math_shepherd_infer_fn(s).tolist() for s in input_str
+2024-09-28 13:36:28 | ERROR | stderr |   File "/hpc2ssd/JH_DATA/spooler/qxiao183/workspace/ziyu/open_reasoner/FastChat_tsllm/fastchat/serve/math_shepherd_model_worker.py", line 114, in _math_shepherd_infer_fn
+2024-09-28 13:36:28 | ERROR | stderr |     logits = self.model(input_id).logits[:,:,candidate_tokens]
+2024-09-28 13:36:28 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+2024-09-28 13:36:28 | ERROR | stderr |     return self._call_impl(*args, **kwargs)
+2024-09-28 13:36:28 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+2024-09-28 13:36:28 | ERROR | stderr |     return forward_call(*args, **kwargs)
+2024-09-28 13:36:28 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/transformers/models/llama/modeling_llama.py", line 1189, in forward
+2024-09-28 13:36:28 | ERROR | stderr |     outputs = self.model(
+2024-09-28 13:36:28 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+2024-09-28 13:36:28 | ERROR | stderr |     return self._call_impl(*args, **kwargs)
+2024-09-28 13:36:28 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+2024-09-28 13:36:28 | ERROR | stderr |     return forward_call(*args, **kwargs)
+2024-09-28 13:36:28 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/transformers/models/llama/modeling_llama.py", line 946, in forward
+2024-09-28 13:36:28 | ERROR | stderr |     inputs_embeds = self.embed_tokens(input_ids)
+2024-09-28 13:36:28 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+2024-09-28 13:36:28 | ERROR | stderr |     return self._call_impl(*args, **kwargs)
+2024-09-28 13:36:28 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+2024-09-28 13:36:28 | ERROR | stderr |     return forward_call(*args, **kwargs)
+2024-09-28 13:36:28 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/torch/nn/modules/sparse.py", line 164, in forward
+2024-09-28 13:36:28 | ERROR | stderr |     return F.embedding(
+2024-09-28 13:36:28 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/torch/nn/functional.py", line 2267, in embedding
+2024-09-28 13:36:28 | ERROR | stderr |     return torch.embedding(weight, input, padding_idx, scale_grad_by_freq, sparse)
+2024-09-28 13:36:28 | ERROR | stderr | RuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu! (when checking argument for argument index in method wrapper_CUDA__index_select)
+2024-09-28 13:38:38 | ERROR | stderr | [32mINFO[0m:     Shutting down
+2024-09-28 13:38:38 | ERROR | stderr | [32mINFO[0m:     Waiting for application shutdown.
+2024-09-28 13:38:38 | ERROR | stderr | [32mINFO[0m:     Application shutdown complete.
+2024-09-28 13:38:38 | ERROR | stderr | [32mINFO[0m:     Finished server process [[36m823770[0m]

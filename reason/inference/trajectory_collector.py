@@ -1,8 +1,8 @@
 from typing import Optional
 from envs.base_env import CoTEnv
-from inference.evaluation.vote_utils import MAJORITY_VOTE
-from mcts.tree import MCTS
-from mcts.utils import get_root
+from reason.reranking.vote_utils import MAJORITY_VOTE
+from reason.mcts.tree import MCTS
+from reason.mcts.utils import get_root
 import time
 
 

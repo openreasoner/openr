@@ -1,43 +1,27 @@
-2024-09-27 15:33:30 | INFO | controller | args: Namespace(host='0.0.0.0', port=28777, dispatch_method='shortest_queue', ssl=False)
-2024-09-27 15:33:30 | ERROR | stderr | [32mINFO[0m:     Started server process [[36m782676[0m]
-2024-09-27 15:33:30 | ERROR | stderr | [32mINFO[0m:     Waiting for application startup.
-2024-09-27 15:33:30 | ERROR | stderr | [32mINFO[0m:     Application startup complete.
-2024-09-27 15:33:30 | ERROR | stderr | [32mINFO[0m:     Uvicorn running on [1mhttp://0.0.0.0:28777[0m (Press CTRL+C to quit)
-2024-09-27 15:34:12 | INFO | controller | Register a new worker: http://0.0.0.0:4001
-2024-09-27 15:34:12 | INFO | controller | Register done: http://0.0.0.0:4001, {'model_names': ['llama2-7b-gsm8k-value'], 'speed': 1, 'queue_length': 0}
-2024-09-27 15:34:12 | INFO | stdout | [32mINFO[0m:     127.0.0.1:57414 - "[1mPOST /register_worker HTTP/1.1[0m" [32m200 OK[0m
-2024-09-27 15:34:44 | INFO | controller | Register a new worker: http://0.0.0.0:30010
-2024-09-27 15:34:44 | INFO | controller | Register done: http://0.0.0.0:30010, {'model_names': ['llama2-7b-game24-policy-hf'], 'speed': 1, 'queue_length': 0}
-2024-09-27 15:34:44 | INFO | stdout | [32mINFO[0m:     127.0.0.1:32908 - "[1mPOST /register_worker HTTP/1.1[0m" [32m200 OK[0m
-2024-09-27 15:34:57 | INFO | controller | Receive heart beat. http://0.0.0.0:4001
-2024-09-27 15:34:57 | INFO | stdout | [32mINFO[0m:     127.0.0.1:36464 - "[1mPOST /receive_heart_beat HTTP/1.1[0m" [32m200 OK[0m
-2024-09-27 15:35:29 | INFO | controller | Receive heart beat. http://0.0.0.0:30010
-2024-09-27 15:35:29 | INFO | stdout | [32mINFO[0m:     127.0.0.1:33438 - "[1mPOST /receive_heart_beat HTTP/1.1[0m" [32m200 OK[0m
-2024-09-27 15:35:42 | INFO | controller | Receive heart beat. http://0.0.0.0:4001
-2024-09-27 15:35:42 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59870 - "[1mPOST /receive_heart_beat HTTP/1.1[0m" [32m200 OK[0m
-2024-09-27 15:36:14 | INFO | controller | Receive heart beat. http://0.0.0.0:30010
-2024-09-27 15:36:14 | INFO | stdout | [32mINFO[0m:     127.0.0.1:44342 - "[1mPOST /receive_heart_beat HTTP/1.1[0m" [32m200 OK[0m
-2024-09-27 15:36:27 | INFO | controller | Receive heart beat. http://0.0.0.0:4001
-2024-09-27 15:36:27 | INFO | stdout | [32mINFO[0m:     127.0.0.1:51166 - "[1mPOST /receive_heart_beat HTTP/1.1[0m" [32m200 OK[0m
-2024-09-27 15:36:59 | INFO | controller | Receive heart beat. http://0.0.0.0:30010
-2024-09-27 15:36:59 | INFO | stdout | [32mINFO[0m:     127.0.0.1:57580 - "[1mPOST /receive_heart_beat HTTP/1.1[0m" [32m200 OK[0m
-2024-09-27 15:37:12 | INFO | controller | Receive heart beat. http://0.0.0.0:4001
-2024-09-27 15:37:12 | INFO | stdout | [32mINFO[0m:     127.0.0.1:40574 - "[1mPOST /receive_heart_beat HTTP/1.1[0m" [32m200 OK[0m
-2024-09-27 15:37:44 | INFO | controller | Receive heart beat. http://0.0.0.0:30010
-2024-09-27 15:37:44 | INFO | stdout | [32mINFO[0m:     127.0.0.1:52330 - "[1mPOST /receive_heart_beat HTTP/1.1[0m" [32m200 OK[0m
-2024-09-27 15:37:57 | INFO | controller | Receive heart beat. http://0.0.0.0:4001
-2024-09-27 15:37:57 | INFO | stdout | [32mINFO[0m:     127.0.0.1:54626 - "[1mPOST /receive_heart_beat HTTP/1.1[0m" [32m200 OK[0m
-2024-09-27 15:38:29 | INFO | controller | Receive heart beat. http://0.0.0.0:30010
-2024-09-27 15:38:29 | INFO | stdout | [32mINFO[0m:     127.0.0.1:55996 - "[1mPOST /receive_heart_beat HTTP/1.1[0m" [32m200 OK[0m
-2024-09-27 15:38:42 | INFO | controller | Receive heart beat. http://0.0.0.0:4001
-2024-09-27 15:38:42 | INFO | stdout | [32mINFO[0m:     127.0.0.1:60486 - "[1mPOST /receive_heart_beat HTTP/1.1[0m" [32m200 OK[0m
-2024-09-27 15:39:15 | INFO | controller | Receive heart beat. http://0.0.0.0:30010
-2024-09-27 15:39:15 | INFO | stdout | [32mINFO[0m:     127.0.0.1:49004 - "[1mPOST /receive_heart_beat HTTP/1.1[0m" [32m200 OK[0m
-2024-09-27 15:39:23 | INFO | controller | args: Namespace(host='0.0.0.0', port=28777, dispatch_method='shortest_queue', ssl=False)
-2024-09-27 15:39:23 | ERROR | stderr | [32mINFO[0m:     Started server process [[36m788110[0m]
-2024-09-27 15:39:23 | ERROR | stderr | [32mINFO[0m:     Waiting for application startup.
-2024-09-27 15:39:23 | ERROR | stderr | [32mINFO[0m:     Application startup complete.
-2024-09-27 15:39:23 | ERROR | stderr | [32mINFO[0m:     Uvicorn running on [1mhttp://0.0.0.0:28777[0m (Press CTRL+C to quit)
-2024-09-27 15:40:04 | INFO | controller | Register a new worker: http://0.0.0.0:4001
-2024-09-27 15:40:04 | INFO | controller | Register done: http://0.0.0.0:4001, {'model_names': ['llama2-7b-gsm8k-value'], 'speed': 1, 'queue_length': 0}
-2024-09-27 15:40:04 | INFO | stdout | [32mINFO[0m:     127.0.0.1:58774 - "[1mPOST /register_worker HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 13:31:28 | INFO | controller | args: Namespace(host='0.0.0.0', port=28777, dispatch_method='shortest_queue', ssl=False)
+2024-09-28 13:31:28 | ERROR | stderr | [32mINFO[0m:     Started server process [[36m821247[0m]
+2024-09-28 13:31:28 | ERROR | stderr | [32mINFO[0m:     Waiting for application startup.
+2024-09-28 13:31:28 | ERROR | stderr | [32mINFO[0m:     Application startup complete.
+2024-09-28 13:31:28 | ERROR | stderr | [32mINFO[0m:     Uvicorn running on [1mhttp://0.0.0.0:28777[0m (Press CTRL+C to quit)
+2024-09-28 13:31:56 | INFO | controller | Register a new worker: http://0.0.0.0:40010
+2024-09-28 13:31:56 | INFO | controller | Register done: http://0.0.0.0:40010, {'model_names': ['math-shepherd-mistral-7b-prm'], 'speed': 1, 'queue_length': 0}
+2024-09-28 13:31:56 | INFO | stdout | [32mINFO[0m:     127.0.0.1:34020 - "[1mPOST /register_worker HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 13:32:20 | INFO | controller | Register a new worker: http://0.0.0.0:30010
+2024-09-28 13:32:20 | INFO | controller | Register done: http://0.0.0.0:30010, {'model_names': ['mistral-7b-sft'], 'speed': 1, 'queue_length': 0}
+2024-09-28 13:32:20 | INFO | stdout | [32mINFO[0m:     127.0.0.1:53512 - "[1mPOST /register_worker HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 13:32:41 | INFO | controller | Receive heart beat. http://0.0.0.0:40010
+2024-09-28 13:32:41 | INFO | stdout | [32mINFO[0m:     127.0.0.1:50970 - "[1mPOST /receive_heart_beat HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 13:33:05 | INFO | controller | Receive heart beat. http://0.0.0.0:30010
+2024-09-28 13:33:05 | INFO | stdout | [32mINFO[0m:     127.0.0.1:48436 - "[1mPOST /receive_heart_beat HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 13:33:26 | INFO | controller | Receive heart beat. http://0.0.0.0:40010
+2024-09-28 13:33:26 | INFO | stdout | [32mINFO[0m:     127.0.0.1:35488 - "[1mPOST /receive_heart_beat HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 13:33:50 | INFO | controller | Receive heart beat. http://0.0.0.0:30010
+2024-09-28 13:33:50 | INFO | stdout | [32mINFO[0m:     127.0.0.1:46292 - "[1mPOST /receive_heart_beat HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 13:34:03 | INFO | controller | names: ['http://0.0.0.0:30010'], queue_lens: [0.0], ret: http://0.0.0.0:30010
+2024-09-28 13:34:03 | INFO | stdout | [32mINFO[0m:     127.0.0.1:41020 - "[1mPOST /get_worker_address HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 13:34:05 | INFO | controller | names: ['http://0.0.0.0:40010'], queue_lens: [0.0], ret: http://0.0.0.0:40010
+2024-09-28 13:34:05 | INFO | stdout | [32mINFO[0m:     127.0.0.1:41034 - "[1mPOST /get_worker_address HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 13:34:11 | INFO | controller | Receive heart beat. http://0.0.0.0:40010
+2024-09-28 13:34:11 | INFO | stdout | [32mINFO[0m:     127.0.0.1:41044 - "[1mPOST /receive_heart_beat HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 13:34:35 | INFO | controller | Receive heart beat. http://0.0.0.0:30010
+2024-09-28 13:34:35 | INFO | stdout | [32mINFO[0m:     127.0.0.1:44238 - "[1mPOST /receive_heart_beat HTTP/1.1[0m" [32m200 OK[0m

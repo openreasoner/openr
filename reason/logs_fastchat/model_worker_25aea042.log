@@ -1,0 +1,1455 @@
+2024-09-28 13:48:35 | ERROR | stderr | Loading pt checkpoint shards:   0% Completed | 0/3 [00:00<?, ?it/s]
+2024-09-28 13:48:35 | ERROR | stderr | 
+2024-09-28 13:48:35 | ERROR | stderr | /hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/model_executor/model_loader/weight_utils.py:424: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+2024-09-28 13:48:35 | ERROR | stderr |   state = torch.load(bin_file, map_location="cpu")
+2024-09-28 13:48:51 | ERROR | stderr | Loading pt checkpoint shards:  33% Completed | 1/3 [00:15<00:31, 15.96s/it]
+2024-09-28 13:48:51 | ERROR | stderr | 
+2024-09-28 13:49:06 | ERROR | stderr | Loading pt checkpoint shards:  67% Completed | 2/3 [00:30<00:15, 15.24s/it]
+2024-09-28 13:49:06 | ERROR | stderr | 
+2024-09-28 13:49:13 | ERROR | stderr | Loading pt checkpoint shards: 100% Completed | 3/3 [00:38<00:00, 11.82s/it]
+2024-09-28 13:49:13 | ERROR | stderr | 
+2024-09-28 13:49:13 | ERROR | stderr | Loading pt checkpoint shards: 100% Completed | 3/3 [00:38<00:00, 12.82s/it]
+2024-09-28 13:49:13 | ERROR | stderr | 
+2024-09-28 13:49:13 | ERROR | stderr | 
+2024-09-28 13:49:34 | INFO | model_worker | Loading the model ['llama2-7b-game24-policy-hf'] on worker 25aea042, worker type: vLLM worker...
+2024-09-28 13:49:34 | INFO | model_worker | Register to controller
+2024-09-28 13:49:34 | ERROR | stderr | [32mINFO[0m:     Started server process [[36m829959[0m]
+2024-09-28 13:49:34 | ERROR | stderr | [32mINFO[0m:     Waiting for application startup.
+2024-09-28 13:49:34 | ERROR | stderr | [32mINFO[0m:     Application startup complete.
+2024-09-28 13:49:34 | ERROR | stderr | [32mINFO[0m:     Uvicorn running on [1mhttp://0.0.0.0:30110[0m (Press CTRL+C to quit)
+2024-09-28 13:50:19 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 13:51:04 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 13:51:49 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 13:52:34 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 13:53:19 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 13:54:04 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 13:54:49 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 13:55:34 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 13:56:19 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 13:57:04 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 13:57:50 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 13:58:35 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 13:59:20 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:00:05 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:00:50 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:01:35 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:02:20 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:03:05 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:03:50 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:04:35 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:05:20 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:06:05 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:06:50 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:07:35 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:08:20 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:09:05 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:09:50 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:10:35 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:11:20 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:12:05 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:12:50 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:13:35 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:14:21 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:15:06 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:15:51 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:16:36 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:17:21 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:18:06 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:18:51 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:19:36 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:20:21 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:21:06 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:21:51 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:22:36 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:23:21 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:24:06 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:24:51 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:25:36 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:26:21 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:27:06 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:27:51 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:28:36 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:29:21 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:30:06 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:30:51 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:31:36 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:32:21 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:33:07 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:33:52 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:34:37 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:35:22 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:36:07 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:36:52 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:37:37 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:38:22 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:39:07 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:39:52 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:40:37 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:41:22 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:42:07 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:42:52 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:43:37 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:44:22 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:45:07 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:45:52 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:46:37 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:47:22 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:48:07 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:48:52 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:49:37 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:50:22 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:51:07 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:51:52 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:52:37 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:53:22 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:54:08 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:54:53 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:55:38 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:56:23 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:57:08 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:57:53 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:58:38 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 14:59:23 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 15:00:08 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 15:00:53 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 15:01:38 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 15:02:23 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 15:03:08 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 15:03:53 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 15:04:38 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 15:05:23 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 15:06:08 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 15:06:53 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 15:07:38 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 15:08:23 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 15:09:08 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 15:09:53 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 15:10:38 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 15:11:23 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 15:12:08 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 15:12:54 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 15:13:39 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 15:14:24 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 15:15:09 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 15:15:54 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 15:16:39 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 15:17:24 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 15:18:09 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 15:18:54 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: None. call_ct: 0. worker_id: 25aea042. 
+2024-09-28 15:18:55 | INFO | stdout | [32mINFO[0m:     127.0.0.1:58178 - "[1mPOST /worker_generate HTTP/1.1[0m" [91m500 Internal Server Error[0m
+2024-09-28 15:18:55 | ERROR | stderr | [31mERROR[0m:    Exception in ASGI application
+2024-09-28 15:18:55 | ERROR | stderr | Traceback (most recent call last):
+2024-09-28 15:18:55 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/uvicorn/protocols/http/httptools_impl.py", line 401, in run_asgi
+2024-09-28 15:18:55 | ERROR | stderr |     result = await app(  # type: ignore[func-returns-value]
+2024-09-28 15:18:55 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/uvicorn/middleware/proxy_headers.py", line 70, in __call__
+2024-09-28 15:18:55 | ERROR | stderr |     return await self.app(scope, receive, send)
+2024-09-28 15:18:55 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/fastapi/applications.py", line 1054, in __call__
+2024-09-28 15:18:55 | ERROR | stderr |     await super().__call__(scope, receive, send)
+2024-09-28 15:18:55 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/applications.py", line 113, in __call__
+2024-09-28 15:18:55 | ERROR | stderr |     await self.middleware_stack(scope, receive, send)
+2024-09-28 15:18:55 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/middleware/errors.py", line 187, in __call__
+2024-09-28 15:18:55 | ERROR | stderr |     raise exc
+2024-09-28 15:18:55 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/middleware/errors.py", line 165, in __call__
+2024-09-28 15:18:55 | ERROR | stderr |     await self.app(scope, receive, _send)
+2024-09-28 15:18:55 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+2024-09-28 15:18:55 | ERROR | stderr |     await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+2024-09-28 15:18:55 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+2024-09-28 15:18:55 | ERROR | stderr |     raise exc
+2024-09-28 15:18:55 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+2024-09-28 15:18:55 | ERROR | stderr |     await app(scope, receive, sender)
+2024-09-28 15:18:55 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 715, in __call__
+2024-09-28 15:18:55 | ERROR | stderr |     await self.middleware_stack(scope, receive, send)
+2024-09-28 15:18:55 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 735, in app
+2024-09-28 15:18:55 | ERROR | stderr |     await route.handle(scope, receive, send)
+2024-09-28 15:18:55 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 288, in handle
+2024-09-28 15:18:55 | ERROR | stderr |     await self.app(scope, receive, send)
+2024-09-28 15:18:55 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 76, in app
+2024-09-28 15:18:55 | ERROR | stderr |     await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+2024-09-28 15:18:55 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+2024-09-28 15:18:55 | ERROR | stderr |     raise exc
+2024-09-28 15:18:55 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+2024-09-28 15:18:55 | ERROR | stderr |     await app(scope, receive, sender)
+2024-09-28 15:18:55 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 73, in app
+2024-09-28 15:18:55 | ERROR | stderr |     response = await f(request)
+2024-09-28 15:18:55 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/fastapi/routing.py", line 301, in app
+2024-09-28 15:18:55 | ERROR | stderr |     raw_response = await run_endpoint_function(
+2024-09-28 15:18:55 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/fastapi/routing.py", line 212, in run_endpoint_function
+2024-09-28 15:18:55 | ERROR | stderr |     return await dependant.call(**values)
+2024-09-28 15:18:55 | ERROR | stderr |   File "/hpc2ssd/JH_DATA/spooler/qxiao183/workspace/ziyu/open_reasoner/FastChat_tsllm/fastchat/serve/vllm_worker.py", line 192, in api_generate
+2024-09-28 15:18:55 | ERROR | stderr |     output = await worker.generate(params)
+2024-09-28 15:18:55 | ERROR | stderr |   File "/hpc2ssd/JH_DATA/spooler/qxiao183/workspace/ziyu/open_reasoner/FastChat_tsllm/fastchat/serve/vllm_worker.py", line 150, in generate
+2024-09-28 15:18:55 | ERROR | stderr |     async for x in self.generate_stream(params):
+2024-09-28 15:18:55 | ERROR | stderr |   File "/hpc2ssd/JH_DATA/spooler/qxiao183/workspace/ziyu/open_reasoner/FastChat_tsllm/fastchat/serve/vllm_worker.py", line 78, in generate_stream
+2024-09-28 15:18:55 | ERROR | stderr |     stop_token_ids.append(self.tokenizer.eos_token_id)
+2024-09-28 15:18:55 | ERROR | stderr | AttributeError: 'int' object has no attribute 'append'
+2024-09-28 15:19:36 | INFO | stdout | [32mINFO[0m:     127.0.0.1:45928 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:19:38 | INFO | stdout | [32mINFO[0m:     127.0.0.1:45934 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:19:39 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: Semaphore(value=1022, locked=False). call_ct: 4. worker_id: 25aea042. 
+2024-09-28 15:19:39 | INFO | stdout | [32mINFO[0m:     127.0.0.1:45936 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:19:40 | INFO | stdout | [32mINFO[0m:     127.0.0.1:45940 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:19:41 | INFO | stdout | [32mINFO[0m:     127.0.0.1:45952 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:19:42 | INFO | stdout | [32mINFO[0m:     127.0.0.1:45960 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:19:43 | INFO | stdout | [32mINFO[0m:     127.0.0.1:52998 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:19:44 | INFO | stdout | [32mINFO[0m:     127.0.0.1:53006 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:19:45 | INFO | stdout | [32mINFO[0m:     127.0.0.1:53012 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:19:47 | INFO | stdout | [32mINFO[0m:     127.0.0.1:53024 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:19:48 | INFO | stdout | [32mINFO[0m:     127.0.0.1:53034 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:19:49 | INFO | stdout | [32mINFO[0m:     127.0.0.1:53044 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:19:49 | INFO | stdout | [32mINFO[0m:     127.0.0.1:53054 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:19:50 | INFO | stdout | [32mINFO[0m:     127.0.0.1:53062 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:19:51 | INFO | stdout | [32mINFO[0m:     127.0.0.1:53072 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:19:53 | INFO | stdout | [32mINFO[0m:     127.0.0.1:53086 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:19:54 | INFO | stdout | [32mINFO[0m:     127.0.0.1:46000 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:19:55 | INFO | stdout | [32mINFO[0m:     127.0.0.1:46014 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:19:55 | INFO | stdout | [32mINFO[0m:     127.0.0.1:46024 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:19:56 | INFO | stdout | [32mINFO[0m:     127.0.0.1:46028 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:19:57 | INFO | stdout | [32mINFO[0m:     127.0.0.1:46036 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:19:58 | INFO | stdout | [32mINFO[0m:     127.0.0.1:46050 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:19:58 | INFO | stdout | [32mINFO[0m:     127.0.0.1:46066 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:00 | INFO | stdout | [32mINFO[0m:     127.0.0.1:46074 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:02 | INFO | stdout | [32mINFO[0m:     127.0.0.1:46080 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:03 | INFO | stdout | [32mINFO[0m:     127.0.0.1:45932 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:04 | INFO | stdout | [32mINFO[0m:     127.0.0.1:45946 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:05 | INFO | stdout | [32mINFO[0m:     127.0.0.1:45958 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:06 | INFO | stdout | [32mINFO[0m:     127.0.0.1:45960 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:07 | INFO | stdout | [32mINFO[0m:     127.0.0.1:45962 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:08 | INFO | stdout | [32mINFO[0m:     127.0.0.1:45976 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:09 | INFO | stdout | [32mINFO[0m:     127.0.0.1:45992 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:10 | INFO | stdout | [32mINFO[0m:     127.0.0.1:46002 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:11 | INFO | stdout | [32mINFO[0m:     127.0.0.1:46008 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:11 | INFO | stdout | [32mINFO[0m:     127.0.0.1:46024 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:12 | INFO | stdout | [32mINFO[0m:     127.0.0.1:46026 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:13 | INFO | stdout | [32mINFO[0m:     127.0.0.1:52614 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:14 | INFO | stdout | [32mINFO[0m:     127.0.0.1:52630 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:16 | INFO | stdout | [32mINFO[0m:     127.0.0.1:52646 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:17 | INFO | stdout | [32mINFO[0m:     127.0.0.1:52656 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:18 | INFO | stdout | [32mINFO[0m:     127.0.0.1:52666 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:20 | INFO | stdout | [32mINFO[0m:     127.0.0.1:52674 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:21 | INFO | stdout | [32mINFO[0m:     127.0.0.1:52676 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:22 | INFO | stdout | [32mINFO[0m:     127.0.0.1:52686 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:23 | INFO | stdout | [32mINFO[0m:     127.0.0.1:58296 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:24 | INFO | stdout | [32mINFO[0m:     127.0.0.1:58306 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:24 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: Semaphore(value=1022, locked=False). call_ct: 48. worker_id: 25aea042. 
+2024-09-28 15:20:25 | INFO | stdout | [32mINFO[0m:     127.0.0.1:58322 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:26 | INFO | stdout | [32mINFO[0m:     127.0.0.1:58332 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:27 | INFO | stdout | [32mINFO[0m:     127.0.0.1:58348 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:28 | INFO | stdout | [32mINFO[0m:     127.0.0.1:58362 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:29 | INFO | stdout | [32mINFO[0m:     127.0.0.1:58376 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:30 | INFO | stdout | [32mINFO[0m:     127.0.0.1:58390 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:31 | INFO | stdout | [32mINFO[0m:     127.0.0.1:58398 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:32 | INFO | stdout | [32mINFO[0m:     127.0.0.1:58404 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:33 | INFO | stdout | [32mINFO[0m:     127.0.0.1:51212 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:34 | INFO | stdout | [32mINFO[0m:     127.0.0.1:51214 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:35 | INFO | stdout | [32mINFO[0m:     127.0.0.1:51228 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:36 | INFO | stdout | [32mINFO[0m:     127.0.0.1:51242 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:37 | INFO | stdout | [32mINFO[0m:     127.0.0.1:51248 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:38 | INFO | stdout | [32mINFO[0m:     127.0.0.1:51262 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:39 | INFO | stdout | [32mINFO[0m:     127.0.0.1:51278 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:40 | INFO | stdout | [32mINFO[0m:     127.0.0.1:51280 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:42 | INFO | stdout | [32mINFO[0m:     127.0.0.1:51294 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:43 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59104 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:44 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59112 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:45 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59122 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:46 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59126 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:47 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59142 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:48 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59144 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:49 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59152 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:50 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59166 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:51 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59178 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:52 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59182 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:53 | INFO | stdout | [32mINFO[0m:     127.0.0.1:40316 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:54 | INFO | stdout | [32mINFO[0m:     127.0.0.1:40332 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:55 | INFO | stdout | [32mINFO[0m:     127.0.0.1:40334 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:57 | INFO | stdout | [32mINFO[0m:     127.0.0.1:40348 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:57 | INFO | stdout | [32mINFO[0m:     127.0.0.1:40362 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:20:58 | INFO | stdout | [32mINFO[0m:     127.0.0.1:40378 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:00 | INFO | stdout | [32mINFO[0m:     127.0.0.1:40394 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:01 | INFO | stdout | [32mINFO[0m:     127.0.0.1:40400 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:02 | INFO | stdout | [32mINFO[0m:     127.0.0.1:40402 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:03 | INFO | stdout | [32mINFO[0m:     127.0.0.1:47420 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:04 | INFO | stdout | [32mINFO[0m:     127.0.0.1:47434 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:04 | INFO | stdout | [32mINFO[0m:     127.0.0.1:47438 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:05 | INFO | stdout | [32mINFO[0m:     127.0.0.1:47446 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:08 | INFO | stdout | [32mINFO[0m:     127.0.0.1:47458 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:09 | INFO | stdout | [32mINFO[0m:     127.0.0.1:47470 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:09 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: Semaphore(value=1022, locked=False). call_ct: 90. worker_id: 25aea042. 
+2024-09-28 15:21:10 | INFO | stdout | [32mINFO[0m:     127.0.0.1:47484 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:11 | INFO | stdout | [32mINFO[0m:     127.0.0.1:47486 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:12 | INFO | stdout | [32mINFO[0m:     127.0.0.1:47498 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:13 | INFO | stdout | [32mINFO[0m:     127.0.0.1:55766 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:14 | INFO | stdout | [32mINFO[0m:     127.0.0.1:55782 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:14 | INFO | stdout | [32mINFO[0m:     127.0.0.1:55784 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:15 | INFO | stdout | [32mINFO[0m:     127.0.0.1:55796 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:16 | INFO | stdout | [32mINFO[0m:     127.0.0.1:55802 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:17 | INFO | stdout | [32mINFO[0m:     127.0.0.1:55810 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:20 | INFO | stdout | [32mINFO[0m:     127.0.0.1:55814 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:20 | INFO | stdout | [32mINFO[0m:     127.0.0.1:55830 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:21 | INFO | stdout | [32mINFO[0m:     127.0.0.1:55842 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:22 | INFO | stdout | [32mINFO[0m:     127.0.0.1:55844 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:24 | INFO | stdout | [32mINFO[0m:     127.0.0.1:37530 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:25 | INFO | stdout | [32mINFO[0m:     127.0.0.1:37532 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:26 | INFO | stdout | [32mINFO[0m:     127.0.0.1:37538 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:27 | INFO | stdout | [32mINFO[0m:     127.0.0.1:37542 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:28 | INFO | stdout | [32mINFO[0m:     127.0.0.1:37546 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:28 | INFO | stdout | [32mINFO[0m:     127.0.0.1:37558 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:29 | INFO | stdout | [32mINFO[0m:     127.0.0.1:37570 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:30 | INFO | stdout | [32mINFO[0m:     127.0.0.1:37578 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:31 | INFO | stdout | [32mINFO[0m:     127.0.0.1:37586 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:32 | INFO | stdout | [32mINFO[0m:     127.0.0.1:37602 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:33 | INFO | stdout | [32mINFO[0m:     127.0.0.1:53958 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:34 | INFO | stdout | [32mINFO[0m:     127.0.0.1:53974 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:34 | INFO | stdout | [32mINFO[0m:     127.0.0.1:53982 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:35 | INFO | stdout | [32mINFO[0m:     127.0.0.1:53996 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:36 | INFO | stdout | [32mINFO[0m:     127.0.0.1:54000 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:37 | INFO | stdout | [32mINFO[0m:     127.0.0.1:54010 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:38 | INFO | stdout | [32mINFO[0m:     127.0.0.1:54020 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:39 | INFO | stdout | [32mINFO[0m:     127.0.0.1:54034 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:40 | INFO | stdout | [32mINFO[0m:     127.0.0.1:54044 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:40 | INFO | stdout | [32mINFO[0m:     127.0.0.1:54058 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:41 | INFO | stdout | [32mINFO[0m:     127.0.0.1:54070 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:42 | INFO | stdout | [32mINFO[0m:     127.0.0.1:54084 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:43 | INFO | stdout | [32mINFO[0m:     127.0.0.1:46396 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:44 | INFO | stdout | [32mINFO[0m:     127.0.0.1:46410 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:45 | INFO | stdout | [32mINFO[0m:     127.0.0.1:46426 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:46 | INFO | stdout | [32mINFO[0m:     127.0.0.1:46436 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:47 | INFO | stdout | [32mINFO[0m:     127.0.0.1:46446 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:48 | INFO | stdout | [32mINFO[0m:     127.0.0.1:46458 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:49 | INFO | stdout | [32mINFO[0m:     127.0.0.1:46472 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:50 | INFO | stdout | [32mINFO[0m:     127.0.0.1:46480 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:51 | INFO | stdout | [32mINFO[0m:     127.0.0.1:46482 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:51 | INFO | stdout | [32mINFO[0m:     127.0.0.1:46484 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:52 | INFO | stdout | [32mINFO[0m:     127.0.0.1:46488 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:52 | INFO | stdout | [32mINFO[0m:     127.0.0.1:60082 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:53 | INFO | stdout | [32mINFO[0m:     127.0.0.1:60094 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:54 | INFO | stdout | [32mINFO[0m:     127.0.0.1:60102 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:54 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: Semaphore(value=1022, locked=False). call_ct: 139. worker_id: 25aea042. 
+2024-09-28 15:21:55 | INFO | stdout | [32mINFO[0m:     127.0.0.1:60118 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:56 | INFO | stdout | [32mINFO[0m:     127.0.0.1:60128 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:57 | INFO | stdout | [32mINFO[0m:     127.0.0.1:60136 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:21:58 | INFO | stdout | [32mINFO[0m:     127.0.0.1:60144 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:22:01 | INFO | stdout | [32mINFO[0m:     127.0.0.1:60148 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:22:02 | INFO | stdout | [32mINFO[0m:     127.0.0.1:60162 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:22:03 | INFO | stdout | [32mINFO[0m:     127.0.0.1:56258 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:22:04 | INFO | stdout | [32mINFO[0m:     127.0.0.1:56260 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:22:05 | INFO | stdout | [32mINFO[0m:     127.0.0.1:56270 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:22:07 | INFO | stdout | [32mINFO[0m:     127.0.0.1:56282 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:22:08 | INFO | stdout | [32mINFO[0m:     127.0.0.1:56292 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:22:09 | INFO | stdout | [32mINFO[0m:     127.0.0.1:56306 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:22:10 | INFO | stdout | [32mINFO[0m:     127.0.0.1:56318 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:22:13 | INFO | stdout | [32mINFO[0m:     127.0.0.1:56322 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:22:14 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59884 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:22:15 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59894 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:22:16 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59898 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:22:17 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59902 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:22:18 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59910 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:22:19 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59922 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:22:20 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59936 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:22:21 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59942 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:22:22 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59948 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:22:23 | INFO | stdout | [32mINFO[0m:     127.0.0.1:48596 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:22:23 | INFO | stdout | [32mINFO[0m:     127.0.0.1:48610 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:22:25 | INFO | stdout | [32mINFO[0m:     127.0.0.1:48620 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:22:25 | INFO | stdout | [32mINFO[0m:     127.0.0.1:48624 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:22:27 | INFO | stdout | [32mINFO[0m:     127.0.0.1:48628 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:22:28 | INFO | stdout | [32mINFO[0m:     127.0.0.1:48644 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:22:29 | INFO | stdout | [32mINFO[0m:     127.0.0.1:48646 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:22:30 | INFO | stdout | [32mINFO[0m:     127.0.0.1:48656 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:22:31 | INFO | stdout | [32mINFO[0m:     127.0.0.1:48664 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:22:32 | INFO | stdout | [32mINFO[0m:     127.0.0.1:48676 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:22:33 | INFO | stdout | [32mINFO[0m:     127.0.0.1:33222 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:22:34 | INFO | stdout | [32mINFO[0m:     127.0.0.1:33230 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:22:35 | INFO | stdout | [32mINFO[0m:     127.0.0.1:33234 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:22:36 | INFO | stdout | [32mINFO[0m:     127.0.0.1:33242 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:22:37 | INFO | stdout | [32mINFO[0m:     127.0.0.1:33250 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:22:38 | INFO | stdout | [32mINFO[0m:     127.0.0.1:33264 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:22:39 | INFO | stdout | [32mINFO[0m:     127.0.0.1:33276 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:22:39 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: Semaphore(value=1022, locked=False). call_ct: 179. worker_id: 25aea042. 
+2024-09-28 15:22:41 | INFO | stdout | [32mINFO[0m:     127.0.0.1:33286 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:22:42 | INFO | stdout | [32mINFO[0m:     127.0.0.1:33298 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:22:43 | INFO | stdout | [32mINFO[0m:     127.0.0.1:32828 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:22:44 | INFO | stdout | [32mINFO[0m:     127.0.0.1:32830 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:22:45 | INFO | stdout | [32mINFO[0m:     127.0.0.1:32836 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:22:46 | INFO | stdout | [32mINFO[0m:     127.0.0.1:32842 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:22:48 | INFO | stdout | [32mINFO[0m:     127.0.0.1:32856 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:22:49 | INFO | stdout | [32mINFO[0m:     127.0.0.1:32870 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:22:50 | INFO | stdout | [32mINFO[0m:     127.0.0.1:32884 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:22:52 | INFO | stdout | [32mINFO[0m:     127.0.0.1:32890 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:22:54 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59326 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:22:54 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59330 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:22:55 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59332 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:22:57 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59346 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:22:58 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59348 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:22:59 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59356 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:00 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59372 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:01 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59380 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:02 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59396 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:03 | INFO | stdout | [32mINFO[0m:     127.0.0.1:58886 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:04 | INFO | stdout | [32mINFO[0m:     127.0.0.1:58898 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:05 | INFO | stdout | [32mINFO[0m:     127.0.0.1:58906 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:06 | INFO | stdout | [32mINFO[0m:     127.0.0.1:58914 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:07 | INFO | stdout | [32mINFO[0m:     127.0.0.1:58922 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:08 | INFO | stdout | [32mINFO[0m:     127.0.0.1:58930 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:09 | INFO | stdout | [32mINFO[0m:     127.0.0.1:58946 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:10 | INFO | stdout | [32mINFO[0m:     127.0.0.1:58958 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:11 | INFO | stdout | [32mINFO[0m:     127.0.0.1:58972 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:12 | INFO | stdout | [32mINFO[0m:     127.0.0.1:58988 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:13 | INFO | stdout | [32mINFO[0m:     127.0.0.1:41454 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:14 | INFO | stdout | [32mINFO[0m:     127.0.0.1:41458 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:14 | INFO | stdout | [32mINFO[0m:     127.0.0.1:41474 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:15 | INFO | stdout | [32mINFO[0m:     127.0.0.1:41482 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:16 | INFO | stdout | [32mINFO[0m:     127.0.0.1:41498 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:17 | INFO | stdout | [32mINFO[0m:     127.0.0.1:41500 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:18 | INFO | stdout | [32mINFO[0m:     127.0.0.1:41502 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:19 | INFO | stdout | [32mINFO[0m:     127.0.0.1:41506 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:20 | INFO | stdout | [32mINFO[0m:     127.0.0.1:41520 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:22 | INFO | stdout | [32mINFO[0m:     127.0.0.1:41526 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:23 | INFO | stdout | [32mINFO[0m:     127.0.0.1:37044 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:24 | INFO | stdout | [32mINFO[0m:     127.0.0.1:37056 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:24 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: Semaphore(value=1022, locked=False). call_ct: 220. worker_id: 25aea042. 
+2024-09-28 15:23:25 | INFO | stdout | [32mINFO[0m:     127.0.0.1:37058 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:26 | INFO | stdout | [32mINFO[0m:     127.0.0.1:37072 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:27 | INFO | stdout | [32mINFO[0m:     127.0.0.1:37078 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:28 | INFO | stdout | [32mINFO[0m:     127.0.0.1:37088 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:29 | INFO | stdout | [32mINFO[0m:     127.0.0.1:37102 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:30 | INFO | stdout | [32mINFO[0m:     127.0.0.1:37110 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:31 | INFO | stdout | [32mINFO[0m:     127.0.0.1:37118 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:32 | INFO | stdout | [32mINFO[0m:     127.0.0.1:37124 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:33 | INFO | stdout | [32mINFO[0m:     127.0.0.1:42724 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:34 | INFO | stdout | [32mINFO[0m:     127.0.0.1:42728 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:35 | INFO | stdout | [32mINFO[0m:     127.0.0.1:42740 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:36 | INFO | stdout | [32mINFO[0m:     127.0.0.1:42742 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:38 | INFO | stdout | [32mINFO[0m:     127.0.0.1:42744 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:39 | INFO | stdout | [32mINFO[0m:     127.0.0.1:42758 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:40 | INFO | stdout | [32mINFO[0m:     127.0.0.1:42762 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:41 | INFO | stdout | [32mINFO[0m:     127.0.0.1:42768 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:42 | INFO | stdout | [32mINFO[0m:     127.0.0.1:42772 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:43 | INFO | stdout | [32mINFO[0m:     127.0.0.1:45118 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:44 | INFO | stdout | [32mINFO[0m:     127.0.0.1:45128 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:45 | INFO | stdout | [32mINFO[0m:     127.0.0.1:45130 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:46 | INFO | stdout | [32mINFO[0m:     127.0.0.1:45134 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:47 | INFO | stdout | [32mINFO[0m:     127.0.0.1:45136 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:50 | INFO | stdout | [32mINFO[0m:     127.0.0.1:45138 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:51 | INFO | stdout | [32mINFO[0m:     127.0.0.1:45152 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:52 | INFO | stdout | [32mINFO[0m:     127.0.0.1:45168 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:53 | INFO | stdout | [32mINFO[0m:     127.0.0.1:57882 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:54 | INFO | stdout | [32mINFO[0m:     127.0.0.1:57888 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:54 | INFO | stdout | [32mINFO[0m:     127.0.0.1:57900 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:56 | INFO | stdout | [32mINFO[0m:     127.0.0.1:57908 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:57 | INFO | stdout | [32mINFO[0m:     127.0.0.1:57916 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:58 | INFO | stdout | [32mINFO[0m:     127.0.0.1:57920 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:23:59 | INFO | stdout | [32mINFO[0m:     127.0.0.1:57934 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:00 | INFO | stdout | [32mINFO[0m:     127.0.0.1:57942 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:01 | INFO | stdout | [32mINFO[0m:     127.0.0.1:57950 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:02 | INFO | stdout | [32mINFO[0m:     127.0.0.1:57956 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:03 | INFO | stdout | [32mINFO[0m:     127.0.0.1:47592 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:04 | INFO | stdout | [32mINFO[0m:     127.0.0.1:47596 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:05 | INFO | stdout | [32mINFO[0m:     127.0.0.1:47606 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:06 | INFO | stdout | [32mINFO[0m:     127.0.0.1:47618 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:07 | INFO | stdout | [32mINFO[0m:     127.0.0.1:47632 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:08 | INFO | stdout | [32mINFO[0m:     127.0.0.1:47636 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:09 | INFO | stdout | [32mINFO[0m:     127.0.0.1:47650 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:09 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: Semaphore(value=1022, locked=False). call_ct: 262. worker_id: 25aea042. 
+2024-09-28 15:24:10 | INFO | stdout | [32mINFO[0m:     127.0.0.1:47656 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:11 | INFO | stdout | [32mINFO[0m:     127.0.0.1:47670 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:12 | INFO | stdout | [32mINFO[0m:     127.0.0.1:47680 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:13 | INFO | stdout | [32mINFO[0m:     127.0.0.1:45002 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:14 | INFO | stdout | [32mINFO[0m:     127.0.0.1:45006 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:15 | INFO | stdout | [32mINFO[0m:     127.0.0.1:45016 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:17 | INFO | stdout | [32mINFO[0m:     127.0.0.1:45030 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:18 | INFO | stdout | [32mINFO[0m:     127.0.0.1:45044 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:19 | INFO | stdout | [32mINFO[0m:     127.0.0.1:45046 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:20 | INFO | stdout | [32mINFO[0m:     127.0.0.1:45060 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:21 | INFO | stdout | [32mINFO[0m:     127.0.0.1:45076 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:22 | INFO | stdout | [32mINFO[0m:     127.0.0.1:45092 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:24 | INFO | stdout | [32mINFO[0m:     127.0.0.1:53738 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:25 | INFO | stdout | [32mINFO[0m:     127.0.0.1:53750 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:26 | INFO | stdout | [32mINFO[0m:     127.0.0.1:53756 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:27 | INFO | stdout | [32mINFO[0m:     127.0.0.1:53768 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:27 | INFO | stdout | [32mINFO[0m:     127.0.0.1:53774 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:29 | INFO | stdout | [32mINFO[0m:     127.0.0.1:53790 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:29 | INFO | stdout | [32mINFO[0m:     127.0.0.1:53794 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:30 | INFO | stdout | [32mINFO[0m:     127.0.0.1:53810 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:31 | INFO | stdout | [32mINFO[0m:     127.0.0.1:53818 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:32 | INFO | stdout | [32mINFO[0m:     127.0.0.1:53822 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:33 | INFO | stdout | [32mINFO[0m:     127.0.0.1:36346 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:34 | INFO | stdout | [32mINFO[0m:     127.0.0.1:36360 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:35 | INFO | stdout | [32mINFO[0m:     127.0.0.1:36374 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:36 | INFO | stdout | [32mINFO[0m:     127.0.0.1:36380 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:37 | INFO | stdout | [32mINFO[0m:     127.0.0.1:36382 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:37 | INFO | stdout | [32mINFO[0m:     127.0.0.1:36386 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:38 | INFO | stdout | [32mINFO[0m:     127.0.0.1:36396 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:39 | INFO | stdout | [32mINFO[0m:     127.0.0.1:36402 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:40 | INFO | stdout | [32mINFO[0m:     127.0.0.1:36406 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:41 | INFO | stdout | [32mINFO[0m:     127.0.0.1:36410 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:42 | INFO | stdout | [32mINFO[0m:     127.0.0.1:36416 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:43 | INFO | stdout | [32mINFO[0m:     127.0.0.1:39682 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:44 | INFO | stdout | [32mINFO[0m:     127.0.0.1:39696 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:45 | INFO | stdout | [32mINFO[0m:     127.0.0.1:39708 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:46 | INFO | stdout | [32mINFO[0m:     127.0.0.1:39718 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:47 | INFO | stdout | [32mINFO[0m:     127.0.0.1:39722 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:48 | INFO | stdout | [32mINFO[0m:     127.0.0.1:39732 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:49 | INFO | stdout | [32mINFO[0m:     127.0.0.1:39746 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:50 | INFO | stdout | [32mINFO[0m:     127.0.0.1:39760 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:51 | INFO | stdout | [32mINFO[0m:     127.0.0.1:39776 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:52 | INFO | stdout | [32mINFO[0m:     127.0.0.1:39784 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:53 | INFO | stdout | [32mINFO[0m:     127.0.0.1:39554 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:54 | INFO | stdout | [32mINFO[0m:     127.0.0.1:39558 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:54 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: Semaphore(value=1022, locked=False). call_ct: 307. worker_id: 25aea042. 
+2024-09-28 15:24:55 | INFO | stdout | [32mINFO[0m:     127.0.0.1:39570 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:56 | INFO | stdout | [32mINFO[0m:     127.0.0.1:39576 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:57 | INFO | stdout | [32mINFO[0m:     127.0.0.1:39582 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:58 | INFO | stdout | [32mINFO[0m:     127.0.0.1:39584 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:24:59 | INFO | stdout | [32mINFO[0m:     127.0.0.1:39586 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:01 | INFO | stdout | [32mINFO[0m:     127.0.0.1:39594 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:02 | INFO | stdout | [32mINFO[0m:     127.0.0.1:39604 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:03 | INFO | stdout | [32mINFO[0m:     127.0.0.1:33350 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:04 | INFO | stdout | [32mINFO[0m:     127.0.0.1:33364 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:05 | INFO | stdout | [32mINFO[0m:     127.0.0.1:33378 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:06 | INFO | stdout | [32mINFO[0m:     127.0.0.1:33382 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:07 | INFO | stdout | [32mINFO[0m:     127.0.0.1:33394 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:08 | INFO | stdout | [32mINFO[0m:     127.0.0.1:33406 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:09 | INFO | stdout | [32mINFO[0m:     127.0.0.1:33420 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:10 | INFO | stdout | [32mINFO[0m:     127.0.0.1:33432 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:11 | INFO | stdout | [32mINFO[0m:     127.0.0.1:33448 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:12 | INFO | stdout | [32mINFO[0m:     127.0.0.1:33458 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:13 | INFO | stdout | [32mINFO[0m:     127.0.0.1:56734 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:13 | INFO | stdout | [32mINFO[0m:     127.0.0.1:56740 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:14 | INFO | stdout | [32mINFO[0m:     127.0.0.1:56742 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:15 | INFO | stdout | [32mINFO[0m:     127.0.0.1:56752 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:16 | INFO | stdout | [32mINFO[0m:     127.0.0.1:56760 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:17 | INFO | stdout | [32mINFO[0m:     127.0.0.1:56776 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:20 | INFO | stdout | [32mINFO[0m:     127.0.0.1:56792 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:21 | INFO | stdout | [32mINFO[0m:     127.0.0.1:56800 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:22 | INFO | stdout | [32mINFO[0m:     127.0.0.1:56814 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:23 | INFO | stdout | [32mINFO[0m:     127.0.0.1:43798 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:25 | INFO | stdout | [32mINFO[0m:     127.0.0.1:43804 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:25 | INFO | stdout | [32mINFO[0m:     127.0.0.1:43806 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:26 | INFO | stdout | [32mINFO[0m:     127.0.0.1:43818 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:27 | INFO | stdout | [32mINFO[0m:     127.0.0.1:43822 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:28 | INFO | stdout | [32mINFO[0m:     127.0.0.1:43824 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:29 | INFO | stdout | [32mINFO[0m:     127.0.0.1:43834 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:30 | INFO | stdout | [32mINFO[0m:     127.0.0.1:43836 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:31 | INFO | stdout | [32mINFO[0m:     127.0.0.1:43838 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:32 | INFO | stdout | [32mINFO[0m:     127.0.0.1:43854 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:33 | INFO | stdout | [32mINFO[0m:     127.0.0.1:47518 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:34 | INFO | stdout | [32mINFO[0m:     127.0.0.1:47520 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:35 | INFO | stdout | [32mINFO[0m:     127.0.0.1:47526 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:36 | INFO | stdout | [32mINFO[0m:     127.0.0.1:47530 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:37 | INFO | stdout | [32mINFO[0m:     127.0.0.1:47546 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:38 | INFO | stdout | [32mINFO[0m:     127.0.0.1:47558 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:39 | INFO | stdout | [32mINFO[0m:     127.0.0.1:47564 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:39 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: Semaphore(value=1022, locked=False). call_ct: 350. worker_id: 25aea042. 
+2024-09-28 15:25:40 | INFO | stdout | [32mINFO[0m:     127.0.0.1:47572 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:41 | INFO | stdout | [32mINFO[0m:     127.0.0.1:47584 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:42 | INFO | stdout | [32mINFO[0m:     127.0.0.1:47590 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:42 | INFO | stdout | [32mINFO[0m:     127.0.0.1:47410 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:43 | INFO | stdout | [32mINFO[0m:     127.0.0.1:47416 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:44 | INFO | stdout | [32mINFO[0m:     127.0.0.1:47418 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:45 | INFO | stdout | [32mINFO[0m:     127.0.0.1:47424 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:46 | INFO | stdout | [32mINFO[0m:     127.0.0.1:47430 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:47 | INFO | stdout | [32mINFO[0m:     127.0.0.1:47436 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:48 | INFO | stdout | [32mINFO[0m:     127.0.0.1:47438 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:49 | INFO | stdout | [32mINFO[0m:     127.0.0.1:47446 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:50 | INFO | stdout | [32mINFO[0m:     127.0.0.1:47462 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:50 | INFO | stdout | [32mINFO[0m:     127.0.0.1:47468 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:52 | INFO | stdout | [32mINFO[0m:     127.0.0.1:47476 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:53 | INFO | stdout | [32mINFO[0m:     127.0.0.1:56914 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:54 | INFO | stdout | [32mINFO[0m:     127.0.0.1:56924 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:55 | INFO | stdout | [32mINFO[0m:     127.0.0.1:56930 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:55 | INFO | stdout | [32mINFO[0m:     127.0.0.1:56934 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:56 | INFO | stdout | [32mINFO[0m:     127.0.0.1:56948 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:57 | INFO | stdout | [32mINFO[0m:     127.0.0.1:56962 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:25:58 | INFO | stdout | [32mINFO[0m:     127.0.0.1:56968 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:00 | INFO | stdout | [32mINFO[0m:     127.0.0.1:56976 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:01 | INFO | stdout | [32mINFO[0m:     127.0.0.1:56990 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:02 | INFO | stdout | [32mINFO[0m:     127.0.0.1:57004 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:02 | INFO | stdout | [32mINFO[0m:     127.0.0.1:50550 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:04 | INFO | stdout | [32mINFO[0m:     127.0.0.1:50562 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:05 | INFO | stdout | [32mINFO[0m:     127.0.0.1:50570 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:06 | INFO | stdout | [32mINFO[0m:     127.0.0.1:50576 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:07 | INFO | stdout | [32mINFO[0m:     127.0.0.1:50580 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:08 | INFO | stdout | [32mINFO[0m:     127.0.0.1:50582 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:09 | INFO | stdout | [32mINFO[0m:     127.0.0.1:50594 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:10 | INFO | stdout | [32mINFO[0m:     127.0.0.1:50608 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:11 | INFO | stdout | [32mINFO[0m:     127.0.0.1:50624 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:11 | INFO | stdout | [32mINFO[0m:     127.0.0.1:50636 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:12 | INFO | stdout | [32mINFO[0m:     127.0.0.1:50650 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:13 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59488 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:14 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59504 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:16 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59520 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:17 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59536 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:18 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59542 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:18 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59558 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:19 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59572 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:20 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59588 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:21 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59604 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:22 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59614 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:23 | INFO | stdout | [32mINFO[0m:     127.0.0.1:35494 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:24 | INFO | stdout | [32mINFO[0m:     127.0.0.1:35506 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:24 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: Semaphore(value=1022, locked=False). call_ct: 397. worker_id: 25aea042. 
+2024-09-28 15:26:25 | INFO | stdout | [32mINFO[0m:     127.0.0.1:35510 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:26 | INFO | stdout | [32mINFO[0m:     127.0.0.1:35516 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:28 | INFO | stdout | [32mINFO[0m:     127.0.0.1:35528 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:29 | INFO | stdout | [32mINFO[0m:     127.0.0.1:35542 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:30 | INFO | stdout | [32mINFO[0m:     127.0.0.1:35544 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:31 | INFO | stdout | [32mINFO[0m:     127.0.0.1:35546 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:32 | INFO | stdout | [32mINFO[0m:     127.0.0.1:35550 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:33 | INFO | stdout | [32mINFO[0m:     127.0.0.1:49130 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:34 | INFO | stdout | [32mINFO[0m:     127.0.0.1:49144 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:35 | INFO | stdout | [32mINFO[0m:     127.0.0.1:49154 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:37 | INFO | stdout | [32mINFO[0m:     127.0.0.1:49170 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:37 | INFO | stdout | [32mINFO[0m:     127.0.0.1:49186 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:39 | INFO | stdout | [32mINFO[0m:     127.0.0.1:49202 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:40 | INFO | stdout | [32mINFO[0m:     127.0.0.1:49212 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:41 | INFO | stdout | [32mINFO[0m:     127.0.0.1:49224 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:42 | INFO | stdout | [32mINFO[0m:     127.0.0.1:49236 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:43 | INFO | stdout | [32mINFO[0m:     127.0.0.1:53140 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:44 | INFO | stdout | [32mINFO[0m:     127.0.0.1:53150 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:45 | INFO | stdout | [32mINFO[0m:     127.0.0.1:53154 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:46 | INFO | stdout | [32mINFO[0m:     127.0.0.1:53170 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:47 | INFO | stdout | [32mINFO[0m:     127.0.0.1:53172 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:49 | INFO | stdout | [32mINFO[0m:     127.0.0.1:53176 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:50 | INFO | stdout | [32mINFO[0m:     127.0.0.1:53188 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:51 | INFO | stdout | [32mINFO[0m:     127.0.0.1:53202 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:52 | INFO | stdout | [32mINFO[0m:     127.0.0.1:53218 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:53 | INFO | stdout | [32mINFO[0m:     127.0.0.1:54522 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:54 | INFO | stdout | [32mINFO[0m:     127.0.0.1:54526 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:55 | INFO | stdout | [32mINFO[0m:     127.0.0.1:54536 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:56 | INFO | stdout | [32mINFO[0m:     127.0.0.1:54550 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:58 | INFO | stdout | [32mINFO[0m:     127.0.0.1:54554 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:58 | INFO | stdout | [32mINFO[0m:     127.0.0.1:54558 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:26:59 | INFO | stdout | [32mINFO[0m:     127.0.0.1:54570 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:00 | INFO | stdout | [32mINFO[0m:     127.0.0.1:54572 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:01 | INFO | stdout | [32mINFO[0m:     127.0.0.1:54588 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:02 | INFO | stdout | [32mINFO[0m:     127.0.0.1:54592 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:03 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59452 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:04 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59466 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:05 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59472 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:06 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59484 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:07 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59500 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:08 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59504 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:08 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59518 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:09 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59530 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:09 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: Semaphore(value=1022, locked=False). call_ct: 440. worker_id: 25aea042. 
+2024-09-28 15:27:10 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59534 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:11 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59540 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:12 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59542 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:13 | INFO | stdout | [32mINFO[0m:     127.0.0.1:50818 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:14 | INFO | stdout | [32mINFO[0m:     127.0.0.1:50822 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:15 | INFO | stdout | [32mINFO[0m:     127.0.0.1:50828 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:16 | INFO | stdout | [32mINFO[0m:     127.0.0.1:50830 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:18 | INFO | stdout | [32mINFO[0m:     127.0.0.1:50836 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:19 | INFO | stdout | [32mINFO[0m:     127.0.0.1:50846 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:20 | INFO | stdout | [32mINFO[0m:     127.0.0.1:50848 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:21 | INFO | stdout | [32mINFO[0m:     127.0.0.1:50860 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:22 | INFO | stdout | [32mINFO[0m:     127.0.0.1:50876 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:23 | INFO | stdout | [32mINFO[0m:     127.0.0.1:45130 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:24 | INFO | stdout | [32mINFO[0m:     127.0.0.1:45142 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:25 | INFO | stdout | [32mINFO[0m:     127.0.0.1:45152 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:26 | INFO | stdout | [32mINFO[0m:     127.0.0.1:45168 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:27 | INFO | stdout | [32mINFO[0m:     127.0.0.1:45176 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:28 | INFO | stdout | [32mINFO[0m:     127.0.0.1:45192 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:29 | INFO | stdout | [32mINFO[0m:     127.0.0.1:45194 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:30 | INFO | stdout | [32mINFO[0m:     127.0.0.1:45200 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:31 | INFO | stdout | [32mINFO[0m:     127.0.0.1:45206 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:32 | INFO | stdout | [32mINFO[0m:     127.0.0.1:45216 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:33 | INFO | stdout | [32mINFO[0m:     127.0.0.1:46434 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:34 | INFO | stdout | [32mINFO[0m:     127.0.0.1:46438 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:35 | INFO | stdout | [32mINFO[0m:     127.0.0.1:46440 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:36 | INFO | stdout | [32mINFO[0m:     127.0.0.1:46444 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:37 | INFO | stdout | [32mINFO[0m:     127.0.0.1:46452 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:37 | INFO | stdout | [32mINFO[0m:     127.0.0.1:46462 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:38 | INFO | stdout | [32mINFO[0m:     127.0.0.1:46474 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:39 | INFO | stdout | [32mINFO[0m:     127.0.0.1:46478 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:40 | INFO | stdout | [32mINFO[0m:     127.0.0.1:46482 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:41 | INFO | stdout | [32mINFO[0m:     127.0.0.1:46488 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:42 | INFO | stdout | [32mINFO[0m:     127.0.0.1:46494 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:43 | INFO | stdout | [32mINFO[0m:     127.0.0.1:32968 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:44 | INFO | stdout | [32mINFO[0m:     127.0.0.1:32982 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:45 | INFO | stdout | [32mINFO[0m:     127.0.0.1:32984 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:46 | INFO | stdout | [32mINFO[0m:     127.0.0.1:32986 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:47 | INFO | stdout | [32mINFO[0m:     127.0.0.1:32998 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:48 | INFO | stdout | [32mINFO[0m:     127.0.0.1:33014 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:49 | INFO | stdout | [32mINFO[0m:     127.0.0.1:33028 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:50 | INFO | stdout | [32mINFO[0m:     127.0.0.1:33044 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:52 | INFO | stdout | [32mINFO[0m:     127.0.0.1:33052 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:53 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59332 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:54 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59334 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:54 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: Semaphore(value=1022, locked=False). call_ct: 484. worker_id: 25aea042. 
+2024-09-28 15:27:55 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59344 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:56 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59346 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:58 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59356 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:27:58 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59362 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:00 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59364 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:01 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59366 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:01 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59374 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:02 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59380 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:03 | INFO | stdout | [32mINFO[0m:     127.0.0.1:41880 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:04 | INFO | stdout | [32mINFO[0m:     127.0.0.1:41894 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:05 | INFO | stdout | [32mINFO[0m:     127.0.0.1:41904 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:05 | INFO | stdout | [32mINFO[0m:     127.0.0.1:41906 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:06 | INFO | stdout | [32mINFO[0m:     127.0.0.1:41914 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:07 | INFO | stdout | [32mINFO[0m:     127.0.0.1:41918 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:08 | INFO | stdout | [32mINFO[0m:     127.0.0.1:41920 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:09 | INFO | stdout | [32mINFO[0m:     127.0.0.1:41932 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:10 | INFO | stdout | [32mINFO[0m:     127.0.0.1:41942 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:11 | INFO | stdout | [32mINFO[0m:     127.0.0.1:41946 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:12 | INFO | stdout | [32mINFO[0m:     127.0.0.1:41958 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:13 | INFO | stdout | [32mINFO[0m:     127.0.0.1:60788 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:14 | INFO | stdout | [32mINFO[0m:     127.0.0.1:60800 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:14 | INFO | stdout | [32mINFO[0m:     127.0.0.1:60816 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:14 | INFO | stdout | [32mINFO[0m:     127.0.0.1:60826 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:15 | INFO | stdout | [32mINFO[0m:     127.0.0.1:60838 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:16 | INFO | stdout | [32mINFO[0m:     127.0.0.1:60846 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:17 | INFO | stdout | [32mINFO[0m:     127.0.0.1:60862 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:18 | INFO | stdout | [32mINFO[0m:     127.0.0.1:60866 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:19 | INFO | stdout | [32mINFO[0m:     127.0.0.1:60870 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:20 | INFO | stdout | [32mINFO[0m:     127.0.0.1:60880 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:22 | INFO | stdout | [32mINFO[0m:     127.0.0.1:60888 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:23 | INFO | stdout | [32mINFO[0m:     127.0.0.1:36324 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:24 | INFO | stdout | [32mINFO[0m:     127.0.0.1:36336 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:24 | INFO | stdout | [32mINFO[0m:     127.0.0.1:36352 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:25 | INFO | stdout | [32mINFO[0m:     127.0.0.1:36356 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:26 | INFO | stdout | [32mINFO[0m:     127.0.0.1:36366 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:26 | INFO | stdout | [32mINFO[0m:     127.0.0.1:36378 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:27 | INFO | stdout | [32mINFO[0m:     127.0.0.1:36382 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:28 | INFO | stdout | [32mINFO[0m:     127.0.0.1:36398 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:29 | INFO | stdout | [32mINFO[0m:     127.0.0.1:36412 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:31 | INFO | stdout | [32mINFO[0m:     127.0.0.1:36418 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:32 | INFO | stdout | [32mINFO[0m:     127.0.0.1:36428 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:34 | INFO | stdout | [32mINFO[0m:     127.0.0.1:51984 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:35 | INFO | stdout | [32mINFO[0m:     127.0.0.1:51992 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:36 | INFO | stdout | [32mINFO[0m:     127.0.0.1:51994 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:37 | INFO | stdout | [32mINFO[0m:     127.0.0.1:52010 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:38 | INFO | stdout | [32mINFO[0m:     127.0.0.1:52012 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:39 | INFO | stdout | [32mINFO[0m:     127.0.0.1:52018 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:39 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: Semaphore(value=1022, locked=False). call_ct: 531. worker_id: 25aea042. 
+2024-09-28 15:28:40 | INFO | stdout | [32mINFO[0m:     127.0.0.1:52032 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:41 | INFO | stdout | [32mINFO[0m:     127.0.0.1:52046 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:41 | INFO | stdout | [32mINFO[0m:     127.0.0.1:52058 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:42 | INFO | stdout | [32mINFO[0m:     127.0.0.1:52060 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:43 | INFO | stdout | [32mINFO[0m:     127.0.0.1:33332 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:45 | INFO | stdout | [32mINFO[0m:     127.0.0.1:33346 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:45 | INFO | stdout | [32mINFO[0m:     127.0.0.1:33350 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:46 | INFO | stdout | [32mINFO[0m:     127.0.0.1:33358 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:47 | INFO | stdout | [32mINFO[0m:     127.0.0.1:33366 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:48 | INFO | stdout | [32mINFO[0m:     127.0.0.1:33372 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:49 | INFO | stdout | [32mINFO[0m:     127.0.0.1:33382 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:50 | INFO | stdout | [32mINFO[0m:     127.0.0.1:33386 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:51 | INFO | stdout | [32mINFO[0m:     127.0.0.1:33388 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:52 | INFO | stdout | [32mINFO[0m:     127.0.0.1:33390 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:54 | INFO | stdout | [32mINFO[0m:     127.0.0.1:56086 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:55 | INFO | stdout | [32mINFO[0m:     127.0.0.1:56088 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:56 | INFO | stdout | [32mINFO[0m:     127.0.0.1:56090 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:56 | INFO | stdout | [32mINFO[0m:     127.0.0.1:56102 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:57 | INFO | stdout | [32mINFO[0m:     127.0.0.1:56116 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:58 | INFO | stdout | [32mINFO[0m:     127.0.0.1:56130 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:28:59 | INFO | stdout | [32mINFO[0m:     127.0.0.1:56144 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:29:00 | INFO | stdout | [32mINFO[0m:     127.0.0.1:56154 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:29:01 | INFO | stdout | [32mINFO[0m:     127.0.0.1:56162 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:29:03 | INFO | stdout | [32mINFO[0m:     127.0.0.1:56170 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:29:04 | INFO | stdout | [32mINFO[0m:     127.0.0.1:50332 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:29:05 | INFO | stdout | [32mINFO[0m:     127.0.0.1:50340 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:29:06 | INFO | stdout | [32mINFO[0m:     127.0.0.1:50354 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:29:07 | INFO | stdout | [32mINFO[0m:     127.0.0.1:50356 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:29:08 | INFO | stdout | [32mINFO[0m:     127.0.0.1:50366 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:29:09 | INFO | stdout | [32mINFO[0m:     127.0.0.1:50378 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:29:10 | INFO | stdout | [32mINFO[0m:     127.0.0.1:50390 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:29:11 | INFO | stdout | [32mINFO[0m:     127.0.0.1:50404 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:29:14 | INFO | stdout | [32mINFO[0m:     127.0.0.1:50406 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:29:15 | INFO | stdout | [32mINFO[0m:     127.0.0.1:42688 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:29:16 | INFO | stdout | [32mINFO[0m:     127.0.0.1:42692 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:29:17 | INFO | stdout | [32mINFO[0m:     127.0.0.1:42704 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:29:18 | INFO | stdout | [32mINFO[0m:     127.0.0.1:42712 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:29:18 | INFO | stdout | [32mINFO[0m:     127.0.0.1:42720 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:29:19 | INFO | stdout | [32mINFO[0m:     127.0.0.1:42724 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:29:20 | INFO | stdout | [32mINFO[0m:     127.0.0.1:42738 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:29:21 | INFO | stdout | [32mINFO[0m:     127.0.0.1:42742 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:29:22 | INFO | stdout | [32mINFO[0m:     127.0.0.1:42756 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:29:24 | INFO | stdout | [32mINFO[0m:     127.0.0.1:60800 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:29:25 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: Semaphore(value=1022, locked=False). call_ct: 574. worker_id: 25aea042. 
+2024-09-28 15:29:25 | INFO | stdout | [32mINFO[0m:     127.0.0.1:60806 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:29:26 | INFO | stdout | [32mINFO[0m:     127.0.0.1:60808 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:29:27 | INFO | stdout | [32mINFO[0m:     127.0.0.1:60812 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:29:30 | INFO | stdout | [32mINFO[0m:     127.0.0.1:60818 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:29:31 | INFO | stdout | [32mINFO[0m:     127.0.0.1:60828 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:29:32 | INFO | stdout | [32mINFO[0m:     127.0.0.1:60840 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:29:33 | INFO | stdout | [32mINFO[0m:     127.0.0.1:56278 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:29:34 | INFO | stdout | [32mINFO[0m:     127.0.0.1:56284 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:29:35 | INFO | stdout | [32mINFO[0m:     127.0.0.1:56292 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:29:36 | INFO | stdout | [32mINFO[0m:     127.0.0.1:56302 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:29:38 | INFO | stdout | [32mINFO[0m:     127.0.0.1:56310 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:29:39 | INFO | stdout | [32mINFO[0m:     127.0.0.1:56318 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:29:40 | INFO | stdout | [32mINFO[0m:     127.0.0.1:56332 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:29:41 | INFO | stdout | [32mINFO[0m:     127.0.0.1:56346 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 15:30:10 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: Semaphore(value=1023, locked=False). call_ct: 588. worker_id: 25aea042. 
+2024-09-28 15:30:13 | INFO | stdout | [32mINFO[0m:     127.0.0.1:34256 - "[1mPOST /worker_generate HTTP/1.1[0m" [91m500 Internal Server Error[0m
+2024-09-28 15:30:13 | ERROR | stderr | [31mERROR[0m:    Exception in ASGI application
+2024-09-28 15:30:13 | ERROR | stderr | Traceback (most recent call last):
+2024-09-28 15:30:13 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/uvicorn/protocols/http/httptools_impl.py", line 401, in run_asgi
+2024-09-28 15:30:13 | ERROR | stderr |     result = await app(  # type: ignore[func-returns-value]
+2024-09-28 15:30:13 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/uvicorn/middleware/proxy_headers.py", line 70, in __call__
+2024-09-28 15:30:13 | ERROR | stderr |     return await self.app(scope, receive, send)
+2024-09-28 15:30:13 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/fastapi/applications.py", line 1054, in __call__
+2024-09-28 15:30:13 | ERROR | stderr |     await super().__call__(scope, receive, send)
+2024-09-28 15:30:13 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/applications.py", line 113, in __call__
+2024-09-28 15:30:13 | ERROR | stderr |     await self.middleware_stack(scope, receive, send)
+2024-09-28 15:30:13 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/middleware/errors.py", line 187, in __call__
+2024-09-28 15:30:13 | ERROR | stderr |     raise exc
+2024-09-28 15:30:13 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/middleware/errors.py", line 165, in __call__
+2024-09-28 15:30:13 | ERROR | stderr |     await self.app(scope, receive, _send)
+2024-09-28 15:30:13 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+2024-09-28 15:30:13 | ERROR | stderr |     await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+2024-09-28 15:30:13 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+2024-09-28 15:30:13 | ERROR | stderr |     raise exc
+2024-09-28 15:30:13 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+2024-09-28 15:30:13 | ERROR | stderr |     await app(scope, receive, sender)
+2024-09-28 15:30:13 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 715, in __call__
+2024-09-28 15:30:13 | ERROR | stderr |     await self.middleware_stack(scope, receive, send)
+2024-09-28 15:30:13 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 735, in app
+2024-09-28 15:30:13 | ERROR | stderr |     await route.handle(scope, receive, send)
+2024-09-28 15:30:13 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 288, in handle
+2024-09-28 15:30:13 | ERROR | stderr |     await self.app(scope, receive, send)
+2024-09-28 15:30:13 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 76, in app
+2024-09-28 15:30:13 | ERROR | stderr |     await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+2024-09-28 15:30:13 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+2024-09-28 15:30:13 | ERROR | stderr |     raise exc
+2024-09-28 15:30:13 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+2024-09-28 15:30:13 | ERROR | stderr |     await app(scope, receive, sender)
+2024-09-28 15:30:13 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 73, in app
+2024-09-28 15:30:13 | ERROR | stderr |     response = await f(request)
+2024-09-28 15:30:13 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/fastapi/routing.py", line 301, in app
+2024-09-28 15:30:13 | ERROR | stderr |     raw_response = await run_endpoint_function(
+2024-09-28 15:30:13 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/fastapi/routing.py", line 212, in run_endpoint_function
+2024-09-28 15:30:13 | ERROR | stderr |     return await dependant.call(**values)
+2024-09-28 15:30:13 | ERROR | stderr |   File "/hpc2ssd/JH_DATA/spooler/qxiao183/workspace/ziyu/open_reasoner/FastChat_tsllm/fastchat/serve/vllm_worker.py", line 192, in api_generate
+2024-09-28 15:30:13 | ERROR | stderr |     output = await worker.generate(params)
+2024-09-28 15:30:13 | ERROR | stderr |   File "/hpc2ssd/JH_DATA/spooler/qxiao183/workspace/ziyu/open_reasoner/FastChat_tsllm/fastchat/serve/vllm_worker.py", line 150, in generate
+2024-09-28 15:30:13 | ERROR | stderr |     async for x in self.generate_stream(params):
+2024-09-28 15:30:13 | ERROR | stderr |   File "/hpc2ssd/JH_DATA/spooler/qxiao183/workspace/ziyu/open_reasoner/FastChat_tsllm/fastchat/serve/vllm_worker.py", line 115, in generate_stream
+2024-09-28 15:30:13 | ERROR | stderr |     async for request_output in results_generator:
+2024-09-28 15:30:13 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/engine/async_llm_engine.py", line 859, in generate
+2024-09-28 15:30:13 | ERROR | stderr |     async for output in await self.add_request(
+2024-09-28 15:30:13 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/engine/async_llm_engine.py", line 106, in generator
+2024-09-28 15:30:13 | ERROR | stderr |     raise result
+2024-09-28 15:30:13 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/engine/async_llm_engine.py", line 48, in _log_task_completion
+2024-09-28 15:30:13 | ERROR | stderr |     return_value = task.result()
+2024-09-28 15:30:13 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/engine/async_llm_engine.py", line 733, in run_engine_loop
+2024-09-28 15:30:13 | ERROR | stderr |     result = task.result()
+2024-09-28 15:30:13 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/engine/async_llm_engine.py", line 661, in engine_step
+2024-09-28 15:30:13 | ERROR | stderr |     await self.engine.add_request_async(**new_request)
+2024-09-28 15:30:13 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/engine/async_llm_engine.py", line 419, in add_request_async
+2024-09-28 15:30:13 | ERROR | stderr |     preprocessed_inputs = await self.input_preprocessor.preprocess_async(
+2024-09-28 15:30:13 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/inputs/preprocess.py", line 528, in preprocess_async
+2024-09-28 15:30:13 | ERROR | stderr |     return await self._process_decoder_only_prompt_async(
+2024-09-28 15:30:13 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/inputs/preprocess.py", line 468, in _process_decoder_only_prompt_async
+2024-09-28 15:30:13 | ERROR | stderr |     prompt_comps = await self._extract_prompt_components_async(
+2024-09-28 15:30:13 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/inputs/preprocess.py", line 263, in _extract_prompt_components_async
+2024-09-28 15:30:13 | ERROR | stderr |     parsed = parse_singleton_prompt(inputs)
+2024-09-28 15:30:13 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/inputs/parse.py", line 95, in parse_singleton_prompt
+2024-09-28 15:30:13 | ERROR | stderr |     raise TypeError("inputs must be a string, TextPrompt, or TokensPrompt")
+2024-09-28 15:30:13 | ERROR | stderr | TypeError: inputs must be a string, TextPrompt, or TokensPrompt
+2024-09-28 15:30:55 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: Semaphore(value=1022, locked=False). call_ct: 589. worker_id: 25aea042. 
+2024-09-28 15:31:20 | INFO | stdout | [32mINFO[0m:     127.0.0.1:58046 - "[1mPOST /worker_generate HTTP/1.1[0m" [91m500 Internal Server Error[0m
+2024-09-28 15:31:20 | ERROR | stderr | [31mERROR[0m:    Exception in ASGI application
+2024-09-28 15:31:20 | ERROR | stderr | Traceback (most recent call last):
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/uvicorn/protocols/http/httptools_impl.py", line 401, in run_asgi
+2024-09-28 15:31:20 | ERROR | stderr |     result = await app(  # type: ignore[func-returns-value]
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/uvicorn/middleware/proxy_headers.py", line 70, in __call__
+2024-09-28 15:31:20 | ERROR | stderr |     return await self.app(scope, receive, send)
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/fastapi/applications.py", line 1054, in __call__
+2024-09-28 15:31:20 | ERROR | stderr |     await super().__call__(scope, receive, send)
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/applications.py", line 113, in __call__
+2024-09-28 15:31:20 | ERROR | stderr |     await self.middleware_stack(scope, receive, send)
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/middleware/errors.py", line 187, in __call__
+2024-09-28 15:31:20 | ERROR | stderr |     raise exc
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/middleware/errors.py", line 165, in __call__
+2024-09-28 15:31:20 | ERROR | stderr |     await self.app(scope, receive, _send)
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+2024-09-28 15:31:20 | ERROR | stderr |     await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+2024-09-28 15:31:20 | ERROR | stderr |     raise exc
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+2024-09-28 15:31:20 | ERROR | stderr |     await app(scope, receive, sender)
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 715, in __call__
+2024-09-28 15:31:20 | ERROR | stderr |     await self.middleware_stack(scope, receive, send)
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 735, in app
+2024-09-28 15:31:20 | ERROR | stderr |     await route.handle(scope, receive, send)
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 288, in handle
+2024-09-28 15:31:20 | ERROR | stderr |     await self.app(scope, receive, send)
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 76, in app
+2024-09-28 15:31:20 | ERROR | stderr |     await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+2024-09-28 15:31:20 | ERROR | stderr |     raise exc
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+2024-09-28 15:31:20 | ERROR | stderr |     await app(scope, receive, sender)
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 73, in app
+2024-09-28 15:31:20 | ERROR | stderr |     response = await f(request)
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/fastapi/routing.py", line 301, in app
+2024-09-28 15:31:20 | ERROR | stderr |     raw_response = await run_endpoint_function(
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/fastapi/routing.py", line 212, in run_endpoint_function
+2024-09-28 15:31:20 | ERROR | stderr |     return await dependant.call(**values)
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2ssd/JH_DATA/spooler/qxiao183/workspace/ziyu/open_reasoner/FastChat_tsllm/fastchat/serve/vllm_worker.py", line 192, in api_generate
+2024-09-28 15:31:20 | ERROR | stderr |     output = await worker.generate(params)
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2ssd/JH_DATA/spooler/qxiao183/workspace/ziyu/open_reasoner/FastChat_tsllm/fastchat/serve/vllm_worker.py", line 150, in generate
+2024-09-28 15:31:20 | ERROR | stderr |     async for x in self.generate_stream(params):
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2ssd/JH_DATA/spooler/qxiao183/workspace/ziyu/open_reasoner/FastChat_tsllm/fastchat/serve/vllm_worker.py", line 115, in generate_stream
+2024-09-28 15:31:20 | ERROR | stderr |     async for request_output in results_generator:
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/engine/async_llm_engine.py", line 859, in generate
+2024-09-28 15:31:20 | ERROR | stderr |     async for output in await self.add_request(
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/engine/async_llm_engine.py", line 106, in generator
+2024-09-28 15:31:20 | ERROR | stderr |     raise result
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/engine/async_llm_engine.py", line 48, in _log_task_completion
+2024-09-28 15:31:20 | ERROR | stderr |     return_value = task.result()
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/engine/async_llm_engine.py", line 733, in run_engine_loop
+2024-09-28 15:31:20 | ERROR | stderr |     result = task.result()
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/engine/async_llm_engine.py", line 661, in engine_step
+2024-09-28 15:31:20 | ERROR | stderr |     await self.engine.add_request_async(**new_request)
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/engine/async_llm_engine.py", line 419, in add_request_async
+2024-09-28 15:31:20 | ERROR | stderr |     preprocessed_inputs = await self.input_preprocessor.preprocess_async(
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/inputs/preprocess.py", line 528, in preprocess_async
+2024-09-28 15:31:20 | ERROR | stderr |     return await self._process_decoder_only_prompt_async(
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/inputs/preprocess.py", line 468, in _process_decoder_only_prompt_async
+2024-09-28 15:31:20 | ERROR | stderr |     prompt_comps = await self._extract_prompt_components_async(
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/inputs/preprocess.py", line 263, in _extract_prompt_components_async
+2024-09-28 15:31:20 | ERROR | stderr |     parsed = parse_singleton_prompt(inputs)
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/inputs/parse.py", line 95, in parse_singleton_prompt
+2024-09-28 15:31:20 | ERROR | stderr |     raise TypeError("inputs must be a string, TextPrompt, or TokensPrompt")
+2024-09-28 15:31:20 | ERROR | stderr | TypeError: inputs must be a string, TextPrompt, or TokensPrompt
+2024-09-28 15:31:20 | ERROR | stderr | 
+2024-09-28 15:31:20 | ERROR | stderr | The above exception was the direct cause of the following exception:
+2024-09-28 15:31:20 | ERROR | stderr | 
+2024-09-28 15:31:20 | ERROR | stderr | Traceback (most recent call last):
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/uvicorn/protocols/http/httptools_impl.py", line 401, in run_asgi
+2024-09-28 15:31:20 | ERROR | stderr |     result = await app(  # type: ignore[func-returns-value]
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/uvicorn/middleware/proxy_headers.py", line 70, in __call__
+2024-09-28 15:31:20 | ERROR | stderr |     return await self.app(scope, receive, send)
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/fastapi/applications.py", line 1054, in __call__
+2024-09-28 15:31:20 | ERROR | stderr |     await super().__call__(scope, receive, send)
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/applications.py", line 113, in __call__
+2024-09-28 15:31:20 | ERROR | stderr |     await self.middleware_stack(scope, receive, send)
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/middleware/errors.py", line 187, in __call__
+2024-09-28 15:31:20 | ERROR | stderr |     raise exc
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/middleware/errors.py", line 165, in __call__
+2024-09-28 15:31:20 | ERROR | stderr |     await self.app(scope, receive, _send)
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+2024-09-28 15:31:20 | ERROR | stderr |     await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+2024-09-28 15:31:20 | ERROR | stderr |     raise exc
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+2024-09-28 15:31:20 | ERROR | stderr |     await app(scope, receive, sender)
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 715, in __call__
+2024-09-28 15:31:20 | ERROR | stderr |     await self.middleware_stack(scope, receive, send)
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 735, in app
+2024-09-28 15:31:20 | ERROR | stderr |     await route.handle(scope, receive, send)
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 288, in handle
+2024-09-28 15:31:20 | ERROR | stderr |     await self.app(scope, receive, send)
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 76, in app
+2024-09-28 15:31:20 | ERROR | stderr |     await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+2024-09-28 15:31:20 | ERROR | stderr |     raise exc
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+2024-09-28 15:31:20 | ERROR | stderr |     await app(scope, receive, sender)
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 73, in app
+2024-09-28 15:31:20 | ERROR | stderr |     response = await f(request)
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/fastapi/routing.py", line 301, in app
+2024-09-28 15:31:20 | ERROR | stderr |     raw_response = await run_endpoint_function(
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/fastapi/routing.py", line 212, in run_endpoint_function
+2024-09-28 15:31:20 | ERROR | stderr |     return await dependant.call(**values)
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2ssd/JH_DATA/spooler/qxiao183/workspace/ziyu/open_reasoner/FastChat_tsllm/fastchat/serve/vllm_worker.py", line 192, in api_generate
+2024-09-28 15:31:20 | ERROR | stderr |     output = await worker.generate(params)
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2ssd/JH_DATA/spooler/qxiao183/workspace/ziyu/open_reasoner/FastChat_tsllm/fastchat/serve/vllm_worker.py", line 150, in generate
+2024-09-28 15:31:20 | ERROR | stderr |     async for x in self.generate_stream(params):
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2ssd/JH_DATA/spooler/qxiao183/workspace/ziyu/open_reasoner/FastChat_tsllm/fastchat/serve/vllm_worker.py", line 115, in generate_stream
+2024-09-28 15:31:20 | ERROR | stderr |     async for request_output in results_generator:
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/engine/async_llm_engine.py", line 859, in generate
+2024-09-28 15:31:20 | ERROR | stderr |     async for output in await self.add_request(
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/engine/async_llm_engine.py", line 766, in add_request
+2024-09-28 15:31:20 | ERROR | stderr |     self.start_background_loop()
+2024-09-28 15:31:20 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/engine/async_llm_engine.py", line 623, in start_background_loop
+2024-09-28 15:31:20 | ERROR | stderr |     raise AsyncEngineDeadError(
+2024-09-28 15:31:20 | ERROR | stderr | vllm.engine.async_llm_engine.AsyncEngineDeadError: Background loop has errored already.
+2024-09-28 15:31:39 | INFO | stdout | [32mINFO[0m:     127.0.0.1:47426 - "[1mPOST /worker_generate HTTP/1.1[0m" [91m500 Internal Server Error[0m
+2024-09-28 15:31:39 | ERROR | stderr | [31mERROR[0m:    Exception in ASGI application
+2024-09-28 15:31:39 | ERROR | stderr | Traceback (most recent call last):
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/uvicorn/protocols/http/httptools_impl.py", line 401, in run_asgi
+2024-09-28 15:31:39 | ERROR | stderr |     result = await app(  # type: ignore[func-returns-value]
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/uvicorn/middleware/proxy_headers.py", line 70, in __call__
+2024-09-28 15:31:39 | ERROR | stderr |     return await self.app(scope, receive, send)
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/fastapi/applications.py", line 1054, in __call__
+2024-09-28 15:31:39 | ERROR | stderr |     await super().__call__(scope, receive, send)
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/applications.py", line 113, in __call__
+2024-09-28 15:31:39 | ERROR | stderr |     await self.middleware_stack(scope, receive, send)
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/middleware/errors.py", line 187, in __call__
+2024-09-28 15:31:39 | ERROR | stderr |     raise exc
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/middleware/errors.py", line 165, in __call__
+2024-09-28 15:31:39 | ERROR | stderr |     await self.app(scope, receive, _send)
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+2024-09-28 15:31:39 | ERROR | stderr |     await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+2024-09-28 15:31:39 | ERROR | stderr |     raise exc
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+2024-09-28 15:31:39 | ERROR | stderr |     await app(scope, receive, sender)
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 715, in __call__
+2024-09-28 15:31:39 | ERROR | stderr |     await self.middleware_stack(scope, receive, send)
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 735, in app
+2024-09-28 15:31:39 | ERROR | stderr |     await route.handle(scope, receive, send)
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 288, in handle
+2024-09-28 15:31:39 | ERROR | stderr |     await self.app(scope, receive, send)
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 76, in app
+2024-09-28 15:31:39 | ERROR | stderr |     await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+2024-09-28 15:31:39 | ERROR | stderr |     raise exc
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+2024-09-28 15:31:39 | ERROR | stderr |     await app(scope, receive, sender)
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 73, in app
+2024-09-28 15:31:39 | ERROR | stderr |     response = await f(request)
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/fastapi/routing.py", line 301, in app
+2024-09-28 15:31:39 | ERROR | stderr |     raw_response = await run_endpoint_function(
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/fastapi/routing.py", line 212, in run_endpoint_function
+2024-09-28 15:31:39 | ERROR | stderr |     return await dependant.call(**values)
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2ssd/JH_DATA/spooler/qxiao183/workspace/ziyu/open_reasoner/FastChat_tsllm/fastchat/serve/vllm_worker.py", line 192, in api_generate
+2024-09-28 15:31:39 | ERROR | stderr |     output = await worker.generate(params)
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2ssd/JH_DATA/spooler/qxiao183/workspace/ziyu/open_reasoner/FastChat_tsllm/fastchat/serve/vllm_worker.py", line 150, in generate
+2024-09-28 15:31:39 | ERROR | stderr |     async for x in self.generate_stream(params):
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2ssd/JH_DATA/spooler/qxiao183/workspace/ziyu/open_reasoner/FastChat_tsllm/fastchat/serve/vllm_worker.py", line 115, in generate_stream
+2024-09-28 15:31:39 | ERROR | stderr |     async for request_output in results_generator:
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/engine/async_llm_engine.py", line 859, in generate
+2024-09-28 15:31:39 | ERROR | stderr |     async for output in await self.add_request(
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/engine/async_llm_engine.py", line 106, in generator
+2024-09-28 15:31:39 | ERROR | stderr |     raise result
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/engine/async_llm_engine.py", line 48, in _log_task_completion
+2024-09-28 15:31:39 | ERROR | stderr |     return_value = task.result()
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/engine/async_llm_engine.py", line 733, in run_engine_loop
+2024-09-28 15:31:39 | ERROR | stderr |     result = task.result()
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/engine/async_llm_engine.py", line 661, in engine_step
+2024-09-28 15:31:39 | ERROR | stderr |     await self.engine.add_request_async(**new_request)
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/engine/async_llm_engine.py", line 419, in add_request_async
+2024-09-28 15:31:39 | ERROR | stderr |     preprocessed_inputs = await self.input_preprocessor.preprocess_async(
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/inputs/preprocess.py", line 528, in preprocess_async
+2024-09-28 15:31:39 | ERROR | stderr |     return await self._process_decoder_only_prompt_async(
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/inputs/preprocess.py", line 468, in _process_decoder_only_prompt_async
+2024-09-28 15:31:39 | ERROR | stderr |     prompt_comps = await self._extract_prompt_components_async(
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/inputs/preprocess.py", line 263, in _extract_prompt_components_async
+2024-09-28 15:31:39 | ERROR | stderr |     parsed = parse_singleton_prompt(inputs)
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/inputs/parse.py", line 95, in parse_singleton_prompt
+2024-09-28 15:31:39 | ERROR | stderr |     raise TypeError("inputs must be a string, TextPrompt, or TokensPrompt")
+2024-09-28 15:31:39 | ERROR | stderr | TypeError: inputs must be a string, TextPrompt, or TokensPrompt
+2024-09-28 15:31:39 | ERROR | stderr | 
+2024-09-28 15:31:39 | ERROR | stderr | The above exception was the direct cause of the following exception:
+2024-09-28 15:31:39 | ERROR | stderr | 
+2024-09-28 15:31:39 | ERROR | stderr | Traceback (most recent call last):
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/uvicorn/protocols/http/httptools_impl.py", line 401, in run_asgi
+2024-09-28 15:31:39 | ERROR | stderr |     result = await app(  # type: ignore[func-returns-value]
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/uvicorn/middleware/proxy_headers.py", line 70, in __call__
+2024-09-28 15:31:39 | ERROR | stderr |     return await self.app(scope, receive, send)
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/fastapi/applications.py", line 1054, in __call__
+2024-09-28 15:31:39 | ERROR | stderr |     await super().__call__(scope, receive, send)
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/applications.py", line 113, in __call__
+2024-09-28 15:31:39 | ERROR | stderr |     await self.middleware_stack(scope, receive, send)
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/middleware/errors.py", line 187, in __call__
+2024-09-28 15:31:39 | ERROR | stderr |     raise exc
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/middleware/errors.py", line 165, in __call__
+2024-09-28 15:31:39 | ERROR | stderr |     await self.app(scope, receive, _send)
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+2024-09-28 15:31:39 | ERROR | stderr |     await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+2024-09-28 15:31:39 | ERROR | stderr |     raise exc
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+2024-09-28 15:31:39 | ERROR | stderr |     await app(scope, receive, sender)
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 715, in __call__
+2024-09-28 15:31:39 | ERROR | stderr |     await self.middleware_stack(scope, receive, send)
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 735, in app
+2024-09-28 15:31:39 | ERROR | stderr |     await route.handle(scope, receive, send)
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 288, in handle
+2024-09-28 15:31:39 | ERROR | stderr |     await self.app(scope, receive, send)
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 76, in app
+2024-09-28 15:31:39 | ERROR | stderr |     await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+2024-09-28 15:31:39 | ERROR | stderr |     raise exc
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+2024-09-28 15:31:39 | ERROR | stderr |     await app(scope, receive, sender)
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 73, in app
+2024-09-28 15:31:39 | ERROR | stderr |     response = await f(request)
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/fastapi/routing.py", line 301, in app
+2024-09-28 15:31:39 | ERROR | stderr |     raw_response = await run_endpoint_function(
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/fastapi/routing.py", line 212, in run_endpoint_function
+2024-09-28 15:31:39 | ERROR | stderr |     return await dependant.call(**values)
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2ssd/JH_DATA/spooler/qxiao183/workspace/ziyu/open_reasoner/FastChat_tsllm/fastchat/serve/vllm_worker.py", line 192, in api_generate
+2024-09-28 15:31:39 | ERROR | stderr |     output = await worker.generate(params)
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2ssd/JH_DATA/spooler/qxiao183/workspace/ziyu/open_reasoner/FastChat_tsllm/fastchat/serve/vllm_worker.py", line 150, in generate
+2024-09-28 15:31:39 | ERROR | stderr |     async for x in self.generate_stream(params):
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2ssd/JH_DATA/spooler/qxiao183/workspace/ziyu/open_reasoner/FastChat_tsllm/fastchat/serve/vllm_worker.py", line 115, in generate_stream
+2024-09-28 15:31:39 | ERROR | stderr |     async for request_output in results_generator:
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/engine/async_llm_engine.py", line 859, in generate
+2024-09-28 15:31:39 | ERROR | stderr |     async for output in await self.add_request(
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/engine/async_llm_engine.py", line 766, in add_request
+2024-09-28 15:31:39 | ERROR | stderr |     self.start_background_loop()
+2024-09-28 15:31:39 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/engine/async_llm_engine.py", line 623, in start_background_loop
+2024-09-28 15:31:39 | ERROR | stderr |     raise AsyncEngineDeadError(
+2024-09-28 15:31:39 | ERROR | stderr | vllm.engine.async_llm_engine.AsyncEngineDeadError: Background loop has errored already.
+2024-09-28 15:31:40 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: Semaphore(value=1020, locked=False). call_ct: 591. worker_id: 25aea042. 
+2024-09-28 15:31:59 | INFO | stdout | [32mINFO[0m:     127.0.0.1:59350 - "[1mPOST /worker_generate HTTP/1.1[0m" [91m500 Internal Server Error[0m
+2024-09-28 15:31:59 | ERROR | stderr | [31mERROR[0m:    Exception in ASGI application
+2024-09-28 15:31:59 | ERROR | stderr | Traceback (most recent call last):
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/uvicorn/protocols/http/httptools_impl.py", line 401, in run_asgi
+2024-09-28 15:31:59 | ERROR | stderr |     result = await app(  # type: ignore[func-returns-value]
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/uvicorn/middleware/proxy_headers.py", line 70, in __call__
+2024-09-28 15:31:59 | ERROR | stderr |     return await self.app(scope, receive, send)
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/fastapi/applications.py", line 1054, in __call__
+2024-09-28 15:31:59 | ERROR | stderr |     await super().__call__(scope, receive, send)
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/applications.py", line 113, in __call__
+2024-09-28 15:31:59 | ERROR | stderr |     await self.middleware_stack(scope, receive, send)
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/middleware/errors.py", line 187, in __call__
+2024-09-28 15:31:59 | ERROR | stderr |     raise exc
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/middleware/errors.py", line 165, in __call__
+2024-09-28 15:31:59 | ERROR | stderr |     await self.app(scope, receive, _send)
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+2024-09-28 15:31:59 | ERROR | stderr |     await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+2024-09-28 15:31:59 | ERROR | stderr |     raise exc
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+2024-09-28 15:31:59 | ERROR | stderr |     await app(scope, receive, sender)
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 715, in __call__
+2024-09-28 15:31:59 | ERROR | stderr |     await self.middleware_stack(scope, receive, send)
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 735, in app
+2024-09-28 15:31:59 | ERROR | stderr |     await route.handle(scope, receive, send)
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 288, in handle
+2024-09-28 15:31:59 | ERROR | stderr |     await self.app(scope, receive, send)
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 76, in app
+2024-09-28 15:31:59 | ERROR | stderr |     await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+2024-09-28 15:31:59 | ERROR | stderr |     raise exc
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+2024-09-28 15:31:59 | ERROR | stderr |     await app(scope, receive, sender)
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 73, in app
+2024-09-28 15:31:59 | ERROR | stderr |     response = await f(request)
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/fastapi/routing.py", line 301, in app
+2024-09-28 15:31:59 | ERROR | stderr |     raw_response = await run_endpoint_function(
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/fastapi/routing.py", line 212, in run_endpoint_function
+2024-09-28 15:31:59 | ERROR | stderr |     return await dependant.call(**values)
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2ssd/JH_DATA/spooler/qxiao183/workspace/ziyu/open_reasoner/FastChat_tsllm/fastchat/serve/vllm_worker.py", line 192, in api_generate
+2024-09-28 15:31:59 | ERROR | stderr |     output = await worker.generate(params)
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2ssd/JH_DATA/spooler/qxiao183/workspace/ziyu/open_reasoner/FastChat_tsllm/fastchat/serve/vllm_worker.py", line 150, in generate
+2024-09-28 15:31:59 | ERROR | stderr |     async for x in self.generate_stream(params):
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2ssd/JH_DATA/spooler/qxiao183/workspace/ziyu/open_reasoner/FastChat_tsllm/fastchat/serve/vllm_worker.py", line 115, in generate_stream
+2024-09-28 15:31:59 | ERROR | stderr |     async for request_output in results_generator:
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/engine/async_llm_engine.py", line 859, in generate
+2024-09-28 15:31:59 | ERROR | stderr |     async for output in await self.add_request(
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/engine/async_llm_engine.py", line 106, in generator
+2024-09-28 15:31:59 | ERROR | stderr |     raise result
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/engine/async_llm_engine.py", line 48, in _log_task_completion
+2024-09-28 15:31:59 | ERROR | stderr |     return_value = task.result()
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/engine/async_llm_engine.py", line 733, in run_engine_loop
+2024-09-28 15:31:59 | ERROR | stderr |     result = task.result()
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/engine/async_llm_engine.py", line 661, in engine_step
+2024-09-28 15:31:59 | ERROR | stderr |     await self.engine.add_request_async(**new_request)
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/engine/async_llm_engine.py", line 419, in add_request_async
+2024-09-28 15:31:59 | ERROR | stderr |     preprocessed_inputs = await self.input_preprocessor.preprocess_async(
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/inputs/preprocess.py", line 528, in preprocess_async
+2024-09-28 15:31:59 | ERROR | stderr |     return await self._process_decoder_only_prompt_async(
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/inputs/preprocess.py", line 468, in _process_decoder_only_prompt_async
+2024-09-28 15:31:59 | ERROR | stderr |     prompt_comps = await self._extract_prompt_components_async(
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/inputs/preprocess.py", line 263, in _extract_prompt_components_async
+2024-09-28 15:31:59 | ERROR | stderr |     parsed = parse_singleton_prompt(inputs)
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/inputs/parse.py", line 95, in parse_singleton_prompt
+2024-09-28 15:31:59 | ERROR | stderr |     raise TypeError("inputs must be a string, TextPrompt, or TokensPrompt")
+2024-09-28 15:31:59 | ERROR | stderr | TypeError: inputs must be a string, TextPrompt, or TokensPrompt
+2024-09-28 15:31:59 | ERROR | stderr | 
+2024-09-28 15:31:59 | ERROR | stderr | The above exception was the direct cause of the following exception:
+2024-09-28 15:31:59 | ERROR | stderr | 
+2024-09-28 15:31:59 | ERROR | stderr | Traceback (most recent call last):
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/uvicorn/protocols/http/httptools_impl.py", line 401, in run_asgi
+2024-09-28 15:31:59 | ERROR | stderr |     result = await app(  # type: ignore[func-returns-value]
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/uvicorn/middleware/proxy_headers.py", line 70, in __call__
+2024-09-28 15:31:59 | ERROR | stderr |     return await self.app(scope, receive, send)
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/fastapi/applications.py", line 1054, in __call__
+2024-09-28 15:31:59 | ERROR | stderr |     await super().__call__(scope, receive, send)
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/applications.py", line 113, in __call__
+2024-09-28 15:31:59 | ERROR | stderr |     await self.middleware_stack(scope, receive, send)
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/middleware/errors.py", line 187, in __call__
+2024-09-28 15:31:59 | ERROR | stderr |     raise exc
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/middleware/errors.py", line 165, in __call__
+2024-09-28 15:31:59 | ERROR | stderr |     await self.app(scope, receive, _send)
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+2024-09-28 15:31:59 | ERROR | stderr |     await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+2024-09-28 15:31:59 | ERROR | stderr |     raise exc
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+2024-09-28 15:31:59 | ERROR | stderr |     await app(scope, receive, sender)
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 715, in __call__
+2024-09-28 15:31:59 | ERROR | stderr |     await self.middleware_stack(scope, receive, send)
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 735, in app
+2024-09-28 15:31:59 | ERROR | stderr |     await route.handle(scope, receive, send)
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 288, in handle
+2024-09-28 15:31:59 | ERROR | stderr |     await self.app(scope, receive, send)
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 76, in app
+2024-09-28 15:31:59 | ERROR | stderr |     await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+2024-09-28 15:31:59 | ERROR | stderr |     raise exc
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+2024-09-28 15:31:59 | ERROR | stderr |     await app(scope, receive, sender)
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 73, in app
+2024-09-28 15:31:59 | ERROR | stderr |     response = await f(request)
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/fastapi/routing.py", line 301, in app
+2024-09-28 15:31:59 | ERROR | stderr |     raw_response = await run_endpoint_function(
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/fastapi/routing.py", line 212, in run_endpoint_function
+2024-09-28 15:31:59 | ERROR | stderr |     return await dependant.call(**values)
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2ssd/JH_DATA/spooler/qxiao183/workspace/ziyu/open_reasoner/FastChat_tsllm/fastchat/serve/vllm_worker.py", line 192, in api_generate
+2024-09-28 15:31:59 | ERROR | stderr |     output = await worker.generate(params)
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2ssd/JH_DATA/spooler/qxiao183/workspace/ziyu/open_reasoner/FastChat_tsllm/fastchat/serve/vllm_worker.py", line 150, in generate
+2024-09-28 15:31:59 | ERROR | stderr |     async for x in self.generate_stream(params):
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2ssd/JH_DATA/spooler/qxiao183/workspace/ziyu/open_reasoner/FastChat_tsllm/fastchat/serve/vllm_worker.py", line 115, in generate_stream
+2024-09-28 15:31:59 | ERROR | stderr |     async for request_output in results_generator:
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/engine/async_llm_engine.py", line 859, in generate
+2024-09-28 15:31:59 | ERROR | stderr |     async for output in await self.add_request(
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/engine/async_llm_engine.py", line 766, in add_request
+2024-09-28 15:31:59 | ERROR | stderr |     self.start_background_loop()
+2024-09-28 15:31:59 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/engine/async_llm_engine.py", line 623, in start_background_loop
+2024-09-28 15:31:59 | ERROR | stderr |     raise AsyncEngineDeadError(
+2024-09-28 15:31:59 | ERROR | stderr | vllm.engine.async_llm_engine.AsyncEngineDeadError: Background loop has errored already.
+2024-09-28 15:32:25 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: Semaphore(value=1019, locked=False). call_ct: 592. worker_id: 25aea042. 
+2024-09-28 15:33:03 | INFO | stdout | [32mINFO[0m:     127.0.0.1:47232 - "[1mPOST /worker_generate HTTP/1.1[0m" [91m500 Internal Server Error[0m
+2024-09-28 15:33:03 | ERROR | stderr | [31mERROR[0m:    Exception in ASGI application
+2024-09-28 15:33:03 | ERROR | stderr | Traceback (most recent call last):
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/uvicorn/protocols/http/httptools_impl.py", line 401, in run_asgi
+2024-09-28 15:33:03 | ERROR | stderr |     result = await app(  # type: ignore[func-returns-value]
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/uvicorn/middleware/proxy_headers.py", line 70, in __call__
+2024-09-28 15:33:03 | ERROR | stderr |     return await self.app(scope, receive, send)
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/fastapi/applications.py", line 1054, in __call__
+2024-09-28 15:33:03 | ERROR | stderr |     await super().__call__(scope, receive, send)
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/applications.py", line 113, in __call__
+2024-09-28 15:33:03 | ERROR | stderr |     await self.middleware_stack(scope, receive, send)
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/middleware/errors.py", line 187, in __call__
+2024-09-28 15:33:03 | ERROR | stderr |     raise exc
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/middleware/errors.py", line 165, in __call__
+2024-09-28 15:33:03 | ERROR | stderr |     await self.app(scope, receive, _send)
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+2024-09-28 15:33:03 | ERROR | stderr |     await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+2024-09-28 15:33:03 | ERROR | stderr |     raise exc
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+2024-09-28 15:33:03 | ERROR | stderr |     await app(scope, receive, sender)
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 715, in __call__
+2024-09-28 15:33:03 | ERROR | stderr |     await self.middleware_stack(scope, receive, send)
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 735, in app
+2024-09-28 15:33:03 | ERROR | stderr |     await route.handle(scope, receive, send)
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 288, in handle
+2024-09-28 15:33:03 | ERROR | stderr |     await self.app(scope, receive, send)
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 76, in app
+2024-09-28 15:33:03 | ERROR | stderr |     await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+2024-09-28 15:33:03 | ERROR | stderr |     raise exc
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+2024-09-28 15:33:03 | ERROR | stderr |     await app(scope, receive, sender)
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 73, in app
+2024-09-28 15:33:03 | ERROR | stderr |     response = await f(request)
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/fastapi/routing.py", line 301, in app
+2024-09-28 15:33:03 | ERROR | stderr |     raw_response = await run_endpoint_function(
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/fastapi/routing.py", line 212, in run_endpoint_function
+2024-09-28 15:33:03 | ERROR | stderr |     return await dependant.call(**values)
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2ssd/JH_DATA/spooler/qxiao183/workspace/ziyu/open_reasoner/FastChat_tsllm/fastchat/serve/vllm_worker.py", line 192, in api_generate
+2024-09-28 15:33:03 | ERROR | stderr |     output = await worker.generate(params)
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2ssd/JH_DATA/spooler/qxiao183/workspace/ziyu/open_reasoner/FastChat_tsllm/fastchat/serve/vllm_worker.py", line 150, in generate
+2024-09-28 15:33:03 | ERROR | stderr |     async for x in self.generate_stream(params):
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2ssd/JH_DATA/spooler/qxiao183/workspace/ziyu/open_reasoner/FastChat_tsllm/fastchat/serve/vllm_worker.py", line 115, in generate_stream
+2024-09-28 15:33:03 | ERROR | stderr |     async for request_output in results_generator:
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/engine/async_llm_engine.py", line 859, in generate
+2024-09-28 15:33:03 | ERROR | stderr |     async for output in await self.add_request(
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/engine/async_llm_engine.py", line 106, in generator
+2024-09-28 15:33:03 | ERROR | stderr |     raise result
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/engine/async_llm_engine.py", line 48, in _log_task_completion
+2024-09-28 15:33:03 | ERROR | stderr |     return_value = task.result()
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/engine/async_llm_engine.py", line 733, in run_engine_loop
+2024-09-28 15:33:03 | ERROR | stderr |     result = task.result()
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/engine/async_llm_engine.py", line 661, in engine_step
+2024-09-28 15:33:03 | ERROR | stderr |     await self.engine.add_request_async(**new_request)
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/engine/async_llm_engine.py", line 419, in add_request_async
+2024-09-28 15:33:03 | ERROR | stderr |     preprocessed_inputs = await self.input_preprocessor.preprocess_async(
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/inputs/preprocess.py", line 528, in preprocess_async
+2024-09-28 15:33:03 | ERROR | stderr |     return await self._process_decoder_only_prompt_async(
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/inputs/preprocess.py", line 468, in _process_decoder_only_prompt_async
+2024-09-28 15:33:03 | ERROR | stderr |     prompt_comps = await self._extract_prompt_components_async(
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/inputs/preprocess.py", line 263, in _extract_prompt_components_async
+2024-09-28 15:33:03 | ERROR | stderr |     parsed = parse_singleton_prompt(inputs)
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/inputs/parse.py", line 95, in parse_singleton_prompt
+2024-09-28 15:33:03 | ERROR | stderr |     raise TypeError("inputs must be a string, TextPrompt, or TokensPrompt")
+2024-09-28 15:33:03 | ERROR | stderr | TypeError: inputs must be a string, TextPrompt, or TokensPrompt
+2024-09-28 15:33:03 | ERROR | stderr | 
+2024-09-28 15:33:03 | ERROR | stderr | The above exception was the direct cause of the following exception:
+2024-09-28 15:33:03 | ERROR | stderr | 
+2024-09-28 15:33:03 | ERROR | stderr | Traceback (most recent call last):
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/uvicorn/protocols/http/httptools_impl.py", line 401, in run_asgi
+2024-09-28 15:33:03 | ERROR | stderr |     result = await app(  # type: ignore[func-returns-value]
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/uvicorn/middleware/proxy_headers.py", line 70, in __call__
+2024-09-28 15:33:03 | ERROR | stderr |     return await self.app(scope, receive, send)
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/fastapi/applications.py", line 1054, in __call__
+2024-09-28 15:33:03 | ERROR | stderr |     await super().__call__(scope, receive, send)
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/applications.py", line 113, in __call__
+2024-09-28 15:33:03 | ERROR | stderr |     await self.middleware_stack(scope, receive, send)
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/middleware/errors.py", line 187, in __call__
+2024-09-28 15:33:03 | ERROR | stderr |     raise exc
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/middleware/errors.py", line 165, in __call__
+2024-09-28 15:33:03 | ERROR | stderr |     await self.app(scope, receive, _send)
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+2024-09-28 15:33:03 | ERROR | stderr |     await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+2024-09-28 15:33:03 | ERROR | stderr |     raise exc
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+2024-09-28 15:33:03 | ERROR | stderr |     await app(scope, receive, sender)
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 715, in __call__
+2024-09-28 15:33:03 | ERROR | stderr |     await self.middleware_stack(scope, receive, send)
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 735, in app
+2024-09-28 15:33:03 | ERROR | stderr |     await route.handle(scope, receive, send)
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 288, in handle
+2024-09-28 15:33:03 | ERROR | stderr |     await self.app(scope, receive, send)
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 76, in app
+2024-09-28 15:33:03 | ERROR | stderr |     await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+2024-09-28 15:33:03 | ERROR | stderr |     raise exc
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+2024-09-28 15:33:03 | ERROR | stderr |     await app(scope, receive, sender)
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 73, in app
+2024-09-28 15:33:03 | ERROR | stderr |     response = await f(request)
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/fastapi/routing.py", line 301, in app
+2024-09-28 15:33:03 | ERROR | stderr |     raw_response = await run_endpoint_function(
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/fastapi/routing.py", line 212, in run_endpoint_function
+2024-09-28 15:33:03 | ERROR | stderr |     return await dependant.call(**values)
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2ssd/JH_DATA/spooler/qxiao183/workspace/ziyu/open_reasoner/FastChat_tsllm/fastchat/serve/vllm_worker.py", line 192, in api_generate
+2024-09-28 15:33:03 | ERROR | stderr |     output = await worker.generate(params)
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2ssd/JH_DATA/spooler/qxiao183/workspace/ziyu/open_reasoner/FastChat_tsllm/fastchat/serve/vllm_worker.py", line 150, in generate
+2024-09-28 15:33:03 | ERROR | stderr |     async for x in self.generate_stream(params):
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2ssd/JH_DATA/spooler/qxiao183/workspace/ziyu/open_reasoner/FastChat_tsllm/fastchat/serve/vllm_worker.py", line 115, in generate_stream
+2024-09-28 15:33:03 | ERROR | stderr |     async for request_output in results_generator:
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/engine/async_llm_engine.py", line 859, in generate
+2024-09-28 15:33:03 | ERROR | stderr |     async for output in await self.add_request(
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/engine/async_llm_engine.py", line 766, in add_request
+2024-09-28 15:33:03 | ERROR | stderr |     self.start_background_loop()
+2024-09-28 15:33:03 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/engine/async_llm_engine.py", line 623, in start_background_loop
+2024-09-28 15:33:03 | ERROR | stderr |     raise AsyncEngineDeadError(
+2024-09-28 15:33:03 | ERROR | stderr | vllm.engine.async_llm_engine.AsyncEngineDeadError: Background loop has errored already.
+2024-09-28 15:33:10 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: Semaphore(value=1018, locked=False). call_ct: 593. worker_id: 25aea042. 
+2024-09-28 15:33:55 | INFO | model_worker | Send heart beat. Models: ['llama2-7b-game24-policy-hf']. Semaphore: Semaphore(value=1018, locked=False). call_ct: 593. worker_id: 25aea042. 
+2024-09-28 15:34:12 | INFO | stdout | [32mINFO[0m:     127.0.0.1:33760 - "[1mPOST /worker_generate HTTP/1.1[0m" [91m500 Internal Server Error[0m
+2024-09-28 15:34:12 | ERROR | stderr | [31mERROR[0m:    Exception in ASGI application
+2024-09-28 15:34:12 | ERROR | stderr | Traceback (most recent call last):
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/uvicorn/protocols/http/httptools_impl.py", line 401, in run_asgi
+2024-09-28 15:34:12 | ERROR | stderr |     result = await app(  # type: ignore[func-returns-value]
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/uvicorn/middleware/proxy_headers.py", line 70, in __call__
+2024-09-28 15:34:12 | ERROR | stderr |     return await self.app(scope, receive, send)
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/fastapi/applications.py", line 1054, in __call__
+2024-09-28 15:34:12 | ERROR | stderr |     await super().__call__(scope, receive, send)
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/applications.py", line 113, in __call__
+2024-09-28 15:34:12 | ERROR | stderr |     await self.middleware_stack(scope, receive, send)
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/middleware/errors.py", line 187, in __call__
+2024-09-28 15:34:12 | ERROR | stderr |     raise exc
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/middleware/errors.py", line 165, in __call__
+2024-09-28 15:34:12 | ERROR | stderr |     await self.app(scope, receive, _send)
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+2024-09-28 15:34:12 | ERROR | stderr |     await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+2024-09-28 15:34:12 | ERROR | stderr |     raise exc
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+2024-09-28 15:34:12 | ERROR | stderr |     await app(scope, receive, sender)
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 715, in __call__
+2024-09-28 15:34:12 | ERROR | stderr |     await self.middleware_stack(scope, receive, send)
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 735, in app
+2024-09-28 15:34:12 | ERROR | stderr |     await route.handle(scope, receive, send)
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 288, in handle
+2024-09-28 15:34:12 | ERROR | stderr |     await self.app(scope, receive, send)
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 76, in app
+2024-09-28 15:34:12 | ERROR | stderr |     await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+2024-09-28 15:34:12 | ERROR | stderr |     raise exc
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+2024-09-28 15:34:12 | ERROR | stderr |     await app(scope, receive, sender)
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 73, in app
+2024-09-28 15:34:12 | ERROR | stderr |     response = await f(request)
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/fastapi/routing.py", line 301, in app
+2024-09-28 15:34:12 | ERROR | stderr |     raw_response = await run_endpoint_function(
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/fastapi/routing.py", line 212, in run_endpoint_function
+2024-09-28 15:34:12 | ERROR | stderr |     return await dependant.call(**values)
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2ssd/JH_DATA/spooler/qxiao183/workspace/ziyu/open_reasoner/FastChat_tsllm/fastchat/serve/vllm_worker.py", line 192, in api_generate
+2024-09-28 15:34:12 | ERROR | stderr |     output = await worker.generate(params)
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2ssd/JH_DATA/spooler/qxiao183/workspace/ziyu/open_reasoner/FastChat_tsllm/fastchat/serve/vllm_worker.py", line 150, in generate
+2024-09-28 15:34:12 | ERROR | stderr |     async for x in self.generate_stream(params):
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2ssd/JH_DATA/spooler/qxiao183/workspace/ziyu/open_reasoner/FastChat_tsllm/fastchat/serve/vllm_worker.py", line 115, in generate_stream
+2024-09-28 15:34:12 | ERROR | stderr |     async for request_output in results_generator:
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/engine/async_llm_engine.py", line 859, in generate
+2024-09-28 15:34:12 | ERROR | stderr |     async for output in await self.add_request(
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/engine/async_llm_engine.py", line 106, in generator
+2024-09-28 15:34:12 | ERROR | stderr |     raise result
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/engine/async_llm_engine.py", line 48, in _log_task_completion
+2024-09-28 15:34:12 | ERROR | stderr |     return_value = task.result()
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/engine/async_llm_engine.py", line 733, in run_engine_loop
+2024-09-28 15:34:12 | ERROR | stderr |     result = task.result()
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/engine/async_llm_engine.py", line 661, in engine_step
+2024-09-28 15:34:12 | ERROR | stderr |     await self.engine.add_request_async(**new_request)
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/engine/async_llm_engine.py", line 419, in add_request_async
+2024-09-28 15:34:12 | ERROR | stderr |     preprocessed_inputs = await self.input_preprocessor.preprocess_async(
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/inputs/preprocess.py", line 528, in preprocess_async
+2024-09-28 15:34:12 | ERROR | stderr |     return await self._process_decoder_only_prompt_async(
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/inputs/preprocess.py", line 468, in _process_decoder_only_prompt_async
+2024-09-28 15:34:12 | ERROR | stderr |     prompt_comps = await self._extract_prompt_components_async(
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/inputs/preprocess.py", line 263, in _extract_prompt_components_async
+2024-09-28 15:34:12 | ERROR | stderr |     parsed = parse_singleton_prompt(inputs)
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/inputs/parse.py", line 95, in parse_singleton_prompt
+2024-09-28 15:34:12 | ERROR | stderr |     raise TypeError("inputs must be a string, TextPrompt, or TokensPrompt")
+2024-09-28 15:34:12 | ERROR | stderr | TypeError: inputs must be a string, TextPrompt, or TokensPrompt
+2024-09-28 15:34:12 | ERROR | stderr | 
+2024-09-28 15:34:12 | ERROR | stderr | The above exception was the direct cause of the following exception:
+2024-09-28 15:34:12 | ERROR | stderr | 
+2024-09-28 15:34:12 | ERROR | stderr | Traceback (most recent call last):
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/uvicorn/protocols/http/httptools_impl.py", line 401, in run_asgi
+2024-09-28 15:34:12 | ERROR | stderr |     result = await app(  # type: ignore[func-returns-value]
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/uvicorn/middleware/proxy_headers.py", line 70, in __call__
+2024-09-28 15:34:12 | ERROR | stderr |     return await self.app(scope, receive, send)
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/fastapi/applications.py", line 1054, in __call__
+2024-09-28 15:34:12 | ERROR | stderr |     await super().__call__(scope, receive, send)
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/applications.py", line 113, in __call__
+2024-09-28 15:34:12 | ERROR | stderr |     await self.middleware_stack(scope, receive, send)
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/middleware/errors.py", line 187, in __call__
+2024-09-28 15:34:12 | ERROR | stderr |     raise exc
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/middleware/errors.py", line 165, in __call__
+2024-09-28 15:34:12 | ERROR | stderr |     await self.app(scope, receive, _send)
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+2024-09-28 15:34:12 | ERROR | stderr |     await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+2024-09-28 15:34:12 | ERROR | stderr |     raise exc
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+2024-09-28 15:34:12 | ERROR | stderr |     await app(scope, receive, sender)
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 715, in __call__
+2024-09-28 15:34:12 | ERROR | stderr |     await self.middleware_stack(scope, receive, send)
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 735, in app
+2024-09-28 15:34:12 | ERROR | stderr |     await route.handle(scope, receive, send)
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 288, in handle
+2024-09-28 15:34:12 | ERROR | stderr |     await self.app(scope, receive, send)
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 76, in app
+2024-09-28 15:34:12 | ERROR | stderr |     await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+2024-09-28 15:34:12 | ERROR | stderr |     raise exc
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+2024-09-28 15:34:12 | ERROR | stderr |     await app(scope, receive, sender)
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/starlette/routing.py", line 73, in app
+2024-09-28 15:34:12 | ERROR | stderr |     response = await f(request)
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/fastapi/routing.py", line 301, in app
+2024-09-28 15:34:12 | ERROR | stderr |     raw_response = await run_endpoint_function(
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/fastapi/routing.py", line 212, in run_endpoint_function
+2024-09-28 15:34:12 | ERROR | stderr |     return await dependant.call(**values)
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2ssd/JH_DATA/spooler/qxiao183/workspace/ziyu/open_reasoner/FastChat_tsllm/fastchat/serve/vllm_worker.py", line 192, in api_generate
+2024-09-28 15:34:12 | ERROR | stderr |     output = await worker.generate(params)
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2ssd/JH_DATA/spooler/qxiao183/workspace/ziyu/open_reasoner/FastChat_tsllm/fastchat/serve/vllm_worker.py", line 150, in generate
+2024-09-28 15:34:12 | ERROR | stderr |     async for x in self.generate_stream(params):
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2ssd/JH_DATA/spooler/qxiao183/workspace/ziyu/open_reasoner/FastChat_tsllm/fastchat/serve/vllm_worker.py", line 115, in generate_stream
+2024-09-28 15:34:12 | ERROR | stderr |     async for request_output in results_generator:
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/engine/async_llm_engine.py", line 859, in generate
+2024-09-28 15:34:12 | ERROR | stderr |     async for output in await self.add_request(
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/engine/async_llm_engine.py", line 766, in add_request
+2024-09-28 15:34:12 | ERROR | stderr |     self.start_background_loop()
+2024-09-28 15:34:12 | ERROR | stderr |   File "/hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/engine/async_llm_engine.py", line 623, in start_background_loop
+2024-09-28 15:34:12 | ERROR | stderr |     raise AsyncEngineDeadError(
+2024-09-28 15:34:12 | ERROR | stderr | vllm.engine.async_llm_engine.AsyncEngineDeadError: Background loop has errored already.
+2024-09-28 15:34:23 | ERROR | stderr | [32mINFO[0m:     Shutting down
+2024-09-28 15:34:23 | ERROR | stderr | [32mINFO[0m:     Waiting for application shutdown.
+2024-09-28 15:34:23 | ERROR | stderr | [32mINFO[0m:     Application shutdown complete.
+2024-09-28 15:34:23 | ERROR | stderr | [32mINFO[0m:     Finished server process [[36m829959[0m]

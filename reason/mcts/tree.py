@@ -1,6 +1,7 @@
 """
 The Node and MCTS class for AlphaZero.
 """
+
 #
 import copy
 import json
@@ -615,7 +616,6 @@ class MCTS(object):
 
         execute_dfs(self.root, simulate_env.copy())
 
-        
         return traj_list
 
     def _simulate(

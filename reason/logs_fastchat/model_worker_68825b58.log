@@ -1,0 +1,4 @@
+2024-09-28 13:31:56 | INFO | model_worker | Register to controller
+2024-09-28 13:32:41 | INFO | model_worker | Send heart beat. Models: ['math-shepherd-mistral-7b-prm']. Semaphore: None. call_ct: 0. worker_id: 68825b58. 
+2024-09-28 13:33:26 | INFO | model_worker | Send heart beat. Models: ['math-shepherd-mistral-7b-prm']. Semaphore: None. call_ct: 0. worker_id: 68825b58. 
+2024-09-28 13:34:11 | INFO | model_worker | Send heart beat. Models: ['math-shepherd-mistral-7b-prm']. Semaphore: Semaphore(value=4, locked=False). call_ct: 0. worker_id: 68825b58. 

@@ -1,0 +1,21 @@
+2024-09-28 13:31:45 | ERROR | stderr | Loading pt checkpoint shards:   0% Completed | 0/2 [00:00<?, ?it/s]
+2024-09-28 13:31:45 | ERROR | stderr | 
+2024-09-28 13:31:45 | ERROR | stderr | /hpc2hdd/home/qxiao183/anaconda3/envs/open_reasoner/lib/python3.10/site-packages/vllm/model_executor/model_loader/weight_utils.py:424: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+2024-09-28 13:31:45 | ERROR | stderr |   state = torch.load(bin_file, map_location="cpu")
+2024-09-28 13:31:53 | ERROR | stderr | Loading pt checkpoint shards:  50% Completed | 1/2 [00:07<00:07,  7.58s/it]
+2024-09-28 13:31:53 | ERROR | stderr | 
+2024-09-28 13:32:00 | ERROR | stderr | Loading pt checkpoint shards: 100% Completed | 2/2 [00:14<00:00,  7.25s/it]
+2024-09-28 13:32:00 | ERROR | stderr | 
+2024-09-28 13:32:00 | ERROR | stderr | Loading pt checkpoint shards: 100% Completed | 2/2 [00:14<00:00,  7.30s/it]
+2024-09-28 13:32:00 | ERROR | stderr | 
+2024-09-28 13:32:00 | ERROR | stderr | 
+2024-09-28 13:32:20 | INFO | model_worker | Loading the model ['mistral-7b-sft'] on worker 03c05ca6, worker type: vLLM worker...
+2024-09-28 13:32:20 | INFO | model_worker | Register to controller
+2024-09-28 13:32:20 | ERROR | stderr | [32mINFO[0m:     Started server process [[36m821583[0m]
+2024-09-28 13:32:20 | ERROR | stderr | [32mINFO[0m:     Waiting for application startup.
+2024-09-28 13:32:20 | ERROR | stderr | [32mINFO[0m:     Application startup complete.
+2024-09-28 13:32:20 | ERROR | stderr | [32mINFO[0m:     Uvicorn running on [1mhttp://0.0.0.0:30010[0m (Press CTRL+C to quit)
+2024-09-28 13:33:05 | INFO | model_worker | Send heart beat. Models: ['mistral-7b-sft']. Semaphore: None. call_ct: 0. worker_id: 03c05ca6. 
+2024-09-28 13:33:50 | INFO | model_worker | Send heart beat. Models: ['mistral-7b-sft']. Semaphore: None. call_ct: 0. worker_id: 03c05ca6. 
+2024-09-28 13:34:05 | INFO | stdout | [32mINFO[0m:     127.0.0.1:41860 - "[1mPOST /worker_generate HTTP/1.1[0m" [32m200 OK[0m
+2024-09-28 13:34:35 | INFO | model_worker | Send heart beat. Models: ['mistral-7b-sft']. Semaphore: Semaphore(value=1024, locked=False). call_ct: 1. worker_id: 03c05ca6. 

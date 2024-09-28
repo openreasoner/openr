@@ -1,0 +1,18 @@
+2024-09-28 13:45:36 | INFO | model_worker | args: Namespace(host='0.0.0.0', port=40010, worker_address='http://0.0.0.0:40010', controller_address='http://0.0.0.0:28777', model_path='/hpc2ssd/JH_DATA/spooler/qxiao183/workspace/hf_models//tsllm/llama2-7b-gsm8k-value', revision='main', device='cuda', gpus=None, num_gpus=1, max_gpu_memory=None, dtype=None, load_8bit=False, cpu_offloading=False, gptq_ckpt=None, gptq_wbits=16, gptq_groupsize=-1, gptq_act_order=False, awq_ckpt=None, awq_wbits=16, awq_groupsize=-1, enable_exllama=False, exllama_max_seq_len=4096, exllama_gpu_split=None, exllama_cache_8bit=False, enable_xft=False, xft_max_seq_len=4096, xft_dtype=None, model_names=None, conv_template=None, embed_in_truncate=False, limit_worker_concurrency=5, stream_interval=2, no_register=False, seed=None, debug=False, ssl=False)
+2024-09-28 13:45:36 | INFO | model_worker | Loading the model ['llama2-7b-gsm8k-value'] on worker 986179bd ...
+2024-09-28 13:45:36 | INFO | stdout | Load Base Model, Won't matter if Warning
+2024-09-28 13:45:36 | ERROR | stderr | Loading checkpoint shards:   0%|                          | 0/2 [00:00<?, ?it/s]
+2024-09-28 13:45:50 | ERROR | stderr | Loading checkpoint shards:  50%|█████████         | 1/2 [00:14<00:14, 14.21s/it]
+2024-09-28 13:45:55 | ERROR | stderr | Loading checkpoint shards: 100%|██████████████████| 2/2 [00:18<00:00,  8.41s/it]
+2024-09-28 13:45:55 | ERROR | stderr | Loading checkpoint shards: 100%|██████████████████| 2/2 [00:18<00:00,  9.28s/it]
+2024-09-28 13:45:55 | ERROR | stderr | 
+2024-09-28 13:45:55 | ERROR | stderr | /hpc2ssd/JH_DATA/spooler/qxiao183/workspace/ziyu/open_reasoner/o1-dev/reason/model/modeling_base.py:291: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+2024-09-28 13:45:55 | ERROR | stderr |   state_dict.update(torch.load(filename, map_location="cpu"))
+2024-09-28 13:45:57 | INFO | stdout | Load Linear Layer
+2024-09-28 13:46:17 | INFO | model_worker | Register to controller
+2024-09-28 13:46:17 | ERROR | stderr | [32mINFO[0m:     Started server process [[36m828598[0m]
+2024-09-28 13:46:17 | ERROR | stderr | [32mINFO[0m:     Waiting for application startup.
+2024-09-28 13:46:17 | ERROR | stderr | [32mINFO[0m:     Application startup complete.
+2024-09-28 13:46:17 | ERROR | stderr | [31mERROR[0m:    [Errno 98] error while attempting to bind on address ('0.0.0.0', 40010): address already in use
+2024-09-28 13:46:17 | ERROR | stderr | [32mINFO[0m:     Waiting for application shutdown.
+2024-09-28 13:46:17 | ERROR | stderr | [32mINFO[0m:     Application shutdown complete.
