@@ -18,7 +18,7 @@ from reason.reranking.vote_utils import (
     MAJORITY_VOTE,
     ORM_VOTE,
     ORM_MAX,
-    PRM_MEAN_MAX,
+    PRM_MIN_VOTE,
     PRM_MIN_MAX
 )
 from envs.base_env import INVALID_ANS
@@ -48,7 +48,7 @@ def setup_seed(seed):
     torch.backends.cudnn.deterministic = True
 
 
-CHOSEN_AGGR_METHODS = [MAJORITY_VOTE, PRM_MIN_MAX, PRM_MEAN_MAX]
+CHOSEN_AGGR_METHODS = [MAJORITY_VOTE, PRM_MIN_MAX, PRM_MIN_VOTE]
 
 
 def judge_ans(
