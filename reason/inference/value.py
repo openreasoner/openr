@@ -8,7 +8,6 @@ import requests
 
 def _value_inference_fastchat(
     model_name: str,
-    unused_tokenizer: AutoTokenizer,
     input_str: Union[List[str], str],
     controller_addr="http://0.0.0.0:28777",
 ):

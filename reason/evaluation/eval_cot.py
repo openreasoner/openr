@@ -83,33 +83,9 @@ def judge_ans(
     )
 
 
-def get_correct_proportion(
-    problem_str: str,
-    extracted_groundtruth: str,
-    output_list: List[str],
-    extract_answer_fn,
-    judge_correct_fn,
-):
-    correct_list = [
-        (
-            1.0
-            if judge_correct_fn(
-                problem_str, extracted_groundtruth, extract_answer_fn(txt)
-            )
-            else 0.0
-        )
-        for txt in output_list
-    ]
-    if len(correct_list) > 0:
-        return np.mean(correct_list).item()
-    else:
-        return 0.0
-
-
 if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("--exp_name", type=str, default="CoT")
-    parser.add_argument("--tokenizer_path", type=str, required=True)
     parser.add_argument("--LM", type=str, required=True)
     parser.add_argument("--RM", type=str, required=True)
     # parser.add_argument("--save_dir", type=str, required=True)
@@ -137,11 +113,9 @@ if __name__ == "__main__":
     if not config.test:
         test_ds = train_ds
 
-    tokenizer = AutoTokenizer.from_pretrained(config.tokenizer_path)
     llm_gen_fn = partial(
         llm_gen_with_logp_fastchat_vllm,
         config.LM,
-        tokenizer,
         controller_addr=config.controller_addr,
     )
 
@@ -158,18 +132,16 @@ if __name__ == "__main__":
         input_str: Union[str, List[str]]
     ) -> Union[List[List[int]], List[int]]:
         return _value_inference_fastchat(
-            config.RM, tokenizer, input_str, config.controller_addr
+            config.RM, input_str, config.controller_addr
         )
 
-    def cot_direct_output(problem_inst, stop, **kwargs):
+    def cot_direct_output(problem_inst, **kwargs):
         prompt = prompt_fn(problem_inst["question"])
         max_new_tokens = kwargs.pop("max_new_tokens", 256)
         max_new_tokens = max(256, max_new_tokens)
         gen_result = llm_gen_fn(
-            static_prompt=None,
             prompt=prompt,
             num_sequence=config.num_sequence,
-            stop_token_ids=None,
             max_new_tokens=max_new_tokens,
             **kwargs,
         )
@@ -205,13 +177,12 @@ if __name__ == "__main__":
         }
         return res, output_list
 
-    def save_fn(writer, idx, problem_inst, output, result: Dict):
+    def save_fn(writer, idx, problem_inst, result: Dict):
         if writer is not None:
             obj = {
                 "i": idx,
                 "question": problem_inst["question"],
                 "groundtruth": problem_inst["answer"],
-                "output": output,
                 "result": result,
             }
             writer.write(obj)
@@ -219,7 +190,6 @@ if __name__ == "__main__":
     def fn(problem_inst):
         gen_result = cot_direct_output(
             problem_inst,
-            stop=tokenizer.eos_token_id,
             max_new_tokens=config.max_new_tokens,
             temperature=config.temperature,
             top_k=config.top_k,
@@ -240,4 +210,4 @@ if __name__ == "__main__":
 
     with jsonlines.open("tmp_results.jsonl", "w") as writer:
         for i, (problem_inst, result) in enumerate(zip(test_ds, results)):
-            save_fn(writer, i, problem_inst, result["episodes"], result)
+            save_fn(writer, i, problem_inst, result)

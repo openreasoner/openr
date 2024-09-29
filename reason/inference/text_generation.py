@@ -69,10 +69,8 @@ def _generate_fastchat(
 
 
 def llm_gen_with_logp_fastchat_vllm(
-    model_name, tokenizer, static_prompt, prompt, num_sequence, stop=None, **kwargs
+    model_name, prompt, num_sequence, **kwargs
 ) -> ConcatedLMGenResult:
-    assert static_prompt is None
-    assert stop is None
     return _generate_fastchat(
         query_str=prompt,
         model_name=model_name,
