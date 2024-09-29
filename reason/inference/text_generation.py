@@ -1,6 +1,5 @@
-from typing import List
+from typing import List, Optional
 import requests
-import torch
 from dataclasses import dataclass
 
 
@@ -18,17 +17,13 @@ def _generate_fastchat(
     model_name,
     n,
     temperature,
-    top_p=1.0,
-    top_k=-1,
-    max_new_tokens=256,
-    stop_token_ids=None,
-    stop_str=None,
-    controller_addr="http://0.0.0.0:28777",
+    top_p,
+    top_k,
+    max_new_tokens,
+    stop_token_ids,
+    stop_str,
+    controller_addr,
 ) -> ConcatedLMGenResult:
-    # ret = requests.post(controller_addr + "/refresh_all_workers")
-    # ret = requests.post(controller_addr + "/list_models")
-    # models = ret.json()["models"]
-    # models.sort()
 
     ret = requests.post(
         controller_addr + "/get_worker_address", json={"model": model_name}
@@ -65,21 +60,4 @@ def _generate_fastchat(
         completion_tokens=results["usage"]["completion_tokens"],
         cumulative_logprob=cum_logps,
         logp_avg_by_len=avg_len_logps,
-    )
-
-
-def llm_gen_with_logp_fastchat_vllm(
-    model_name, prompt, num_sequence, **kwargs
-) -> ConcatedLMGenResult:
-    return _generate_fastchat(
-        query_str=prompt,
-        model_name=model_name,
-        n=num_sequence,
-        temperature=kwargs.pop("temperature", 1.0),
-        top_p=kwargs.pop("top_p", 1.0),
-        top_k=kwargs.pop("top_k", 1),
-        max_new_tokens=kwargs.pop("max_new_tokens", 16),
-        stop_token_ids=kwargs.pop("stop_token_ids", None),
-        stop_str=kwargs.pop("stop_str", None),
-        **kwargs
     )

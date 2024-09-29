@@ -28,10 +28,12 @@ def _agg_orm_max(x_list: List[str], v_list: List[float]):
     text_max = x_list[v_list.index(max(v_list))]
     return text_max
 
+
 def _agg_prm_min_max(x_list: List[str], v_list: List[List[float]]):
     v_list = [min(v) if v else -1.0 for v in v_list]
     text_max = x_list[v_list.index(max(v_list))]
     return text_max
+
 
 def _agg_prm_min_vote(x_list: List[str], v_list: List[List[float]]):
     v_list = [min(v) if v else -1.0 for v in v_list]

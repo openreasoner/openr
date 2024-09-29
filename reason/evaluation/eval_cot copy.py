@@ -19,7 +19,7 @@ from reason.reranking.vote_utils import (
     ORM_VOTE,
     ORM_MAX,
     PRM_MIN_VOTE,
-    PRM_MIN_MAX
+    PRM_MIN_MAX,
 )
 from envs.base_env import INVALID_ANS
 from transformers import AutoTokenizer
@@ -128,12 +128,8 @@ if __name__ == "__main__":
     # def rm_call(x):
     #     return np.array([0.0] * len(x)).tolist()
 
-    def rm_call(
-        input_str: Union[str, List[str]]
-    ) -> Union[List[List[int]], List[int]]:
-        return _value_inference_fastchat(
-            config.RM, input_str, config.controller_addr
-        )
+    def rm_call(input_str: Union[str, List[str]]) -> Union[List[List[int]], List[int]]:
+        return _value_inference_fastchat(config.RM, input_str, config.controller_addr)
 
     def cot_direct_output(problem_inst, **kwargs):
         prompt = prompt_fn(problem_inst["question"])
@@ -152,9 +148,7 @@ if __name__ == "__main__":
         extracted_groundtruth = extract_groundtruth(problem_inst["answer"])
         prompt = prompt_fn(problem_inst["question"])
         if len(texts) > 1:
-            value_list = rm_call(
-                [prompt + txt + task_module.SEP for txt in texts]
-            )
+            value_list = rm_call([prompt + txt + task_module.SEP for txt in texts])
         else:
             value_list = [[0]]
         output_list = [
@@ -196,7 +190,7 @@ if __name__ == "__main__":
         )
         r_cot, cot_episodes = analyze_output(problem_inst, gen_result)
         return {"res": r_cot, "episodes": cot_episodes}
-    
+
     # test_ds = [test_ds[i] for i in range(10)]
     results = Pool(32).imap(fn, test_ds)
     results = list(tqdm(results, total=len(test_ds)))
