@@ -93,7 +93,7 @@ def beam_search(
             "generation_config": {
                 "max_new_tokens": gen_config.max_new_tokens,
                 "temperature": gen_config.temperature,
-                "top_p": gen_config.temperature,
+                "top_p": gen_config.top_p,
                 "top_k": gen_config.top_k,
             },
         },
