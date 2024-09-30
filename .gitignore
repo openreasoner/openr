@@ -1,2 +1,10 @@
 __pycache__/
 results/
+*.*~
+*.pkl
+**/*.egg-info
+.python-version
+.idea/
+.vscode/
+.DS_Store
+_build/

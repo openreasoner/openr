@@ -1,13 +1,11 @@
 """
 Modified from OpenAI Baselines code to work with multi-agent envs
 """
-
 import numpy as np
 import torch
 from multiprocessing import Process, Pipe
 from abc import ABC, abstractmethod
 from mat.utils.util import tile_images
-
 
 class CloudpickleWrapper(object):
     """
@@ -19,12 +17,10 @@ class CloudpickleWrapper(object):
 
     def __getstate__(self):
         import cloudpickle
-
         return cloudpickle.dumps(self.x)
 
     def __setstate__(self, ob):
         import pickle
-
         self.x = pickle.loads(ob)
 
 
@@ -35,11 +31,12 @@ class ShareVecEnv(ABC):
     each observation becomes an batch of observations, and expected action is a batch of actions to
     be applied per-environment.
     """
-
     closed = False
     viewer = None
 
-    metadata = {"render.modes": ["human", "rgb_array"]}
+    metadata = {
+        'render.modes': ['human', 'rgb_array']
+    }
 
     def __init__(self, num_envs):
         self.num_envs = num_envs
@@ -118,9 +115,9 @@ def shareworker(remote, parent_remote, env_fn_wrapper):
     env = env_fn_wrapper.x()
     while True:
         cmd, data = remote.recv()
-        if cmd == "step":
+        if cmd == 'step':
             ob, reward, done, info = env.step(data)
-            if "bool" in done.__class__.__name__:
+            if 'bool' in done.__class__.__name__:
                 if done:
                     ob = env.reset()
             else:
@@ -128,19 +125,19 @@ def shareworker(remote, parent_remote, env_fn_wrapper):
                     ob = env.reset()
 
             remote.send((ob, reward, done, info))
-        elif cmd == "reset":
+        elif cmd == 'reset':
             ob = env.reset()
             remote.send((ob))
-        elif cmd == "reset_task":
+        elif cmd == 'reset_task':
             ob = env.reset_task()
             remote.send(ob)
-        elif cmd == "close":
+        elif cmd == 'close':
             env.close()
             remote.close()
             break
-        elif cmd == "get_num_agents":
+        elif cmd == 'get_num_agents':
             remote.send((env.n_agents))
-        elif cmd == "render_vulnerability":
+        elif cmd == 'render_vulnerability':
             fr = env.render_vulnerability(data)
             remote.send((fr))
         else:
@@ -156,29 +153,20 @@ class ShareSubprocVecEnv(ShareVecEnv):
         self.closed = False
         self.nenvs = len(env_fns)
         self.remotes, self.work_remotes = zip(*[Pipe() for _ in range(self.nenvs)])
-        self.ps = [
-            Process(
-                target=shareworker,
-                args=(work_remote, remote, CloudpickleWrapper(env_fn)),
-            )
-            for (work_remote, remote, env_fn) in zip(
-                self.work_remotes, self.remotes, env_fns
-            )
-        ]
+        self.ps = [Process(target=shareworker, args=(work_remote, remote, CloudpickleWrapper(env_fn)))
+                   for (work_remote, remote, env_fn) in zip(self.work_remotes, self.remotes, env_fns)]
         for p in self.ps:
-            p.daemon = (
-                True  # if the main process crashes, we should not cause things to hang
-            )
+            p.daemon = True  # if the main process crashes, we should not cause things to hang
             p.start()
         for remote in self.work_remotes:
             remote.close()
-        self.remotes[0].send(("get_num_agents", None))
+        self.remotes[0].send(('get_num_agents', None))
         self.n_agents = self.remotes[0].recv()
         ShareVecEnv.__init__(self, len(env_fns))
 
     def step_async(self, actions):
         for remote, action in zip(self.remotes, actions):
-            remote.send(("step", action))
+            remote.send(('step', action))
         self.waiting = True
 
     def step_wait(self):
@@ -189,7 +177,7 @@ class ShareSubprocVecEnv(ShareVecEnv):
 
     def reset(self):
         for remote in self.remotes:
-            remote.send(("reset", None))
+            remote.send(('reset', None))
         self.waiting = True
         results = [remote.recv() for remote in self.remotes]
         self.waiting = False
@@ -198,7 +186,7 @@ class ShareSubprocVecEnv(ShareVecEnv):
 
     def reset_task(self):
         for remote in self.remotes:
-            remote.send(("reset_task", None))
+            remote.send(('reset_task', None))
         return np.stack([remote.recv() for remote in self.remotes])
 
     def close(self):
@@ -208,7 +196,7 @@ class ShareSubprocVecEnv(ShareVecEnv):
             for remote in self.remotes:
                 remote.recv()
         for remote in self.remotes:
-            remote.send(("close", None))
+            remote.send(('close', None))
         for p in self.ps:
             p.join()
         self.closed = True
@@ -229,8 +217,8 @@ class ShareDummyVecEnv(ShareVecEnv):
         results = [env.step(a) for (a, env) in zip(self.actions, self.envs)]
         obs, rews, dones, infos = map(np.array, zip(*results))
 
-        for i, done in enumerate(dones):
-            if "bool" in done.__class__.__name__:
+        for (i, done) in enumerate(dones):
+            if 'bool' in done.__class__.__name__:
                 if done:
                     obs[i] = self.envs[i].reset()
             else:
@@ -251,3 +239,5 @@ class ShareDummyVecEnv(ShareVecEnv):
     def save_replay(self):
         for env in self.envs:
             env.save_replay()
+
+

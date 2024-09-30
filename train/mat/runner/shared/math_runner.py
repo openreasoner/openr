@@ -5,19 +5,18 @@ from functools import reduce
 import torch
 from tensorboardX import SummaryWriter
 from mat.agents.qwen_lora_agent import QwenLoRAgent
+from mat.models.rm import ProcessRM
 from mat.utils.language_buffer import LanguageBuffer
 from mat.trainers.llm_trainer_appo import APPOTrainer
 from mat.trainers.llm_trainer_tppo import TPPOTrainer
 
-
 def _t2n(x):
     return x.detach().cpu().numpy()
 
-
 class MathRunner:
     def __init__(self, config):
-        self.num_agents = config["num_agents"]
-        self.all_args = config["all_args"]
+        self.num_agents = config['num_agents']
+        self.all_args = config['all_args']
         self.n_eval_rollout_threads = self.all_args.n_eval_rollout_threads
         self.num_env_steps = self.all_args.num_env_steps
         self.episode_length = self.all_args.episode_length
@@ -27,22 +26,19 @@ class MathRunner:
         self.algo = self.all_args.algorithm_name
 
         self.run_dir = config["run_dir"]
-        self.log_dir = str(self.run_dir / "logs")
+        self.log_dir = str(self.run_dir / 'logs')
         if not os.path.exists(self.log_dir):
             os.makedirs(self.log_dir)
         self.writter = SummaryWriter(self.log_dir)
-        self.save_dir = str(self.run_dir / "models/")
+        self.save_dir = str(self.run_dir / 'models/')
         if not os.path.exists(self.save_dir):
             os.makedirs(self.save_dir)
 
-        self.envs = config["envs"]
-        self.eval_envs = config["eval_envs"]
-        self.agent = QwenLoRAgent(
-            self.all_args.model_name, self.all_args.max_new_tokens, self.algo
-        )
-        self.buffer = LanguageBuffer(
-            self.all_args, self.num_agents, self.agent.tokenizer.pad_token_id
-        )
+        self.envs = config['envs']
+        self.eval_envs = config['eval_envs']
+        self.agent = QwenLoRAgent(self.all_args.model_name_or_path, self.all_args.max_new_tokens, self.algo)
+        self.buffer = LanguageBuffer(self.all_args, self.num_agents, self.agent.tokenizer.pad_token_id)
+        self.prm = ProcessRM(self.all_args.prm_model_name_or_path)
 
         if self.algo == "APPO":
             self.trainer = APPOTrainer(self.all_args, self.agent, self.num_agents)
@@ -55,35 +51,34 @@ class MathRunner:
         obs = self.envs.reset()
         self.buffer.obs[0] = obs.copy()
 
-        episodes = (
-            int(self.num_env_steps) // self.episode_length // self.n_rollout_threads
-        )
-
+        episodes = int(self.num_env_steps) // self.episode_length // self.n_rollout_threads
+        
         episodic_returns = []
         for episode in range(episodes):
-            total_num_steps = (
-                (episode + 1) * self.episode_length * self.n_rollout_threads
-            )
+            total_num_steps = (episode + 1) * self.episode_length * self.n_rollout_threads  
             for step in range(self.episode_length):
                 # Sample actions
                 values, actions, action_tokens, log_probs = self.collect(step)
+                
+                # output rewards
+                rewards = self.prm.get_reward(obs, actions)
 
-                # Obser reward and next obs
-                obs, rewards, dones, infos = self.envs.step(actions)
+                # Obs reward and next obs
+                obs, fake_rewards, dones, infos = self.envs.step(actions)
 
                 # insert data into buffer
                 data = obs, rewards, dones, values, actions, action_tokens, log_probs
                 self.insert(data)
-
+                
                 for i in range(self.n_rollout_threads):
                     if dones[i, 0]:
                         episodic_returns.append(rewards[i, 0])
 
             # compute return and update network
             self.before_update()
-            train_infos = self.trainer.train(self.buffer)
+            train_infos = self.trainer.train(self.buffer)      
             self.buffer.after_update()
-
+            
             # post process
             # save model
             # if (episode == episodes - 1):
@@ -102,15 +97,14 @@ class MathRunner:
             if self.all_args.use_eval and episode % self.eval_interval == 0:
                 self.eval(total_num_steps)
         # print("buffer: ", self.buffer.value_preds)
+        
 
     @torch.no_grad()
     def collect(self, step):
-        behaviour_data = self.agent.infer_for_rollout(
-            np.concatenate(self.buffer.obs[step])
-        )
-
+        behaviour_data = self.agent.infer_for_rollout(np.concatenate(self.buffer.obs[step]))
+        
         actions, action_tokens, values, log_probs = behaviour_data
-
+        
         # [self.envs, agents]
         values = np.array(np.split(values, self.n_rollout_threads))
         actions = np.array(np.split(actions, self.n_rollout_threads))
@@ -119,23 +113,17 @@ class MathRunner:
 
         return values, actions, action_tokens, log_probs
 
-    def insert(self, data):
+    def insert(self,data):
         obs, rewards, dones, values, actions, action_tokens, log_probs = data
 
         dones_env = np.all(dones, axis=1)
         masks = np.ones((self.n_rollout_threads, self.num_agents), dtype=np.float32)
-        masks[dones_env == True] = np.zeros(
-            ((dones_env == True).sum(), self.num_agents), dtype=np.float32
-        )
+        masks[dones_env == True] = np.zeros(((dones_env == True).sum(), self.num_agents), dtype=np.float32)
 
         if self.algo == "APPO":
-            self.buffer.insert_appo(
-                obs, actions, values, rewards, masks, action_tokens, log_probs
-            )
+            self.buffer.insert_appo(obs, actions, values, rewards, masks, action_tokens, log_probs)
         elif self.algo == "TPPO":
-            self.buffer.insert_tppo(
-                obs, actions, values, rewards, masks, action_tokens, log_probs
-            )
+            self.buffer.insert_tppo(obs, actions, values, rewards, masks, action_tokens, log_probs)
         else:
             raise NotImplementedError
 
@@ -154,7 +142,7 @@ class MathRunner:
     def log_infos(self, infos, total_num_steps):
         for k, v in infos.items():
             self.writter.add_scalars(k, {k: v}, total_num_steps)
-
+    
     @torch.no_grad()
     def eval(self, total_num_steps):
         eval_episode = 0
@@ -173,12 +161,12 @@ class MathRunner:
 
             if eval_episode >= self.all_args.eval_episodes:
                 eval_currect_rate = np.mean(eval_episodic_returns)
-                env_infos = {"eval_currect_rate": eval_currect_rate}
+                env_infos = {'eval_currect_rate': eval_currect_rate}     
                 print("total_num_steps: ", total_num_steps)
-                print("eval_currect_rate is {}.".format(eval_currect_rate))
+                print("eval_currect_rate is {}.".format(eval_currect_rate))           
                 self.log_infos(env_infos, total_num_steps)
                 break
-
+                
     def save(self, episode):
         """Save policy's actor and critic networks."""
         self.agent.save(self.save_dir, episode)
@@ -186,3 +174,5 @@ class MathRunner:
     def restore(self, model_dir):
         """Restore policy's networks from a saved model."""
         self.agent.restore(model_dir)
+
+
