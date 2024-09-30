@@ -1,5 +1,35 @@
 # Open O1 dev
 
+## Features
+- **Various thinking**: CoT greedy 
+- **Scalable data**: 
+
+## Evaluation
+Todo: performance with more time spent thinking (test-time compute)
+
+
+## Getting Started
+
+### Installation
+Todo: libs
+
+### Quickstart
+This following starts the language model (LM) and reward model (RM) services required for running inference. 
+Then it prepares and runs inference using different techniques.
+
+Start LM & RM Services
+```bash
+sh reason/llm_service/create_service_math_shepherd.sh
+```
+
+Run Inference
+```bash
+export PYTHONPATH=$(pwd)
+sh scripts/eval/cot_greedy.sh
+sh scripts/eval/cot_rerank.sh
+sh scripts/eval/beam_search.sh
+```
+
 ## Two-week plan ?
 
 - Inference (mcts-like)
