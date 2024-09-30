@@ -192,7 +192,7 @@ def get_root(node: Node):
     return node
 
 
-class MCTS(object):
+class SearchTree:
     """
     Overview:
         MCTS search process.
@@ -846,7 +846,8 @@ class MCTS(object):
 
         text_state = simulate_env.get_state()
         if not self._init_critic_value:
-            leaf_value = policy_forward_fn(text_state).item()
+            leaf_value = policy_forward_fn(text_state)
+
         else:
             leaf_value = node._initial_value
             assert len(simulate_env.legal_actions) > 0
@@ -855,7 +856,13 @@ class MCTS(object):
                     text_state + x["action"] + simulate_env.sep
                     for x in simulate_env.legal_actions
                 ]
-            ).tolist()
+            )
+            # PRM get last r as single reward
+            child_values = [x[-1] for x in child_values]
+            print(text_state)
+            print(child_values)
+            # FIXME(ziyu): fix step 1 no sep str problem
+            import pdb; pdb.set_trace()
 
         assert len(node.children) == 0
         for i, action_dict in enumerate(simulate_env.legal_actions):
@@ -870,6 +877,7 @@ class MCTS(object):
 
             if self._init_critic_value:
                 child_value = child_values[i]
+                
             else:
                 child_value = 0.0
 
@@ -995,4 +1003,4 @@ if __name__ == "__main__":
 
     tree_path = "./tree.json"
 
-    mcts = MCTS.from_json(mcts_cfg, tree_path)
+    mcts = SearchTree.from_json(mcts_cfg, tree_path)

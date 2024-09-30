@@ -4,7 +4,8 @@ python reason/evaluation/evaluate.py \
     --task_name MATH \
     --temperature 1.0 \
     --num_sequence 32 \
-    --max_new_tokens 512 \
+    --max_new_tokens 1024 \
     --save_dir results \
-    --method best_of_n \
+    --method beam_search \
+    --num_worker 1 \
     --controller_addr http://0.0.0.0:28777

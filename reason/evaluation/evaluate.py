@@ -19,6 +19,7 @@ from multiprocessing import Pool
 import tree
 from ray.util.actor_pool import ActorPool
 from reason.evaluation.methods import *
+import ray
 
 
 def setup_seed(seed):
@@ -30,12 +31,11 @@ def setup_seed(seed):
     torch.backends.cudnn.deterministic = True
 
 
-
-
 if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("--LM", type=str, required=True)
     parser.add_argument("--RM", type=str, required=True)
+    parser.add_argument("--method", type=str, required=True)
     parser.add_argument("--save_dir", type=str, default=None)
     parser.add_argument("--task_name", type=str, default="gsm8k")
     parser.add_argument("--test", type=str2bool, default=True)
@@ -51,6 +51,7 @@ if __name__ == "__main__":
     config = parser.parse_args()
 
     setup_seed(config.seed)
+    # ray.init(local_mode=True)
 
     llm_gen_fn = VLLMRemoteCaller(config.LM, config.controller_addr)
     rm_call = RMRemoteCaller(config.RM, config.controller_addr)
@@ -78,11 +79,13 @@ if __name__ == "__main__":
             ]
         )
         test_ds = task.test_ds
-        test_ds = [test_ds[i] for i in range(32)]
+        # test_ds = [test_ds[i] for i in range(32)]
         res_q = actor_pool.map_unordered(
             lambda p, x: p.evaluate_problem.remote(x, solver_fn), test_ds
         )
-        for i, (problem_inst, result, output) in enumerate(tqdm(res_q, total=len(test_ds))):
+        for i, (problem_inst, result, output) in enumerate(
+            tqdm(res_q, total=len(test_ds))
+        ):
             results.append(result)
             if record_writer:
                 obj = {
@@ -93,21 +96,14 @@ if __name__ == "__main__":
                     "output": output,
                 }
                 record_writer.write(obj)
-        avg_res = (
-            tree.map_structure(lambda *xs: np.mean(xs), *results),
-        )
+        avg_res = (tree.map_structure(lambda *xs: np.mean(xs), *results),)
         if record_writer:
             json.dump(avg_res, open(save_dir / "avg_result.json", "w"))
-        print(
-            "Method: {}. Average result: {}".format(method_name, avg_res)
-        )
+        print("Method: {}. Average result: {}".format(method_name, avg_res))
         return results
-    
-    solver_fns = {
-        "cot": cot,
-        "best_of_n": best_of_n
-    }
-    
+
+    solver_fns = {"cot": cot, "best_of_n": best_of_n}
+
     gen_config = LMCallingConfig(
         n=config.num_sequence,
         temperature=config.temperature,
@@ -115,7 +111,23 @@ if __name__ == "__main__":
         top_p=config.top_p,
         max_new_tokens=config.max_new_tokens,
     )
-    
-    best_of_config = BestOfNConfig(num_sequence=config.num_sequence)
-    best_of_n_fn = partial(best_of_n, best_of_config, gen_config)
-    parallel_evaluate_test_dataset("best_of_n", best_of_n_fn)
+    if config.method == "cot":
+        cot_config = CoTConfig(config.task_name)
+        solver_fn = partial(cot, cot_config, gen_config)
+    elif config.method == "best_of_n":
+        best_of_config = BestOfNConfig(
+            config.task_name, num_sequence=config.num_sequence
+        )
+        solver_fn = partial(best_of_n, best_of_config, gen_config)
+    elif config.method == "beam_search":
+        beam_search_config = BeamSearchConfig(
+            task_name=config.task_name,
+            tree_max_length=10,
+            tree_max_width=10,
+            beam_size=2,
+        )
+        solver_fn = partial(beam_search, beam_search_config, gen_config)
+    else:
+        raise ValueError(f"Unknown method: {config.method}")
+
+    parallel_evaluate_test_dataset(config.method, solver_fn)

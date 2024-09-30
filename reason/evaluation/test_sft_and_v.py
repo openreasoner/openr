@@ -14,7 +14,7 @@ from inference.value import value_fn
 from llm.text_generation import llm_gen_with_logp_fastchat_vllm
 from inference.value import _value_inference_fastchat
 from model import load_critic_model
-from reason.mcts.tree import MCTS
+from reason.mcts.tree import SearchTree
 from inference.evaluation.vote_utils import (
     AGG_FN_MAP,
     MAJORITY_VOTE,
@@ -343,9 +343,9 @@ if __name__ == "__main__":
             "no_terminal_reward": no_terminal_reward,
         }
         if tree_path and tree_path.exists():
-            mcts = MCTS.from_json(cfg, tree_path, reset_visit_info=True)
+            mcts = SearchTree.from_json(cfg, tree_path, reset_visit_info=True)
         else:
-            mcts = MCTS(cfg=cfg)
+            mcts = SearchTree(cfg=cfg)
 
         if args.rollout_method == "mcts.rollout":
             assert args.max_token is not None and args.max_simulation is None

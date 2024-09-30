@@ -12,7 +12,7 @@ from envs import get_env_datasets, get_default_query_str_builder
 from reason.inference.trajectory_collector import _mcts_rollout_v1
 from reason.inference.text_generation import llm_gen_with_logp_fastchat_vllm
 from reason.inference.value import _value_inference_fastchat
-from reason.mcts.tree import MCTS
+from reason.mcts.tree import SearchTree
 from reason.reranking.vote_utils import (
     AGG_FN_MAP,
     MAJORITY_VOTE,

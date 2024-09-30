@@ -16,7 +16,6 @@ def get_default_query_str_builder(env_name: str, **kwargs):
             cot_examples=task_module.COT_EXAMPLES,
             problem_format_str=task_module.PROBLEM_FORMAT_STR,
             problem_input=problem_input,
-            sep=task_module.SEP,
             is_few_shot=is_few_shot,
         )
 

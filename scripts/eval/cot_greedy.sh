@@ -5,4 +5,5 @@ python reason/evaluation/evaluate.py \
     --temperature 0.0 \
     --max_new_tokens 1024 \
     --save_dir results \
+    --method cot \
     --controller_addr http://0.0.0.0:28777

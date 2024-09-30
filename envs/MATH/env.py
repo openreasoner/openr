@@ -26,7 +26,6 @@ def judge_correct(
 
 class Env(CoTEnv):
     sep = SEP
-
     def __init__(
         self,
         config,
@@ -61,12 +60,6 @@ class Env(CoTEnv):
         return judge_correct(
             self.math_problem["question"], self.math_problem["answer"], extracted_answer
         )
-
-    def init_action_history(self):
-        # add the first prompted questions
-        return ([self.task_prefix] if self.task_prefix is not None else []) + [
-            f"Question: {self.math_problem['question']}\nAnswer: Let's think step by step"
-        ]
 
     def get_reward(self):
         """To implement based on learned reward model"""

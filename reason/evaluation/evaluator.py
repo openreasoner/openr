@@ -27,6 +27,7 @@ class Task:
         self.judge_correct = task_module.judge_correct
 
         self._is_few_shot = is_few_shot
+        self.env_fn = task_module.Env
 
     def prompt_fn(self, problem_input: str):
         return get_default_query_str_builder(self.task_name)(
@@ -95,8 +96,7 @@ class MathEvaluator:
     def evaluate_problem(
         self, problem_inst: Dict[str, str], solver_fn: Callable
     ) -> List[str]:
-        prompt = self._task.prompt_fn(problem_inst["question"])
-        solution: SolutionOutput = solver_fn(prompt, self.lm_call, self.rm_call)
+        solution: SolutionOutput = solver_fn(problem_inst, self.lm_call, self.rm_call)
         result, output = self.analyze_output(problem_inst, solution.solutions)
         for i, o in enumerate(output):
             o["completion_tokens"] = solution.completion_tokens[i]
@@ -105,6 +105,7 @@ class MathEvaluator:
     def analyze_output(self, problem_inst: Dict[str, str], gen_answers: List[str]):
         extracted_groundtruth = self._task.extract_groundtruth(problem_inst["answer"])
         prompt = self._task.prompt_fn(problem_inst["question"])
+        # import pdb; pdb.set_trace()
         if len(gen_answers) > 1:
             value_list = self.rm_call([prompt + txt for txt in gen_answers])
         else:

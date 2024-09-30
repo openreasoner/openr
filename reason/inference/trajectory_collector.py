@@ -1,13 +1,13 @@
 from typing import Optional
 from envs.base_env import CoTEnv
 from reason.reranking.vote_utils import MAJORITY_VOTE
-from reason.mcts.tree import MCTS
+from reason.mcts.tree import SearchTree
 from reason.mcts.utils import get_root
 import time
 
 
 def _mcts_rollout_v1(
-    mcts: MCTS,
+    mcts: SearchTree,
     env: CoTEnv,
     policy_forward_value,
     n_rollout: int,
@@ -69,7 +69,7 @@ def _mcts_rollout_v1(
 
 
 def _mcts_rollout_v2(
-    mcts: MCTS,
+    mcts: SearchTree,
     env: CoTEnv,
     policy_forward_value,
     n_rollout: int,

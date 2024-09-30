@@ -6,6 +6,7 @@ import pdb
 import torch
 from distributed.utils import print_with_rank
 from transformers import PreTrainedTokenizer
+from reason.inference.lm_call import LMCallingConfig, ConcatedLMGenResult
 
 INVALID_ANS = "[invalid]"
 
@@ -43,7 +44,6 @@ class BaseEnv(abc.ABC):
         cot_examples: Optional[str],
         problem_format_str: str,
         problem_input: str,
-        sep: str,
         is_few_shot: bool = False,
     ):
         """a wrap function that wrap the problem text with certrain format
@@ -64,8 +64,6 @@ class BaseEnv(abc.ABC):
             ret += cot_examples + "\n"
         ret += problem_format_str.format(question=problem_input)
 
-        # THIS is because CoTEnv.answer/get_state() append "\n"
-        ret += sep
         return ret
 
     @staticmethod
@@ -79,19 +77,6 @@ class CoTEnv(BaseEnv):
     """The basic environment for solving natural language problems using CoT"""
 
     sep: str
-
-    @staticmethod
-    def build_response_str(
-        answer_str: str, tokenizer: PreTrainedTokenizer, add_eos_token: bool
-    ):
-        if add_eos_token:
-            # if text ends with </s>, remove it so the follwing strip can remove \n
-            #  and in latter add_traj, \n and </s> will be added again
-            if answer_str.endswith(tokenizer.eos_token):
-                answer_str = answer_str.replace(tokenizer.eos_token, "")
-            answer_str = answer_str.strip()
-            answer_str += tokenizer.eos_token
-        return answer_str
 
     @property
     def stop_str(self):
@@ -145,7 +130,14 @@ class CoTEnv(BaseEnv):
     def reset(self, update_legal_action=True):
         # reset environment to problem idx
         self.set_problem(idx=0)
-        self.action_history = self.init_action_history()
+        self.action_history = []
+        self._init_query = self.build_query_str(
+            cot_examples=self._cot_example_str,
+            cot_task_desc=self._task_desc_str,
+            problem_format_str=self._problem_format_str,
+            problem_input=self.math_problem["question"],
+            is_few_shot=self.is_few_shot
+        )
         if update_legal_action:
             cnt = 0
             while cnt < 3:
@@ -179,49 +171,36 @@ class CoTEnv(BaseEnv):
         return state, reward, terminated, truncated, info
 
     def get_state(self):
-        return "\n".join(self.action_history) + "\n"
-
-    def init_action_history(self):
-        # add the first prompted questions
-        return ([self.task_prefix] if self.task_prefix is not None else []) + [
-            # f"Question: {self.math_problem['question']}\nAnswer: Let's think step by step"
-            self._problem_format_str.format(question=self.math_problem["question"])
-        ]
+        ret = self._init_query + self.sep.join(self.action_history)
+        if len(self.action_history) > 0:
+            ret += self.sep
+        return ret
 
     def update_legal_actions(self):
-        def reduce_prob_list(prob_list: List[List]) -> List:
-            ans_list = []
-            for scores in prob_list:
-                ans_list.append(np.exp(np.mean(scores)))
-            return ans_list
-
-        prefix = (
-            (self.action_history[0] + "\n") if self.task_prefix is not None else None
+        result: ConcatedLMGenResult = self.llm_gen_fn(
+            input_str=self.get_state(),
+            config=LMCallingConfig(
+                n=self.config["max_actions"],
+                stop_str=self.sep,
+                **self.config["generation_config"]
+            ),
         )
-        act_hist_start_i = 0 if self.task_prefix is None else 1
-        unprefixed_state = "\n".join(self.action_history[act_hist_start_i:]) + "\n"
-        texts, logps = self.llm_gen_fn(
-            static_prompt=prefix,
-            prompt=unprefixed_state,
-            num_sequence=self.config["max_actions"],
-            stop=[13, self.tokenizer.eos_token_id],
-            **self.config["generation_config"],
-        )
-
+        texts = result.text
+        logps_avg_by_len = result.logp_avg_by_len
         text_list, prob_list = [], []
 
         for i in range(len(texts)):
             if len(texts[i]) > 0 and texts[i] not in text_list:
                 text_list.append(texts[i])
-                prob_list.append(logps[i])
+                prob_list.append(logps_avg_by_len[i])
 
         if len(prob_list) == 0:
             print_with_rank(
-                "{} {} {}".format(prefix, act_hist_start_i, unprefixed_state)
+                "{} {}".format(self.get_state())
             )
             raise NoLegalActionException("No possible action have been generated.")
 
-        prob_list = reduce_prob_list(prob_list)
+        prob_list = np.exp(prob_list)
         prob_list = np.array(prob_list)
         # normalize probability
         prob_list = prob_list / np.sum(prob_list)
@@ -234,6 +213,7 @@ class CoTEnv(BaseEnv):
             {"action": action, "prob": prob, "num_token": n_token}
             for action, prob, n_token in zip(text_list, prob_list, num_token_list)
         ]
+        # print(num_token_list, sum(num_token_list), len(num_token_list), result.completion_tokens)
 
         return _legal_actions
 
@@ -242,19 +222,11 @@ class CoTEnv(BaseEnv):
 
     @property
     def question(self):
-        return (
-            "\n".join(self.action_history[:1]) + "\n"
-            if self.task_prefix is None
-            else "\n".join(self.action_history[:2]) + "\n"
-        )
+        return self._init_query
 
     @property
     def answer(self):
-        return (
-            "\n".join(self.action_history[1:]) + "\n"
-            if self.task_prefix is None
-            else "\n".join(self.action_history[2:]) + "\n"
-        )
+        return self.sep.join(self.action_history)
 
     def get_done_and_info(self):
         info = {"winner": 0}
@@ -293,6 +265,7 @@ class CoTEnv(BaseEnv):
         env.math_problem = copy.deepcopy(self.math_problem)
         env._legal_actions = copy.deepcopy(self._legal_actions)
         env.action_history = copy.deepcopy(self.action_history)
+        env._init_query = copy.deepcopy(self._init_query)
         return env
 
     @property
