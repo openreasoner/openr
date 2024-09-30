@@ -35,6 +35,15 @@ sh scripts/eval/cot_rerank.sh
 sh scripts/eval/beam_search.sh
 ```
 
+Run Training
+
+Before training, please modify the dataset_path, model_name_or_path and prm_name_or_path in train/mat/scripts/train_llm.sh.
+
+```bash
+cd train/mat/scripts
+bash train_llm.sh
+```
+
 ## Two-week plan ?
 
 - Inference (mcts-like)
