@@ -233,9 +233,7 @@ class CoTEnv(BaseEnv):
         # done when reaches maximum length or LLM generates stop words
         terminated = self.stop_str in self.action_history[-1]
 
-        truncated = len(self.action_history) >= self.config["max_length"] + (
-            2 if self.task_prefix is not None else 1
-        )
+        truncated = len(self.action_history) >= self.config["max_length"]
         assert len(self.action_history) <= self.config["max_length"] + (
             2 if self.task_prefix is not None else 1
         ), "action history length: {}, max length: {}".format(
