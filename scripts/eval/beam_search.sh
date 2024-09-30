@@ -7,5 +7,5 @@ python reason/evaluation/evaluate.py \
     --max_new_tokens 1024 \
     --save_dir results \
     --method beam_search \
-    --num_worker 1 \
+    --num_worker 32 \
     --controller_addr http://0.0.0.0:28777

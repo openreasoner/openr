@@ -48,6 +48,7 @@ if __name__ == "__main__":
     parser.add_argument("--max_new_tokens", type=int, default=256)
     parser.add_argument("--num_sequence", type=int, default=1)
     parser.add_argument("--num_worker", type=int, default=32)
+    parser.add_argument("--resume_dir", type=str, default=None)
     config = parser.parse_args()
 
     setup_seed(config.seed)
@@ -59,33 +60,47 @@ if __name__ == "__main__":
     task = Task(task_name=config.task_name, is_few_shot=config.is_few_shot)
 
     def parallel_evaluate_test_dataset(
-        method_name: str, solver_fn: Callable
+        method_name: str, solver_fn: Callable, save_dir: Optional[Path] = None
     ) -> List[Dict[str, Any]]:
-        if config.save_dir is not None:
-            datetime_str = datetime.now().strftime("%Y%m%d_%H%M%S")
-            save_dir = (
-                Path(config.save_dir) / task.task_name / method_name / datetime_str
-            )
-            save_dir.mkdir(parents=True)
+        if save_dir is not None:
             record_writer = jsonlines.open(save_dir / f"record.jsonl", mode="w")
         else:
             record_writer = None
 
+        test_ds = task.test_ds
+        # test_ds = [test_ds[i] for i in range(32)]
+
         results = []
+        if config.resume_dir is not None:
+            answered_questions = set()
+            with jsonlines.open(Path(config.resume_dir) / "record.jsonl", "r") as reader:
+                cnt = 0
+                for obj in reader:
+                    results.append(obj["result"])
+                    answered_questions.add(obj['question'])
+                    if record_writer is not None:
+                        record_writer.write(obj)
+                        cnt += 1
+            print(f"Resumed {cnt} questions from {config.resume_dir}")
+            total_cnt = len(test_ds)
+            test_ds = [problem_inst for problem_inst in test_ds 
+                       if problem_inst['question'] not in answered_questions]
+            new_cnt = len(test_ds)
+            print(f"After resuming, there are {new_cnt}/{total_cnt} new questions to answer.")
+            
         actor_pool = ActorPool(
             [
                 MathEvaluator.remote(config.task_name, llm_gen_fn, rm_call)
                 for _ in range(config.num_worker)
             ]
         )
-        test_ds = task.test_ds
-        # test_ds = [test_ds[i] for i in range(32)]
         res_q = actor_pool.map_unordered(
             lambda p, x: p.evaluate_problem.remote(x, solver_fn), test_ds
         )
         for i, (problem_inst, result, output) in enumerate(
             tqdm(res_q, total=len(test_ds))
         ):
+            result["completion_tokens"] = output[-1]["completion_tokens"]
             results.append(result)
             if record_writer:
                 obj = {
@@ -104,6 +119,7 @@ if __name__ == "__main__":
 
     solver_fns = {"cot": cot, "best_of_n": best_of_n}
 
+    cfg_dict_record = dict()
     gen_config = LMCallingConfig(
         n=config.num_sequence,
         temperature=config.temperature,
@@ -111,23 +127,40 @@ if __name__ == "__main__":
         top_p=config.top_p,
         max_new_tokens=config.max_new_tokens,
     )
+    cfg_dict_record["gen_config"] = gen_config.__dict__
+
     if config.method == "cot":
-        cot_config = CoTConfig(config.task_name)
-        solver_fn = partial(cot, cot_config, gen_config)
+        method_config = CoTConfig(config.task_name)
+        solver_fn = partial(cot, method_config, gen_config)
     elif config.method == "best_of_n":
-        best_of_config = BestOfNConfig(
+        method_config = BestOfNConfig(
             config.task_name, num_sequence=config.num_sequence
         )
-        solver_fn = partial(best_of_n, best_of_config, gen_config)
+        solver_fn = partial(best_of_n, method_config, gen_config)
     elif config.method == "beam_search":
-        beam_search_config = BeamSearchConfig(
+        method_config = BeamSearchConfig(
             task_name=config.task_name,
             tree_max_length=10,
             tree_max_width=10,
-            beam_size=2,
+            beam_size=5,
         )
-        solver_fn = partial(beam_search, beam_search_config, gen_config)
+        solver_fn = partial(beam_search, method_config, gen_config)
     else:
         raise ValueError(f"Unknown method: {config.method}")
+    cfg_dict_record["method"] = config.method
+    cfg_dict_record["method_config"] = method_config.__dict__
 
-    parallel_evaluate_test_dataset(config.method, solver_fn)
+    if config.save_dir is not None:
+        datetime_str = datetime.now().strftime("%Y%m%d_%H%M%S")
+        save_dir = (
+            Path(config.save_dir) / task.task_name / config.method / datetime_str
+        )
+        save_dir.mkdir(parents=True)
+        record_writer = jsonlines.open(save_dir / f"record.jsonl", mode="w")
+        json.dump(cfg_dict_record, open(save_dir / "config.json", "w"))
+    else:
+        save_dir = None
+
+    parallel_evaluate_test_dataset(config.method, solver_fn, save_dir)
+    
+    

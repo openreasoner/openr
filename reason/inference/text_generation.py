@@ -52,7 +52,7 @@ def _generate_fastchat(
     results = response.json()
     output_token_lens = results["output_token_len"]
     cum_logps = results["cumulative_logprob"]
-    avg_len_logps = [clp / otl for clp, otl in zip(cum_logps, output_token_lens)]
+    avg_len_logps = [clp / max(1, otl) for clp, otl in zip(cum_logps, output_token_lens)]
     # return results["text"], avg_len_logps
     return ConcatedLMGenResult(
         text=results["text"],

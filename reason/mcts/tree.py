@@ -405,7 +405,7 @@ class SearchTree:
             return traj_list, cnt, self.root
         return traj_list, cnt
 
-    def rap(
+    def vanila_mcts(
         self,
         simulate_env: Type[CoTEnv],
         num_paths: int,
@@ -859,10 +859,7 @@ class SearchTree:
             )
             # PRM get last r as single reward
             child_values = [x[-1] for x in child_values]
-            print(text_state)
-            print(child_values)
             # FIXME(ziyu): fix step 1 no sep str problem
-            import pdb; pdb.set_trace()
 
         assert len(node.children) == 0
         for i, action_dict in enumerate(simulate_env.legal_actions):

@@ -380,7 +380,7 @@ if __name__ == "__main__":
                 o["value"] = v
 
         elif args.rollout_method == "mcts.rap":
-            output_list = mcts.rap(
+            output_list = mcts.vanila_mcts(
                 env,
                 args.num_mcts_aggregation,
                 policy_forward_value,
