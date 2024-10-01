@@ -98,8 +98,11 @@ class MathEvaluator:
     ) -> List[str]:
         solution: SolutionOutput = solver_fn(problem_inst, self.lm_call, self.rm_call)
         result, output = self.analyze_output(problem_inst, solution.solutions)
+        total_completion_token = 0
         for i, o in enumerate(output):
             o["completion_tokens"] = solution.completion_tokens[i]
+            total_completion_token += solution.completion_tokens[i]
+        result["total_completion_tokens"] = total_completion_token
         return problem_inst, result, output
 
     def analyze_output(self, problem_inst: Dict[str, str], gen_answers: List[str]):

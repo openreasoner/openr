@@ -3,9 +3,11 @@ python reason/evaluation/evaluate.py \
     --RM math-shepherd-mistral-7b-prm \
     --task_name MATH \
     --temperature 1.0 \
-    --num_sequence 32 \
     --max_new_tokens 1024 \
-    --save_dir results \
+    --num_sequence 5 \
+    --tree_max_width 10 \
+    --tree_max_depth 50 \
+    --save_dir debug \
     --method beam_search \
     --num_worker 32 \
     --controller_addr http://0.0.0.0:28777

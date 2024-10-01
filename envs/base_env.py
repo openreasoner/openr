@@ -94,7 +94,6 @@ class CoTEnv(BaseEnv):
         config,
         math_problems,
         llm_gen_fn,
-        tokenizer,
         task_desc_str: str,
         cot_example_str: str,
         problem_format_str: str,
@@ -104,7 +103,6 @@ class CoTEnv(BaseEnv):
         self.mcts_mode = "play_with_bot_mode"
         self.math_problems = math_problems
         self.llm_gen_fn = llm_gen_fn
-        self.tokenizer = tokenizer
         self.action_history = None
         self.math_problem = None
         self._legal_actions = None
@@ -187,12 +185,14 @@ class CoTEnv(BaseEnv):
         )
         texts = result.text
         logps_avg_by_len = result.logp_avg_by_len
-        text_list, prob_list = [], []
+        token_len = result.num_tokens
+        text_list, prob_list, num_token_list = [], [], []
 
         for i in range(len(texts)):
             if len(texts[i]) > 0 and texts[i] not in text_list:
                 text_list.append(texts[i])
                 prob_list.append(logps_avg_by_len[i])
+                num_token_list.append(token_len[i])
 
         if len(prob_list) == 0:
             print_with_rank(
@@ -204,11 +204,7 @@ class CoTEnv(BaseEnv):
         prob_list = np.array(prob_list)
         # normalize probability
         prob_list = prob_list / np.sum(prob_list)
-        # set add special tokens as False to remove bos/eos tokens
-        num_token_list = [
-            len(self.tokenizer.encode(txt, add_special_tokens=False))
-            for txt in text_list
-        ]
+
         _legal_actions = [
             {"action": action, "prob": prob, "num_token": n_token}
             for action, prob, n_token in zip(text_list, prob_list, num_token_list)
@@ -254,7 +250,6 @@ class CoTEnv(BaseEnv):
             self.config,
             self.math_problems,
             self.llm_gen_fn,
-            self.tokenizer,
             self._task_desc_str,
             self._cot_example_str,
             self._problem_format_str,

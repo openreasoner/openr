@@ -497,14 +497,6 @@ class SearchTree:
                         reverse=True,
                     )[:k]
                     for c_act, c_node, c_value in top_k_children:
-                        # new_env = cur_env.copy()
-                        # _, _, terminated, truncated, info = new_env.step(
-                        #     c_act, update_legal_action=True
-                        # )
-                        # if terminated or truncated:
-                        #     c_node.set_as_terminate_node()
-                        # else:
-                        #     self._expand_leaf_node(c_node, new_env, policy_forward_fn)
                         new_env = cur_env.copy()
                         heapq.heappush(top_k_nodes, (-c_value, c_node, new_env))
             # nsmallest since we negate the value
@@ -531,7 +523,7 @@ class SearchTree:
                     "path_idx": i,
                     "text": e_env.answer,
                     "value": -neg_e_v,
-                    "num_generated_token": None,
+                    "num_generated_token": 0,
                     # num_generated_token is hard to compute, since we
                     #  allow beam size to be larger than max_action of a node.
                 }

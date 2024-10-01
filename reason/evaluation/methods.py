@@ -52,8 +52,7 @@ def best_of_n(
     task = Task(task_name=config.task_name)
     prompt = task.prompt_fn(problem_inst["question"])
     output = lm_call(prompt, gen_config)
-    completion_tokens = [0] * len(output.text)
-    completion_tokens[-1] = output.completion_tokens
+    completion_tokens = output.num_tokens
     return SolutionOutput(
         solutions=output.text,
         completion_tokens=completion_tokens,
@@ -63,7 +62,7 @@ def best_of_n(
 @dataclass
 class TreeSearchConfig(BasicConfig):
     tree_max_width: int = 10
-    tree_max_length: int = 10
+    tree_max_depth: int = 10
 
 
 @dataclass
@@ -79,16 +78,10 @@ def beam_search(
     rm_call: RMRemoteCaller,
 ) -> SolutionOutput:
     task = Task(task_name=config.task_name)
-    # Hack here
-    from transformers import AutoTokenizer
-
-    tokenizer = AutoTokenizer.from_pretrained(
-        "/hpc2ssd/JH_DATA/spooler/qxiao183/workspace/hf_models/peiyi9979/mistral-7b-sft"
-    )
     env = task.env_fn(
         config={
             "max_actions": config.tree_max_width,
-            "max_length": config.tree_max_length,
+            "max_length": config.tree_max_depth,
             "stop_str": "The answer is ",
             "generation_config": {
                 "max_new_tokens": gen_config.max_new_tokens,
@@ -104,11 +97,10 @@ def beam_search(
             }
         ],
         llm_gen_fn=lm_call,
-        tokenizer=tokenizer,
     )
 
     search_tree = SearchTree(cfg={})
-    traj_list = search_tree.beam_search(env, config.beam_size, config.tree_max_length, rm_call)
+    traj_list = search_tree.beam_search(env, config.beam_size, config.tree_max_depth, rm_call)
     return SolutionOutput(
         solutions=[t['text'] for t in traj_list],
         completion_tokens=[t['num_generated_token'] for t in traj_list]

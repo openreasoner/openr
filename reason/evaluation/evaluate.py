@@ -35,24 +35,36 @@ if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("--LM", type=str, required=True)
     parser.add_argument("--RM", type=str, required=True)
-    parser.add_argument("--method", type=str, required=True)
-    parser.add_argument("--save_dir", type=str, default=None)
+    parser.add_argument("--controller_addr", type=str, default="http://0.0.0.0:28778")
+    # task config
     parser.add_argument("--task_name", type=str, default="gsm8k")
     parser.add_argument("--test", type=str2bool, default=True)
     parser.add_argument("--is_few_shot", type=str2bool, default=False)
-    parser.add_argument("--controller_addr", type=str, default="http://0.0.0.0:28778")
     parser.add_argument("--seed", type=int, default=0)
+    # method config
+    parser.add_argument("--method", type=str, required=True)
+    parser.add_argument("--num_sequence", type=int, default=1)
+    # LM gen config
     parser.add_argument("--temperature", type=float, default=0.0)
     parser.add_argument("--top_k", type=int, default=50)
     parser.add_argument("--top_p", type=int, default=1)
     parser.add_argument("--max_new_tokens", type=int, default=256)
-    parser.add_argument("--num_sequence", type=int, default=1)
-    parser.add_argument("--num_worker", type=int, default=32)
+    # Tree construction config
+    parser.add_argument("--tree_max_depth", type=int, default=None)
+    parser.add_argument("--tree_max_width", type=int, default=None)
+    # ckpg config
+    parser.add_argument("--save_dir", type=str, default=None)
     parser.add_argument("--resume_dir", type=str, default=None)
+    # parallel config
+    parser.add_argument("--local", action="store_true", default=False)
+    parser.add_argument("--num_worker", type=int, default=32)
     config = parser.parse_args()
 
     setup_seed(config.seed)
-    # ray.init(local_mode=True)
+    if config.local:
+        print("run in pure local mode for debug only")
+        config.num_worker = 1
+        ray.init(local_mode=True)
 
     llm_gen_fn = VLLMRemoteCaller(config.LM, config.controller_addr)
     rm_call = RMRemoteCaller(config.RM, config.controller_addr)
@@ -100,7 +112,6 @@ if __name__ == "__main__":
         for i, (problem_inst, result, output) in enumerate(
             tqdm(res_q, total=len(test_ds))
         ):
-            result["completion_tokens"] = output[-1]["completion_tokens"]
             results.append(result)
             if record_writer:
                 obj = {
@@ -140,9 +151,9 @@ if __name__ == "__main__":
     elif config.method == "beam_search":
         method_config = BeamSearchConfig(
             task_name=config.task_name,
-            tree_max_length=10,
-            tree_max_width=10,
-            beam_size=5,
+            tree_max_depth=config.tree_max_depth,
+            tree_max_width=config.tree_max_width,
+            beam_size=config.num_sequence,
         )
         solver_fn = partial(beam_search, method_config, gen_config)
     else:

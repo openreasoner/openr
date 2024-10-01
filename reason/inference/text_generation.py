@@ -7,9 +7,14 @@ from dataclasses import dataclass
 class ConcatedLMGenResult:
     text: List[str]
     prompt_tokens: List[int]
-    completion_tokens: List[int]
+    num_tokens: List[int]
     cumulative_logprob: List[float]
     logp_avg_by_len: List[float]
+
+    # post init compute number of completion_tokens
+    def __post_init__(self):
+        self.completion_tokens = sum(self.num_tokens)
+    
 
 
 def _generate_fastchat(
@@ -57,7 +62,7 @@ def _generate_fastchat(
     return ConcatedLMGenResult(
         text=results["text"],
         prompt_tokens=results["usage"]["prompt_tokens"],
-        completion_tokens=results["usage"]["completion_tokens"],
+        num_tokens=results["output_token_len"],
         cumulative_logprob=cum_logps,
         logp_avg_by_len=avg_len_logps,
     )
