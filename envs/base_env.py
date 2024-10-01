@@ -196,7 +196,7 @@ class CoTEnv(BaseEnv):
 
         if len(prob_list) == 0:
             print_with_rank(
-                "{} {}".format(self.get_state())
+                "state: {}".format(self.get_state())
             )
             raise NoLegalActionException("No possible action have been generated.")
 
