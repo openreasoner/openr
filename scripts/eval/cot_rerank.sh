@@ -5,7 +5,7 @@ python reason/evaluation/evaluate.py \
     --temperature 1.0 \
     --num_sequence 10 \
     --max_new_tokens 1024 \
-    --save_dir results \
+    --save_dir debug \
     --method best_of_n \
     --num_worker 32 \
     --controller_addr http://0.0.0.0:28777

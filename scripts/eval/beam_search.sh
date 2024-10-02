@@ -4,8 +4,8 @@ python reason/evaluation/evaluate.py \
     --task_name MATH \
     --temperature 1.0 \
     --max_new_tokens 1024 \
-    --num_sequence 5 \
-    --tree_max_width 10 \
+    --num_sequence $i \
+    --tree_max_width 20 \
     --tree_max_depth 50 \
     --save_dir debug \
     --method beam_search \

@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from reason.inference.lm_call import LMCallingConfig, VLLMRemoteCaller
 from reason.inference.rm_call import RMRemoteCaller
-from reason.evaluation.evaluator import SolutionOutput, Task
+from reason.evaluation.evaluator import SolutionOutput, Task, TreeSearchSolutionOutput
 from reason.mcts.tree import SearchTree
 
 
@@ -101,7 +101,8 @@ def beam_search(
 
     search_tree = SearchTree(cfg={})
     traj_list = search_tree.beam_search(env, config.beam_size, config.tree_max_depth, rm_call)
-    return SolutionOutput(
+    return TreeSearchSolutionOutput(
         solutions=[t['text'] for t in traj_list],
-        completion_tokens=[t['num_generated_token'] for t in traj_list]
+        completion_tokens=[t['api_completion_tokens'] for t in traj_list],
+        tree_completion_tokens=[t['tree_completion_tokens'] for t in traj_list],
     )

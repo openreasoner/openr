@@ -227,13 +227,13 @@ class SearchTree:
 
         self._init_critic_value = self._cfg.get("init_critic_value", True)
 
-        self._num_generated_token = 0
+        self._completion_tokens = 0
 
         self._prune_node_under_v = self._cfg.get("prune_node_under_v", None)
 
     @property
     def num_generated_token(self):
-        return self._num_generated_token
+        return self._completion_tokens
 
     def clear_node(self, node):
         assert node is not None
@@ -313,108 +313,17 @@ class SearchTree:
             return action, action_probs, root
         return action, action_probs
 
-    @torch.inference_mode()
-    def try_search_right_answer(
-        self,
-        simulate_env: Type[CoTEnv],
-        policy_forward_fn: Optional[Callable] = None,
-        sample: bool = True,
-        save_path: Optional[str] = None,
-    ) -> Tuple[int, List[float]]:
-        if self.root is None:
-            root = LanguageNode(text_state=simulate_env.get_state())
-            self.root = root
-            self._expand_leaf_node(root, simulate_env, policy_forward_fn)
-        if sample:
-            self._add_exploration_noise(root)
-
-        def save_tree():
-            if save_path is not None:
-                json.dump(root.to_json(), open(save_path, "w"), indent=2)
-
-        for n in range(self._num_simulations):
-            simulate_env_copy = simulate_env.copy()
-            simulate_env_copy.battle_mode = simulate_env_copy.mcts_mode
-            self._simulate(root, simulate_env_copy, policy_forward_fn)
-
-            if len(self.answers) > 0:
-                save_tree()
-                return True
-
-        save_tree()
-        return False
-
-    def rollout(
-        self,
-        simulate_env: Type[CoTEnv],
-        num_paths: int,
-        policy_forward_fn: Optional[Callable] = None,
-        *,
-        max_num_simulation: Optional[int] = 200,
-        max_token: Optional[int] = 25482,
-        sample: bool = True,
-        return_tree: bool = False
-    ) -> List[Dict]:
-        assert (max_num_simulation is None) ^ (max_token is None)
-
-        if self.root is None:
-            root = LanguageNode(text_state=simulate_env.get_state())
-            self._expand_leaf_node(root, simulate_env, policy_forward_fn)
-            self.root = root
-        else:
-            root = self.root
-
-        self.visited_paths = []
-        cnt = 0
-        traj_list = []
-        visit_path_num = 0
-
-        while len(self.visited_paths) < num_paths:
-            cnt += 1
-            if max_num_simulation is not None and cnt > max_num_simulation:
-                print_with_rank(
-                    "exit for max num simulation, #current_paths: {}".format(
-                        len(self.visited_paths)
-                    )
-                )
-                break
-            elif max_token is not None and self._num_generated_token > max_token:
-                print_with_rank(
-                    "exit for exceed max generated token {}>{}, #current_paths: {}".format(
-                        self._num_generated_token, max_token, len(self.visited_paths)
-                    )
-                )
-                break
-            simulate_env_copy = simulate_env.copy()
-            simulate_env_copy.battle_mode = simulate_env_copy.mcts_mode
-            self._simulate(root, simulate_env_copy, policy_forward_fn)
-
-            if len(self.visited_paths) > len(traj_list):
-                assert len(self.visited_paths) == len(traj_list) + 1
-                # which means include new path
-                new_visit_path = self.visited_paths[-1]
-                traj_data = {
-                    "path_idx": len(traj_list),
-                    "text": new_visit_path["text"],
-                    "value": new_visit_path["value"],
-                    "num_generated_token": self._num_generated_token,
-                }
-                traj_list.append(traj_data)
-
-        if return_tree:
-            return traj_list, cnt, self.root
-        return traj_list, cnt
 
     def vanila_mcts(
         self,
         simulate_env: Type[CoTEnv],
         num_paths: int,
-        policy_forward_fn: Optional[Callable] = None,
+        reward_model_fn: Optional[Callable] = None,
         select_by_prior: bool = False,
     ) -> List[Dict]:
         if self.root is None:
             root = LanguageNode(text_state=simulate_env.get_state())
-            self._expand_leaf_node(root, simulate_env, policy_forward_fn)
+            self._expand_leaf_node(root, simulate_env, reward_model_fn)
             self.root = root
 
         traj_list = []
@@ -432,11 +341,9 @@ class SearchTree:
                     action, update_legal_action=node.is_leaf()
                 )
                 done = terminated or truncated
-                if not done:
-                    if node.is_leaf():
-                        self._expand_leaf_node(node, env_copy, policy_forward_fn)
-            if "reward" in info.keys():  # handle rlhf special case
-                leaf_value = info["reward"]
+                if not done and node.is_leaf():
+                    self._expand_leaf_node(node, env_copy, reward_model_fn)
+
             else:
                 if node.visit_count > 0:
                     leaf_value = node.value
@@ -444,14 +351,14 @@ class SearchTree:
                     if self._init_critic_value:
                         leaf_value = node._initial_value
                     else:
-                        leaf_value = policy_forward_fn(env_copy.get_state()).item()
+                        leaf_value = reward_model_fn(env_copy.get_state()).item()
             node.update_recursive(leaf_value, env_copy.mcts_mode)
 
             traj_data = {
                 "path_idx": i_path,
                 "text": env_copy.answer,
                 "value": leaf_value,
-                "num_generated_token": self._num_generated_token,
+                "completion_tokens": self._completion_tokens,
             }
 
             traj_list.append(traj_data)
@@ -460,14 +367,17 @@ class SearchTree:
 
     def beam_search(
         self,
-        simulate_env: Type[CoTEnv],
+        simulate_env: CoTEnv,
         beam_size: int,
         max_step: int,
-        policy_forward_fn: Optional[Callable] = None,
+        reward_model_fn: Optional[Callable] = None,
     ) -> List[Dict]:
+        api_call_completion_tokens = 0
+        _, info = simulate_env.reset(update_legal_action=True)
+        api_call_completion_tokens += info['api_completion_token']
         if self.root is None:
             root = LanguageNode(text_state=simulate_env.get_state())
-            self._expand_leaf_node(root, simulate_env, policy_forward_fn)
+            self._expand_leaf_node(root, simulate_env, reward_model_fn)
             self.root = root
 
         end_nodes, top_k_nodes = [], [(-root._initial_value, root, simulate_env.copy())]
@@ -485,7 +395,7 @@ class SearchTree:
                     assert (
                         len(cur_node.children) > 0
                     ), "in beam search you should expand this non-terminal node at first."
-                    self._num_generated_token += sum(
+                    self._completion_tokens += sum(
                         c.num_generated_token for c in cur_node.children.values()
                     )
                     top_k_children = sorted(
@@ -507,10 +417,11 @@ class SearchTree:
                 _, _, terminated, truncated, info = new_env.step(
                     node.last_action, update_legal_action=True
                 )
+                api_call_completion_tokens += info['api_completion_token']
                 if terminated or truncated:
                     node.set_as_terminate_node()
                 else:
-                    self._expand_leaf_node(node, new_env, policy_forward_fn)
+                    self._expand_leaf_node(node, new_env, reward_model_fn)
 
             if len(end_nodes) == beam_size:
                 assert k == 0
@@ -523,91 +434,15 @@ class SearchTree:
                     "path_idx": i,
                     "text": e_env.answer,
                     "value": -neg_e_v,
-                    "num_generated_token": 0,
+                    "completion_tokens": 0,
+                    "tree_completion_tokens": 0
                     # num_generated_token is hard to compute, since we
                     #  allow beam size to be larger than max_action of a node.
                 }
             )
-        traj_list[-1]["num_generated_token"] = self._num_generated_token
-        return traj_list
-
-    def dfs(
-        self,
-        simulate_env: Type[CoTEnv],
-        num_paths: int,
-        policy_forward_fn: Optional[Callable] = None,
-        prune_value: Optional[float] = None,
-        prune_ratio: Optional[float] = None,
-    ) -> List[Dict]:
-        if prune_ratio:
-            assert 1 > prune_ratio > 0
-
-        if self.root is None:
-            root = LanguageNode(text_state=simulate_env.get_state())
-            self._expand_leaf_node(root, simulate_env, policy_forward_fn)
-            self.root = root
-
-        # end_nodes = []
-        traj_list = []
-        # num_visited_node = 0
-
-        def execute_dfs(cur_node, cur_env):
-            if cur_node.terminated:
-                # end_nodes.append((cur_node._initial_value, cur_node, cur_env))
-                traj_list.append(
-                    {
-                        "path_idx": len(traj_list),
-                        "text": cur_env.answer,
-                        "value": cur_node._initial_value,
-                        "num_generated_token": self._num_generated_token,
-                    }
-                )
-            else:
-                assert len(cur_node.children.values()) > 0, "node must have children"
-                self._num_generated_token += sum(
-                    c.num_generated_token for c in cur_node.children.values()
-                )
-
-                # you can select only top k children to expand here with [:k].
-                for i, child in enumerate(
-                    sorted(
-                        cur_node.children.values(),
-                        key=lambda x: x._initial_value,
-                        reverse=True,
-                    )
-                ):
-                    # # pruned by enough visited nodes.
-                    # if num_visited_node >= step_limit:
-                    #     return
-                    # else:
-                    #     num_visited_node += 1
-
-                    # sample at most num_paths answers
-                    if len(traj_list) >= num_paths:
-                        return
-
-                    if prune_value is not None and child._initial_value < prune_value:
-                        # if we don't have any answer yet, we will not prune.
-                        # since we sorted w.r.t. _initial_value
-                        return
-
-                    if prune_ratio is not None and i > (1 - prune_ratio) * len(
-                        cur_node.children
-                    ):
-                        return
-                    copy_env = cur_env.copy()
-                    _, _, terminated, truncated, info = copy_env.step(
-                        child.last_action, update_legal_action=True
-                    )
-
-                    if terminated or truncated:
-                        child.set_as_terminate_node()
-                    else:
-                        self._expand_leaf_node(child, copy_env, policy_forward_fn)
-                    execute_dfs(child, copy_env)
-
-        execute_dfs(self.root, simulate_env.copy())
-
+        traj_list[-1]["tree_completion_tokens"] = self._completion_tokens
+        traj_list[-1]["api_completion_tokens"] = api_call_completion_tokens
+        print("Finish beam_search, api_token: {}, tree_token: {}".format(api_call_completion_tokens, self._completion_tokens))
         return traj_list
 
     def _simulate(
@@ -737,7 +572,7 @@ class SearchTree:
             - child (:obj:`Node`): the child node reached by executing the action with the highest ucb score.
         """
         if not node.has_collected_token_num:
-            self._num_generated_token += sum(
+            self._completion_tokens += sum(
                 c.num_generated_token for c in node.children.values()
             )
             node.has_collected_token_num = True
@@ -778,7 +613,7 @@ class SearchTree:
         #  For select by prior, we should only calculate the token that
         #  is actually selected
         if not chosen_node.has_collected_token_num:
-            self._num_generated_token += chosen_node.num_generated_token
+            self._completion_tokens += chosen_node.num_generated_token
             chosen_node.has_collected_token_num = True
 
         return chosen_action, chosen_node

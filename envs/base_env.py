@@ -141,12 +141,13 @@ class CoTEnv(BaseEnv):
             while cnt < 3:
                 cnt += 1
                 try:
-                    self._legal_actions = self.update_legal_actions()
+                    self._legal_actions, api_completion_token = self.update_legal_actions()
                     break
                 except NoLegalActionException as e:
                     if cnt == 3:
                         raise ResetException
-        return self.get_state()
+        info = {"api_completion_token": api_completion_token}
+        return self.get_state(), info 
 
     def step(self, action, update_legal_action=True):
         self.action_history.append(action)
@@ -156,7 +157,8 @@ class CoTEnv(BaseEnv):
         # update legal actions
         if not (terminated or truncated) and update_legal_action:
             try:
-                self._legal_actions = self.update_legal_actions()
+                self._legal_actions, api_completion_token = self.update_legal_actions()
+                info["api_completion_token"] = api_completion_token
             except NoLegalActionException as e:
                 terminated = True
                 reward = 0
@@ -166,6 +168,7 @@ class CoTEnv(BaseEnv):
             self._legal_actions = None
             if info["winner"] == 1:
                 reward = 1.0
+            info["api_completion_token"] = 0
         return state, reward, terminated, truncated, info
 
     def get_state(self):
@@ -198,6 +201,7 @@ class CoTEnv(BaseEnv):
             print_with_rank(
                 "state: {}".format(self.get_state())
             )
+            print_with_rank("gen_result: {}".format(result))
             raise NoLegalActionException("No possible action have been generated.")
 
         prob_list = np.exp(prob_list)
@@ -211,7 +215,7 @@ class CoTEnv(BaseEnv):
         ]
         # print(num_token_list, sum(num_token_list), len(num_token_list), result.completion_tokens)
 
-        return _legal_actions
+        return _legal_actions, result.completion_tokens
 
     def set_problem(self, idx):
         self.math_problem = self.math_problems[idx]

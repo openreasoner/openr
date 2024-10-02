@@ -46,7 +46,7 @@ def _mcts_rollout_v1(
             "path_idx": i,
             "text": env.answer.strip(),  # drop the last "\n"
             "value": mcts.root.value,
-            "num_generated_token": num_generated_token,
+            "completion_tokens": num_generated_token,
         }
         output_episodes.append(traj_data)
 

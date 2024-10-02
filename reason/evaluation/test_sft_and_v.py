@@ -428,7 +428,7 @@ if __name__ == "__main__":
         )
 
         if output_list and args.rollout_method != "mcts.rollout":
-            num_token = output_list[-1]["num_generated_token"]
+            num_token = output_list[-1]["completion_tokens"]
         else:
             num_token = mcts.num_generated_token
         judge_results["#token"] = num_token

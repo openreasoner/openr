@@ -79,6 +79,10 @@ class SolutionOutput:
     solutions: List[str]
     completion_tokens: List[int]
 
+@dataclass
+class TreeSearchSolutionOutput(SolutionOutput):
+    tree_completion_tokens: List[int]
+
 
 @ray.remote
 class MathEvaluator:
@@ -101,6 +105,8 @@ class MathEvaluator:
         total_completion_token = 0
         for i, o in enumerate(output):
             o["completion_tokens"] = solution.completion_tokens[i]
+            if isinstance(solution, TreeSearchSolutionOutput):
+                o["tree_completion_tokens"] = solution.tree_completion_tokens[i]
             total_completion_token += solution.completion_tokens[i]
         result["total_completion_tokens"] = total_completion_token
         return problem_inst, result, output
