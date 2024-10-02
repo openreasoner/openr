@@ -68,16 +68,34 @@ output3 = """Step 4: She sells the remainder at the farmers' market daily for $2
 
 # Tokenizing function
 def preprocess_function(example):
-    input = f"{example['question']} {example['process']} {example['label']}"
+    input = f"{example['question']} {example['process']}"
     tokenized_inputs = tokenizer(
         input, 
         truncation=True, 
         # padding='max_length', 
         max_length=2048,
     )
+    
+    def find_all_indices(lst, element):
+        return [i for i, x in enumerate(lst) if x == element]
+    
     length = len(tokenized_inputs['input_ids'])
-    tokenized_inputs['labels'] = [-100] *(length-1) + tokenized_inputs['input_ids'][length-1:]
+    indices = find_all_indices(tokenized_inputs['input_ids'],step_tag_id)
+    assert len(indices) == len(example['label'])
+    
+    tokenized_inputs['labels'] = [-100] * length
     tokenized_inputs['attention_mask'] = [1] *length
+    
+    for i in range(len(indices)):
+        if example['label'][i] == '+':
+            tokenized_inputs['labels'][indices[i]] = candidate_tokens[0]
+        elif example['label'][i] == '-':
+            tokenized_inputs['labels'][indices[i]] = candidate_tokens[1]
+        else:
+            raise ValueError('label is wrong')
+        tokenized_inputs['attention_mask'][indices[i]] = 0
+    # tokenized_inputs['labels'] = [-100] *(length-1) + tokenized_inputs['input_ids'][length-1:]
+    
     return tokenized_inputs
 
 
@@ -118,11 +136,11 @@ training_args = TrainingArguments(
 # Define a custom metric function (e.g., accuracy for binary classification)
 def compute_metrics(eval_pred):
     print(eval_pred)
-    logits, labels = eval_pred
-    predictions = torch.sigmoid(torch.tensor(logits)).numpy() > 0.5
-    labels = torch.tensor(labels).numpy()
-    accuracy = (predictions == labels).mean()
-    return {"accuracy": accuracy}
+    # logits, labels = eval_pred
+    # predictions = torch.sigmoid(torch.tensor(logits)).numpy() > 0.5
+    # labels = torch.tensor(labels).numpy()
+    # accuracy = (predictions == labels).mean()
+    # return {"accuracy": accuracy}
 
 def preprocess_logits_for_metrics(logits,labels):
     print('aa')
