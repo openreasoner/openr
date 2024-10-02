@@ -4,7 +4,7 @@ python reason/evaluation/evaluate.py \
     --task_name MATH \
     --temperature 1.0 \
     --max_new_tokens 1024 \
-    --num_sequence $i \
+    --num_sequence 20 \
     --tree_max_width 20 \
     --tree_max_depth 50 \
     --save_dir debug \

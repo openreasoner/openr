@@ -15,7 +15,6 @@ class ConcatedLMGenResult:
     # post init compute number of completion_tokens
     def __post_init__(self):
         self.completion_tokens = sum(self.num_tokens)
-    
 
 
 def _generate_fastchat(
@@ -58,7 +57,9 @@ def _generate_fastchat(
     results = response.json()
     output_token_lens = results["output_token_len"]
     cum_logps = results["cumulative_logprob"]
-    avg_len_logps = [clp / max(1, otl) for clp, otl in zip(cum_logps, output_token_lens)]
+    avg_len_logps = [
+        clp / max(1, otl) for clp, otl in zip(cum_logps, output_token_lens)
+    ]
     # return results["text"], avg_len_logps
     return ConcatedLMGenResult(
         text=results["text"],

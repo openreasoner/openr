@@ -85,21 +85,28 @@ if __name__ == "__main__":
         results = []
         if config.resume_dir is not None:
             answered_questions = set()
-            with jsonlines.open(Path(config.resume_dir) / "record.jsonl", "r") as reader:
+            with jsonlines.open(
+                Path(config.resume_dir) / "record.jsonl", "r"
+            ) as reader:
                 cnt = 0
                 for obj in reader:
                     results.append(obj["result"])
-                    answered_questions.add(obj['question'])
+                    answered_questions.add(obj["question"])
                     if record_writer is not None:
                         record_writer.write(obj)
                         cnt += 1
             print(f"Resumed {cnt} questions from {config.resume_dir}")
             total_cnt = len(test_ds)
-            test_ds = [problem_inst for problem_inst in test_ds 
-                       if problem_inst['question'] not in answered_questions]
+            test_ds = [
+                problem_inst
+                for problem_inst in test_ds
+                if problem_inst["question"] not in answered_questions
+            ]
             new_cnt = len(test_ds)
-            print(f"After resuming, there are {new_cnt}/{total_cnt} new questions to answer.")
-            
+            print(
+                f"After resuming, there are {new_cnt}/{total_cnt} new questions to answer."
+            )
+
         actor_pool = ActorPool(
             [
                 MathEvaluator.remote(config.task_name, llm_gen_fn, rm_call)
@@ -163,9 +170,7 @@ if __name__ == "__main__":
 
     if config.save_dir is not None:
         datetime_str = datetime.now().strftime("%Y%m%d_%H%M%S")
-        save_dir = (
-            Path(config.save_dir) / task.task_name / config.method / datetime_str
-        )
+        save_dir = Path(config.save_dir) / task.task_name / config.method / datetime_str
         save_dir.mkdir(parents=True)
         record_writer = jsonlines.open(save_dir / f"record.jsonl", mode="w")
         json.dump(cfg_dict_record, open(save_dir / "config.json", "w"))
@@ -173,5 +178,3 @@ if __name__ == "__main__":
         save_dir = None
 
     parallel_evaluate_test_dataset(config.method, solver_fn, save_dir)
-    
-    

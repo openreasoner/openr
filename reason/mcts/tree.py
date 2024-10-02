@@ -313,7 +313,6 @@ class SearchTree:
             return action, action_probs, root
         return action, action_probs
 
-
     def vanila_mcts(
         self,
         simulate_env: Type[CoTEnv],
@@ -374,7 +373,7 @@ class SearchTree:
     ) -> List[Dict]:
         api_call_completion_tokens = 0
         _, info = simulate_env.reset(update_legal_action=True)
-        api_call_completion_tokens += info['api_completion_token']
+        api_call_completion_tokens += info["api_completion_token"]
         if self.root is None:
             root = LanguageNode(text_state=simulate_env.get_state())
             self._expand_leaf_node(root, simulate_env, reward_model_fn)
@@ -417,7 +416,7 @@ class SearchTree:
                 _, _, terminated, truncated, info = new_env.step(
                     node.last_action, update_legal_action=True
                 )
-                api_call_completion_tokens += info['api_completion_token']
+                api_call_completion_tokens += info["api_completion_token"]
                 if terminated or truncated:
                     node.set_as_terminate_node()
                 else:
@@ -434,15 +433,15 @@ class SearchTree:
                     "path_idx": i,
                     "text": e_env.answer,
                     "value": -neg_e_v,
-                    "completion_tokens": 0,
-                    "tree_completion_tokens": 0
+                    "api_completion_tokens": 0,
+                    "tree_completion_tokens": 0,
                     # num_generated_token is hard to compute, since we
                     #  allow beam size to be larger than max_action of a node.
                 }
             )
         traj_list[-1]["tree_completion_tokens"] = self._completion_tokens
         traj_list[-1]["api_completion_tokens"] = api_call_completion_tokens
-        print("Finish beam_search, api_token: {}, tree_token: {}".format(api_call_completion_tokens, self._completion_tokens))
+        # print("Finish beam_search, api_token: {}, tree_token: {}".format(api_call_completion_tokens, self._completion_tokens))
         return traj_list
 
     def _simulate(
@@ -701,7 +700,7 @@ class SearchTree:
 
             if self._init_critic_value:
                 child_value = child_values[i]
-                
+
             else:
                 child_value = 0.0
 

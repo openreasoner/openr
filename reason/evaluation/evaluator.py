@@ -79,6 +79,7 @@ class SolutionOutput:
     solutions: List[str]
     completion_tokens: List[int]
 
+
 @dataclass
 class TreeSearchSolutionOutput(SolutionOutput):
     tree_completion_tokens: List[int]

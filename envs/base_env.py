@@ -134,20 +134,22 @@ class CoTEnv(BaseEnv):
             cot_task_desc=self._task_desc_str,
             problem_format_str=self._problem_format_str,
             problem_input=self.math_problem["question"],
-            is_few_shot=self.is_few_shot
+            is_few_shot=self.is_few_shot,
         )
         if update_legal_action:
             cnt = 0
             while cnt < 3:
                 cnt += 1
                 try:
-                    self._legal_actions, api_completion_token = self.update_legal_actions()
+                    self._legal_actions, api_completion_token = (
+                        self.update_legal_actions()
+                    )
                     break
                 except NoLegalActionException as e:
                     if cnt == 3:
                         raise ResetException
         info = {"api_completion_token": api_completion_token}
-        return self.get_state(), info 
+        return self.get_state(), info
 
     def step(self, action, update_legal_action=True):
         self.action_history.append(action)
@@ -198,9 +200,7 @@ class CoTEnv(BaseEnv):
                 num_token_list.append(token_len[i])
 
         if len(prob_list) == 0:
-            print_with_rank(
-                "state: {}".format(self.get_state())
-            )
+            print_with_rank("state: {}".format(self.get_state()))
             print_with_rank("gen_result: {}".format(result))
             raise NoLegalActionException("No possible action have been generated.")
 

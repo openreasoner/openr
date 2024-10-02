@@ -16,6 +16,7 @@ pip3 install -e ".[model_worker,webui]"
 ## Running
 `export PYTHONPATH=$(pwd)`
 ### Start LM & RM Services
+Set `NUM_LM_WORKER` and `NUM_RM_WORKER`, as well as the model_path config, in `reason/llm_service/create_service_math_shepherd.sh`
 ```
 sh reason/llm_service/create_service_math_shepherd.sh
 ```
@@ -27,3 +28,6 @@ sh scripts/eval/cot_greedy.sh
 sh scripts/eval/cot_rerank.sh
 sh scripts/eval/beam_search.sh
 ```
+
+### Run Experiment for me @(anjie)
+see `scripts/eval/exp/`, run scripts in it.

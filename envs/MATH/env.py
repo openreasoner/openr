@@ -26,6 +26,7 @@ def judge_correct(
 
 class Env(CoTEnv):
     sep = SEP
+
     def __init__(
         self,
         config,

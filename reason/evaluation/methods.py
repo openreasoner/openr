@@ -100,9 +100,11 @@ def beam_search(
     )
 
     search_tree = SearchTree(cfg={})
-    traj_list = search_tree.beam_search(env, config.beam_size, config.tree_max_depth, rm_call)
+    traj_list = search_tree.beam_search(
+        env, config.beam_size, config.tree_max_depth, rm_call
+    )
     return TreeSearchSolutionOutput(
-        solutions=[t['text'] for t in traj_list],
-        completion_tokens=[t['api_completion_tokens'] for t in traj_list],
-        tree_completion_tokens=[t['tree_completion_tokens'] for t in traj_list],
+        solutions=[t["text"] for t in traj_list],
+        completion_tokens=[t["api_completion_tokens"] for t in traj_list],
+        tree_completion_tokens=[t["tree_completion_tokens"] for t in traj_list],
     )
