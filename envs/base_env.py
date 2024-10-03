@@ -179,6 +179,10 @@ class CoTEnv(BaseEnv):
             ret += self.sep
         return ret
 
+    def post_process_act(self, action: str):
+        # This step may change the token count
+        return action
+
     def update_legal_actions(self):
         result: ConcatedLMGenResult = self.llm_gen_fn(
             input_str=self.get_state(),
@@ -192,12 +196,20 @@ class CoTEnv(BaseEnv):
         logps_avg_by_len = result.logp_avg_by_len
         token_len = result.num_tokens
         text_list, prob_list, num_token_list = [], [], []
+        finish_reason_list = []
 
         for i in range(len(texts)):
-            if len(texts[i]) > 0 and texts[i] not in text_list:
-                text_list.append(texts[i])
+            processed_act = self.post_process_act(texts[i])
+            if (
+                len(processed_act) > 0
+                and processed_act not in text_list
+                # only stop is valid, otherwise the output action is truncated actually
+                and result.finish_reason[i] == "stop" 
+            ):
+                text_list.append(processed_act)
                 prob_list.append(logps_avg_by_len[i])
                 num_token_list.append(token_len[i])
+                finish_reason_list.append(result.finish_reason[i])
 
         if len(prob_list) == 0:
             print_with_rank("state: {}".format(self.get_state()))
@@ -210,10 +222,16 @@ class CoTEnv(BaseEnv):
         prob_list = prob_list / np.sum(prob_list)
 
         _legal_actions = [
-            {"action": action, "prob": prob, "num_token": n_token}
-            for action, prob, n_token in zip(text_list, prob_list, num_token_list)
+            {
+                "action": action,
+                "prob": prob,
+                "num_token": n_token,
+                "finish_reason": finish_reason,
+            }
+            for action, prob, n_token, finish_reason in zip(
+                text_list, prob_list, num_token_list, finish_reason_list
+            )
         ]
-        # print(num_token_list, sum(num_token_list), len(num_token_list), result.completion_tokens)
 
         return _legal_actions, result.completion_tokens
 

@@ -13,6 +13,8 @@ from reason.reranking.vote_utils import (
     MAJORITY_VOTE,
     PRM_MIN_MAX,
     PRM_MIN_VOTE,
+    PRM_LAST_VOTE,
+    PRM_LAST_MAX,
     AGG_FN_MAP,
 )
 from envs.base_env import INVALID_ANS
@@ -39,7 +41,13 @@ class Task:
         return get_env_datasets(self.task_name)[1]
 
 
-CHOSEN_AGGR_METHODS = [MAJORITY_VOTE, PRM_MIN_MAX, PRM_MIN_VOTE]
+CHOSEN_AGGR_METHODS = [
+    MAJORITY_VOTE,
+    PRM_MIN_MAX,
+    PRM_MIN_VOTE,
+    PRM_LAST_MAX,
+    PRM_LAST_VOTE,
+]
 
 
 def judge_ans(

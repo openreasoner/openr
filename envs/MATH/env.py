@@ -51,6 +51,22 @@ class Env(CoTEnv):
     def stop_str(self):
         return STOP_STR
 
+    def post_process_act(self, action: str):
+        # This is because the sft model will only output 'ки' at the end
+        if action.endswith("ки"):
+            action = action.strip("ки")
+        elif self.stop_str in action:
+            # for the case where no 'ки' is outputted but stop with eos
+            # this is only a soft check
+            # add an extra whitespace to avoid the tokenizer not recognizing `ки` 
+            action = action.strip() + " "
+            
+        return action
+
+    @property
+    def answer(self):
+        return self.sep.join(self.action_history) + "ки"
+
     def _is_correct(self, completion):
         extracted_answer = extract_answer(completion)
         # print("Compare: {} -- {}".format(extrated_answer,

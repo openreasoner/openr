@@ -16,6 +16,7 @@ from envs.base_env import CoTEnv
 import pdb
 from tqdm import tqdm
 import heapq
+from loguru import logger
 
 
 class Node(object):
@@ -229,8 +230,6 @@ class SearchTree:
 
         self._completion_tokens = 0
 
-        self._prune_node_under_v = self._cfg.get("prune_node_under_v", None)
-
     @property
     def num_generated_token(self):
         return self._completion_tokens
@@ -441,7 +440,6 @@ class SearchTree:
             )
         traj_list[-1]["tree_completion_tokens"] = self._completion_tokens
         traj_list[-1]["api_completion_tokens"] = api_call_completion_tokens
-        # print("Finish beam_search, api_token: {}, tree_token: {}".format(api_call_completion_tokens, self._completion_tokens))
         return traj_list
 
     def _simulate(
@@ -677,42 +675,42 @@ class SearchTree:
         else:
             leaf_value = node._initial_value
             assert len(simulate_env.legal_actions) > 0
-            child_values = policy_forward_fn(
+            prms = policy_forward_fn(
                 [
                     text_state + x["action"] + simulate_env.sep
                     for x in simulate_env.legal_actions
                 ]
             )
+            child_values = []
             # PRM get last r as single reward
-            child_values = [x[-1] for x in child_values]
-            # FIXME(ziyu): fix step 1 no sep str problem
+            for act, rs in zip(simulate_env.legal_actions, prms):
+                if len(simulate_env.action_history) + 1 != len(rs):
+                    logger.warning(
+                        "PRM value length not match with action history. s: {}\n\na: {}\nrs:{}".format(
+                            text_state, act, rs
+                        )
+                    )
+                    raise RuntimeError("Tokenizer problems")
+
+                if len(rs) == 0:
+                    logger.warning(
+                        "Empty PRM value for: \nState: \n{} \naction: \n{}, will be set to 0.0".format(
+                            text_state, act
+                        )
+                    )
+                    child_values.append(0.0)
+                else:
+                    child_values.append(rs[-1])
 
         assert len(node.children) == 0
         for i, action_dict in enumerate(simulate_env.legal_actions):
             action, prob = action_dict["action"], action_dict["prob"]
-            # self._num_generated_token += action_dict["num_token"]
-
-            # if policy_forward_fn is None:
-            #     prm_value = None
-            # else:
-            #     prm_value = policy_forward_fn(q_str,
-            #                                   prefix + "\n" + action + "\n")
 
             if self._init_critic_value:
                 child_value = child_values[i]
 
             else:
                 child_value = 0.0
-
-            if self._prune_node_under_v is not None:
-                assert (
-                    self._init_critic_value
-                ), "currently only support prune for init_critic_value setting."
-                if child_value < self._prune_node_under_v:
-                    # print_rank_0("Prune node of value {:.4f} < {:.4f}".format(
-                    #     child_value, self._prune_node_under_v
-                    # ))
-                    continue
 
             node.children[action] = LanguageNode(
                 parent=node,
@@ -813,17 +811,3 @@ class SearchTree:
         obj = cls(cfg)
         obj.root = root_node
         return obj
-
-
-if __name__ == "__main__":
-    mcts_cfg = {
-        "num_simulations": 200,
-        "pb_c_base": 19652,
-        "pb_c_init": 10,
-        "root_dirichlet_alpha": 0.3,
-        "root_noise_weight": 0.25,
-    }
-
-    tree_path = "./tree.json"
-
-    mcts = SearchTree.from_json(mcts_cfg, tree_path)
