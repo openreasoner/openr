@@ -55,6 +55,13 @@ class Env(CoTEnv):
         if not action.endswith(self.sep):
             if "ки" not in action:
                 action = action.strip() + " ки"
+        # if multiple 'ки' in the action, remove all but the last one
+        if action.count("ки") > 1:
+            if action.endswith(self.sep):
+                # remove intermediate 'ки's
+                action = action.replace("ки", "").strip("\n").strip() + " " + self.sep
+            else:
+                action = action.replace("ки", "").strip() + " ки"
         return action
 
     def _is_correct(self, completion):
