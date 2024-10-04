@@ -41,7 +41,7 @@ def judge_correct(problem_str: str, extracted_groundtruth: Optional[str], answer
         return False
 
 
-class Gsm8kEnv(CoTEnv):
+class Env(CoTEnv):
     sep = SEP
 
     def __init__(
@@ -68,6 +68,19 @@ class Gsm8kEnv(CoTEnv):
     def stop_str(self):
         return STOP_STR
 
+    def post_process_act(self, action: str):
+        if not action.endswith(self.sep):
+            if "ки" not in action:
+                action = action.strip() + " ки"
+        # if multiple 'ки' in the action, remove all but the last one
+        if action.count("ки") > 1:
+            if action.endswith(self.sep):
+                # remove intermediate 'ки's
+                action = action.replace("ки", "").strip("\n").strip() + " " + self.sep
+            else:
+                action = action.replace("ки", "").strip() + " ки"
+        return action
+
     def _is_correct(self, completion):
         extracted_answer = extract_answer(completion)
         # print("Compare: {} -- {}".format(extrated_answer,
@@ -76,12 +89,6 @@ class Gsm8kEnv(CoTEnv):
         return judge_correct(
             self.math_problem["question"], self.math_problem["answer"], extracted_answer
         )
-
-    def init_action_history(self):
-        # add the first prompted questions
-        return ([self.task_prefix] if self.task_prefix is not None else []) + [
-            f"Question: {self.math_problem['question']}\nAnswer: Let's think step by step"
-        ]
 
     def get_reward(self):
         """To implement based on learned reward model"""
