@@ -174,9 +174,7 @@ class CoTEnv(BaseEnv):
         return state, reward, terminated, truncated, info
 
     def get_state(self):
-        ret = self._init_query + self.sep.join(self.action_history)
-        if len(self.action_history) > 0:
-            ret += self.sep
+        ret = self._init_query + "".join(self.action_history)
         return ret
 
     def post_process_act(self, action: str):
@@ -189,6 +187,7 @@ class CoTEnv(BaseEnv):
             config=LMCallingConfig(
                 n=self.config["max_actions"],
                 stop_str=self.sep,
+                include_stop_str_in_output=True,
                 **self.config["generation_config"]
             ),
         )
@@ -244,21 +243,20 @@ class CoTEnv(BaseEnv):
 
     @property
     def answer(self):
-        return self.sep.join(self.action_history)
+        return "".join(self.action_history)
 
     def get_done_and_info(self):
         info = {"winner": 0}
         # done when reaches maximum length or LLM generates stop words
-        terminated = self.stop_str in self.action_history[-1]
+        if self.stop_str in self.action_history[-1]:
+            terminated = True
+        elif self.sep not in self.action_history[-1]:
+            # This is because the output is stopped by eos
+            terminated = True
+        else: terminated = False
 
         truncated = len(self.action_history) >= self.config["max_length"]
-        assert len(self.action_history) <= self.config["max_length"] + (
-            2 if self.task_prefix is not None else 1
-        ), "action history length: {}, max length: {}".format(
-            len(self.action_history),
-            self.config["max_length"] + (2 if self.task_prefix is not None else 1),
-        )
-
+        assert len(self.action_history) <= self.config["max_length"]
         if terminated or truncated:
             if self._is_correct(self.action_history[-1]):
                 info["winner"] = 1

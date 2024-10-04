@@ -677,7 +677,7 @@ class SearchTree:
             assert len(simulate_env.legal_actions) > 0
             prms = policy_forward_fn(
                 [
-                    text_state + x["action"] + simulate_env.sep
+                    text_state + x["action"]
                     for x in simulate_env.legal_actions
                 ]
             )
@@ -700,6 +700,7 @@ class SearchTree:
                     )
                     child_values.append(0.0)
                 else:
+                    # child_values.append(rs[-1])
                     child_values.append(rs[-1])
 
         assert len(node.children) == 0

@@ -1,5 +1,4 @@
-# iterate i in 1, 2, 3, 5, 10, 20
-for i in 1 2 3 5 10 20:
+for i in 1 4 16 64:
 do
     python reason/evaluation/evaluate.py \
         --LM mistral-7b-sft \
@@ -8,7 +7,7 @@ do
         --temperature 1.0 \
         --max_new_tokens 1024 \
         --num_sequence $i \
-        --tree_max_width 20 \
+        --tree_max_width 4 \
         --tree_max_depth 50 \
         --save_dir results \
         --method beam_search \

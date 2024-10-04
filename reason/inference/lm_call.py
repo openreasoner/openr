@@ -12,6 +12,7 @@ class LMCallingConfig:
     max_new_tokens: int = 512
     stop_token_ids: Optional[List[int]] = None
     stop_str: Optional[str] = None
+    include_stop_str_in_output: bool = False
 
 
 class LanguageModelCallingFunction:
@@ -36,4 +37,5 @@ class VLLMRemoteCaller(LanguageModelCallingFunction):
             stop_token_ids=config.stop_token_ids,
             stop_str=config.stop_str,
             controller_addr=self.controller_addr,
+            include_stop_str_in_output=config.include_stop_str_in_output,
         )
