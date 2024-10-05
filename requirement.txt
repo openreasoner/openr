@@ -19,3 +19,4 @@ protobuf
 accelerate>=0.34.2
 numpy
 pylatexenc
+loguru
