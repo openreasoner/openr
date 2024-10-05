@@ -35,8 +35,8 @@ def parse_args(args, parser):
     parser.add_argument('--dataset_name', type=str, default='prealgebra', help="Which dataset to test on.")
     parser.add_argument('--dataset_path', type=str, help="Path to the dataset file.")
     parser.add_argument('--model_name_or_path', type=str, help="Name of the agent model or path to the agent model checkpoint.")
-    parser.add_argument('--prm_model_name_or_path', type=str, default='/home/jwliao/models/math-shepherd-mistral-7b-prm', help="Name of the model or path to the process reward model checkpoint.")
-    parser.add_argument('--max_new_tokens', type=int, default=64, help="max_new_tokens")
+    parser.add_argument('--prm_model_name_or_path', type=str, default='', help="Name of the model or path to the process reward model checkpoint.")
+    parser.add_argument('--max_new_tokens', type=int, default=96, help="max_new_tokens")
     parser.add_argument('--vacab_size', type=int, default=151936)
     parser.add_argument('--gradient_cp_steps', type=int, default=4)
     all_args = parser.parse_known_args(args)[0]
@@ -71,8 +71,6 @@ def main(args):
     all_args.log_interval = 1
     all_args.critic_lr = 5e-5
     all_args.lr = 1e-6
-    
-    all_args.use_eval = True
     print("algorithm: {}, dataset_name: {}".format(all_args.algorithm_name, all_args.dataset_name))
 
     run_dir = build_run_dir(all_args)
@@ -96,10 +94,6 @@ def main(args):
     runner = Runner(config)
     runner.run()
     # runner.eval(0)
-
-    # post process
-    if envs is not None:
-        envs.close()
 
     runner.writter.export_scalars_to_json(str(runner.log_dir + '/summary.json'))
     runner.writter.close()

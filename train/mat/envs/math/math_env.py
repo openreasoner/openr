@@ -2,6 +2,7 @@ import numpy as np
 import json
 import random
 from copy import deepcopy
+from mat.envs.math.prompts import IN_CONTEXT_EXAMPLE
 
 # training data with mode="train" and testing data with mode="test"
 def load_dataset(dataset_path, mode):
@@ -31,14 +32,14 @@ class MathEnv:
         self.problem = problem_answer_pair["problem"]
         self.label = problem_answer_pair["final_answer"]
         self.current_state = self.problem
-        obs = np.array([self.problem], dtype=np.object_)
+        obs = np.array([IN_CONTEXT_EXAMPLE + self.problem], dtype=np.object_)
         self.step_count = 0
         return obs
     
     def step(self, action):
         self.step_count += 1
         action = action[0]
-        self.current_state = self.current_state + "\n" + action + self.step_tag
+        self.current_state = self.current_state + "\n" + action.strip() + self.step_tag + "\n"
         next_obs = np.array([self.current_state], dtype=np.object_)
         
         score = 0.0

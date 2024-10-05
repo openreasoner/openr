@@ -94,8 +94,8 @@ class MathRunner:
                 episodic_returns = []
 
             # eval
-            if self.all_args.use_eval and episode % self.eval_interval == 0:
-                self.eval(total_num_steps)
+            # if self.all_args.use_eval and episode % self.eval_interval == 0:
+            #     self.eval(total_num_steps)
         # print("buffer: ", self.buffer.value_preds)
         
 
