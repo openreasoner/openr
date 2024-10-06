@@ -1,1 +1,0 @@
-upd: centered logo
