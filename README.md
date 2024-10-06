@@ -36,7 +36,7 @@
 <!-- <h3 align="center">OpenR</h3> -->
 
 <p align="center">
-    <strong>OpenR</strong>: OpenR: An Open-Sourced Framework for Advancing Reasoning in Large Language Models
+    <strong>OpenR</strong>: An Open-Sourced Framework for Advancing Reasoning in Large Language Models
     <!-- <br />
     <a href="https://openreasoner.github.io/"><strong>Explore the docs »</strong></a>
     <br /> -->
@@ -142,3 +142,23 @@ bash train_llm.sh
 [Let's Verify Step by Step](https://arxiv.org/abs/2305.20050)
 
 [Learning to Reason with LLMs](https://openai.com/index/learning-to-reason-with-llms/)
+
+
+
+
+
+<!-- MARKDOWN LINKS & IMAGES -->
+
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+
+[contributors-shield]: https://img.shields.io/github/contributors/openreasoner/o1-dev.svg?style=for-the-badge
+[contributors-url]: https://github.com/openreasoner/o1-dev/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/openreasoner/o1-dev.svg?style=for-the-badge
+[forks-url]: https://github.com/openreasoner/o1-dev/network/members
+[stars-shield]: https://img.shields.io/github/stars/openreasoner/o1-dev.svg?style=for-the-badge
+[stars-url]: https://github.com/openreasoner/o1-dev/stargazers
+[issues-shield]: https://img.shields.io/github/issues/openreasoner/o1-dev.svg?style=for-the-badge
+[issues-url]: https://github.com/openreasoner/o1-dev/issues
+
+[license-shield]: https://img.shields.io/github/license/openreasoner/o1-dev.svg?style=for-the-badge
+[license-url]: https://github.com/openreasoner/o1-dev/blob/main/LICENSE.txt
