@@ -411,6 +411,7 @@ class SearchTree:
             top_k_nodes = heapq.nsmallest(k, top_k_nodes)
 
             # expand selected nodes
+            # XXX(ziyu): this could be optimized by batch expand
             for value, node, new_env in top_k_nodes:
                 _, _, terminated, truncated, info = new_env.step(
                     node.last_action, update_legal_action=True

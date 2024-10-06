@@ -6,11 +6,7 @@
 conda create -n open_reasoner python=3.10
 conda activate open_reasoner
 pip install -r requirements.txt
-
-cd .. 
-git clone git@github.com:ziyuwan/FastChat_tsllm.git
-cd FastChat_tsllm
-pip3 install -e ".[model_worker,webui]"
+pip3 install  "fschat[model_worker,webui]"
 ```
 
 ## Running
