@@ -1,13 +1,18 @@
 import numpy as np
 import json
+import jsonlines
 import random
 from copy import deepcopy
 from mat.envs.math.prompts import IN_CONTEXT_EXAMPLE
 
 # training data with mode="train" and testing data with mode="test"
 def load_dataset(dataset_path, mode):
-    with open(dataset_path, "r") as f:
-        dataset = json.load(f)
+    if "jsonl" in dataset_path:
+        with jsonlines.open(dataset_path) as reader:
+            dataset = [line for line in reader]
+    else:
+        with open(dataset_path, "r") as f:
+            dataset = json.load(f)
     return dataset
 
 class MathEnv:
@@ -28,25 +33,28 @@ class MathEnv:
         self.current_state = None
 
     def reset(self):
-        problem_answer_pair = random.choice(self.dataset)
+        # problem_answer_pair = random.choice(self.dataset)
+        problem_answer_pair = self.dataset[3]
         self.problem = problem_answer_pair["problem"]
         self.label = problem_answer_pair["final_answer"]
-        self.current_state = self.problem
-        obs = np.array([IN_CONTEXT_EXAMPLE + self.problem], dtype=np.object_)
+        self.current_state = IN_CONTEXT_EXAMPLE + self.problem + "\n"
+        obs = np.array([self.current_state], dtype=np.object_)
         self.step_count = 0
         return obs
     
     def step(self, action):
         self.step_count += 1
         action = action[0]
-        self.current_state = self.current_state + "\n" + action.strip() + self.step_tag + "\n"
+        action = action.replace(self.step_tag, "").strip()
+        self.current_state = self.current_state + action + " " + self.step_tag + "\n"
+        # self.current_state = self.current_state + action.strip() + "\n"
         next_obs = np.array([self.current_state], dtype=np.object_)
         
         score = 0.0
-        if "answer" in action.lower() or self.label in action.lower():
+        if "step" in action.lower() or "answer" in action.lower():
+            score = 1.0
+        if "answer" in action.lower():
             dones = np.ones((self.n_agents), dtype=bool)
-            if self.label in action.lower():
-                score = 1.0
         elif self.step_count >= self.max_step:
             dones = np.ones((self.n_agents), dtype=bool)
         else:

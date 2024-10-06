@@ -64,6 +64,8 @@ class MathRunner:
                 rewards = self.prm.get_reward(obs, actions)
 
                 # Obs reward and next obs
+                # print("obs: ", obs[0])
+                # print("actions: ", actions[0])
                 obs, fake_rewards, dones, infos = self.envs.step(actions)
 
                 # insert data into buffer

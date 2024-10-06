@@ -39,10 +39,10 @@ class ProcessRM(nn.Module):
     @torch.no_grad()
     def get_reward(self, obs: list[np.ndarray[str]], actions: list[np.ndarray[str]]):
         inputs_for_prm = []
-        for o, a in zip(obs, actions):
+        for o, a in zip(obs.copy(), actions.copy()):
             o = o[0].replace(IN_CONTEXT_EXAMPLE, "")
-            a = a[0]
-            inputs_for_prm.append(f"{o} {a} {self.step_tag}")
+            a = a[0].replace(self.step_tag, "").strip()
+            inputs_for_prm.append(f"{o}{a} {self.step_tag}")
         # inputs_for_prm = [f"{o.replace(IN_CONTEXT_EXAMPLE, "")} {a} {self.step_tag}" for o, a in zip(obs, actions)]
         # input_ids = [torch.tensor([self.tokenizer.encode(ip)]).to("cuda") for ip in inputs_for_prm]
         input_ids = self.tokenizer(inputs_for_prm, return_tensors="pt", padding=True).to("cuda")
