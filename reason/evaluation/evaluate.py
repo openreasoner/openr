@@ -4,7 +4,7 @@ from typing import Any, Callable, Dict, List, Optional, Union
 from config.config_utils import str2bool
 from reason.inference.lm_call import LMCallingConfig, VLLMRemoteCaller
 from reason.inference.rm_call import RMRemoteCaller
-from reason.evaluation.evaluator import SolutionOutput, Task, MathEvaluator
+from reason.evaluation.evaluator import SolutionOutput, Task, RemoteMathEvaluator
 import torch
 from functools import partial
 import json
@@ -109,7 +109,7 @@ if __name__ == "__main__":
 
         actor_pool = ActorPool(
             [
-                MathEvaluator.remote(config.task_name, llm_gen_fn, rm_call)
+                RemoteMathEvaluator.remote(config.task_name, llm_gen_fn, rm_call)
                 for _ in range(config.num_worker)
             ]
         )

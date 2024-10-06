@@ -93,7 +93,7 @@ class TreeSearchSolutionOutput(SolutionOutput):
     tree_completion_tokens: List[int]
 
 
-@ray.remote
+
 class MathEvaluator:
 
     def __init__(
@@ -123,7 +123,7 @@ class MathEvaluator:
     def analyze_output(self, problem_inst: Dict[str, str], gen_answers: List[str]):
         extracted_groundtruth = self._task.extract_groundtruth(problem_inst["answer"])
         prompt = self._task.prompt_fn(problem_inst["question"])
-        # import pdb; pdb.set_trace()
+
         if len(gen_answers) > 1:
             value_list = self.rm_call([prompt + txt for txt in gen_answers])
         else:
@@ -147,3 +147,13 @@ class MathEvaluator:
             )
         }
         return res, output_list
+
+@ray.remote
+class RemoteMathEvaluator(MathEvaluator):
+    def __init__(
+        self,
+        task: str,
+        lm_call: LanguageModelCallingFunction,
+        rm_call: RewardModelCallingFunction,
+    ):
+        super().__init__(task, lm_call, rm_call)
