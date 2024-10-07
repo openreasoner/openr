@@ -45,7 +45,7 @@ tokenizer.padding_side = "left"  # Allow batched inference
 
 
 # tokenizer = AutoTokenizer.from_pretrained('peiyi9979/math-shepherd-mistral-7b-prm')
-candidate_tokens = tokenizer.encode(f"{good_token} {bad_token}")[1:] # [648, 387]
+candidate_tokens = tokenizer.encode(f"{good_token} {bad_token}")[1:] # [648, 387] token_id of + -  
 step_tag_id = tokenizer.encode(f"{step_tag}")[-1] # 12902
 print('step_tag_id:',tokenizer.encode(f"{step_tag}"))
 # model = AutoModelForCausalLM.from_pretrained('peiyi9979/math-shepherd-mistral-7b-prm').eval()
@@ -184,10 +184,10 @@ def compute_metrics(eval_pred):
 def preprocess_logits_for_metrics(logits,labels):
     print('aa')
     # return logits,labels
-    labels_index = torch.argwhere(torch.bitwise_or(labels == 648, labels == 387))
-    gold = torch.where(labels[labels_index[:, 0], labels_index[:, 1]] == 387, 0, 1)
+    labels_index = torch.argwhere(torch.bitwise_or(labels == candidate_tokens[0], labels == candidate_tokens[1]))
+    gold = torch.where(labels[labels_index[:, 0], labels_index[:, 1]] == candidate_tokens[1], 0, 1)
     # labels_index[: , 1] = labels_index[: , 1] - 1
-    logits = logits[labels_index[:, 0], labels_index[:, 1]][:, [387, 648]]
+    logits = logits[labels_index[:, 0], labels_index[:, 1]][:, [candidate_tokens[1], candidate_tokens[0]]]
     prob = torch.softmax(logits, dim=-1)
     return prob[:, 1], gold
     
