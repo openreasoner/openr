@@ -14,7 +14,7 @@ from transformers import DataCollatorWithPadding
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--per_device_train_batch_size", type=int, default=1)
+parser.add_argument("--per_device_train_batch_size", type=int, default=4)
 parser.add_argument("--per_device_eval_batch_size", type=int, default=1)
 parser.add_argument("--total_batch_size", type=int, default=64)
 parser.add_argument("--learning_rate", type=int, default=1e-4)
@@ -83,8 +83,9 @@ def preprocess_function(example):
     tokenized_inputs = tokenizer(
         input, 
         truncation=True, 
-        # padding='max_length', 
-        max_length=1024,
+        padding='max_length', 
+        # padding=True,
+        max_length=128,
     )
     
     def find_all_indices(lst, element):
@@ -101,7 +102,7 @@ def preprocess_function(example):
     assert len(indices) == len(example['label'])
     
     tokenized_inputs['labels'] = [-100] * length
-    tokenized_inputs['attention_mask'] = [1] *length
+    # tokenized_inputs['attention_mask'] = [1] *length
     
     for i in range(len(indices)):
         if example['label'][i] == '+' or example['label'][i] == 1:
@@ -117,8 +118,9 @@ def preprocess_function(example):
 
 DATA_PATH = {
     # "train": 'multi-step.json', 
-    "train": "../../data/prm800k/prm800k/prm800k/data/phase2_train_new.jsonl",
-    "test": "../../data/prm800k/prm800k/prm800k/data/phase2_test_new.jsonl",
+    # "train": 'test.json',
+    "train": "../../data/prm800k/prm800k/prm800k/data/phase1_train_new.jsonl",
+    "test": "../../data/prm800k/prm800k/prm800k/data/phase1_test_new.jsonl",
     # "test": 'multi-step.json',
 }
 
@@ -134,22 +136,24 @@ print('dataset processed')
 # print(len(tokenized_datasets['train']['input_ids'][0]))
 
 # Data collator for padding inputs dynamically
-data_collator = DataCollatorWithPadding(tokenizer)
+data_collator = DataCollatorWithPadding(tokenizer=tokenizer)
 
 BATCH_SIZE = args.total_batch_size
 GRADIENT_ACCUMULATION_STEPS = BATCH_SIZE // args.per_device_train_batch_size
 
+print(BATCH_SIZE,GRADIENT_ACCUMULATION_STEPS)
+
 fp = f'bs_{args.total_batch_size}_lr_{args.learning_rate}'
 output_path = f'./prm_results/{fp}'
 
-
+print(args)
 # Training arguments
 training_args = TrainingArguments(
     output_dir=output_path,
     evaluation_strategy="epoch",  # Evaluate at the end of each epoch
     learning_rate=args.learning_rate,
-    per_device_train_batch_size=1,
-    per_device_eval_batch_size=1,
+    per_device_train_batch_size=args.per_device_train_batch_size,
+    per_device_eval_batch_size=args.per_device_eval_batch_size,
     gradient_accumulation_steps=GRADIENT_ACCUMULATION_STEPS,
     num_train_epochs=3,
     weight_decay=0.01,
