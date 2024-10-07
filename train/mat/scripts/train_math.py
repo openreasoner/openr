@@ -38,7 +38,7 @@ def parse_args(args, parser):
     parser.add_argument('--prm_model_name_or_path', type=str, default='', help="Name of the model or path to the process reward model checkpoint.")
     parser.add_argument('--max_new_tokens', type=int, default=96, help="max_new_tokens")
     parser.add_argument('--vacab_size', type=int, default=151936)
-    parser.add_argument('--gradient_cp_steps', type=int, default=1)
+    parser.add_argument('--gradient_cp_steps', type=int, default=2)
     all_args = parser.parse_known_args(args)[0]
 
     return all_args

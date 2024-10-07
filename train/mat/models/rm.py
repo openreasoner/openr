@@ -19,21 +19,6 @@ class ProcessRM(nn.Module):
         self.step_tag_id = self.tokenizer.encode(f"{self.step_tag}")[-1] # 12902
         self.model = AutoModelForCausalLM.from_pretrained(model_name_or_path, device_map="auto",).eval()
         print(f"successfully loaded PRM.")
-        
-        # from mat.envs.math.prompts import IN_CONTEXT_EXAMPLE
-        # input_id = torch.tensor([self.tokenizer.encode(IN_CONTEXT_EXAMPLE)]).to("cuda")
-        # print("input_id: ", input_id)
-        
-        # print("candidate_tokens: ", self.candidate_tokens)
-        # print("step_tag_id: ", self.step_tag_id)
-        # with torch.no_grad():
-        #     logits = self.model(input_id).logits[:,:,self.candidate_tokens]
-        #     print("logits: ", logits)
-        #     scores = logits.softmax(dim=-1)[:,:,0] 
-        #     print("scores: ", scores)
-        #     step_scores = scores[input_id == self.step_tag_id]
-        #     print("step_scores: ", step_scores)
-        # exit()
             
 
     @torch.no_grad()
@@ -43,8 +28,6 @@ class ProcessRM(nn.Module):
             o = o[0].replace(IN_CONTEXT_EXAMPLE, "")
             a = a[0].replace(self.step_tag, "").strip()
             inputs_for_prm.append(f"{o}{a} {self.step_tag}")
-        # inputs_for_prm = [f"{o.replace(IN_CONTEXT_EXAMPLE, "")} {a} {self.step_tag}" for o, a in zip(obs, actions)]
-        # input_ids = [torch.tensor([self.tokenizer.encode(ip)]).to("cuda") for ip in inputs_for_prm]
         input_ids = self.tokenizer(inputs_for_prm, return_tensors="pt", padding=True).to("cuda")
         logits = self.model(**input_ids).logits[:, :, self.candidate_tokens]
         score = logits.softmax(dim=-1)[:, :, 0]
@@ -55,13 +38,5 @@ class ProcessRM(nn.Module):
             last_step_score = step_score[-1]
             step_scores.append([last_step_score.item()])
         step_scores = np.array(step_scores)
-
-        # step_scores = []
-        # with torch.no_grad():
-        #     for input_id in input_ids:
-        #         logits = self.model(input_id).logits[:, :, self.candidate_tokens]
-        #         score = logits.softmax(dim=-1)[:, :, 0]
-        #         step_score = score[input_id == self.step_tag_id][-1]
-        #         step_scores.append(step_score)
-        #     step_scores = np.array([[score.item()] for score in step_scores])
+        
         return step_scores

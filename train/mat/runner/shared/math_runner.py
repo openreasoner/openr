@@ -23,6 +23,7 @@ class MathRunner:
         self.n_rollout_threads = self.all_args.n_rollout_threads
         self.log_interval = self.all_args.log_interval
         self.eval_interval = self.all_args.eval_interval
+        self.save_interval = self.all_args.save_interval
         self.algo = self.all_args.algorithm_name
 
         self.run_dir = config["run_dir"]
@@ -64,8 +65,6 @@ class MathRunner:
                 rewards = self.prm.get_reward(obs, actions)
 
                 # Obs reward and next obs
-                # print("obs: ", obs[0])
-                # print("actions: ", actions[0])
                 obs, fake_rewards, dones, infos = self.envs.step(actions)
 
                 # insert data into buffer
@@ -81,10 +80,9 @@ class MathRunner:
             train_infos = self.trainer.train(self.buffer)      
             self.buffer.after_update()
             
-            # post process
             # save model
-            # if (episode == episodes - 1):
-            #     self.save(episode)
+            if (episode == episodes - 1 or episode % self.save_interval == 0):
+                self.save(episode)
 
             # log information
             if episode % self.log_interval == 0:
@@ -98,7 +96,6 @@ class MathRunner:
             # eval
             # if self.all_args.use_eval and episode % self.eval_interval == 0:
             #     self.eval(total_num_steps)
-        # print("buffer: ", self.buffer.value_preds)
         
 
     @torch.no_grad()

@@ -32,27 +32,12 @@ class QwenLoRAgent:
         self.tokenizer = AutoTokenizer.from_pretrained(model_name, use_fast=True, padding_side='left', trust_remote_code=True)
         self.tokenizer.pad_token_id = 151655 # "<|image_pad|>"
         
-        # print("pading token id: ", self.tokenizer.pad_token_id)
-        # print("eos token id: ", self.tokenizer.eos_token_id)
-        # print("bos token id: ", self.tokenizer.bos_token_id)
-        
-        # token_seq = self.tokenizer("\n\n", return_tensors="pt", padding=True)
-        # input_ids = token_seq["input_ids"].to("cuda")
-        # print("input_ids: ", input_ids)
-        
-        # revocer = self.tokenizer.decode([151655], skip_special_tokens=False) # "<|image_pad|>"
-        # print("recover: ", revocer)
-        # revocer = self.tokenizer.decode([1899], skip_special_tokens=False)
-        # print("recover2: ", revocer)
-        # exit()
-        
         self.base_model = AutoModelForCausalLM.from_pretrained(model_name, 
                                                                torch_dtype=torch.float16,
                                                                device_map="auto",
                                                                trust_remote_code=True)
         self.base_model.half().to(self.device)
         
-        # self.device = next(self.generator.parameters()).device
         self.max_new_tokens = max_new_tokens
         
         if load_path is None:

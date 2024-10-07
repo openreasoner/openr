@@ -267,7 +267,7 @@ def get_config():
     parser.add_argument("--use_linear_lr_decay", action='store_true',
                         default=False, help='use a linear schedule on the learning rate')
     # save parameters
-    parser.add_argument("--save_interval", type=int, default=100, help="time duration between contiunous twice models saving.")
+    parser.add_argument("--save_interval", type=int, default=200, help="time duration between contiunous twice models saving.")
 
     # log parameters
     parser.add_argument("--log_interval", type=int, default=1, help="time duration between contiunous twice log printing.")
