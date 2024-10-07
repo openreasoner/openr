@@ -3,7 +3,7 @@ import torch
 from datasets import load_dataset
 import argparse
 
-from peft import PeftModel
+from peft import PeftModel, PeftConfig
 from peft import get_peft_model, LoraConfig, TaskType
 # Ensure bitsandbytes is available for 8-bit quantization
 import bitsandbytes as bnb
@@ -61,15 +61,22 @@ model = AutoModelForCausalLM.from_pretrained(
 #     print(name)
 print(model)
 
-lora_config = LoraConfig(
-    task_type=TaskType.CAUSAL_LM,  # LoRA for causal language modeling task
-    r=8,  # Rank of LoRA
-    lora_alpha=32,  # Alpha scaling factor for LoRA
-    lora_dropout=0.1,  # Dropout rate for LoRA layers
-    target_modules=["q_proj", "v_proj"],  # Apply LoRA to specific layers
-)
+# Load the adapter configuration (LoRA config)
+adapter_config = PeftConfig.from_pretrained('./results/checkpoint-2767')
 
-model = get_peft_model(model, lora_config)
+# Wrap the pre-trained model with the LoRA fine-tuned weights
+model = PeftModel.from_pretrained(model, './results/checkpoint-2767')
+
+
+# lora_config = LoraConfig(
+#     task_type=TaskType.CAUSAL_LM,  # LoRA for causal language modeling task
+#     r=8,  # Rank of LoRA
+#     lora_alpha=32,  # Alpha scaling factor for LoRA
+#     lora_dropout=0.1,  # Dropout rate for LoRA layers
+#     target_modules=["q_proj", "v_proj"],  # Apply LoRA to specific layers
+# )
+
+# model = get_peft_model(model, lora_config)
 
 # model.to('cuda:0')
 print(model.device)
@@ -117,8 +124,8 @@ def preprocess_function(example):
 
 DATA_PATH = {
     # "train": 'multi-step.json', 
-    "train": "../../data/prm800k/prm800k/prm800k/data/phase2_train_new.jsonl",
-    "test": "../../data/prm800k/prm800k/prm800k/data/phase2_test_new.jsonl",
+    "train": "../../data/prm800k/prm800k/prm800k/data/phase1_train_new.jsonl",
+    "test": "../../data/prm800k/prm800k/prm800k/data/phase1_test_new.jsonl",
     # "test": 'multi-step.json',
 }
 
@@ -200,8 +207,8 @@ trainer = Trainer(
     compute_metrics=compute_metrics,
 )
 
-trainer.train()
-# trainer.evaluate()
+# trainer.train()
+trainer.evaluate()
 
 # Save the fine-tuned model and tokenizer
 model.save_pretrained('./fine_tuned_math_shepherd_lora_8bit')
