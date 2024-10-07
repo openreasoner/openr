@@ -42,7 +42,8 @@ class QwenLoRAgent:
         
         if load_path is None:
             self.actor = self._init_actor().to(self.device)
-            self.critic = self._init_critic().to(self.device)
+            if self.algo != "GRPO":
+                self.critic = self._init_critic().to(self.device)
         else:
             self.load(load_path)
     
@@ -251,6 +252,12 @@ class QwenLoRAgent:
             action_tokens = action_tokens.int().cpu().numpy()
             token_log_probs = token_log_probs.float().cpu().numpy()
             log_probs = token_log_probs
+        elif self.algo == "GRPO":
+            values = np.zeros((obs.shape[0],)) # fake values, grpo does not use critic
+            action_log_probs, _ = self.get_joint_action_log_probs(obs, action_tokens, batch_infer=True)
+            action_tokens = action_tokens.int().cpu().numpy()
+            action_log_probs = action_log_probs.float().cpu().numpy()
+            log_probs = action_log_probs
         else:
             raise NotImplementedError
 
@@ -280,6 +287,8 @@ class QwenLoRAgent:
             values = self.get_next_tppo_values(obs).squeeze(-1)
             values = values.cpu().float().numpy()
             return values
+        elif self.algo == "GRPO":
+            return np.zeros((obs.shape[0],)) # fake values, grpo does not use critic
         else: 
             raise NotImplementedError
         
@@ -300,13 +309,15 @@ class QwenLoRAgent:
         # save lora
         self.actor.save_pretrained(exp_path)
         # save critic
-        torch.save(self.critic.v_head.state_dict(), os.path.join(exp_path, "critic.pth"))
+        if self.algo != "GRPO":
+            torch.save(self.critic.v_head.state_dict(), os.path.join(exp_path, "critic.pth"))
 
     def load(self, save_dir):
         print("load model")
         self.actor = self._init_actor(save_dir).to(self.device)
         critic_weights = os.path.join(save_dir, "critic.pth")
-        self.critic = self._init_critic(critic_weights).to(self.device)
+        if self.algo != "GRPO":
+            self.critic = self._init_critic(critic_weights).to(self.device)
 
     def train(self):
         self.generator.train()

@@ -9,6 +9,7 @@ from mat.models.rm import ProcessRM
 from mat.utils.language_buffer import LanguageBuffer
 from mat.trainers.llm_trainer_appo import APPOTrainer
 from mat.trainers.llm_trainer_tppo import TPPOTrainer
+from mat.trainers.llm_trainer_grpo import GRPOTrainer
 
 def _t2n(x):
     return x.detach().cpu().numpy()
@@ -45,6 +46,8 @@ class MathRunner:
             self.trainer = APPOTrainer(self.all_args, self.agent, self.num_agents)
         elif self.algo == "TPPO":
             self.trainer = TPPOTrainer(self.all_args, self.agent, self.num_agents)
+        elif self.algo == "GRPO":
+            self.trainer = GRPOTrainer(self.all_args, self.agent, self.num_agents)
         else:
             raise NotImplementedError
 
@@ -119,7 +122,7 @@ class MathRunner:
         masks = np.ones((self.n_rollout_threads, self.num_agents), dtype=np.float32)
         masks[dones_env == True] = np.zeros(((dones_env == True).sum(), self.num_agents), dtype=np.float32)
 
-        if self.algo == "APPO":
+        if self.algo == "APPO" or self.algo == "GRPO":
             self.buffer.insert_appo(obs, actions, values, rewards, masks, action_tokens, log_probs)
         elif self.algo == "TPPO":
             self.buffer.insert_tppo(obs, actions, values, rewards, masks, action_tokens, log_probs)
@@ -135,6 +138,8 @@ class MathRunner:
             self.buffer.batch_process_appo(next_values)
         elif self.algo == "TPPO":
             self.buffer.batch_process_tppo(next_values)
+        elif self.algo == "GRPO":
+            self.buffer.batch_process_grpo()
         else:
             raise NotImplementedError
 

@@ -47,7 +47,7 @@ class LanguageBuffer(object):
         self.rewards = np.zeros((self.episode_length, self.n_rollout_threads, num_agents), dtype=np.float32)
         self.masks = np.ones((self.episode_length + 1, self.n_rollout_threads, num_agents), dtype=np.float32)
         
-        # for action-level ppo
+        # for action-level ppo and grpo
         self.action_level_v_values = np.zeros((self.episode_length + 1, self.n_rollout_threads, num_agents), dtype=np.float32)
         self.action_level_returns = np.zeros((self.episode_length, self.n_rollout_threads, num_agents), dtype=np.float32)
         self.action_level_advantages = np.zeros_like(self.action_level_returns)
@@ -109,6 +109,9 @@ class LanguageBuffer(object):
             gae = delta + self.gamma * self.gae_lambda * self.masks[step + 1] * gae
             self.action_level_returns[step] = self.action_level_v_values[step] + gae
             self.action_level_advantages[step] = gae
+            
+    def batch_process_grpo(self):
+        self.action_level_advantages = (self.rewards - np.mean(self.rewards)) / (np.std(self.rewards) + 1e-8)
         
     def batch_process_tppo(self, next_value):
         self.tppo_values[-1, :, :, 0] = next_value
