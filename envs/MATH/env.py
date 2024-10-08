@@ -57,10 +57,7 @@ class Env(CoTEnv):
 
     def post_process_act(self, action: str):
         if not action.endswith(self.sep):
-            # action = action.strip() + self.sep
-            action = action.strip() + STEP_TAG
-        else:
-            action = action.strip(STOP_STR) + STEP_TAG
+            action = action.strip() + self.sep
         
         return action
 
