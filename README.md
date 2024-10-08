@@ -102,6 +102,15 @@ Todo: performance with more time spent thinking (test-time compute)
 
 ### Installation
 Todo: libs
+```
+conda create -n open_reasoner python=3.10
+conda activate open_reasoner
+pip install -r requirements.txt
+pip3 install  "fschat[model_worker,webui]"
+cd envs/MATH/latex2sympy
+pip install -e .
+cd -
+```
 
 ### Quickstart
 This following starts the language model (LM) and reward model (RM) services required for running inference. 

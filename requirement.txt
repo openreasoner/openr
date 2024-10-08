@@ -20,3 +20,10 @@ accelerate>=0.34.2
 numpy
 pylatexenc
 loguru
+sympy==1.12
+antlr4-python3-runtime==4.11.1 # ! The version needs to be compatible with sympy.
+word2number
+Pebble
+timeout-decorator
+flash_attn
+python_dateutil
