@@ -30,7 +30,8 @@ class BaseEnv(abc.ABC):
     def step(self):
         raise NotImplementedError
 
-    @abc.abstractproperty
+    @property
+    @abc.abstractmethod
     def legal_actions(self):
         raise NotImplementedError
 
@@ -248,7 +249,7 @@ class CoTEnv(BaseEnv):
     def get_done_and_info(self):
         info = {"winner": 0}
         # done when reaches maximum length or LLM generates stop words
-        if self.stop_str in self.action_history[-1]:
+        if self.stop_str is not None and self.stop_str in self.action_history[-1]:
             terminated = True
         elif self.sep not in self.action_history[-1]:
             # This is because the output is stopped by eos

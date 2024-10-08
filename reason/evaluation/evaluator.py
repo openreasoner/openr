@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from datetime import datetime
 import importlib
 from multiprocessing import Pool
-from typing import Any, Callable, Dict, Optional, List
+from typing import Any, Callable, Dict, Optional, List, Union
 
 import numpy as np
 import ray
@@ -58,6 +58,7 @@ def judge_ans(
     aggration_mode: str,
     extract_answer_fn,
     judge_correct_fn,
+    normalize=False,
 ):
     ans_list = [extract_answer_fn(txt) for txt in output_list]
     valid_ans_list, valid_v_list = [], []
@@ -65,11 +66,10 @@ def judge_ans(
         if ans != INVALID_ANS:
             valid_ans_list.append(ans)
             valid_v_list.append(v_list[i])
-
     if len(valid_ans_list) == 0:
         return 0
 
-    if "orm" in aggration_mode:
+    if "orm" in aggration_mode and normalize:
         # score_normalization: this is only necessary for [-1, 1] values
         valid_v_list = np.array(valid_v_list)
         valid_v_list -= valid_v_list.min()
@@ -98,11 +98,15 @@ class MathEvaluator:
 
     def __init__(
         self,
-        task: str,
+        task: Union[str, Task],
         lm_call: LanguageModelCallingFunction,
         rm_call: RewardModelCallingFunction,
     ):
-        self._task = Task(task_name=task)
+        if isinstance(task, str):
+            self._task = Task(task_name=task)
+        else:
+            assert isinstance(task, Task)
+            self._task = task
         self.lm_call = lm_call
         self.rm_call = rm_call
 

@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from reason.inference.lm_call import LMCallingConfig, VLLMRemoteCaller
 from reason.inference.rm_call import RMRemoteCaller
 from reason.evaluation.evaluator import SolutionOutput, Task, TreeSearchSolutionOutput
-from reason.mcts.tree import SearchTree
+from reason.guided_search.tree import SearchTree
 
 
 @dataclass

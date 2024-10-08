@@ -1,6 +1,5 @@
 python reason/evaluation/evaluate.py \
     --LM mistral-7b-sft \
-    --RM math-shepherd-mistral-7b-prm \
     --task_name MATH \
     --temperature 0.0 \
     --max_new_tokens 1024 \

@@ -1,10 +1,10 @@
 python reason/evaluation/evaluate.py \
-    --LM mistral-7b-sft \
-    --RM math-shepherd-mistral-7b-prm \
+    --LM Qwen2.5-Math-1.5B-Instruct \
+    --RM dummy \
     --task_name MATH \
-    --temperature 1.0 \
-    --num_sequence 10 \
-    --max_new_tokens 1024 \
+    --temperature 0.7 \
+    --num_sequence 8 \
+    --max_new_tokens 2048 \
     --save_dir debug \
     --method best_of_n \
     --num_worker 32 \

@@ -4,24 +4,28 @@ from typing import List, Optional
 import numpy as np
 from envs.base_env import CoTEnv, NoLegalActionException, INVALID_ANS
 from .prompt import COT_EXAMPLES, COT_TASK_DESC, PROBLEM_FORMAT_STR, SEP
-from .verify_utils import extract_answer as extract_fn, grade_answer
+# from .verify_utils import extract_answer as extract_fn, grade_answer
+from .parse_utils_qwen import extract_answer as extract_fn, parse_ground_truth
+from .grader import math_equal
 
-ANS_RE = re.compile(r"The answer is: (.*) ки")
-STOP_STR = "The answer is: "
+ANS_RE = None 
+STOP_STR = None
 
 
 def extract_answer(answer_str: str) -> str:
-    return extract_fn(answer_str, pattern=ANS_RE)
+    return extract_fn(answer_str, data_name='math')
 
 
 def extract_groundtruth(groundtruth_str: str) -> str:
-    return groundtruth_str
+    return parse_ground_truth(groundtruth_str, data_name='math')
 
 
 def judge_correct(
     problem_str: str, extracted_groundtruth: Optional[str], answer: str
 ) -> bool:
-    return grade_answer(given_answer=answer, ground_truth=extracted_groundtruth)
+    # return grade_answer(given_answer=answer, ground_truth=extracted_groundtruth)
+    result = math_equal(answer, extracted_groundtruth)
+    return result
 
 
 class Env(CoTEnv):
@@ -53,15 +57,11 @@ class Env(CoTEnv):
 
     def post_process_act(self, action: str):
         if not action.endswith(self.sep):
-            if "ки" not in action:
-                action = action.strip() + " ки"
-        # if multiple 'ки' in the action, remove all but the last one
-        if action.count("ки") > 1:
-            if action.endswith(self.sep):
-                # remove intermediate 'ки's
-                action = action.replace("ки", "").strip("\n").strip() + " " + self.sep
-            else:
-                action = action.replace("ки", "").strip() + " ки"
+            # action = action.strip() + self.sep
+            action = action.strip() + STEP_TAG
+        else:
+            action = action.strip(STOP_STR) + STEP_TAG
+        
         return action
 
     def _is_correct(self, completion):

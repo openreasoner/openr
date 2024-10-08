@@ -92,6 +92,12 @@ class ModelWorker(BaseModelWorker):
             xft_config=xft_config,
             debug=debug,
         )
+
+        # from peft.peft_model import PeftModel, PeftConfig
+        # ckpt_path = '/hpc2ssd/JH_DATA/spooler/qxiao183/workspace/ziyu/open_reasoner/checkpoint-2767'
+        # adpater_config = PeftConfig.from_pretrained(ckpt_path)
+        # self.model = PeftModel.from_pretrained(self.model, ckpt_path)
+        
         self.device = device
         if self.tokenizer.pad_token == None:
             self.tokenizer.pad_token = self.tokenizer.eos_token

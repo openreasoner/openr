@@ -3,7 +3,7 @@ from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional, Union
 from config.config_utils import str2bool
 from reason.inference.lm_call import LMCallingConfig, VLLMRemoteCaller
-from reason.inference.rm_call import RMRemoteCaller
+from reason.inference.rm_call import RMRemoteCaller, DummyRewardModelCaller
 from reason.evaluation.evaluator import SolutionOutput, Task, RemoteMathEvaluator
 import torch
 from functools import partial
@@ -34,7 +34,7 @@ def setup_seed(seed):
 if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("--LM", type=str, required=True)
-    parser.add_argument("--RM", type=str, required=True)
+    parser.add_argument("--RM", type=str, default="dummy")
     parser.add_argument("--controller_addr", type=str, default="http://0.0.0.0:28778")
     # task config
     parser.add_argument("--task_name", type=str, default="gsm8k")
@@ -46,7 +46,7 @@ if __name__ == "__main__":
     parser.add_argument("--num_sequence", type=int, default=1)
     # LM gen config
     parser.add_argument("--temperature", type=float, default=0.0)
-    parser.add_argument("--top_k", type=int, default=50)
+    parser.add_argument("--top_k", type=int, default=-1)
     parser.add_argument("--top_p", type=int, default=1)
     parser.add_argument("--max_new_tokens", type=int, default=256)
     # Tree construction config
@@ -66,8 +66,14 @@ if __name__ == "__main__":
         config.num_worker = 1
         ray.init(local_mode=True)
 
+    if 'qwen' in config.LM.lower():
+        step_tag = "\n\n\n\n\n"
+
     llm_gen_fn = VLLMRemoteCaller(config.LM, config.controller_addr)
-    rm_call = RMRemoteCaller(config.RM, config.controller_addr)
+    if config.RM == "dummy":
+        rm_call = DummyRewardModelCaller(step_tag=step_tag)
+    else:
+        rm_call = RMRemoteCaller(config.RM, config.controller_addr)
 
     task = Task(task_name=config.task_name, is_few_shot=config.is_few_shot)
 
@@ -138,6 +144,9 @@ if __name__ == "__main__":
     solver_fns = {"cot": cot, "best_of_n": best_of_n}
 
     cfg_dict_record = dict()
+    # XXX: qwen-2.5 requires add more stop words
+    # not do it now.
+    # stop_words = ["</s>", "<|im_end|>", "<|endoftext|>"]
     gen_config = LMCallingConfig(
         n=config.num_sequence,
         temperature=config.temperature,
@@ -173,6 +182,8 @@ if __name__ == "__main__":
         save_dir = Path(config.save_dir) / task.task_name / config.method / datetime_str
         save_dir.mkdir(parents=True)
         record_writer = jsonlines.open(save_dir / f"record.jsonl", mode="w")
+        cfg_dict_record["LM"] = config.LM
+        cfg_dict_record["RM"] = config.RM
         json.dump(cfg_dict_record, open(save_dir / "config.json", "w"))
     else:
         save_dir = None
