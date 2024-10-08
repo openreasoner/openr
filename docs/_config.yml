@@ -2,7 +2,7 @@ title: OpenR Documents
 description: An Open-Sourced Framework for Advancing Reasoning in Large Language Models
 theme: just-the-docs
 
-url: https://iamlilAJ.github.io/OpenR-docs
+url: https://openreasoner.github.io/docs
 
 
 defaults:
@@ -21,7 +21,7 @@ nav_enabled: true
 nav_sort: case_sensitive # Capital letters sorted before lowercase
 
 aux_links:
-  Template Repository: https://github.com/iamlilAJ/OpenR-docs
+  Template Repository: https://github.com/openreasoner/o1-dev
 
 
 
