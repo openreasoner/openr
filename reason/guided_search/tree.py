@@ -682,11 +682,6 @@ class SearchTree:
                     for x in simulate_env.legal_actions
                 ]
             )
-            # import json
-            # print("=="*20)
-            # print("text_state: \n{}\n".format(text_state))
-            # print("actions: \n{}\n".format(json.dumps(simulate_env.legal_actions, indent=2)))
-            # print("=="*20)
             child_values = []
             # PRM get last r as single reward
             for act, rs in zip(simulate_env.legal_actions, prms):
@@ -706,9 +701,12 @@ class SearchTree:
                     )
                     child_values.append(0.0)
                 else:
-                    # child_values.append(rs[-1])
-                    # child_values.append(rs[-1])
-                    child_values.append(act['prob'])
+                    # prm-last
+                    child_values.append(rs[-1])
+                    # # prm-min
+                    # child_values.append(min(rs))
+                    # # prob-prm
+                    # child_values.append(act['prob'])
 
         assert len(node.children) == 0
         for i, action_dict in enumerate(simulate_env.legal_actions):

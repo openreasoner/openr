@@ -68,6 +68,8 @@ if __name__ == "__main__":
 
     if 'qwen' in config.LM.lower():
         step_tag = "\n\n\n\n\n"
+    if 'math-shepherd' in config.RM.lower():
+        step_tag = "ки\n"
 
     llm_gen_fn = VLLMRemoteCaller(config.LM, config.controller_addr)
     if config.RM == "dummy":

@@ -8,6 +8,7 @@ class RewardModelCallingFunction:
         self, input_str: Union[str, List[str]], config=None
     ) -> Union[List[int], List[List[int]]]:
         raise NotImplementedError
+    
 
 class DummyRewardModelCaller(RewardModelCallingFunction):
     # a dummy rm caller that always return 0
@@ -18,7 +19,22 @@ class DummyRewardModelCaller(RewardModelCallingFunction):
     def __call__(
         self, input_str: Union[str, List[str]], unused_config=None
     ) -> Union[List[int], List[List[int]]]:
+        def split_query_response_hack(input_str):
+            assert self.step_tag != "\n\n"
+            # XXX: this is only a solution for current prm
+            # works only for qwen-2.5-math
+            query, response = input_str.split('<|im_start|>assistant\n')
+            assert self.step_tag not in query
+            # change \n\n to self.step_tag
+            splits = response.split("\n\n")
+            splits = [s.strip() for s in splits]
+            response = self.step_tag.join([s for s in splits if s != ""])
+            response += self.step_tag
+            # response = response.replace("\n\n", self.step_tag)
+            return query + '<|im_start|>assistant\n' + response
+        
         def fn(s):
+            s = split_query_response_hack(s)
             steps = s.split(self.step_tag)
             steps = [s for s in steps if s.strip() != ""]
             return list(range(len(steps)))
@@ -36,6 +52,26 @@ class RMRemoteCaller(RewardModelCallingFunction):
     def __call__(
         self, input_str: Union[str, List[str]], unused_config=None
     ) -> Union[List[int], List[List[int]]]:
+        self.step_tag = "\n\n\n\n\n"
+        def split_query_response_hack(input_str):
+            assert self.step_tag != "\n\n"
+            # XXX: this is only a solution for current prm
+            # works only for qwen-2.5-math
+            query, response = input_str.split('<|im_start|>assistant\n')
+            assert self.step_tag not in query
+            # change \n\n to self.step_tag
+            splits = response.split("\n\n")
+            splits = [s.strip() for s in splits]
+            sep_str = f" {self.step_tag}"
+            response = sep_str.join([s for s in splits if s != ""])
+            response += sep_str
+            # response = response.replace("\n\n", self.step_tag)
+            return query + '<|im_start|>assistant\n' + response
+        
+        if isinstance(input_str, str):
+            input_str = split_query_response_hack(input_str)
+        else:
+            input_str = [split_query_response_hack(s) for s in input_str]
         return _value_inference_fastchat(
             input_str=input_str,
             model_name=self.model_name,

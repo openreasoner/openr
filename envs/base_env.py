@@ -197,8 +197,15 @@ class CoTEnv(BaseEnv):
         token_len = result.num_tokens
         text_list, prob_list, num_token_list = [], [], []
         finish_reason_list = []
+        next_state_terminated = {}
 
         for i in range(len(texts)):
+            # XXX: this process can be improve or moved to other place
+            # this is a pre-judge of terminal flag or certain action, by
+            # whether the text-generation is stop by the <eos> or stop_str
+            
+            terminated = not texts[i].endswith(self.sep)
+
             processed_act = self.post_process_act(texts[i])
             if (
                 len(processed_act) > 0
@@ -210,6 +217,7 @@ class CoTEnv(BaseEnv):
                 prob_list.append(logps_avg_by_len[i])
                 num_token_list.append(token_len[i])
                 finish_reason_list.append(result.finish_reason[i])
+                next_state_terminated[processed_act] = terminated
 
         if len(prob_list) == 0:
             print_with_rank("state: {}".format(self.get_state()))
@@ -233,6 +241,7 @@ class CoTEnv(BaseEnv):
             )
         ]
 
+        self._next_state_terminated = next_state_terminated
         return _legal_actions, result.completion_tokens
 
     def set_problem(self, idx):
@@ -250,6 +259,8 @@ class CoTEnv(BaseEnv):
         info = {"winner": 0}
         # done when reaches maximum length or LLM generates stop words
         if self.stop_str is not None and self.stop_str in self.action_history[-1]:
+            terminated = True
+        elif self._next_state_terminated[self.action_history[-1]]:
             terminated = True
         elif self.sep not in self.action_history[-1]:
             # This is because the output is stopped by eos
@@ -280,6 +291,7 @@ class CoTEnv(BaseEnv):
         env._legal_actions = copy.deepcopy(self._legal_actions)
         env.action_history = copy.deepcopy(self.action_history)
         env._init_query = copy.deepcopy(self._init_query)
+        env._next_state_terminated = copy.deepcopy(self._next_state_terminated)
         return env
 
     @property

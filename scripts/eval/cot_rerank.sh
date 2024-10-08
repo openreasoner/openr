@@ -1,6 +1,6 @@
 python reason/evaluation/evaluate.py \
-    --LM Qwen2.5-Math-1.5B-Instruct \
-    --RM dummy \
+    --LM Qwen2.5-Math-7B-Instruct \
+    --RM Qwen2.5-Math-7B-PRM \
     --task_name MATH \
     --temperature 0.7 \
     --num_sequence 8 \
