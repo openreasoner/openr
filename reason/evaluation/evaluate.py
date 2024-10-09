@@ -66,7 +66,7 @@ if __name__ == "__main__":
         config.num_worker = 1
         ray.init(local_mode=True)
 
-    if 'qwen' in config.LM.lower():
+    if 'qwen' in config.RM.lower():
         step_tag = "\n\n\n\n\n"
     if 'math-shepherd' in config.RM.lower():
         step_tag = "ки\n"
@@ -75,7 +75,7 @@ if __name__ == "__main__":
     if config.RM == "dummy":
         rm_call = DummyRewardModelCaller(step_tag=step_tag)
     else:
-        rm_call = RMRemoteCaller(config.RM, config.controller_addr)
+        rm_call = RMRemoteCaller(config.RM, config.controller_addr, step_tag)
 
     task = Task(task_name=config.task_name, is_few_shot=config.is_few_shot)
 

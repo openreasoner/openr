@@ -243,7 +243,7 @@ class SearchTree:
     def get_next_action(
         self,
         simulate_env: Type[CoTEnv],
-        policy_forward_fn: Optional[Callable] = None,
+        reward_fn: Optional[Callable] = None,
         temperature: int = 1.0,
         sample: bool = True,
         return_tree=False,
@@ -253,7 +253,7 @@ class SearchTree:
             calculate the move probabilities based on visit counts at the root node.
         Arguments:
             - simulate_env (:obj:`Class BaseGameEnv`): The class of simulate env.
-            - policy_forward_fn (:obj:`Function`): The Callable to compute the action probs and state value.
+            - reward_fn (:obj:`Function`): The Callable to compute the state value.
             - temperature (:obj:`Int`): Temperature is a parameter that controls the "softness" of the probability distribution.
             - sample (:obj:`Bool`): The value of the node.
         Returns:
@@ -262,7 +262,7 @@ class SearchTree:
         """
         if self.root is None:
             root = LanguageNode(text_state=simulate_env.get_state())
-            self._expand_leaf_node(root, simulate_env, policy_forward_fn)
+            self._expand_leaf_node(root, simulate_env, reward_fn)
             self.root = root
         else:
             root = self.root
@@ -271,7 +271,7 @@ class SearchTree:
             # if root is leaf node, expand it
             # We have updated the environment legal action when we test the node is leaf node
             # So the expansion won't have bugs
-            self._expand_leaf_node(root, simulate_env, policy_forward_fn)
+            self._expand_leaf_node(root, simulate_env, reward_fn)
 
         if sample:
             self._add_exploration_noise(root)
@@ -279,7 +279,7 @@ class SearchTree:
         for n in range(self._num_simulations):
             simulate_env_copy = simulate_env.copy()
             simulate_env_copy.battle_mode = simulate_env_copy.mcts_mode
-            self._simulate(root, simulate_env_copy, policy_forward_fn)
+            self._simulate(root, simulate_env_copy, reward_fn)
 
         # for debugging
         # print('after simulation')
@@ -447,7 +447,7 @@ class SearchTree:
         self,
         node: Node,
         simulate_env: Type[CoTEnv],
-        policy_forward_fn: Optional[Callable] = None,
+        reward_fn: Optional[Callable] = None,
     ) -> None:
         """
         Overview:
@@ -456,7 +456,7 @@ class SearchTree:
         Arguments:
             - node (:obj:`Class Node`): Current node when performing mcts search.
             - simulate_env (:obj:`Class BaseGameEnv`): The class of simulate env.
-            - policy_forward_fn (:obj:`Function`): The Callable to compute the action probs and state value.
+            - reward_fn (:obj:`Function`): The Callable to compute the action probs and state value.
         """
         # XXX: fix the bug temporally, better implementation is required.
         winner = None
@@ -478,7 +478,7 @@ class SearchTree:
             if not done and node.is_leaf() and node.visit_count == 1:
                 # Once we expand the node, the node will not be leaf node any more
                 # And the while won't break
-                self._expand_leaf_node(node, simulate_env, policy_forward_fn)
+                self._expand_leaf_node(node, simulate_env, reward_fn)
 
             winner = info["winner"]
         """
@@ -487,13 +487,13 @@ class SearchTree:
         """
         if not done:
             # leaf_value = self._expand_leaf_node(node, simulate_env,
-            #                                     policy_forward_fn)
+            #                                     reward_fn)
 
             if not done and self.mask_non_terminal_node_value:
                 leaf_value = 0.0
             else:
                 if not self._init_critic_value:
-                    leaf_value = policy_forward_fn(simulate_env.get_state()).item()
+                    leaf_value = reward_fn(simulate_env.get_state()).item()
                 else:
                     leaf_value = node._initial_value
         else:
@@ -529,7 +529,7 @@ class SearchTree:
                     if self._init_critic_value:
                         leaf_value = node._initial_value
                     else:
-                        leaf_value = policy_forward_fn(simulate_env.get_state()).item()
+                        leaf_value = reward_fn(simulate_env.get_state()).item()
 
         if done:
             node.set_as_terminate_node()
@@ -621,11 +621,11 @@ class SearchTree:
     ) -> None:
         """
         Overview:
-            expand the node without the policy_forward_fn.
+            expand the node without the reward_fn.
         Arguments:
             - node (:obj:`Class Node`): current node when performing mcts search.
             - simulate_env (:obj:`Class BaseGameEnv`): the class of simulate env.
-            - policy_forward_fn (:obj:`Function`): the Callable to compute the action probs and state value.
+            - reward_fn (:obj:`Function`): the Callable to compute the state value.
         Returns:
             - leaf_value (:obj:`Bool`): the leaf node's value.
         """
@@ -645,38 +645,38 @@ class SearchTree:
         self,
         node: Node,
         simulate_env: Type[CoTEnv],
-        policy_forward_fn: Optional[Callable] = None,
+        reward_fn: Optional[Callable] = None,
     ) -> float:
         """
         Overview:
-            expand the node with the policy_forward_fn.
+            expand the node with the reward_fn.
         Arguments:
             - node (:obj:`Class Node`): current node when performing mcts search.
             - simulate_env (:obj:`Class BaseGameEnv`): the class of simulate env.
-            - policy_forward_fn (:obj:`Function`): the Callable to compute the action probs and state value.
+            - reward_fn (:obj:`Function`): the Callable to compute the state value.
         Returns:
             - leaf_value (:obj:`Bool`): the leaf node's value.
         """
         """
-        action_probs_dict, leaf_value = policy_forward_fn(simulate_env)
+        action_probs_dict, leaf_value = reward_fn(simulate_env)
         for action, prior_p in action_probs_dict.items():
             if action in simulate_env.legal_actions:
                 node.children[action] = Node(parent=node, prior_p=prior_p)
         """
         # To implement for leaf value calcuation
 
-        # if policy_forward_fn is not None:
+        # if reward_fn is not None:
         #     q_str = simulate_env.math_problem["question"]
         #     prefix = node.get_path()
 
         text_state = simulate_env.get_state()
         if not self._init_critic_value:
-            leaf_value = policy_forward_fn(text_state)
+            leaf_value = reward_fn(text_state)
 
         else:
             leaf_value = node._initial_value
             assert len(simulate_env.legal_actions) > 0
-            prms = policy_forward_fn(
+            prms = reward_fn(
                 [
                     text_state + x["action"]
                     for x in simulate_env.legal_actions
@@ -691,6 +691,7 @@ class SearchTree:
                             len(prms), len(simulate_env.action_history), text_state, act, rs
                         )
                     )
+                    import pdb; pdb.set_trace()
                     raise RuntimeError("Tokenizer problems")
 
                 if len(rs) == 0:

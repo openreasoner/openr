@@ -159,14 +159,21 @@ class CoTEnv(BaseEnv):
         terminated, truncated, info = self.get_done_and_info()
         # update legal actions
         if not (terminated or truncated) and update_legal_action:
-            try:
-                self._legal_actions, api_completion_token = self.update_legal_actions()
-                info["api_completion_token"] = api_completion_token
-            except NoLegalActionException as e:
-                terminated = True
-                reward = 0
-                self._legal_actions = None
-                info["winner"] = 2
+            cnt = 0
+            while cnt < 3:
+                cnt += 1
+                try:
+                    self._legal_actions, api_completion_token = self.update_legal_actions()
+                    info["api_completion_token"] = api_completion_token
+                except NoLegalActionException as e:
+                    if cnt == 3:
+                        terminated = True
+                        reward = 0
+                        self._legal_actions = None
+                        info["winner"] = 2
+                        info["api_completion_token"] = 0
+                    else:
+                        pass
         else:
             self._legal_actions = None
             if info["winner"] == 1:

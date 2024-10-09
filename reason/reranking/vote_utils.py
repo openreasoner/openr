@@ -55,8 +55,8 @@ def _agg_prm_last_vote(x_list: List[str], v_list: List[List[float]]):
 
 AGG_FN_MAP = {
     MAJORITY_VOTE: _agg_majority_vote,
-    ORM_VOTE: _agg_orm_vote,
-    ORM_MAX: _agg_orm_max,
+    # ORM_VOTE: _agg_orm_vote,
+    # ORM_MAX: _agg_orm_max,
     PRM_MIN_MAX: _agg_prm_min_max,
     PRM_MIN_VOTE: _agg_prm_min_vote,
     PRM_LAST_MAX: _agg_prm_last_max,

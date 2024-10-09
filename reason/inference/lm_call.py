@@ -8,7 +8,7 @@ class LMCallingConfig:
     n: int = 1
     temperature: float = 1.0
     top_p: float = 1.0
-    top_k: Optional[int] = None
+    top_k: int = -1 # -1 for vllm by default
     max_new_tokens: int = 512
     stop_token_ids: Optional[List[int]] = None
     stop_str: Optional[str] = None
