@@ -46,7 +46,7 @@ class QwenLoRAgent:
                 self.critic = self._init_critic().to(self.device)
         else:
             self.load(load_path)
-    
+        
     
     def _init_actor(self, lora_weights = None):
         if lora_weights is None:
@@ -110,7 +110,8 @@ class QwenLoRAgent:
             temperature=0.5,
             max_new_tokens=self.max_new_tokens,
             # bos_token_id=self.tokenizer.pad_token_id,
-            eos_token_id=[self.tokenizer.eos_token_id, self.tokenizer.pad_token_id, 198, 624, 715, 271], # 1802: "и", 16748: "ки", 198: "\n", 624: ".\n", 715: " \n", 271: "\n\n"
+            # 1802: "и", 16748: "ки", 198: "\n", 624: ".\n", 715: " \n", 271: "\n\n", 76325: " \n\n\n\n\n"
+            eos_token_id=[self.tokenizer.eos_token_id, self.tokenizer.pad_token_id, 198, 624, 715, 271, 76325], 
             pad_token_id=self.tokenizer.pad_token_id,
             return_dict_in_generate=True,
         )
@@ -309,15 +310,15 @@ class QwenLoRAgent:
         # save lora
         self.actor.save_pretrained(exp_path)
         # save critic
-        if self.algo != "GRPO":
-            torch.save(self.critic.v_head.state_dict(), os.path.join(exp_path, "critic.pth"))
+        # if self.algo != "GRPO":
+        #     torch.save(self.critic.v_head.state_dict(), os.path.join(exp_path, "critic.pth"))
 
     def load(self, save_dir):
         print("load model")
         self.actor = self._init_actor(save_dir).to(self.device)
-        critic_weights = os.path.join(save_dir, "critic.pth")
-        if self.algo != "GRPO":
-            self.critic = self._init_critic(critic_weights).to(self.device)
+        # critic_weights = os.path.join(save_dir, "critic.pth")
+        # if self.algo != "GRPO":
+        #     self.critic = self._init_critic(critic_weights).to(self.device)
 
     def train(self):
         self.generator.train()
