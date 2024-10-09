@@ -33,8 +33,8 @@ class MathEnv:
         self.current_state = None
 
     def reset(self):
-        problem_answer_pair = random.choice(self.dataset)
-        # problem_answer_pair = self.dataset[3]
+        # problem_answer_pair = random.choice(self.dataset)
+        problem_answer_pair = self.dataset[3]
         self.problem = problem_answer_pair["problem"]
         self.label = problem_answer_pair["final_answer"]
         self.current_state = IN_CONTEXT_EXAMPLE + self.problem + "\n"

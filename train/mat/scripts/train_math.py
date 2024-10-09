@@ -35,10 +35,12 @@ def parse_args(args, parser):
     parser.add_argument('--dataset_name', type=str, default='prealgebra', help="Which dataset to test on.")
     parser.add_argument('--dataset_path', type=str, help="Path to the dataset file.")
     parser.add_argument('--model_name_or_path', type=str, help="Name of the agent model or path to the agent model checkpoint.")
-    parser.add_argument('--prm_model_name_or_path', type=str, default='', help="Name of the model or path to the process reward model checkpoint.")
+    parser.add_argument('--prm_type', type=str, default="MS", help="MS or Qwen")
+    parser.add_argument('--prm_model_name_or_path', type=str, default='', help="Name of the model or path to the process reward model.")
+    parser.add_argument('--prm_checkpoint_path', type=str, default='', help="Path to the process reward model lora checkpoint.")
     parser.add_argument('--max_new_tokens', type=int, default=96, help="max_new_tokens")
     parser.add_argument('--vacab_size', type=int, default=151936)
-    parser.add_argument('--gradient_cp_steps', type=int, default=1)
+    parser.add_argument('--gradient_cp_steps', type=int, default=2)
     all_args = parser.parse_known_args(args)[0]
 
     return all_args

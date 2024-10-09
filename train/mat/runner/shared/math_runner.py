@@ -5,7 +5,8 @@ from functools import reduce
 import torch
 from tensorboardX import SummaryWriter
 from mat.agents.qwen_lora_agent import QwenLoRAgent
-from mat.models.rm import ProcessRM
+from mat.models.ms_prm import MSProcessRM
+from mat.models.qwen_prm import QwenProcessRM
 from mat.utils.language_buffer import LanguageBuffer
 from mat.trainers.llm_trainer_appo import APPOTrainer
 from mat.trainers.llm_trainer_tppo import TPPOTrainer
@@ -26,6 +27,7 @@ class MathRunner:
         self.eval_interval = self.all_args.eval_interval
         self.save_interval = self.all_args.save_interval
         self.algo = self.all_args.algorithm_name
+        self.prm_type = self.all_args.prm_type
 
         self.run_dir = config["run_dir"]
         self.log_dir = str(self.run_dir / 'logs')
@@ -40,7 +42,13 @@ class MathRunner:
         self.eval_envs = config['eval_envs']
         self.agent = QwenLoRAgent(self.all_args.model_name_or_path, self.all_args.max_new_tokens, self.algo)
         self.buffer = LanguageBuffer(self.all_args, self.num_agents, self.agent.tokenizer.pad_token_id)
-        self.prm = ProcessRM(self.all_args.prm_model_name_or_path)
+        
+        if self.prm_type == "MS":
+            self.prm = MSProcessRM(self.all_args)
+        elif self.prm_type == "Qwen":
+            self.prm = QwenProcessRM(self.all_args)
+        else:
+            raise NotImplementedError
 
         if self.algo == "APPO":
             self.trainer = APPOTrainer(self.all_args, self.agent, self.num_agents)
