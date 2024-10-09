@@ -25,7 +25,7 @@ class QwenProcessRM(nn.Module):
         self.step_tag_id = self.tokenizer.encode(f" {self.step_tag}")[-1] # 76325
         self.model = AutoModelForCausalLM.from_pretrained(self.model_name_or_path, 
                                                           device_map="auto", 
-                                                          torch_dtype=torch.float16,
+                                                          torch_dtype=torch.bfloat16,
                                                         #   attn_implementation="flash_attention_2",
                                                           ).eval()
         # adapter_config = PeftConfig.from_pretrained(cp_path)
