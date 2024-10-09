@@ -42,7 +42,6 @@ class QwenProcessRM(nn.Module):
         input_ids = self.tokenizer(inputs_for_prm, return_tensors="pt", padding=True).to("cuda")
         logits = self.model(**input_ids).logits[:, :, self.candidate_tokens]
         score = logits.softmax(dim=-1)[:, :, 0]
-        score = score.cpu().numpy()
         
         step_scores = []
         for i in range(np.shape(score)[0]):

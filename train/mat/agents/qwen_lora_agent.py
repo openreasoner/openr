@@ -310,15 +310,15 @@ class QwenLoRAgent:
         # save lora
         self.actor.save_pretrained(exp_path)
         # save critic
-        if self.algo != "GRPO":
-            torch.save(self.critic.v_head.state_dict(), os.path.join(exp_path, "critic.pth"))
+        # if self.algo != "GRPO":
+        #     torch.save(self.critic.v_head.state_dict(), os.path.join(exp_path, "critic.pth"))
 
     def load(self, save_dir):
         print("load model")
         self.actor = self._init_actor(save_dir).to(self.device)
-        critic_weights = os.path.join(save_dir, "critic.pth")
-        if self.algo != "GRPO":
-            self.critic = self._init_critic(critic_weights).to(self.device)
+        # critic_weights = os.path.join(save_dir, "critic.pth")
+        # if self.algo != "GRPO":
+        #     self.critic = self._init_critic(critic_weights).to(self.device)
 
     def train(self):
         self.generator.train()
