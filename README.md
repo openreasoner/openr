@@ -73,7 +73,7 @@
     <li><a href="#usage">Usage</a></li>
     <li><a href="#results">Benchmark Results</a></li>
     <li><a href="#model-zoo">Model Zoo</a></li>
-    <li><a href="#contributing">Community</a></li>
+    <li><a href="#contact">Contact</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
@@ -147,7 +147,34 @@ bash train_llm.sh
 
 - Support Self-improvement Training
 
-## References
+## Contact
+
+
+## License
+
+
+## Citation
+
+If you do find our resources helpful, please cite our paper:
+
+```
+@article{openr2024,
+  title = {},
+  url = {},
+  author = {},
+  year = {2024}
+}
+@article{feng2023alphazero,
+  title={Alphazero-like tree-search can guide large language model decoding and training},
+  author={Feng, Xidong and Wan, Ziyu and Wen, Muning and McAleer, Stephen Marcus and Wen, Ying and Zhang, Weinan and Wang, Jun},
+  journal={arXiv preprint arXiv:2309.17179},
+  year={2023}
+}
+```
+
+## <!-- ACKNOWLEDGMENTS -->
+
+## Acknowledgments
 
 
 ### Inference-time Computing
@@ -187,10 +214,6 @@ process supervision](https://arxiv.org/pdf/2406.06592)
 [4] [Shepherd: A critic for language model generation](https://arxiv.org/abs/2308.04592)
 
 [5] [Math-shepherd: Verify and reinforce llms step-by-step without human annotations](https://aclanthology.org/2024.acl-long.510.pdf)
-
-
-
-
 
 <!-- MARKDOWN LINKS & IMAGES -->
 
