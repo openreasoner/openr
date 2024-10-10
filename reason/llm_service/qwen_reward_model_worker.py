@@ -102,12 +102,17 @@ class ModelWorker(BaseModelWorker):
         self.embed_in_truncate = embed_in_truncate
         self.seed = seed
 
+        candidate_tokens = self.tokenizer.encode(f" {GOOD_TOKEN} {BAD_TOKEN}") # [488, 481]
+        step_tag_id = self.tokenizer.encode(f" {STEP_TAG}") # 76325
+        logger.info("Candidate Tokens: {} (should be [488, 481]) for Qwen2.5-Math".format(candidate_tokens))
+        logger.info("step_tag_id: {} (should be [76325]) for Qwen2.5-Math".format(step_tag_id))
+        
         if not no_register:
             self.init_heart_beat()
 
     @torch.inference_mode()
     def value_inference_gate(self, params):
-        candidate_tokens = self.tokenizer.encode(f"{GOOD_TOKEN} {BAD_TOKEN}") # [648, 387]
+        candidate_tokens = self.tokenizer.encode(f" {GOOD_TOKEN} {BAD_TOKEN}") # [488, 481]
         step_tag_id = torch.tensor([self.tokenizer.encode(f" {STEP_TAG}")], device=self.device) # 76325
 
         def _qwen_math_infer_fn(input_str: str):
