@@ -30,10 +30,10 @@
 <br />
 <div align="center">
   <a href="https://github.com/openreasoner/o1-dev/">
-    <img src="figure/openr_logo.png" alt="Logo" width="300">
+    <img src="figure/openr_logo.png" alt="Logo" width="200">
   </a>
 
-<!-- <h3 align="center">OpenR</h3> -->
+<!-- <h2 align="center">OpenR</h2> -->
 
 <p align="center">
     <strong>OpenR</strong>: An Open-Sourced Framework for Advancing Reasoning in Large Language Models
