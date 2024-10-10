@@ -21,7 +21,7 @@ options:
       --neutral-is-bad     Treat `neutral` as negative labels for PRM800K. PRM800K only
 #+end_example
 
-Note that if you directly pass ~"\n\n"~ to ~--step-token~, the script receive ~"\\n\\n"~ instead of two
+Note that if you directly pass ~"\n\n"~ to ~--step-tag~, the script receive ~"\\n\\n"~ instead of two
 newlines. Several solutions are suggested in [[https://stackoverflow.com/a/50642130][this answer]], but none worked for me.
 
 ** Datasets
