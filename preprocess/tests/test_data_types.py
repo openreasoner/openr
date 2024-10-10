@@ -10,17 +10,17 @@ from src.data_types.prm800k import PRM800KItem
 TEST_DIR = Path(__file__).parent.resolve()
 
 
-@pytest.fixture
+@pytest.fixture(scope='module')
 def example_prm800k_path() -> Path:
   return TEST_DIR / 'samples_prm800k.jsonl'
 
 
-@pytest.fixture
+@pytest.fixture(scope='module')
 def example_math_aps_path() -> Path:
   return TEST_DIR / 'samples_math-aps.json'
 
 
-@pytest.fixture
+@pytest.fixture(scope='module')
 def example_math_shepherd_path() -> Path:
   return TEST_DIR / 'samples_math-shepherd.jsonl'
 

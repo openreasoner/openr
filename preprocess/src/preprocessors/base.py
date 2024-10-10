@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from pathlib import Path
+from typing import Iterable
 
 from src.data_types.base import OriginalItemBase
 from src.data_types.converted import ConvertedItem
@@ -19,6 +20,8 @@ class PreprocessorBase(ABC):
   Methods:
     convert() -> None: Read the original dataset from `ds_path` and dump the
       processed one to `output_path`
+    dump() -> None: Dump the processed dataset to `output_path`. Requires
+      `converted_items` to have value
   """
 
   def __init__(self,
@@ -28,7 +31,7 @@ class PreprocessorBase(ABC):
     self.ds_path: Path = Path(ds_path).resolve()
     self.output_path: Path = self.ds_path.with_suffix(f'.{suffix}.json')
     self.step_tag: str = step_tag
-    self.original_items: list[OriginalItemBase] | None = None
+    self.original_items: Iterable[OriginalItemBase] | None = None
     self.converted_items: list[ConvertedItem] | None = None
 
   @abstractmethod
@@ -37,4 +40,8 @@ class PreprocessorBase(ABC):
 
   @abstractmethod
   def convert(self) -> None:
+    ...
+
+  @abstractmethod
+  def dump(self) -> None:
     ...
