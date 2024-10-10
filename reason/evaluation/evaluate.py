@@ -66,10 +66,12 @@ if __name__ == "__main__":
         config.num_worker = 1
         ray.init(local_mode=True)
 
-    if 'qwen' in config.RM.lower():
-        step_tag = "\n\n\n\n\n"
     if 'math-shepherd' in config.RM.lower():
         step_tag = "ки\n"
+    else:
+        # assume qwen
+        step_tag = "\n\n\n\n\n"
+        
 
     llm_gen_fn = VLLMRemoteCaller(config.LM, config.controller_addr)
     if config.RM == "dummy":

@@ -1,5 +1,5 @@
 python reason/evaluation/evaluate.py \
-    --LM Qwen2.5-Math-7B-Instruct \
+    --LM Qwen2.5-Math-1.5B-Instruct \
     --task_name MATH \
     --temperature 0.0 \
     --max_new_tokens 2048 \

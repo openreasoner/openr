@@ -1,6 +1,6 @@
 python reason/evaluation/evaluate.py \
     --LM Qwen2.5-Math-1.5B-Instruct \
-    --RM math-shepherd-mistral-7b-prm \
+    --RM checkpoint-6898 \
     --task_name MATH \
     --temperature 0.7 \
     --num_sequence 8 \
@@ -12,4 +12,3 @@ python reason/evaluation/evaluate.py \
 
 
 # math-shepherd-mistral-7b-prm
-# Qwen2.5-Math-7B-PRM
