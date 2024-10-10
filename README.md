@@ -62,7 +62,7 @@
   <summary>Table of Contents</summary>
   <ol>
     <li><a href="#news-and-updates">News and Updates</a></li>
-    <li><a href="#intro">Introduction</a></li>
+    <li><a href="#fea">Features</a></li>
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
@@ -71,8 +71,6 @@
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
-    <li><a href="#results">Benchmark Results</a></li>
-    <li><a href="#model-zoo">Model Zoo</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
@@ -100,8 +98,6 @@
 [MATH-APS](https://huggingface.co/datasets/mengfang/MATH-APS)
 
 ## Getting Started
-
-
 
 
 ### Installation
@@ -175,8 +171,13 @@ bash train_llm.sh
 
 - Support Self-improvement Training
 
+<!-- CONTACT -->
+
 ## Contact
 
+The OpenR community is maintained by:
+
+- Jun Wang (jun.wang@cs.ucl.ac.uk) University College London
 
 ## License
 OpenR is released under the MIT License.
