@@ -28,8 +28,8 @@ class DummyRewardModelCaller(RewardModelCallingFunction):
             # change \n\n to self.step_tag
             splits = response.split("\n\n")
             splits = [s.strip() for s in splits]
-            response = self.step_tag.join([s for s in splits if s != ""])
-            response += self.step_tag
+            response = f" {self.step_tag}".join([s for s in splits if s != ""])
+            response += f" {self.step_tag}"
             # response = response.replace("\n\n", self.step_tag)
             return query + '<|im_start|>assistant\n' + response
         
