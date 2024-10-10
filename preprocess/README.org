@@ -1,0 +1,39 @@
+#+title: Preprocess PRM800K dataset for open-o1
+#+author: Ziqin Gong
+
+Requires ~python=^3.12~. ~python=^3.11~ should be ok but hasn't been tested.
+
+Convert the PRM800K dataset:
+#+begin_example
+usage: python prm800k.py [-h] [-t STEP_TOKEN] [--neutral-is-bad] [--add-step-prefix] [-s SUFFIX] file [file ...]
+
+positional arguments:
+  file                  Path to the original dataset file
+
+options:
+  -h, --help            show this help message and exit
+  -t STEP_TOKEN, --step-token STEP_TOKEN
+                        Step tag. Default: \n\n\n\n\n
+  --neutral-is-bad      Treat `neutral` labels as negative
+  --add-step-prefix     Prepend "Step i: " to each step
+  -s SUFFIX, --suffix SUFFIX
+                        Suffix added to the original dataset path for the output path. Default: new
+#+end_example
+
+Convert the Math-APS dataset:
+#+begin_example
+usage: python math_aps.py [-h] [-t STEP_TOKEN] [-s SUFFIX] file [file ...]
+
+positional arguments:
+  file                  Path to the original dataset file
+
+options:
+  -h, --help            show this help message and exit
+  -t STEP_TOKEN, --step-token STEP_TOKEN
+                        Step tag. Default: \n\n\n\n\n
+  -s SUFFIX, --suffix SUFFIX
+                        Suffix added to the original dataset path for the output path. Default: new
+#+end_example
+
+Note that if you directly pass ~"\n\n"~ to ~--step-token~, the scripts receive ~"\\n\\n"~ instead of two
+newlines. Possible solutions can found in [[https://stackoverflow.com/a/50642130][this answer]], but I failed to figure out one.
