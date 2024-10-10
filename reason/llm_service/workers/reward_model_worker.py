@@ -131,7 +131,7 @@ class ModelWorker(BaseModelWorker):
                 #     assert torch.allclose(
                 #         torch.tensor(v1), torch.tensor(v2), 1e-6), [v1, v2]
             else:
-                value = infer_fn(input_str).tolist()
+                value = self.infer_fn(input_str).tolist()
             ret = {"input": input_str, "value": value} 
             gc.collect()
             torch.cuda.empty_cache()
