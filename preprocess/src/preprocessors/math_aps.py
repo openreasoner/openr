@@ -18,7 +18,9 @@ class MathAPSPreprocessor(PreprocessorBase):
       ds_path: str | Path,
       step_tag: str,
       suffix: str = 'new',
+      **kwargs,
   ) -> None:
+    del kwargs  # for compatibility with PRM800KPreprocessor
     super().__init__(ds_path, step_tag, suffix)
 
   def _read_ds(self) -> None:

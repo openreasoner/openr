@@ -16,13 +16,13 @@ class PRM800KPreprocessor(PreprocessorBase):
       ds_path: str | Path,
       step_tag: str,
       suffix: str = 'new',
-      add_step_prefix: bool = False,
-      neutral_is_good: bool = True,
+      add_step_prefix: bool | None = None,
+      neutral_is_bad: bool | None = None,
   ) -> None:
     super().__init__(ds_path, step_tag, suffix)
 
-    self.add_step_prefix: bool = add_step_prefix
-    self.neutral_is_good: bool = neutral_is_good
+    self.add_step_prefix: bool = add_step_prefix if add_step_prefix is not None else False
+    self.neutral_is_bad: bool = neutral_is_bad if neutral_is_bad is not None else False
 
   def _read_ds(self) -> None:
     self.original_items = read_prm800k_ds(self.ds_path)
@@ -35,7 +35,7 @@ class PRM800KPreprocessor(PreprocessorBase):
         convert_prm800k_item,
         step_tag=self.step_tag,
         add_step_prefix=self.add_step_prefix,
-        neutral_is_good=self.neutral_is_good,
+        neutral_is_good=not self.neutral_is_bad,
     )
     with mp.Pool(mp.cpu_count()) as p:
       unflattened_items = p.map(convert_fn, self.original_items)

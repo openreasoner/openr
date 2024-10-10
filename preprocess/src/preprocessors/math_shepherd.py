@@ -18,7 +18,9 @@ class MathShepherdPreprocessor(PreprocessorBase):
       step_tag: str,
       suffix: str = 'new',
       verbose: bool = False,
+      **kwargs,
   ) -> None:
+    del kwargs  # for compatibility with PRM800KPreprocessor
     super().__init__(ds_path, step_tag, suffix)
 
     self.verbose = verbose
