@@ -179,7 +179,7 @@ bash train_llm.sh
 
 
 ## License
-
+OpenR is released under the MIT License.
 
 ## Citation
 
