@@ -160,7 +160,7 @@ bash train_llm.sh
 [Think before you speak: Training language models with pause tokens](https://arxiv.org/pdf/2310.02226)
 
 
-### From Outcome Supervision to Process Supervision. 
+### From Outcome Supervision to Process Supervision
 
 [Training verifiers to solve math word problems](https://arxiv.org/pdf/2110.14168)
 
@@ -176,7 +176,7 @@ mathematical reasoning](https://aclanthology.org/2024.findings-naacl.55.pdf)
 
 [Generative verifiers: Reward modeling as next-token prediction](https://arxiv.org/pdf/2408.15240)
 
-### Data Acquisition. 
+### Data Acquisition
 
 [Star: Bootstrapping reasoning with reasoning](https://proceedings.neurips.cc/paper_files/paper/2022/file/639a9a172c044fbb64175b5fad42e9a5-Paper-Conference.pdf)
 
