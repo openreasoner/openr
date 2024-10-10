@@ -30,7 +30,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/openreasoner/o1-dev/">
-    <img src="figure/openr_logo.png" alt="Logo" width="400">
+    <img src="figure/openr_logo.png" alt="Logo" width="300">
   </a>
 
 <!-- <h3 align="center">OpenR</h3> -->
