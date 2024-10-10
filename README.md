@@ -86,11 +86,12 @@
 - [10/06/2024] OpenR has been released!
   
 ## Features
-- **Various thinking**: CoT greedy 
-- **Scalable data**: 
-
-## Evaluation
-Todo: performance with more time spent thinking (test-time compute)
+- **Test-time Computation**
+- **Test-time Scaling Law**
+- **Process-supervision Data Release**
+- **Support Online RL Training**
+- **Support both Generative and Discriminative PRM Training**
+- **Support Multiple Search Strategies**
 
 ## Provided Datasets
 
