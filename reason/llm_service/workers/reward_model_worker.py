@@ -24,7 +24,7 @@ from fastchat.modules.awq import AWQConfig
 from fastchat.modules.exllama import ExllamaConfig
 from fastchat.modules.xfastertransformer import XftConfig
 from fastchat.modules.gptq import GptqConfig
-from reason.llm_service.base_model_worker import BaseModelWorker, app
+from reason.llm_service.workers.base_model_worker import BaseModelWorker, app
 from fastchat.utils import (
     build_logger,
     get_context_length,

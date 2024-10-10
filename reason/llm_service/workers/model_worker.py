@@ -24,7 +24,7 @@ from fastchat.modules.awq import AWQConfig
 from fastchat.modules.exllama import ExllamaConfig
 from fastchat.modules.xfastertransformer import XftConfig
 from fastchat.modules.gptq import GptqConfig
-from fastchat.serve.base_model_worker import BaseModelWorker, app
+from reason.llm_service.workers.base_model_worker import BaseModelWorker, app
 from fastchat.utils import (
     build_logger,
     get_context_length,
@@ -93,7 +93,10 @@ class ModelWorker(BaseModelWorker):
         if self.tokenizer.pad_token == None:
             self.tokenizer.pad_token = self.tokenizer.eos_token
         self.context_len = get_context_length(self.model.config)
-        self.generate_stream_func = get_generate_stream_function(self.model, model_path)
+        # self.generate_stream_func = get_generate_stream_function(self.model, model_path)
+        print("Use `generate_stream` only for now")
+        from reason.llm_service.workers.inference import generate_stream
+        self.generate_stream_func = generate_stream
         self.stream_interval = stream_interval
         self.embed_in_truncate = embed_in_truncate
         self.seed = seed
@@ -107,6 +110,8 @@ class ModelWorker(BaseModelWorker):
 
             torch_npu.npu.set_device("npu:0")
         self.call_ct += 1
+
+        params["logprobs"] = 1
 
         try:
             if self.seed is not None:
@@ -146,7 +151,15 @@ class ModelWorker(BaseModelWorker):
     def generate_gate(self, params):
         for x in self.generate_stream_gate(params):
             pass
-        return json.loads(x[:-1].decode())
+        stream_result = json.loads(x[:-1].decode())
+        # res['cumulative_logprob']
+        ret = {}
+        ret['text'] = [stream_result['text']]
+        ret['finish_reason'] = [stream_result['finish_reason']]
+        ret['usage'] = {'prompt_tokens': [stream_result['usage']['prompt_tokens']]}
+        ret['output_token_len'] = [stream_result['usage']['completion_tokens']]
+        ret['cumulative_logprob'] = [sum(stream_result['logprobs']['token_logprobs'])]
+        return ret
 
     def __process_embed_chunk(self, input_ids, attention_mask, **model_type_dict):
         if model_type_dict.get("is_bert"):

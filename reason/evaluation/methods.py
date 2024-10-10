@@ -1,6 +1,6 @@
 from dataclasses import dataclass
-from reason.inference.lm_call import LMCallingConfig, VLLMRemoteCaller
-from reason.inference.rm_call import RMRemoteCaller
+from reason.inference.lm_call import LMCallingConfig, LanguageModelCallingFunction
+from reason.inference.rm_call import RewardModelCallingFunction 
 from reason.evaluation.evaluator import SolutionOutput, Task, TreeSearchSolutionOutput
 from reason.guided_search.tree import SearchTree
 
@@ -19,8 +19,8 @@ def cot(
     config: CoTConfig,
     gen_config: LMCallingConfig,
     problem_inst,
-    llm_call: VLLMRemoteCaller,
-    rm_call: RMRemoteCaller,
+    llm_call: LanguageModelCallingFunction,
+    rm_call: RewardModelCallingFunction,
 ) -> SolutionOutput:
     gen_config = LMCallingConfig(
         n=1,
@@ -42,8 +42,8 @@ def best_of_n(
     config: BestOfNConfig,
     gen_config: LMCallingConfig,
     problem_inst,
-    lm_call: VLLMRemoteCaller,
-    rm_call: RMRemoteCaller,
+    lm_call: LanguageModelCallingFunction,
+    rm_call: RewardModelCallingFunction,
 ) -> SolutionOutput:
     if gen_config.max_new_tokens < 256:
         print("Warning: max_new_tokens is less than 256")
@@ -74,8 +74,8 @@ def beam_search(
     config: BeamSearchConfig,
     gen_config: LMCallingConfig,
     problem_inst,
-    lm_call: VLLMRemoteCaller,
-    rm_call: RMRemoteCaller,
+    lm_call: LanguageModelCallingFunction,
+    rm_call: RewardModelCallingFunction,
 ) -> SolutionOutput:
     task = Task(task_name=config.task_name)
     env = task.env_fn(
