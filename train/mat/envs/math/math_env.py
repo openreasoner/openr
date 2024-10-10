@@ -27,16 +27,26 @@ class MathEnv:
         self.max_step = 10
         self.step_count = 0
         
+        if self.mode == "test":
+            self.problem_idx = 0
+        
         self.problem = None
         self.label = None
         self.step_tag = "ки"
         self.current_state = None
 
     def reset(self):
-        problem_answer_pair = random.choice(self.dataset)
+        # problem_answer_pair = random.choice(self.dataset)
         # problem_answer_pair = self.dataset[3]
+        if self.mode == "test":
+            problem_answer_pair = self.dataset[self.problem_idx]
+            self.problem_idx  = (self.problem_idx + 1) % len(self.dataset)
+            
         self.problem = problem_answer_pair["problem"]
         self.label = problem_answer_pair["final_answer"]
+        
+        print(f"\n\n\n\n======== new problem: {self.problem}, label: {self.label} ==========", )
+        
         self.current_state = IN_CONTEXT_EXAMPLE + self.problem + "\n"
         obs = np.array([self.current_state], dtype=np.object_)
         self.step_count = 0
@@ -46,6 +56,7 @@ class MathEnv:
         self.step_count += 1
         action = action[0]
         action = action.replace(self.step_tag, "").strip()
+        print(f"action: {action}")
         self.current_state = self.current_state + action + " " + self.step_tag + "\n"
         # self.current_state = self.current_state + action.strip() + "\n"
         next_obs = np.array([self.current_state], dtype=np.object_)

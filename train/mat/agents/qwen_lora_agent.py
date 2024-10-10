@@ -301,6 +301,39 @@ class QwenLoRAgent:
     def infer_for_token_update(self, obs, action_tokens):
         pi_logits, rho_logits = self.get_token_logits(obs, action_tokens)
         return pi_logits, rho_logits
+    
+    def test_get_actions(self, obs):
+        """
+        Compute actions and value function predictions for the given inputs.
+        """
+        prompts = obs.tolist()
+        token_seq = self.tokenizer(prompts, return_tensors="pt", padding=True)
+        input_ids = token_seq["input_ids"].to("cuda")
+        attn_mask = token_seq["attention_mask"].to("cuda")
+        
+        output = self.actor.generate(
+            input_ids,
+            attention_mask=attn_mask,
+            do_sample=False,
+            # top_k=50,
+            # temperature=0.5,
+            max_new_tokens=self.max_new_tokens,
+            # bos_token_id=self.tokenizer.pad_token_id,
+            # 1802: "и", 16748: "ки", 198: "\n", 624: ".\n", 715: " \n", 271: "\n\n", 76325: " \n\n\n\n\n"
+            eos_token_id=[self.tokenizer.eos_token_id, self.tokenizer.pad_token_id, 198, 624, 715, 271, 76325], 
+            pad_token_id=self.tokenizer.pad_token_id,
+            return_dict_in_generate=True,
+        )
+        sequences = output.sequences
+        
+        actions = []
+        for i in range(sequences.shape[0]):
+            action_token = sequences[i][input_ids[i].shape[0]:]
+            action = self.tokenizer.decode(action_token, skip_special_tokens=True)
+            actions.append(action)
+        actions = np.array(actions, dtype=np.object_)
+        
+        return actions
 
     def save(self, save_dir, episode):
         print("save model")
