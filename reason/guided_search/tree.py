@@ -691,8 +691,8 @@ class SearchTree:
                             len(prms), len(simulate_env.action_history), text_state, act, rs
                         )
                     )
-                    import pdb; pdb.set_trace()
-                    raise RuntimeError("Tokenizer problems")
+                    # raise RuntimeError("Tokenizer problems")
+                    child_values.append(0.0)
 
                 if len(rs) == 0:
                     logger.warning(

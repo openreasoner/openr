@@ -10,9 +10,9 @@ PYTHON_EXECUTABLE=$(which python3)
 MODEL_BASE=/hpc2ssd/JH_DATA/spooler/qxiao183/workspace/hf_models
 CUDA_DEVICE_BASE=0
 POLICY_MODEL_NAME=Qwen/Qwen2.5-Math-1.5B-Instruct
-VALUE_MODEL_NAME=qwen_prm/checkpoint-6898/
+# VALUE_MODEL_NAME=qwen_prm/checkpoint-6898/
 # VALUE_MODEL_NAME=Qwen/Qwen2.5-Math-7B-PRM
-# VALUE_MODEL_NAME=peiyi9979/math-shepherd-mistral-7b-prm
+VALUE_MODEL_NAME=peiyi9979/math-shepherd-mistral-7b-prm
 MODEL_PATH=$MODEL_BASE/$POLICY_MODEL_NAME
 VALUE_MODEL_PATH=$MODEL_BASE/$VALUE_MODEL_NAME
 
