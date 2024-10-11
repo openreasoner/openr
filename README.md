@@ -17,10 +17,6 @@
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
 
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
 <!-- 
 ***[![MIT License][license-shield]][license-url]
 -->
@@ -53,6 +49,11 @@
   </p>
 </div>
 
+---
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
 
 <!-- TABLE OF CONTENTS -->
 
@@ -77,16 +78,18 @@
 <!-- News and Updates -->
 
 ## News and Updates
-
-- [10/06/2024] OpenR has been released!
+- 
+- [12/10/2024] OpenR has been released! 🚀 
   
 ## Features
-- **Test-time Computation**
-- **Test-time Scaling Law**
-- **Process-supervision Data Release**
-- **Support Online RL Training**
-- **Support both Generative and Discriminative PRM Training**
-- **Support Multiple Search Strategies**
+<ul style="list-style-type: none; padding: 0;">
+    <li><strong>✅ Process-supervision Data Release</strong></li>
+    <li><strong>✅ Online RL Training</strong></li>
+    <li><strong>✅ Generative and Discriminative PRM Training</strong></li>
+    <li><strong>✅ Multiple Search Strategies</strong></li>
+    <li><strong>✅ Test-time Computation</strong></li>
+    <li><strong>✅ Test-time Scaling Law</strong></li>
+</ul>
 
 ## Provided Datasets
 
@@ -162,6 +165,22 @@ cd train/mat/scripts
 bash train_llm.sh
 ```
 
+#### Run PRM Learning
+
+```bash
+cd prm/code
+
+\\ single gpu
+python finetune_qwen.py --total_batch_size 256 \
+                          --learning_rate 1e-4 \
+                          --datasets all \
+
+\\ multi gpu
+torchrun --nproc_per_node = 2 finetune_qwen.py --total_batch_size 256 \
+                                                --learning_rate 1e-4 \
+                                                --datasets all \
+```
+
 ## Future Plan
 
 - Add More Comprehensive Evaluations on RL Training and Search Strategies
@@ -187,14 +206,17 @@ If you do find our resources helpful, please cite our paper:
 
 ```
 @article{openr2024,
-  title = {},
+  title = {OpenR: An Open Source Framework for Advanced Reasoning with Large Language Models},
   url = {},
-  author = {},
+  author = {Jun Wang, Meng Fang, Ziyu Wan, Muning Wen, Jiachen Zhu, Anjie Liu, 
+              Ziqin Gong, Yan Song, Lei Chen, Lionel M. Ni, Linyi Yang, Ying Wen, Weinan Zhang},
   year = {2024}
 }
+
 @article{feng2023alphazero,
   title={Alphazero-like tree-search can guide large language model decoding and training},
-  author={Feng, Xidong and Wan, Ziyu and Wen, Muning and McAleer, Stephen Marcus and Wen, Ying and Zhang, Weinan and Wang, Jun},
+  author={Feng, Xidong and Wan, Ziyu and Wen, Muning and McAleer, 
+            Stephen Marcus and Wen, Ying and Zhang, Weinan and Wang, Jun},
   journal={arXiv preprint arXiv:2309.17179},
   year={2023}
 }
