@@ -74,6 +74,8 @@
     <li><a href="#usage">Usage</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#license">License</a></li>
+    <li><a href="#response-examples">Response Examples</a></li>
+    <li><a href="#reference">Reference</a></li>
   </ol>
 </details>
 
@@ -96,8 +98,8 @@
 ## Plots
 
 <p align="center">
-  <img src="./figure/compare_prm_by_boN.png" alt="Image 1" width="45%" />
-  <img src="./figure/MATH_subsampled.png" alt="Image 2" width="45%" />
+  <img src="./figure/compare_prm_by_boN.png" alt="PRM_Results" width="45%" />
+  <img src="./figure/MATH_subsampled.png" alt="Inference_Results" width="45%" />
 </p>
 
 ## Provided Datasets and Models
@@ -218,22 +220,41 @@ If you do find our resources helpful, please cite our paper:
 ```
 @article{openr2024,
   title = {OpenR: An Open Source Framework for Advanced Reasoning with Large Language Models},
-  url = {},
+  url = {https://github.com/openreasoner/openr/blob/main/reports/OpenR-Wang.pdf},
   author = {Jun Wang, Meng Fang, Ziyu Wan, Muning Wen, Jiachen Zhu, Anjie Liu, 
               Ziqin Gong, Yan Song, Lei Chen, Lionel M. Ni, Linyi Yang, Ying Wen, Weinan Zhang},
   year = {2024}
 }
-
-@article{feng2023alphazero,
-  title={Alphazero-like tree-search can guide large language model decoding and training},
-  author={Feng, Xidong and Wan, Ziyu and Wen, Muning and McAleer, 
-            Stephen Marcus and Wen, Ying and Zhang, Weinan and Wang, Jun},
-  journal={arXiv preprint arXiv:2309.17179},
-  year={2023}
-}
 ```
 
+## Response Examples
 
+### Comparing PRM, Math-psa (Ours) V.S. Math-Shepherd 
+
+<p align="center">
+  <img src="./figure/QA/QA1.png" alt="QA 1" width="49%" />
+  <img src="./figure/QA/QA2.png" alt="QA 2" width="49%" />
+</p>
+
+
+### Justifing RL Training
+
+<p align="center">
+  <img src="./figure/QA/QA3.png" alt="QA 3" width="49%" />
+  <img src="./figure/QA/QA4.png" alt="QA 4" width="49%" />
+</p>
+
+### Exploring Test-time Computation
+
+<p align="center">
+  <img src="./figure/QA/QA5.png" alt="QA 5" width="70%" />
+  <img src="./figure/QA/QA6.png" alt="QA 6" width="70%" />
+  <img src="./figure/QA/QA7.png" alt="QA 7" width="70%" />
+</p>
+
+
+
+## Reference
 
 ### Inference-time Computing
 [1] [Alphazero-like tree-search can guide large language model decoding and training.](https://arxiv.org/pdf/2309.17179)
