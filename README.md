@@ -32,7 +32,7 @@
 <!-- <h2 align="center">OpenR</h2> -->
 
 <p align="center">
-    <span style="font-size: 30px;"><strong><em>OpenR</em></strong>: An Open-Sourced Framework for Advanced Reasoning with Large Language Models </span>
+    <span style="font-size: 30px;"><strong><em>OpenR</em></strong>: An Open-Source Framework for Advanced Reasoning with Large Language Models </span>
     <!-- <br />
     <a href="https://openreasoner.github.io/"><strong>Explore the docs »</strong></a>
     <br /> -->
