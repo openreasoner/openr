@@ -78,7 +78,6 @@
 <!-- News and Updates -->
 
 ## News and Updates
-- 
 - [12/10/2024] OpenR has been released! 🚀 
   
 ## Features
