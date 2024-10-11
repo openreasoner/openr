@@ -41,15 +41,15 @@
     <a href="https://openreasoner.github.io/"><strong>Explore the docs »</strong></a>
     <br /> -->
     <br />
-    <a href="https://arxiv.org/abs/xxxxx">Paper</a>
+    <a href="https://github.com/openreasoner/openr/tree/main/reports">Paper</a>
+<!--     · -->
+<!--     <a href="https://colab.research.google.com/XXXXX">Demo</a> -->
     ·
-    <a href="https://colab.research.google.com/XXXXX">Demo</a>
+    <a href="https://openreasoner.github.io/">Docs</a>
     ·
-    <a href="https://iamlilaj.github.io/OpenR-docs/">Docs</a>
-    ·
-    <a href="https://github.com/openreasoner/o1-dev/issues">Issue</a>
-    ·
-    <a href="https://medium.com/p/xxxxxx">Blog (Pytorch)</a>
+    <a href="https://github.com/openreasoner/openr/issues">Issue</a>
+<!--     · -->
+<!--     <a href="https://medium.com/p/xxxxxx">Blog (Pytorch)</a> -->
   </p>
 </div>
 
@@ -248,14 +248,14 @@ process supervision](https://arxiv.org/pdf/2406.06592)
 
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
-[contributors-shield]: https://img.shields.io/github/contributors/openreasoner/o1-dev.svg?style=for-the-badge
-[contributors-url]: https://github.com/openreasoner/o1-dev/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/openreasoner/o1-dev.svg?style=for-the-badge
-[forks-url]: https://github.com/openreasoner/o1-dev/network/members
-[stars-shield]: https://img.shields.io/github/stars/openreasoner/o1-dev.svg?style=for-the-badge
-[stars-url]: https://github.com/openreasoner/o1-dev/stargazers
-[issues-shield]: https://img.shields.io/github/issues/openreasoner/o1-dev.svg?style=for-the-badge
-[issues-url]: https://github.com/openreasoner/o1-dev/issues
+[contributors-shield]: https://img.shields.io/github/contributors/openreasoner/openr.svg?style=for-the-badge
+[contributors-url]: https://github.com/openreasoner/openr/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/openreasoner/openr.svg?style=for-the-badge
+[forks-url]: https://github.com/openreasoner/openr/network/members
+[stars-shield]: https://img.shields.io/github/stars/openreasoner/openr.svg?style=for-the-badge
+[stars-url]: https://github.com/openreasoner/openr/stargazers
+[issues-shield]: https://img.shields.io/github/issues/openreasoner/openr.svg?style=for-the-badge
+[issues-url]: https://github.com/openreasoner/openr/issues
 
-[license-shield]: https://img.shields.io/github/license/openreasoner/o1-dev.svg?style=for-the-badge
-[license-url]: https://github.com/openreasoner/o1-dev/blob/main/LICENSE.txt
+[license-shield]: https://img.shields.io/github/license/openreasoner/openr.svg?style=for-the-badge
+[license-url]: https://github.com/openreasoner/openr/blob/main/LICENSE.txt
