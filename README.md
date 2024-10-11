@@ -93,6 +93,7 @@
 - [12/10/2024] OpenR has been released! 🚀 
   
 ## Features
+<div style="display: flex; align-items: center;">
 <ul style="list-style-type: none; padding: 0;">
     <li><strong>✅ Process-supervision Data Release</strong></li>
     <li><strong>✅ Online RL Training</strong></li>
@@ -101,6 +102,8 @@
     <li><strong>✅ Test-time Computation</strong></li>
     <li><strong>✅ Test-time Scaling Law</strong></li>
 </ul>
+    <img src="./figure/logo_text.png" alt="Description" style="width: 300px; margin-left: 50px; float: right;">
+</div>
 
 ## Plots
 
