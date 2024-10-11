@@ -24,7 +24,7 @@
 <!-- PROJECT LOGO -->
 
 <br />
-<div align="center">
+<div align="center" style="font-size: 30px;>
   <a href="https://github.com/openreasoner/o1-dev/">
     <img src="figure/openr_logo.png" alt="Logo" width="200">
   </a>
