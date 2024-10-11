@@ -1,0 +1,29 @@
+title: OpenR Documents
+description: An Open-Sourced Framework for Advancing Reasoning in Large Language Models
+theme: just-the-docs
+
+url: https://openreasoner.github.io/docs
+
+
+defaults:
+  - scope:
+      path: "docs" # an empty string here means all files in the project
+      type: "pages"
+    values:
+      layout: "default"
+
+# Enable or disable the side/mobile menu globally
+# Nav menu can also be selectively enabled or disabled using page variables or the minimal layout
+nav_enabled: true
+
+# Sort order for navigation links
+# nav_sort: case_insensitive # default, equivalent to nil
+nav_sort: case_sensitive # Capital letters sorted before lowercase
+
+aux_links:
+  OpenR Github: https://github.com/openreasoner/openr
+
+
+
+# Set a path/url to a logo that will be displayed instead of the title
+logo: "/assets/images/trans_bg_logo.png"
