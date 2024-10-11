@@ -24,14 +24,14 @@
 <!-- PROJECT LOGO -->
 
 <br />
-<div align="center" style="font-size: 30px;>
+<div align="center">
   <a href="https://github.com/openreasoner/o1-dev/">
     <img src="figure/openr_logo.png" alt="Logo" width="200">
   </a>
 
 <!-- <h2 align="center">OpenR</h2> -->
 
-<p align="center">
+<p align="center" style="font-size: 30px;">
     <strong><em>OpenR</em></strong>: An Open-Sourced Framework for Advancing Reasoning in Large Language Models
     <!-- <br />
     <a href="https://openreasoner.github.io/"><strong>Explore the docs »</strong></a>
