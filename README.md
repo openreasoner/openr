@@ -36,7 +36,7 @@
 <!-- <h2 align="center">OpenR</h2> -->
 
 <p align="center">
-    <strong>*OpenR*</strong>: An Open-Sourced Framework for Advancing Reasoning in Large Language Models
+    <strong><em>OpenR</em>em></strong>: An Open-Sourced Framework for Advancing Reasoning in Large Language Models
     <!-- <br />
     <a href="https://openreasoner.github.io/"><strong>Explore the docs »</strong></a>
     <br /> -->
