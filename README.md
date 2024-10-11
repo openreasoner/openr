@@ -68,7 +68,7 @@
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#Run Inference">Usage</a></li>
+    <li><a href="#usage">Usage</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
@@ -112,7 +112,7 @@ cd -
 ```
 
 
-### Download  Base Models
+### Download Base Models
 
 
 Before running the project, please ensure that all required base models are downloaded. The models used in this project include:
@@ -143,6 +143,8 @@ Then it prepares and runs inference using different techniques.
 ```bash
 sh reason/llm_service/create_service_math_shepherd.sh
 ```
+
+## Usage
 
 #### Run Inference
 ```bash
