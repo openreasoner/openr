@@ -37,7 +37,7 @@
     <a href="https://openreasoner.github.io/"><strong>Explore the docs »</strong></a>
     <br /> -->
     <br />
-    <a href="https://github.com/openreasoner/openr/tree/main/reports">Paper</a>
+    <a href="https://github.com/openreasoner/openr/blob/main/reports/OpenR-Wang.pdf">Paper</a>
     ·
     <a href="https://github.com/openreasoner/openr/blob/main/reports/Tutorial-LLM-Reasoning-Wang.pdf">Tutorial</a>
     ·
