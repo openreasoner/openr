@@ -1,2 +1,0 @@
-2024-09-28 13:38:57 | INFO | model_worker | Register to controller
-2024-09-28 13:39:42 | INFO | model_worker | Send heart beat. Models: ['math-shepherd-mistral-7b-prm']. Semaphore: Semaphore(value=4, locked=False). call_ct: 0. worker_id: eb510ce0. 
