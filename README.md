@@ -50,8 +50,6 @@
     <a href="https://github.com/openreasoner/o1-dev/issues">Issue</a>
     ·
     <a href="https://medium.com/p/xxxxxx">Blog (Pytorch)</a>
-    ·
-    <a href="https://nips.cc/virtual/xxxxx">Video</a>
   </p>
 </div>
 
