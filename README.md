@@ -41,7 +41,13 @@
     ·
     <a href="https://github.com/openreasoner/openr/blob/main/reports/Tutorial-LLM-Reasoning-Wang.pdf">Tutorial</a>
     ·
+    <a href="https://github.com/openreasoner/openr">Code</a>
+    ·
     <a href="https://openreasoner.github.io/">Docs</a>
+    ·
+    <a href="https://huggingface.co/datasets/openreasoner/MATH-APS">Data</a>
+    ·
+    <a href="https://huggingface.co/openreasoner/Math-psa">Model</a>
     ·
     <a href="https://github.com/openreasoner/openr/issues">Issue</a>
 <!--     · -->
@@ -57,7 +63,7 @@
 
 <!-- TABLE OF CONTENTS -->
 
-<details>
+[//]: # (<details>)
   <summary>Table of Contents</summary>
   <ol>
     <li><a href="#news-and-updates">News and Updates</a></li>
@@ -77,7 +83,8 @@
     <li><a href="#response-examples">Response Examples</a></li>
     <li><a href="#reference">Reference</a></li>
   </ol>
-</details>
+
+[//]: # (</details>)
 
 <!-- News and Updates -->
 
