@@ -32,14 +32,14 @@
 <!-- <h2 align="center">OpenR</h2> -->
 
 <p align="center">
-    <strong><em>OpenR</em></strong>: An Open-Sourced Framework for Advancing Reasoning in Large Language Models
+    <span style="font-size: 30px;"><strong><em>OpenR</em></strong>: An Open-Sourced Framework for Advancing Reasoning in Large Language Models </span>
     <!-- <br />
     <a href="https://openreasoner.github.io/"><strong>Explore the docs »</strong></a>
     <br /> -->
     <br />
     <a href="https://github.com/openreasoner/openr/tree/main/reports">Paper</a>
-<!--     · -->
-<!--     <a href="https://colab.research.google.com/XXXXX">Demo</a> -->
+    ·
+    <a href="https://github.com/openreasoner/openr/blob/main/reports/Tutorial-LLM-Reasoning-Wang.pdf">Tutorial</a>
     ·
     <a href="https://openreasoner.github.io/">Docs</a>
     ·
