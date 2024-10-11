@@ -25,7 +25,7 @@
 
 <br />
 <div align="center">
-  <a href="https://github.com/openreasoner/o1-dev/">
+  <a href="https://github.com/openreasoner/openr/">
     <img src="figure/openr_logo.png" alt="Logo" width="200">
   </a>
 
