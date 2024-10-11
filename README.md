@@ -62,6 +62,8 @@
   <ol>
     <li><a href="#news-and-updates">News and Updates</a></li>
     <li><a href="#features">Features</a></li>
+    <li><a href="#plots">Plots</a></li>
+    <li><a href="#provided-datasets-and-models">Datasets and Models</a></li>
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
@@ -91,11 +93,20 @@
     <li><strong>✅ Test-time Scaling Law</strong></li>
 </ul>
 
-## Provided Datasets
+## Plots
 
-[PRM800K](https://github.com/openai/prm800k)
+<p align="center">
+  <img src="./figure/compare_prm_by_boN.png" alt="Image 1" width="45%" />
+  <img src="./figure/MATH_subsampled.png" alt="Image 2" width="45%" />
+</p>
 
-[MATH-APS](https://huggingface.co/datasets/mengfang/MATH-APS)
+## Provided Datasets and Models
+
+[//]: # ([PRM800K]&#40;https://github.com/openai/prm800k&#41; &#40;Process Supervision Dataset&#41;)
+
+[MATH-APS](https://huggingface.co/datasets/mengfang/MATH-APS) (Our Dataset)
+
+[MATH-psa](https://huggingface.co/openreasoner/Math-psa) (Our Process Reward Model)
 
 ## Getting Started
 
