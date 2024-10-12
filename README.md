@@ -102,8 +102,11 @@
     <li><strong>✅ Test-time Computation</strong></li>
     <li><strong>✅ Test-time Scaling Law</strong></li>
 </ul>
-    <img src="./figure/logo_text.png" alt="Description" style="width: 300px; margin-left: 50px; float: right;">
 </div>
+
+<p align="center">
+  <img src="./figure/logo_text.png" alt="Description" style="width: 300px; margin-left: 50px; float: right;">
+</p>
 
 ## Plots
 
