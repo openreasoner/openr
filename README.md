@@ -219,6 +219,8 @@ torchrun --nproc_per_node = 2 finetune_qwen.py --total_batch_size 256 \
 The OpenR community is maintained by:
 
 - Jun Wang (jun.wang@cs.ucl.ac.uk) University College London
+- Meng Fang (Meng.Fang@liverpool.ac.uk) University of Liverpool
+- Linyi Yang (yanglinyiucd@gmail.com) Westlake University
 
 ## License
 OpenR is released under the MIT License.
