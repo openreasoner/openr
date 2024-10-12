@@ -151,7 +151,7 @@ Please make sure that all models are saved in their directories according to the
 
 ### Quickstart
 
-Before running inference, please modify the following variables in the `reason/llm_service/create_service_math_shepherd.sh` script to set the appropriate base models for your usage:
+Before running inference, please modify the following variables in the scripts under `reason/llm_service/` to set the appropriate base models for your usage:
 
 - `$MODEL_BASE`: Set this to the directory where your models are stored.
 - `$POLICY_MODEL_NAME`: Set this to the name of the policy model you wish to use.
@@ -162,6 +162,7 @@ Before running inference, please modify the following variables in the `reason/l
 Then it prepares and runs inference using different techniques.
 
 #### Start LM & RM Services
+For example, to start the LM and RM services for the Math Shepherd model, run the following command:
 ```bash
 sh reason/llm_service/create_service_math_shepherd.sh
 ```
