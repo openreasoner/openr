@@ -100,12 +100,11 @@
 
 <div style="display: flex; align-items: center;">
 <ul style="list-style-type: none; padding: 0;">
-    <li><strong>✅ Process-supervision Data Release</strong></li>
-    <li><strong>✅ Online RL Training</strong></li>
+    <li><strong>✅ Process-supervision Data Generation</strong></li>
+    <li><strong>✅ Online Policy Training</strong></li>
     <li><strong>✅ Generative and Discriminative PRM Training</strong></li>
     <li><strong>✅ Multiple Search Strategies</strong></li>
-    <li><strong>✅ Test-time Computation</strong></li>
-    <li><strong>✅ Test-time Scaling Law</strong></li>
+    <li><strong>✅ Test-time Computation and Scaling Law</strong></li>
 </ul>
 </div>
 
