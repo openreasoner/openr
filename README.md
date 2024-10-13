@@ -28,15 +28,9 @@
   <a href="https://github.com/openreasoner/openr/">
     <img src="figure/openr_logo.png" alt="Logo" width="200">
   </a>
-
-<!-- <h2 align="center">OpenR</h2> -->
-
+  
+<h1 align="center" style="font-size: 30px;"><strong><em>OpenR</em></strong>: An Open Source Framework for Advanced Reasoning with Large Language Models</h1>
 <p align="center">
-    <span style="font-size: 30px;"><strong><em>OpenR</em></strong>: An Open-Source Framework for Advanced Reasoning with Large Language Models </span>
-    <!-- <br />
-    <a href="https://openreasoner.github.io/"><strong>Explore the docs »</strong></a>
-    <br /> -->
-    <br />
     <a href="https://github.com/openreasoner/openr/blob/main/reports/openr-public.pdf">Paper</a>
     ·
     <a href="https://github.com/openreasoner/openr/blob/main/reports/Tutorial-LLM-Reasoning-Wang.pdf">Tutorial</a>
@@ -176,9 +170,10 @@ sh reason/llm_service/create_service_math_shepherd.sh
 
 #### Run Inference
 
-<div style="border: 1px solid #ffcc00; background-color: #fff3cd; padding: 10px; border-radius: 5px;">
-  <strong>Tips:</strong> Make sure the input (<strong>--LM</strong>, <strong>--RM</strong>) in the script aligns with variable ($POLICY_MODEL_NAME, $VALUE_MODEL_NAME) in the pending worker!
-</div>
+
+⚠️ Make sure the input (`--LM`, `--RM`) in the script aligns with the variables (`$POLICY_MODEL_NAME`, `$VALUE_MODEL_NAME`) in the pending worker!
+
+
 
 ```bash
 export PYTHONPATH=$(pwd)
@@ -204,7 +199,7 @@ sh scripts/eval/beam_search.sh
 
 #### Run Training
 
-Before training, please modify the `$dataset_path`, `$model_name_or_path` and `$prm_name_or_path` in `train/mat/scripts/train_llm.sh`.
+⚠️ Before training, please modify the `$dataset_path`, `$model_name_or_path` and `$prm_name_or_path` in `train/mat/scripts/train_llm.sh`.
 
 ```bash
 cd train/mat/scripts
