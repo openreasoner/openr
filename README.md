@@ -175,11 +175,31 @@ sh reason/llm_service/create_service_math_shepherd.sh
 ## Usage
 
 #### Run Inference
+
+<div style="border: 1px solid #ffcc00; background-color: #fff3cd; padding: 10px; border-radius: 5px;">
+  <strong>Tips:</strong> Make sure the input (<strong>--LM</strong>, <strong>--RM</strong>) in the script aligns with variable ($POLICY_MODEL_NAME, $VALUE_MODEL_NAME) in the pending worker!
+</div>
+
 ```bash
 export PYTHONPATH=$(pwd)
 sh scripts/eval/cot_greedy.sh
+
+# Method: cot. Average result: ({'majority_vote': 0.734, 'total_completion_tokens': 559.13},)
+
 sh scripts/eval/cot_rerank.sh
+
+# Method: best_of_n. Average result: ({'majority_vote': 0.782, 
+#                                       'prm_min_max': 0.772, 
+#                                       'prm_min_vote': 0.792, 
+#                                       'prm_last_max': 0.776, 
+#                                       'prm_last_vote': 0.792, 
+#                                       'total_completion_tokens': 4431.268},)
+
 sh scripts/eval/beam_search.sh
+
+# Method: beam_search. Average result: ({'majority_vote': 0.74, 'total_completion_tokens': 2350.492},)
+
+
 ```
 
 #### Run Training

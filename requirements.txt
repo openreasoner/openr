@@ -27,3 +27,5 @@ Pebble
 timeout-decorator
 flash_attn
 python_dateutil
+tensorboardX
+sklearn

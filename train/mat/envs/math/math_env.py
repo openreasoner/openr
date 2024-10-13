@@ -36,11 +36,11 @@ class MathEnv:
         self.current_state = None
 
     def reset(self):
-        # problem_answer_pair = random.choice(self.dataset)
+        problem_answer_pair = random.choice(self.dataset)
         # problem_answer_pair = self.dataset[3]
-        if self.mode == "test":
-            problem_answer_pair = self.dataset[self.problem_idx]
-            self.problem_idx  = (self.problem_idx + 1) % len(self.dataset)
+        # if self.mode == "test":
+        #     problem_answer_pair = self.dataset[self.problem_idx]
+        #     self.problem_idx  = (self.problem_idx + 1) % len(self.dataset)
             
         self.problem = problem_answer_pair["problem"]
         self.label = problem_answer_pair["final_answer"]
