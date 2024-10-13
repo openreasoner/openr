@@ -28,15 +28,9 @@
   <a href="https://github.com/openreasoner/openr/">
     <img src="figure/openr_logo.png" alt="Logo" width="200">
   </a>
-
-<!-- <h2 align="center">OpenR</h2> -->
-
+  
+<h1 align="center" style="font-size: 30px;"><strong><em>OpenR</em></strong>: An Open Source Framework for Advanced Reasoning with Large Language Models</h1>
 <p align="center">
-    <span style="font-size: 30px;"><strong><em>OpenR</em></strong>: An Open-Source Framework for Advanced Reasoning with Large Language Models </span>
-    <!-- <br />
-    <a href="https://openreasoner.github.io/"><strong>Explore the docs »</strong></a>
-    <br /> -->
-    <br />
     <a href="https://github.com/openreasoner/openr/blob/main/reports/openr-public.pdf">Paper</a>
     ·
     <a href="https://github.com/openreasoner/openr/blob/main/reports/Tutorial-LLM-Reasoning-Wang.pdf">Tutorial</a>
