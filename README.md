@@ -176,9 +176,10 @@ sh reason/llm_service/create_service_math_shepherd.sh
 
 #### Run Inference
 
-<div style="border: 1px solid #ffcc00; background-color: #fff3cd; padding: 10px; border-radius: 5px;">
-  <strong>Tips:</strong> Make sure the input (<strong>--LM</strong>, <strong>--RM</strong>) in the script aligns with variable ($POLICY_MODEL_NAME, $VALUE_MODEL_NAME) in the pending worker!
-</div>
+
+⚠️ Make sure the input (`--LM`, `--RM`) in the script aligns with the variables (`$POLICY_MODEL_NAME`, `$VALUE_MODEL_NAME`) in the pending worker!
+
+
 
 ```bash
 export PYTHONPATH=$(pwd)
@@ -204,7 +205,7 @@ sh scripts/eval/beam_search.sh
 
 #### Run Training
 
-Before training, please modify the `$dataset_path`, `$model_name_or_path` and `$prm_name_or_path` in `train/mat/scripts/train_llm.sh`.
+⚠️ Before training, please modify the `$dataset_path`, `$model_name_or_path` and `$prm_name_or_path` in `train/mat/scripts/train_llm.sh`.
 
 ```bash
 cd train/mat/scripts
