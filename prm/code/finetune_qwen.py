@@ -17,6 +17,8 @@ from datasets import concatenate_datasets
 import random
 
 parser = argparse.ArgumentParser()
+parser.add_argument("--model_path", type=str, default="Qwen/Qwen2.5-Math-7B-Instruct")
+parser.add_argument("--data_path", type=str, default="../../datasets")
 parser.add_argument("--per_device_train_batch_size", type=int, default=4)
 parser.add_argument("--per_device_eval_batch_size", type=int, default=4)
 parser.add_argument("--total_batch_size", type=int, default=256)
@@ -33,7 +35,7 @@ bad_token = '-'
 step_tag = '\n\n\n\n\n' #ки
 step_tag2 = '\n\n'
 
-model_path = "../../models/Qwen/Qwen2.5-Math-7B-Instruct/"
+model_path = args.model_path
 
 # tokenizer = AutoTokenizer.from_pretrained(model_path)
 
@@ -153,8 +155,8 @@ def preprocess_function(example):
 DATA_PATH = {
     # "train": 'multi-step.json', 
     # 'train': 'test.json',
-    "test": '../../datasets/processed_data/prm800k_test.json',
-    "train": "../../datasets/processed_data/math_aps.json",
+    "test": os.path.join(args.data_path, 'prm800k_test.json'),
+    "train": os.path.join(args.data_path, "math_aps.json"),
     # "train": "../../datasets/processed_data/prm800k/data/phase2_train_new.jsonl",
     # "test": "../../datasets/prm800k-main/prm800k/data/phase2_test_new.jsonl",
     
@@ -162,11 +164,11 @@ DATA_PATH = {
 
 dataset = load_dataset('json', data_files=DATA_PATH)
 if args.datasets == 'both':
-    dataset2 = load_dataset('json',data_files="../../datasets/processed_data/prm800k_train.json")
+    dataset2 = load_dataset('json',data_files=os.path.join(args.data_path, "prm800k_train.json"))
     dataset['train'] = concatenate_datasets([dataset['train'], dataset2['train']])
 elif args.datasets == 'all':
-    dataset2 = load_dataset('json',data_files="../../datasets/processed_data/prm800k_train.json")
-    dataset3 = load_dataset('json',data_files="../../datasets/processed_data/math_shepherd.json")
+    dataset2 = load_dataset('json',data_files=os.path.join(args.data_path, "prm800k_train.json"))
+    dataset3 = load_dataset('json',data_files=os.path.join(args.data_path, "math_shepherd.json"))
 
     aps_length = len(dataset['train'])
     prm800k_length = len(dataset2['train'])
@@ -176,7 +178,7 @@ elif args.datasets == 'all':
     dataset2['train'] = dataset2['train'].select(random.sample(range(prm800k_length),50000))
     dataset['train'] = concatenate_datasets([dataset['train'], dataset2['train'],dataset3['train']])
 elif args.datasets == 'aps_shepherd':
-    dataset3 = load_dataset('json',data_files="../../datasets/processed_data/math_shepherd.json")
+    dataset3 = load_dataset('json',data_files=os.path.join(args.data_path, "math_shepherd.json"))
     dataset['train'] = concatenate_datasets([dataset['train'],dataset3['train']])
 
 

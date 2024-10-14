@@ -13,7 +13,12 @@ from torch.nn import BCEWithLogitsLoss
 from transformers import DataCollatorWithPadding
 from transformers import TrainerCallback
 from datasets import concatenate_datasets
+from prm.code.finetune_qwen import DATA_PATH
+
 parser = argparse.ArgumentParser()
+parser.add_argument("--model_path", type=str, default="Qwen/Qwen2.5-Math-7B-Instruct")
+parser.add_argument("--train_data_path", type=str, default="../../datasets/math_aps.json")
+parser.add_argument("--test_data_path", type=str, default="../../datasets/prm800k_test.json")
 parser.add_argument("--per_device_train_batch_size", type=int, default=2)
 parser.add_argument("--per_device_eval_batch_size", type=int, default=16)
 parser.add_argument("--total_batch_size", type=int, default=256)
@@ -28,7 +33,7 @@ bad_token = '-'
 step_tag = '\n\n\n\n\n' #ки
 step_tag2 = '\n\n'
 
-model_path = "../../models/Qwen/Qwen2.5-Math-7B-Instruct/"
+model_path = args.model_path
 
 # tokenizer = AutoTokenizer.from_pretrained(model_path)
 
@@ -139,16 +144,19 @@ def preprocess_function(example):
     
     return tokenized_inputs
 
-DATA_PATH = {
+# DATA_PATH = {
     # "train": 'multi-step.json', 
     # 'train': 'test.json',
     # "test": 'test.json',
-    "test": '../../datasets/processed_data/prm800k_test.json',
-    "train": "../../datasets/processed_data/math_aps.json",
+    # "test": '../../datasets/processed_data/prm800k_test.json',
+    # "train": "../../datasets/processed_data/math_aps.json",
     # "train": "../../datasets/processed_data/prm800k/data/phase2_train_new.jsonl",
     # "test": "../../datasets/prm800k-main/prm800k/data/phase2_test_new.jsonl",
     
-}
+# }
+DATA_PATH = {}
+DATA_PATH['train'] = args.train_data_path
+DATA_PATH['test'] = args.test_data_path
 # dataset2 = load_dataset('json',data_files="../../datasets/processed_data/prm800k_train.json")
 
 dataset = load_dataset('json', data_files=DATA_PATH)
