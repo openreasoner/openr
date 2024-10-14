@@ -213,14 +213,15 @@ bash train_llm.sh
 cd prm/code
 
 \\ single gpu
-python finetune_qwen.py --total_batch_size 256 \
-                          --learning_rate 1e-4 \
-                          --datasets all \
+python finetune_qwen_single_gpu.py --model_path $YOUR_MODEL_PATH \
+                                   --train_data_path $TRAIN_DATA_PATH \
+                                   --test_data_path $TEST_DATA_PATH
+
 
 \\ multi gpu
-torchrun --nproc_per_node = 2 finetune_qwen.py --total_batch_size 256 \
-                                                --learning_rate 1e-4 \
-                                                --datasets all \
+torchrun --nproc_per_node=2 finetune_qwen.py --model_path $YOUR_MODEL_PATH \
+                                             --data_path $YOUR_DATA_FOLDER_PATH \
+                                             --datasets both \
 ```
 
 ## Future Plan
