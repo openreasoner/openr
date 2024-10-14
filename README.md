@@ -50,10 +50,16 @@
 </div>
 
 ---
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
+[![GitHub contributors](https://img.shields.io/github/contributors/openreasoner/openr)][contributors-url]
+![Website](https://img.shields.io/website?url=https%3A%2F%2Fgithub.com%2Fopenreasoner%2Fopenr%2Fblob%2Fmain%2Freports%2FOpenR-Wang.pdf&up_message=Online&label=Paper&link=https%3A%2F%2Fgithub.com%2Fopenreasoner%2Fopenr%2Fblob%2Fmain%2Freports%2FOpenR-Wang.pdf)
+![GitHub License](https://img.shields.io/github/license/openreasoner/openr)
+[![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/openreasoner/openr)][issues-url]
+[![GitHub forks](https://img.shields.io/github/forks/openreasoner/openr)][forks-url]
+[![GitHub Repo stars](https://img.shields.io/github/stars/openreasoner/openr)][stars-url]
+[![HuggingFace Dataset](https://img.shields.io/badge/Hugging%20Face-FFD21E?logo=huggingface&logoColor=000)](https://huggingface.co/openreasoner)
+[![X](https://img.shields.io/badge/openreasoner-%23000000.svg?logo=X&logoColor=white)](https://x.com/openreasoner)
+[![WeChat](https://img.shields.io/badge/WeChat_Group-07C160?logo=wechat&logoColor=white)](#community)
+
 
 <!-- TABLE OF CONTENTS -->
 
@@ -75,6 +81,7 @@
     <li><a href="#contact">Contact</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#response-examples">Response Examples</a></li>
+    <li><a href="#community">Community</a></li>
     <li><a href="#reference">Reference</a></li>
   </ol>
 
@@ -238,9 +245,7 @@ torchrun --nproc_per_node=2 finetune_qwen.py --model_path $YOUR_MODEL_PATH \
 
 The OpenR community is maintained by:
 
-- Jun Wang (jun.wang@cs.ucl.ac.uk) University College London [Team Leader]
-- Meng Fang (Meng.Fang@liverpool.ac.uk) University of Liverpool [Team Leader]
-- Linyi Yang (yanglinyiucd@gmail.com) Westlake University [Technical Lead]
+- **Openreasoner Team** (openreasoner@gmail.com)
 
 ## License
 OpenR is released under the MIT License.
@@ -283,6 +288,13 @@ If you do find our resources helpful, please cite our paper:
   <img src="./figure/QA/QA6.png" alt="QA 6" width="70%" />
   <img src="./figure/QA/QA7.png" alt="QA 7" width="70%" />
 </p>
+
+
+## Community
+
+**WeChat**:
+
+<img src="./figure/wechat_qrcode.jpg" width="30%" />
 
 
 
