@@ -14,11 +14,16 @@ from torch.nn import BCEWithLogitsLoss
 from transformers import DataCollatorWithPadding
 from datasets import concatenate_datasets
 
+import random
+
 parser = argparse.ArgumentParser()
 parser.add_argument("--per_device_train_batch_size", type=int, default=4)
 parser.add_argument("--per_device_eval_batch_size", type=int, default=4)
 parser.add_argument("--total_batch_size", type=int, default=256)
 parser.add_argument("--learning_rate", type=int, default=1e-4)
+parser.add_argument("--datasets", type=str, default='all')
+parser.add_argument("--server", type=str, default='1')
+
 
 args = parser.parse_args()
 
@@ -154,12 +159,29 @@ DATA_PATH = {
     # "test": "../../datasets/prm800k-main/prm800k/data/phase2_test_new.jsonl",
     
 }
-dataset2 = load_dataset('json',data_files="../../datasets/processed_data/prm800k_train.json")
 
 dataset = load_dataset('json', data_files=DATA_PATH)
-dataset['train'] = concatenate_datasets([dataset['train'], dataset2['train']])
+if args.datasets == 'both':
+    dataset2 = load_dataset('json',data_files="../../datasets/processed_data/prm800k_train.json")
+    dataset['train'] = concatenate_datasets([dataset['train'], dataset2['train']])
+elif args.datasets == 'all':
+    dataset2 = load_dataset('json',data_files="../../datasets/processed_data/prm800k_train.json")
+    dataset3 = load_dataset('json',data_files="../../datasets/processed_data/math_shepherd.json")
 
-# dataset['train'] = dataset['train'].select(range(1000))
+    aps_length = len(dataset['train'])
+    prm800k_length = len(dataset2['train'])
+    random.seed(42)
+    dataset['train'] = dataset['train'].select(random.sample(range(aps_length),50000))
+    random.seed(42)
+    dataset2['train'] = dataset2['train'].select(random.sample(range(prm800k_length),50000))
+    dataset['train'] = concatenate_datasets([dataset['train'], dataset2['train'],dataset3['train']])
+elif args.datasets == 'aps_shepherd':
+    dataset3 = load_dataset('json',data_files="../../datasets/processed_data/math_shepherd.json")
+    dataset['train'] = concatenate_datasets([dataset['train'],dataset3['train']])
+
+
+
+# dataset['train'] = dataset['train'].select(range(200000,201000))
 # dataset['test'] = dataset['test'].select(range(1000))
 
 print('start processing')
@@ -188,8 +210,8 @@ print(world_size)
 print(ddp)
 
 
-fp = f'bs_{args.total_batch_size}_lr_{args.learning_rate}'
-output_path = f'./prm_results_qwen_new/{fp}'
+fp = f'bs_{args.total_batch_size}_lr_{args.learning_rate}_datasets_{args.datasets}'
+output_path = f'./prm_results_qwen_new.{args.server}/{fp}'
 
 
 # Training arguments
