@@ -51,7 +51,7 @@
 
 ---
 [![GitHub contributors](https://img.shields.io/github/contributors/openreasoner/openr)][contributors-url]
-![Website](https://img.shields.io/website?url=https%3A%2F%2Fgithub.com%2Fopenreasoner%2Fopenr%2Fblob%2Fmain%2Freports%2FOpenR-Wang.pdf&up_message=Online&label=Paper&link=https%3A%2F%2Fgithub.com%2Fopenreasoner%2Fopenr%2Fblob%2Fmain%2Freports%2FOpenR-Wang.pdf)
+[![arXiv](https://img.shields.io/badge/ArXiv-2410.09671-b31b1b.svg)](https://arxiv.org/pdf/2410.09671)
 ![GitHub License](https://img.shields.io/github/license/openreasoner/openr)
 [![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/openreasoner/openr)][issues-url]
 [![GitHub forks](https://img.shields.io/github/forks/openreasoner/openr)][forks-url]
@@ -91,8 +91,10 @@
 
 ## News and Updates
 
-- [12/10/2024] OpenR has been released! 🚀 
-  
+- **[15/10/2024]** Our report is on [**Arxiv**](https://arxiv.org/abs/2410.09671)! 
+- **[12/10/2024]** ***OpenR*** has been released! 🚀 
+
+
 ## Features
 
 <p align="center">
@@ -257,7 +259,7 @@ If you do find our resources helpful, please cite our paper:
 ```
 @article{openr2024,
   title = {OpenR: An Open Source Framework for Advanced Reasoning with Large Language Models},
-  url = {https://github.com/openreasoner/openr/blob/main/reports/OpenR-Wang.pdf},
+  url = {https://arxiv.org/pdf/2410.09671},
   author = {Jun Wang, Meng Fang, Ziyu Wan, Muning Wen, Jiachen Zhu, Anjie Liu, 
               Ziqin Gong, Yan Song, Lei Chen, Lionel M. Ni, Linyi Yang, Ying Wen, Weinan Zhang},
   year = {2024}
