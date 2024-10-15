@@ -31,7 +31,7 @@
   
 <h1 align="center" style="font-size: 30px;"><strong><em>OpenR</em></strong>: An Open Source Framework for Advanced Reasoning with Large Language Models</h1>
 <p align="center">
-    <a href="https://github.com/openreasoner/openr/blob/main/reports/OpenR-Wang.pdf">Paper</a>
+    <a href="https://arxiv.org/abs/2410.09671">Paper</a>
     ·
     <a href="https://github.com/openreasoner/openr/blob/main/reports/Tutorial-LLM-Reasoning-Wang.pdf">Tutorial</a>
     ·
