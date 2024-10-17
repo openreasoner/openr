@@ -74,7 +74,7 @@ class RMRemoteCaller(RewardModelCallingFunction):
             input_str = split_query_response_hack(input_str)
         else:
             input_str = [split_query_response_hack(s) for s in input_str]
-        import pdb; pdb.set_trace()
+        
         return _value_inference_fastchat(
             input_str=input_str,
             model_name=self.model_name,
