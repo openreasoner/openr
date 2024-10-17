@@ -70,7 +70,7 @@ if __name__ == "__main__":
         step_tag = "ки\n"
     else:
         # assume qwen
-        step_tag = "\n\n\n\n\n"
+        step_tag = "\n\n\n\n\n "
         
 
     llm_gen_fn = VLLMRemoteCaller(config.LM, config.controller_addr)
