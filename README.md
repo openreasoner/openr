@@ -78,8 +78,8 @@
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
+    <li><a href="#join-us">Join Us</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#license">License</a></li>
     <li><a href="#response-examples">Response Examples</a></li>
     <li><a href="#community">Community</a></li>
     <li><a href="#reference">Reference</a></li>
@@ -233,7 +233,18 @@ torchrun --nproc_per_node=2 finetune_qwen.py --model_path $YOUR_MODEL_PATH \
                                              --datasets both \
 ```
 
-## Future Plan
+## Join Us
+
+> Every contribution is valuable to the community.
+
+Thank you for your interest in ***OpenR*** ! 🥰 We are deeply committed to the open-source community, 
+and we welcome contributions from everyone. Your efforts, whether big or small, help us grow and improve. 
+Contributions aren’t limited to code—answering questions, helping others, enhancing our 
+documentation, and sharing the project are equally impactful. 
+
+Feel free to checkout the [contribution guidance](CONTRIBUTING.md) ! 
+
+### Future Plan
 
 - Add More Comprehensive Evaluations on RL Training and Search Strategies
 
@@ -245,7 +256,7 @@ torchrun --nproc_per_node=2 finetune_qwen.py --model_path $YOUR_MODEL_PATH \
 
 ## Contact
 
-The OpenR community is maintained by:
+The ***OpenR*** community is maintained by:
 
 - **Openreasoner Team** (openreasoner@gmail.com)
 
@@ -257,12 +268,11 @@ OpenR is released under the MIT License.
 If you do find our resources helpful, please cite our paper:
 
 ```
-@article{openr2024,
-  title = {OpenR: An Open Source Framework for Advanced Reasoning with Large Language Models},
-  url = {https://arxiv.org/pdf/2410.09671},
-  author = {Jun Wang, Meng Fang, Ziyu Wan, Muning Wen, Jiachen Zhu, Anjie Liu, 
-              Ziqin Gong, Yan Song, Lei Chen, Lionel M. Ni, Linyi Yang, Ying Wen, Weinan Zhang},
-  year = {2024}
+@article{wang2024openr,
+  title={OpenR: An Open Source Framework for Advanced Reasoning with Large Language Models},
+  author={Wang, Jun and Fang, Meng and Wan, Ziyu and Wen, Muning and Zhu, Jiachen and Liu, Anjie and Gong, Ziqin and Song, Yan and Chen, Lei and Ni, Lionel M and others},
+  journal={arXiv preprint arXiv:2410.09671},
+  year={2024}
 }
 ```
 
