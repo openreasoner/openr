@@ -29,21 +29,21 @@
     <img src="figure/openr_logo.png" alt="Logo" width="200">
   </a>
   
-<h1 align="center" style="font-size: 30px;"><strong><em>OpenR</em></strong>: An Open Source Framework for Advanced Reasoning with Large Language Models</h1>
+<h1 align="center" style="font-size: 30px;"><strong><em>OpenR</em></strong>: 专注大型语言模型进阶推理能力的开源框架</h1>
 <p align="center">
-    <a href="https://arxiv.org/abs/2410.09671">Paper</a>
+    <a href="https://arxiv.org/abs/2410.09671">技术报告</a>
     ·
-    <a href="https://github.com/openreasoner/openr/blob/main/reports/Tutorial-LLM-Reasoning-Wang.pdf">Tutorial</a>
+    <a href="https://github.com/openreasoner/openr/blob/main/reports/Tutorial-LLM-Reasoning-Wang.pdf">指南</a>
     ·
-    <a href="https://github.com/openreasoner/openr">Code</a>
+    <a href="https://github.com/openreasoner/openr">代码库</a>
     ·
-    <a href="https://openreasoner.github.io/">Docs</a>
+    <a href="https://openreasoner.github.io/">文档</a>
     ·
-    <a href="https://huggingface.co/datasets/openreasoner/MATH-APS">Data</a>
+    <a href="https://huggingface.co/datasets/openreasoner/MATH-APS">数据集</a>
     ·
-    <a href="https://huggingface.co/openreasoner/Math-psa">Model</a>
+    <a href="https://huggingface.co/openreasoner/Math-psa">模型文件</a>
     ·
-    <a href="https://github.com/openreasoner/openr/issues">Issue</a>
+    <a href="https://github.com/openreasoner/openr/issues">问答</a>
   </p>
     <p align="center">
      [ <a href="https://github.com/openreasoner/openr/blob/main/README.md">English</a> ][ <a href="https://github.com/openreasoner/openr/blob/main/README_zh.md">中文</a> ]
@@ -65,38 +65,38 @@
 <!-- TABLE OF CONTENTS -->
 
 [//]: # (<details>)
-  <summary>Table of Contents</summary>
+  <summary>目录</summary>
   <ol>
-    <li><a href="#news-and-updates">News and Updates</a></li>
-    <li><a href="#features">Features</a></li>
-    <li><a href="#plots">Plots</a></li>
-    <li><a href="#provided-datasets-and-models">Datasets and Models</a></li>
+    <li><a href="#新闻与更新">新闻与更新</a></li>
+    <li><a href="#功能">功能</a></li>
+    <li><a href="#图表">图表</a></li>
+    <li><a href="#数据集与模型">数据集与模型</a></li>
     <li>
-      <a href="#getting-started">Getting Started</a>
+      <a href="#快速入门">快速入门</a>
       <ul>
-        <li><a href="#installation">Installation</a></li>
-        <li><a href="#quickstart">Quick Start</a></li>
+        <li><a href="#安装">安装</a></li>
+        <li><a href="#快速开始">快速开始</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#join-us">Join Us</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#response-examples">Response Examples</a></li>
-    <li><a href="#community">Community</a></li>
-    <li><a href="#reference">Reference</a></li>
+    <li><a href="#用法">用法</a></li>
+    <li><a href="#加入我们">加入我们</a></li>
+    <li><a href="#联系方式">联系方式</a></li>
+    <li><a href="#问答示例">问答示例</a></li>
+    <li><a href="#社区">社区</a></li>
+    <li><a href="#参考引用">参考引用</a></li>
   </ol>
 
 [//]: # (</details>)
 
 <!-- News and Updates -->
 
-## News and Updates
+## 新闻与更新
 
-- **[15/10/2024]** Our report is on [**Arxiv**](https://arxiv.org/abs/2410.09671)! 
-- **[12/10/2024]** ***OpenR*** has been released! 🚀 
+- **[15/10/2024]** 我们的报告已发布在 [**Arxiv**](https://arxiv.org/abs/2410.09671) 上! 
+- **[12/10/2024]** ***OpenR*** 已经发布！ 🚀 
 
 
-## Features
+## 功能
 
 <p align="center">
   <img src="./figure/logo_text.png" alt="Description" style="width: 300px; margin-left: 50px; float: right;">
@@ -104,33 +104,33 @@
 
 <div style="display: flex; align-items: center;">
 <ul style="list-style-type: none; padding: 0;">
-    <li><strong>✅ Process-supervision Data Generation</strong></li>
-    <li><strong>✅ Online Policy Training</strong></li>
-    <li><strong>✅ Generative and Discriminative PRM Training</strong></li>
-    <li><strong>✅ Multiple Search Strategies</strong></li>
-    <li><strong>✅ Test-time Computation and Scaling Law</strong></li>
+    <li><strong>✅ 过程监督的数据生成 </strong></li>
+    <li><strong>✅ 在线策略训练 </strong></li>
+    <li><strong>✅ Generative 和 Discriminative 过程奖励模型的训练</strong></li>
+    <li><strong>✅ 多种搜索策略 </strong></li>
+    <li><strong>✅ Test-time 计算和 Scaling Law</strong></li>
 </ul>
 </div>
 
-## Plots
+## 图表
 
 <p align="center">
   <img src="./figure/compare_prm_by_boN.png" alt="PRM_Results" width="45%" />
   <img src="./figure/MATH_subsampled.png" alt="Inference_Results" width="45%" />
 </p>
 
-## Provided Datasets and Models
+## 数据集与模型
 
 [//]: # ([PRM800K]&#40;https://github.com/openai/prm800k&#41; &#40;Process Supervision Dataset&#41;)
 
-[MATH-APS](https://huggingface.co/datasets/mengfang/MATH-APS) (Our Dataset)
+[MATH-APS](https://huggingface.co/datasets/mengfang/MATH-APS) (我们发布的数据集)
 
-[MATH-psa](https://huggingface.co/openreasoner/Math-psa) (Our Process Reward Model)
+[MATH-psa](https://huggingface.co/openreasoner/Math-psa) (我们发布的过程奖励模型)
 
-## Getting Started
+## 快速入门
 
 
-### Installation
+### 安装
 
 ```
 conda create -n open_reasoner python=3.10
@@ -144,45 +144,53 @@ cd -
 ```
 
 
-### Download Base Models
+### 下载基座模型
 
-
-Before running the project, please ensure that all required base models are downloaded. The models used in this project include:
+在运行项目之前，请确保已下载所有所需的基础模型。本项目使用的模型包括：
 
 - `Qwen2.5-Math-1.5B-Instruct`, `Qwen2.5-Math-7B-Instruct`
 - `Qwen2.5-Math-RM-72B`
 - `peiyi9979/mistral-7b-sft`
 - `peiyi9979/math-shepherd-mistral-7b-prm`
 
-To download these models, please refer to the [Hugging Face model downloading tutorial](https://huggingface.co/docs/hub/models-downloading) for step-by-step guidance on downloading models from the Hugging Face Hub.
+Huggingface 具体下载方式可参考 [Huggingface 下载教程](https://huggingface.co/docs/hub/models-downloading)
 
-Please make sure that all models are saved in their directories according to the project setup before proceeding.
+在继续之前，请确保所有模型已根据项目设置保存在各自的目录中。
 
 
-### Quickstart
+### 快速开始
 
-Before running inference, please modify the following variables in the scripts under `reason/llm_service/` to set the appropriate base models for your usage:
+在运行推理之前，请修改`reason/llm_service/`目录下脚本中的以下变量，以设置适合您使用的基座模型：
 
-- `$MODEL_BASE`: Set this to the directory where your models are stored.
-- `$POLICY_MODEL_NAME`: Set this to the name of the policy model you wish to use.
-- `$VALUE_MODEL_NAME`: Set this to the name of the value model you wish to use.
-- `$NUM_LM_WORKER`: Set this to the number of language model (LM) workers to start.
-- `$NUM_RM_WORKER`: Set this to the number of reward model (RM) workers to start.
+- `$MODEL_BASE`: 设置为存储模型的目录路径。
+- `$POLICY_MODEL_NAME`: 设置为您希望使用的策略模型的名称。
+- `$VALUE_MODEL_NAME`: 设置为您希望使用的Value模型的名称。
+- `$NUM_LM_WORKER`: 设置为要启动的语言模型（LM）进程的数量
+- `$NUM_RM_WORKER`: 设置为要启动的奖励模型（RM）进程的数量。
 
-Then it prepares and runs inference using different techniques.
+接下来，我们将使用不同的技术运行推理。
 
-#### Start LM & RM Services
-For example, to start the LM and RM services for the Math Shepherd model, run the following command:
+#### 启动 LM 和 RM 服务
+
+例如，要启动 Math Shepherd 模型的 LM 和 RM 服务，请运行以下命令：
+
+
+
+
+
+
+
+
 ```bash
 sh reason/llm_service/create_service_math_shepherd.sh
 ```
 
-## Usage
+## 用法
 
-#### Run Inference
+#### 运行 推理(Inference)
 
 
-⚠️ Make sure the input (`--LM`, `--RM`) in the script aligns with the variables (`$POLICY_MODEL_NAME`, `$VALUE_MODEL_NAME`) in the pending worker!
+⚠️ 确保脚本中的输入参数(`--LM`, `--RM`)与待运行的进程中的变量(`$POLICY_MODEL_NAME`, `$VALUE_MODEL_NAME`)保持一致！
 
 
 
@@ -208,16 +216,16 @@ sh scripts/eval/beam_search.sh
 
 ```
 
-#### Run Training
+#### 运行 训练(Training)
 
-⚠️ Before training, please modify the `$dataset_path`, `$model_name_or_path` and `$prm_name_or_path` in `train/mat/scripts/train_llm.sh`.
+⚠️ 运行训练之前，请修改 `train/mat/scripts/train_llm.sh` 文件中的 `$dataset_path`, `$model_name_or_path` 和 `$prm_name_or_path` 项。
 
 ```bash
 cd train/mat/scripts
 bash train_llm.sh
 ```
 
-#### Run PRM Learning
+#### 运行 PRM学习
 
 ```bash
 cd prm/code
@@ -234,39 +242,37 @@ torchrun --nproc_per_node=2 finetune_qwen.py --model_path $YOUR_MODEL_PATH \
                                              --datasets both \
 ```
 
-## Join Us
+## 加入我们
 
-> Every contribution is valuable to the community.
+> 您的每一份贡献对社区来说都是宝贵的。
 
-Thank you for your interest in ***OpenR*** ! 🥰 We are deeply committed to the open-source community, 
-and we welcome contributions from everyone. Your efforts, whether big or small, help us grow and improve. 
-Contributions aren’t limited to code—answering questions, helping others, enhancing our 
-documentation, and sharing the project are equally impactful. 
+感谢您对 ***OpenR*** 的关注！🥰 我们致力于发展开源社区，并十分欢迎大家的contribution。无论大小，您的努力都将帮助我们成长和进步。贡献不仅限于代码——解答问题、帮助他人、改进我们的文档、分享项目同样具有深远的影响。
 
-Feel free to checkout the [contribution guidance](CONTRIBUTING.md) ! 
+欢迎查阅 [贡献指南](CONTRIBUTING.md) ! 
 
-### Future Plan
+### 未来计划
 
-- Add More Comprehensive Evaluations on RL Training and Search Strategies
+- 更全面的强化学习训练和搜索方法的实验
 
-- Scaling the Prove-Verifier Model Size
+- 更大规模的Prove-Verifier模型
 
-- Support Self-improvement Training
+- 支持自我提升训练功能
 
 <!-- CONTACT -->
 
-## Contact
+## 联系方式
 
-The ***OpenR*** community is maintained by:
+***OpenR*** 社区由以下团队维护：
 
 - **Openreasoner Team** (openreasoner@gmail.com)
 
 ## License
-OpenR is released under the MIT License.
 
-## Citation
+***OpenR*** is released under the MIT License.
 
-If you do find our resources helpful, please cite our paper:
+## 欢迎引用
+
+如果您觉得我们的资源对您有帮助，请引用我们的论文：
 
 ```
 @article{wang2024openr,
@@ -276,10 +282,11 @@ If you do find our resources helpful, please cite our paper:
   year={2024}
 }
 ```
+十分感谢！
 
-## Response Examples
+## 问答示例
 
-### Comparing PRM, Math-psa (Ours) V.S. Math-Shepherd 
+### 对比 过程奖励模型（PRM）：Math-psa (Ours) V.S. Math-Shepherd 
 
 <p align="center">
   <img src="./figure/QA/QA1.png" alt="QA 1" width="49%" />
@@ -287,14 +294,14 @@ If you do find our resources helpful, please cite our paper:
 </p>
 
 
-### Justifing RL Training
+### 验证强化学习训练 （RL Training）
 
 <p align="center">
   <img src="./figure/QA/QA3.png" alt="QA 3" width="49%" />
   <img src="./figure/QA/QA4.png" alt="QA 4" width="49%" />
 </p>
 
-### Exploring Test-time Computation
+### 探索 Test-time Computation
 
 <p align="center">
   <img src="./figure/QA/QA5.png" alt="QA 5" width="70%" />
@@ -303,15 +310,15 @@ If you do find our resources helpful, please cite our paper:
 </p>
 
 
-## Community
+## 社区
 
-**WeChat**:
+**微信群聊**:
 
 <img src="./figure/wechat_qrcode.jpg" width="30%" />
 
 
 
-## Reference
+## 参考引用
 
 ### Inference-time Computing
 [1] [Alphazero-like tree-search can guide large language model decoding and training.](https://arxiv.org/pdf/2309.17179)
