@@ -22,7 +22,7 @@ parser.add_argument("--data_path", type=str, default="../../datasets")
 parser.add_argument("--per_device_train_batch_size", type=int, default=4)
 parser.add_argument("--per_device_eval_batch_size", type=int, default=4)
 parser.add_argument("--total_batch_size", type=int, default=256)
-parser.add_argument("--learning_rate", type=int, default=1e-4)
+parser.add_argument("--learning_rate", type=float, default=1e-4)
 parser.add_argument("--datasets", type=str, default='all')
 parser.add_argument("--server", type=str, default='1')
 

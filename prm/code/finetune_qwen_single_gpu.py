@@ -22,7 +22,7 @@ parser.add_argument("--test_data_path", type=str, default="../../datasets/prm800
 parser.add_argument("--per_device_train_batch_size", type=int, default=2)
 parser.add_argument("--per_device_eval_batch_size", type=int, default=16)
 parser.add_argument("--total_batch_size", type=int, default=256)
-parser.add_argument("--learning_rate", type=int, default=1e-4)
+parser.add_argument("--learning_rate", type=float, default=1e-4)
 
 args = parser.parse_args()
 
