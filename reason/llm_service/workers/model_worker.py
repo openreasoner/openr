@@ -1,6 +1,7 @@
 """
 A model worker that executes the model.
 """
+
 import argparse
 import base64
 import gc
@@ -96,6 +97,7 @@ class ModelWorker(BaseModelWorker):
         # self.generate_stream_func = get_generate_stream_function(self.model, model_path)
         print("Use `generate_stream` only for now")
         from reason.llm_service.workers.inference import generate_stream
+
         self.generate_stream_func = generate_stream
         self.stream_interval = stream_interval
         self.embed_in_truncate = embed_in_truncate
@@ -154,11 +156,11 @@ class ModelWorker(BaseModelWorker):
         stream_result = json.loads(x[:-1].decode())
         # res['cumulative_logprob']
         ret = {}
-        ret['text'] = [stream_result['text']]
-        ret['finish_reason'] = [stream_result['finish_reason']]
-        ret['usage'] = {'prompt_tokens': [stream_result['usage']['prompt_tokens']]}
-        ret['output_token_len'] = [stream_result['usage']['completion_tokens']]
-        ret['cumulative_logprob'] = [sum(stream_result['logprobs']['token_logprobs'])]
+        ret["text"] = [stream_result["text"]]
+        ret["finish_reason"] = [stream_result["finish_reason"]]
+        ret["usage"] = {"prompt_tokens": [stream_result["usage"]["prompt_tokens"]]}
+        ret["output_token_len"] = [stream_result["usage"]["completion_tokens"]]
+        ret["cumulative_logprob"] = [sum(stream_result["logprobs"]["token_logprobs"])]
         return ret
 
     def __process_embed_chunk(self, input_ids, attention_mask, **model_type_dict):

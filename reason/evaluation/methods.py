@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 import functools
 from reason.inference.lm_call import LMCallingConfig, LanguageModelCallingFunction
-from reason.inference.rm_call import RewardModelCallingFunction 
+from reason.inference.rm_call import RewardModelCallingFunction
 from reason.evaluation.evaluator import SolutionOutput, Task, TreeSearchSolutionOutput
 from reason.guided_search.tree import SearchTree
 

@@ -1,6 +1,7 @@
 """
 A model worker that executes the model.
 """
+
 import argparse
 import base64
 import gc
@@ -35,10 +36,11 @@ from prm.infer_fns import _qwen_math_infer_fn, _math_shepherd_infer_fn
 worker_id = str(uuid.uuid4())[:8]
 logger = build_logger("reward_model_worker", f"reward_model_worker_{worker_id}.log")
 
+
 def get_infer_fn(model_path):
-    if 'qwen' in model_path.lower():
+    if "qwen" in model_path.lower():
         return _qwen_math_infer_fn
-    elif 'math-shepherd' in model_path.lower().replace('_', '-'):
+    elif "math-shepherd" in model_path.lower().replace("_", "-"):
         return _math_shepherd_infer_fn
     else:
         raise ValueError("Model path: {} not recognized".format(model_path))
@@ -109,8 +111,9 @@ class ModelWorker(BaseModelWorker):
             self.init_heart_beat()
 
         infer_fn = get_infer_fn(model_path)
-        self.infer_fn = functools.partial(infer_fn, model=self.model, tokenizer=self.tokenizer, device=self.device)
-        
+        self.infer_fn = functools.partial(
+            infer_fn, model=self.model, tokenizer=self.tokenizer, device=self.device
+        )
 
     @torch.inference_mode()
     def value_inference_gate(self, params):
@@ -118,21 +121,19 @@ class ModelWorker(BaseModelWorker):
         try:
             if isinstance(input_str, list):
                 # value_2 = _batch_qwen_math_infer_fn(
-                #     input_str, 
+                #     input_str,
                 #     batch_size=16
                 # )
                 # value = value_2
 
-                value = [
-                    self.infer_fn(s).tolist() for s in input_str
-                ]
+                value = [self.infer_fn(s).tolist() for s in input_str]
                 # # verify two values
                 # for v1, v2 in zip(value, value_2):
                 #     assert torch.allclose(
                 #         torch.tensor(v1), torch.tensor(v2), 1e-6), [v1, v2]
             else:
                 value = self.infer_fn(input_str).tolist()
-            ret = {"input": input_str, "value": value} 
+            ret = {"input": input_str, "value": value}
             gc.collect()
             torch.cuda.empty_cache()
         except torch.cuda.OutOfMemoryError as e:
@@ -141,6 +142,7 @@ class ModelWorker(BaseModelWorker):
                 "error_code": ErrorCode.CUDA_OUT_OF_MEMORY,
             }
         return ret
+
 
 def create_model_worker():
     parser = argparse.ArgumentParser()

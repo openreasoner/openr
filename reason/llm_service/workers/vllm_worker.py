@@ -110,7 +110,7 @@ class VLLMWorker(BaseModelWorker):
             frequency_penalty=frequency_penalty,
             best_of=best_of,
             logprobs=1,
-            include_stop_str_in_output=include_stop_str_in_output
+            include_stop_str_in_output=include_stop_str_in_output,
         )
         results_generator = engine.generate(context, sampling_params, request_id)
 
@@ -142,9 +142,11 @@ class VLLMWorker(BaseModelWorker):
                 "output_token_len": [
                     len(output.token_ids) for output in request_output.outputs
                 ],
-                "finish_reason": request_output.outputs[0].finish_reason
-                if len(request_output.outputs) == 1
-                else [output.finish_reason for output in request_output.outputs],
+                "finish_reason": (
+                    request_output.outputs[0].finish_reason
+                    if len(request_output.outputs) == 1
+                    else [output.finish_reason for output in request_output.outputs]
+                ),
             }
             yield (json.dumps(ret) + "\0").encode()
 
