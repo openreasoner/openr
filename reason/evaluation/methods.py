@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+import functools
 from reason.inference.lm_call import LMCallingConfig, LanguageModelCallingFunction
 from reason.inference.rm_call import RewardModelCallingFunction 
 from reason.evaluation.evaluator import SolutionOutput, Task, TreeSearchSolutionOutput
@@ -101,8 +102,9 @@ def beam_search(
     )
 
     search_tree = SearchTree(cfg={})
+    rm_call_fn = functools.partial(rm_call, lm_step_tag=lm_call.lm_step_tag)
     traj_list = search_tree.beam_search(
-        env, config.beam_size, config.tree_max_depth, rm_call
+        env, config.beam_size, config.tree_max_depth, rm_call_fn
     )
     return TreeSearchSolutionOutput(
         solutions=[t["text"] for t in traj_list],

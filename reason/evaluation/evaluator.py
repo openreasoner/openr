@@ -126,7 +126,6 @@ class MathEvaluator:
 
     def analyze_output(self, problem_inst: Dict[str, str], gen_answers: List[str]):
         extracted_groundtruth = self._task.extract_groundtruth(problem_inst["answer"])
-        # prompt = self._task.prompt_fn(problem_inst["question"])
 
         if len(gen_answers) > 1:
             input_list = [(problem_inst['question'], txt) for txt in gen_answers]
