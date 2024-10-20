@@ -15,6 +15,8 @@ def _value_inference_fastchat(
         controller_addr + "/get_worker_address", json={"model": model_name}
     )
     worker_addr = ret.json()["address"]
+    if not worker_addr:
+        raise ValueError("Value Model name {} does not exist.".format(model_name))
 
     headers = {"User-Agent": "FastChat Client"}
     gen_params = {"input_str": input_str}

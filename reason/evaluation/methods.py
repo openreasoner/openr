@@ -97,6 +97,7 @@ def beam_search(
             }
         ],
         llm_gen_fn=lm_call,
+        # TODO(ziyu): set sep by lm_call.lm_step_tag
     )
 
     search_tree = SearchTree(cfg={})

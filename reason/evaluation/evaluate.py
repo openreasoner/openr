@@ -3,7 +3,7 @@ from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional, Union
 from config.config_utils import str2bool
 from reason.inference.lm_call import LMCallingConfig, VLLMRemoteCaller
-from reason.inference.rm_call import RMRemoteCaller, DummyRewardModelCaller
+from reason.inference.rm_call import RMRemoteCaller, DummyRewardModelCaller, RewardModelBaseConfig, RemoteRewardModelConfig
 from reason.evaluation.evaluator import SolutionOutput, Task, RemoteMathEvaluator
 import torch
 from functools import partial
@@ -66,18 +66,33 @@ if __name__ == "__main__":
         config.num_worker = 1
         ray.init(local_mode=True)
 
+    # TODO(ziyu): move into some configuration file
     if 'math-shepherd' in config.RM.lower():
-        step_tag = "ки\n"
+        prm_step_tag = "ки\n"
     else:
         # assume qwen
-        step_tag = "\n\n\n\n\n "
-        
-
-    llm_gen_fn = VLLMRemoteCaller(config.LM, config.controller_addr)
-    if config.RM == "dummy":
-        rm_call = DummyRewardModelCaller(step_tag=step_tag)
+        prm_step_tag = "\n\n\n\n\n "
+    prm_format_str = '{question} {answer}'
+    
+    if 'qwen' in config.LM.lower():
+        lm_step_tag = "\n\n"
     else:
-        rm_call = RMRemoteCaller(config.RM, config.controller_addr, step_tag)
+        lm_step_tag = "ки\n"
+        
+    
+
+    llm_gen_fn = VLLMRemoteCaller(config.LM, config.controller_addr, lm_step_tag=lm_step_tag)
+    if config.RM == "dummy":
+        rm_config = RewardModelBaseConfig(step_tag=prm_step_tag, format_str=prm_format_str)
+        rm_call = DummyRewardModelCaller(rm_config)
+    else:
+        rm_config = RemoteRewardModelConfig(
+            step_tag=prm_step_tag,
+            format_str=prm_format_str,
+            model_name=config.RM,
+            controller_addr=config.controller_addr
+        )
+        rm_call = RMRemoteCaller(rm_config)
 
     task = Task(task_name=config.task_name, is_few_shot=config.is_few_shot)
 
