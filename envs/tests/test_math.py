@@ -38,7 +38,7 @@ if __name__ == "__main__":
                 "answer": extract_groundtruth(problem["answer"]),
             }
         ],
-        llm_gen_fn=VLLMRemoteCaller("Qwen2.5-Math-7B-Instruct", "http://0.0.0.0:28777"),
+        llm_gen_fn=VLLMRemoteCaller("Qwen2.5-Math-1.5B-Instruct", "http://0.0.0.0:28777"),
         reset=False,
     )
 

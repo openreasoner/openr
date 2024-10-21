@@ -678,7 +678,10 @@ class SearchTree:
             assert len(simulate_env.legal_actions) > 0
             prms = reward_fn(
                 [
-                    text_state + x["action"]
+                    (
+                        simulate_env.question,
+                        simulate_env.answer + x["action"],
+                    )
                     for x in simulate_env.legal_actions
                 ]
             )
@@ -688,7 +691,11 @@ class SearchTree:
                 if len(simulate_env.action_history) + 1 != len(rs):
                     logger.warning(
                         "PRM value length not match with action history. len(prm)={}, len(act_hist)={} s:\n {}\n\na: \n{}\nrs:{}".format(
-                            len(prms), len(simulate_env.action_history), text_state, act, rs
+                            len(prms),
+                            len(simulate_env.action_history),
+                            text_state,
+                            act,
+                            rs,
                         )
                     )
                     # raise RuntimeError("Tokenizer problems")

@@ -35,6 +35,8 @@ def _generate_fastchat(
         controller_addr + "/get_worker_address", json={"model": model_name}
     )
     worker_addr = ret.json()["address"]
+    if not worker_addr:
+        raise ValueError("Language Model name {} does not exist.".format(model_name))
 
     headers = {"User-Agent": "FastChat Client"}
     gen_params = {

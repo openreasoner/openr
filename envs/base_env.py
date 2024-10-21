@@ -182,6 +182,7 @@ class CoTEnv(BaseEnv):
         return state, reward, terminated, truncated, info
 
     def get_state(self):
+        # not join about sep_str here because we let vllm return with sep_str
         ret = self._init_query + "".join(self.action_history)
         return ret
 
@@ -255,8 +256,13 @@ class CoTEnv(BaseEnv):
         self.math_problem = self.math_problems[idx]
 
     @property
-    def question(self):
+    def query(self):
         return self._init_query
+    
+    @property
+    def question(self)->str:
+        return self.math_problem["question"]
+
 
     @property
     def answer(self):
