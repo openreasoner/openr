@@ -176,13 +176,13 @@ Huggingface 具体下载方式可参考 [Huggingface 下载教程](https://huggi
 
 
 
-
-
-
-
-
 ```bash
 sh reason/llm_service/create_service_math_shepherd.sh
+```
+
+关闭服务进程可以参考以下命令:
+```bash
+tmux kill-session -t {Your Session Name} # default is `FastChat`
 ```
 
 ## 用法
