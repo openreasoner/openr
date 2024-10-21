@@ -327,6 +327,11 @@ class SearchTree:
             self.root = root
 
         traj_list = []
+
+        # TODO(ziyu): split with 1. select 2. expand 3. rollout 4. backprop
+        #  for here is split the for loop with select and rollout
+        #  so that arbitrary rollout function can be used here.
+        
         for i_path in range(num_path):
             node = self.root
             env_copy = simulate_env.copy()
@@ -345,6 +350,12 @@ class SearchTree:
                         #  will select node with highest value
                         action, node = self._select_child(node, env_copy)
 
+                # sync terminated flag here
+                # XXX(ziyu): find a more clean way
+                env_copy._next_state_terminated = {}
+                assert node.last_action == action
+                env_copy._next_state_terminated[action] = node.terminated
+
                 _, _, terminated, truncated, info = env_copy.step(
                     action, update_legal_action=node.is_leaf()
                 )
@@ -352,9 +363,9 @@ class SearchTree:
                 api_call_completion_tokens += info["api_completion_token"]
 
                 done = terminated or truncated
+
                 if not done and node.is_leaf():
                     self._expand_leaf_node(node, env_copy, reward_model_fn)
-
             else:
                 if node.visit_count > 0:
                     leaf_value = node.value
@@ -659,7 +670,8 @@ class SearchTree:
             for act, rs in zip(simulate_env.legal_actions, prms):
                 if len(simulate_env.action_history) + 1 != len(rs):
                     logger.warning(
-                        "PRM value length not match with action history. len(prm)={}, len(act_hist)={} s:\n {}\n\na: \n{}\nrs:{}".format(
+                        "PRM value length not match with action history. \
+                            len(prm)={}, len(act_hist)={} s:\n {}\n\na: \n{}\nrs:{}".format(
                             len(prms),
                             len(simulate_env.action_history),
                             text_state,
@@ -705,6 +717,9 @@ class SearchTree:
                 initial_value=child_value,
                 num_generated_token=action_dict["num_token"],
             )
+            # set terminal node here
+            if simulate_env._next_state_terminated[action]:
+                node.children[action].set_as_terminate_node()
         if len(node.children) == 0:
             print_rank_0(
                 "Prune all current children at node {}".format(node.last_action)
