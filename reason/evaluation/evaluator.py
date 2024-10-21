@@ -128,6 +128,8 @@ class MathEvaluator:
 
         if len(gen_answers) > 1:
             input_list = [(problem_inst["question"], txt) for txt in gen_answers]
+            # XXX(ziyu): for tree search methods with value_fn, should not call rm 
+            #  to compute it again
             value_list = self.rm_call(input_list, lm_step_tag=self.lm_call.lm_step_tag)
         else:
             value_list = [[0]]
