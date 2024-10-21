@@ -177,6 +177,11 @@ For example, to start the LM and RM services for the Math Shepherd model, run th
 sh reason/llm_service/create_service_math_shepherd.sh
 ```
 
+To kill the server processes, recommend using the following command:
+```bash
+tmux kill-session -t {Your Session Name} # default is `FastChat`
+```
+
 ## Usage
 
 #### Run Inference
