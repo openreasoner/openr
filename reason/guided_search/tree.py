@@ -359,13 +359,13 @@ class SearchTree:
                 _, _, terminated, truncated, info = env_copy.step(
                     action, update_legal_action=node.is_leaf()
                 )
-                # record api_tokens
-                api_call_completion_tokens += info["api_completion_token"]
 
                 done = terminated or truncated
 
                 if not done and node.is_leaf():
                     self._expand_leaf_node(node, env_copy, reward_model_fn)
+                    # record api_tokens
+                    api_call_completion_tokens += info["api_completion_token"]
             else:
                 if node.visit_count > 0:
                     leaf_value = node.value
