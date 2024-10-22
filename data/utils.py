@@ -17,7 +17,7 @@ def complete_answer(problem, partial_answer, checkpoint = "Qwen/Qwen2-Math-7B-In
     prompt = problem + partial_answer
     #print("prompt:", prompt)
     inputs = tokenizer(prompt, return_tensors="pt").to('cuda')
-    temperatures = [0.7, 1.0, 1.3]
+    temperatures = [0.7, 1.0]
     temp = random.choice(temperatures)
     outputs = model.generate(**inputs, do_sample=True, max_new_tokens=200, temperature=temp)
     completion_only = outputs[0][inputs['input_ids'].shape[1]:]
