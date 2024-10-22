@@ -149,7 +149,6 @@ cd -
 在运行项目之前，请确保已下载所有所需的基础模型。本项目使用的模型包括：
 
 - `Qwen2.5-Math-1.5B-Instruct`, `Qwen2.5-Math-7B-Instruct`
-- `Qwen2.5-Math-RM-72B`
 - `peiyi9979/mistral-7b-sft`
 - `peiyi9979/math-shepherd-mistral-7b-prm`
 

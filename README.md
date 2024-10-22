@@ -150,7 +150,6 @@ cd -
 Before running the project, please ensure that all required base models are downloaded. The models used in this project include:
 
 - `Qwen2.5-Math-1.5B-Instruct`, `Qwen2.5-Math-7B-Instruct`
-- `Qwen2.5-Math-RM-72B`
 - `peiyi9979/mistral-7b-sft`
 - `peiyi9979/math-shepherd-mistral-7b-prm`
 
