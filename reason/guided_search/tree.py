@@ -364,8 +364,9 @@ class SearchTree:
 
                 if not done and node.is_leaf():
                     self._expand_leaf_node(node, env_copy, reward_model_fn)
-                    # record api_tokens
-                    api_call_completion_tokens += info["api_completion_token"]
+
+                # record api_tokens, if not expand, info["api_completion_token"] is 0
+                api_call_completion_tokens += info["api_completion_token"]
             else:
                 if node.visit_count > 0:
                     leaf_value = node.value
@@ -385,6 +386,9 @@ class SearchTree:
             }
 
             traj_list.append(traj_data)
+
+            # reset api_call_completion_tokens
+            api_call_completion_tokens = 0
 
         return traj_list
 
