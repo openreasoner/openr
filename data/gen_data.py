@@ -1,7 +1,7 @@
 import json
 import logging
 from datetime import datetime
-from main import Node, perform_rollouts, process_annotations, calculate_mc_score
+from module import Node, perform_rollouts, process_annotations, calculate_mc_score
 
 def load_json_file(file_path):
     """
