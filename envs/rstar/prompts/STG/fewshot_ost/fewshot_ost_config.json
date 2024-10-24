@@ -1,0 +1,19 @@
+{
+    "prompt_template": "A chat between a curious user and an AI assistant. The assistant gives step-by-step solutions to the user's questions. In the final step, a conclusive answer is given in the format of \"The answer is: <ANSWER>.\", where <ANSWER> should be one of \"true\" and \"false\".\n\n{examples}\n\n### Instruction:\n{instruction}\n\n### Response:\nLet's think step by step.\n",
+    "stop_tokens": [
+        "</s>",
+        "Question:",
+        "Question",
+        "USER:",
+        "USER",
+        "ASSISTANT:",
+        "ASSISTANT",
+        "Instruction:",
+        "Instruction",
+        "Response:",
+        "Response",
+        "###",
+        "### "
+    ],
+    "answer_marker": "answer is"
+}

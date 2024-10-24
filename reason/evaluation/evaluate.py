@@ -207,6 +207,16 @@ if __name__ == "__main__":
             num_path=config.num_sequence,
         )
         solver_fn = partial(vanila_mcts, method_config, gen_config)
+    elif config.method == "rstar_mcts":
+        method_config = VanilaMCTSConfig(
+            task_name=config.task_name,
+            tree_max_depth=config.tree_max_depth,
+            tree_max_width=config.tree_max_width,
+            select_by_prior=False,
+            num_path=config.num_sequence,
+        )
+        solver_fn = partial(rstar_mcts, method_config, gen_config)
+
     else:
         raise ValueError(f"Unknown method: {config.method}")
     cfg_dict_record["method"] = config.method

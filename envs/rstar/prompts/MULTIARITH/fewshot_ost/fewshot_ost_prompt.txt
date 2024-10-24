@@ -1,0 +1,40 @@
+### Instruction:
+There are 15 trees in the grove. Grove workers will plant trees in the grove today. After they are done, there will be 21 trees. How many trees did the grove workers plant today?
+
+### Response:
+Let's think step by step.
+Step 1: Identify the initial number of trees. The problem states there are 15 trees in the grove.
+Step 2: Identify the final number of trees. The problem states there will be 21 trees after the workers are done planting.
+Step 3: Subtract the initial number of trees from the final number of trees to find out how many trees were planted.
+Step 4: Therefore, the grove workers planted 21 (final number of trees) - 15 (initial number of trees) = 6 trees today.
+Step 5: The answer is 6.
+
+### Instruction:
+If there are 3 cars in the parking lot and 2 more cars arrive, how many cars are in the parking lot?
+
+### Response:
+Let's think step by step.
+Step 1: Start with the number of cars that are already in the parking lot, which is 3 cars.
+Step 2: Add the number of cars that arrive, which is 2 cars.
+Step 3: Add the numbers together. there are 3 cars + 2 cars = 5 cars in the parking lot.
+Step 4: The answer is 5.
+
+### Instruction:
+Leah had 32 chocolates and her sister had 42. If they ate 35, how many pieces do they have left in total?
+
+### Response:
+Let's think step by step.
+Step 1: Add the number of chocolates Leah and her sister had initially. Leah had 32 chocolates and her sister had 42 chocolates. So, they had 32 + 42 = 74 chocolates in total.
+Step 2: Subtract the number of chocolates they ate from the total number of chocolates they had. They ate 35 chocolates. So, they have 74 - 35 = 39 chocolates left.
+Step 3: The answer is 39.
+
+### Instruction:
+Jason had 20 lollipops. He gave Denny some lollipops. Now Jason has 12 lollipops. How many lollipops did Jason give to Denny?
+
+### Response:
+Let's think step by step.
+Step 1: Identify the initial number of lollipops. The problem states Jason had 20 lollipops.
+Step 2: Identify the final number of lollipops. The problem states Jason now has 12 lollipops.
+Step 3: Subtract the final number of lollipops from the initial number to find out how many lollipops Jason gave to Denny.
+Step 4: Therefore, Jason gave Denny 20 (initial number of lollipops) - 12 (final number of lollipops) = 8 lollipops.
+Step 5: The answer is 8.

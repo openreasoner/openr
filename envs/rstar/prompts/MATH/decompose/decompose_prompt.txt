@@ -1,0 +1,37 @@
+Given a question, please decompose it into sub-questions. For each sub-question, please answer it in a complete sentence, ending with "The answer is <a numeric answer>". When the original question is answerable, please start the subquestion with "Now we can answer the question: <original question>".
+
+Question 1: Ben rolls four fair 20-sided dice, and each of the dice has faces numbered from 1 to 20. What is the probability that exactly two of the dice show an even number?
+Question 1.1: What is the probability that a 20-sided die will show an even number?
+Answer 1.1: Since there are 10 even numbers and 10 odd numbers, there is a $\frac{1}{2}$ probability for an even outcome. The answer is $\frac{1}{2}$.
+Question 1.2: How many ways can exactly two of the four dice show an even number?
+Answer 1.2: We can choose 2 dice out of 4 to show even numbers in $\binom{4}{2}=6$ ways. The answer is 6.
+Question 1.3: What is the probability that in one of these ways, the chosen dice show even numbers and the others show odd numbers?
+Answer 1.3: For each way, the probability is $\left( \frac{1}{2} \right)^4=\frac{1}{16}$. The answer is $\frac{1}{16}$.
+Question 1.4: Now we can answer the question: What is the probability that exactly two of the dice show an even number?
+Answer 1.4: The probability is $6\cdot \frac{1}{16}=\boxed{\frac{3}{8}}$. The answer is $\frac{3}{8}$.
+
+Question 2: Juan takes a number, adds $2$ to it, multiplies the answer by $2$, subtracts $2$ from the result, and finally divides that number by $2$. If his answer is $7$, what was the original number?
+Question 2.1: What is the equation that represents the operations Juan performs on the original number to get the answer $7$?
+Answer 2.1: The operations Juan performs can be represented by the equation $(2(n + 2) - 2) / 2 = 7$. The answer is $(2(n + 2) - 2) / 2 = 7$.
+Question 2.2: What is the value of $n$ when the equation is solved?
+Answer 2.2: Solving the equation gives $n = 6$. The answer is 6.
+Question 2.3: Now we can answer the question: What was the original number?
+Answer 2.3: The original number was $\boxed{6}$. The answer is 6.
+
+Question 3: The function $f : \mathbb{R} \to \mathbb{R}$ satisfies\n\[f(x) + 2f(1 - x) = 3x^2\]for all $x.$  Find $f(4).$
+Question 3.1: What is the given functional equation when $x = 4$?
+Answer 3.1: Substituting $x = 4$ into the given functional equation results in \[f(4) + 2f(-3) = 48.\] The answer is $f(4) + 2f(-3) = 48.$
+Question 3.2: What is the given functional equation when $x = -3$?
+Answer 3.2: Substituting $x = -3$ into the given functional equation results in \[f(-3) + 2f(4) = 27.\] The answer is $f(-3) + 2f(4) = 27.$
+Question 3.3: What do we obtain by doubling the second equation and then subtracting the first equation from it?
+Answer 3.3: Doubling the second equation gives us $2f(-3) + 4f(4) = 54.$ Subtracting the first equation $f(4) + 2f(-3) = 48$ from this, we get $3f(4) = 6.$ The answer is $3f(4) = 6.$
+Question 3.4: Now we can answer the question: What is $f(4)$?
+Answer 3.4: Dividing both sides of the equation $3f(4) = 6$ by 3, we find that $f(4) = \boxed{2}.$ The answer is 2.
+
+Question 4: Find the distance between the points $(2,1,-4)$ and $(5,8,-3).$
+Question 4.1: What is the difference in the x-coordinates of the two points?
+Answer 4.1: The difference is $2 - 5 = -3$. The answer is -3.
+Question 4.2: What is the difference in the y-coordinates and the z-coordinates of the two points?
+Answer 4.2: The difference in the y-coordinates is $1 - 8 = -7$ and in the z-coordinates is $-4 + 3 = -1$. The answers are -7 and -1 respectively.
+Question 4.3: Now we can answer the question: What is the distance between the two points?
+Answer 4.3: The distance is $\sqrt{(-3)^2 + (-7)^2 + (-1)^2} = \sqrt{9 + 49 + 1} = \sqrt{59}$. The answer is $\sqrt{59}$.
