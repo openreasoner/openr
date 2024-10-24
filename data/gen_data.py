@@ -1,8 +1,7 @@
 import json
 import logging
 from datetime import datetime
-from core import State
-from utils import getrollouts, process_annotation, cal_mc_bs, cal_mc
+from main import Node, perform_rollouts, process_annotations, calculate_mc_score
 
 def load_json_file(file_path):
     """
@@ -59,21 +58,22 @@ def main():
         logging.info(f"Processed Problem {i + 1}: {problem}")
         logging.info(f"Final Answer: {final_answer}")
         
-        # Call getrollout and handle the result
-        states = []
-        root = State(problem, "", final_answer)
-        max_roll_num = 20
-        rollouts, corrs = getrollouts(root, max_roll_num)
-        mcst = cal_mc_bs(root)
-        root.mc = mcst
+        # Initialize the root node and perform rollouts
+        nodes = []
+        root_node = Node(problem, "", final_answer)
+        max_rollouts = 20
+        rollouts, correctness_flags = perform_rollouts(root_node, max_rollouts)
+        mc_score = calculate_mc_score(root_node)
+        root_node.mc_score = mc_score
 
-        states.append(root)
+        nodes.append(root_node)
 
-        if sum(corrs) > 0 and sum(corrs) < max_roll_num: 
-            print("Process annotation ...\n")
-            filename = str(i+1) +'_states_list.json'
-            process_annotation(problem, final_answer, states, filename)
-    
+        # Check if further processing is needed
+        if 0 < sum(correctness_flags) < max_rollouts:
+            print("Processing annotations ...\n")
+            filename = f"{i+1}_nodes_data.json"
+            process_annotations(problem, final_answer, nodes, filename)
+        
     # Log completion
     logging.info("Finished processing the JSON file.")
 
