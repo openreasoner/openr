@@ -14,21 +14,11 @@ from enum import Enum, unique
 from reason.inference.lm_call import LMCallingConfig
 from .rstar_utils import *
 from .eval_src.Evaluator import MATHEvaluator
-from reason.guided_search.rstar import RstarLanguageNode
-
 from pathlib import Path
 
 # Get the file path of the current script
 CURRENT_DIR = Path(__file__).parent
 
-@unique
-class Node_Type(Enum):
-    USER_QUESTION = "USER_QUESTION"
-    REPHRASED_USER_QUESTION = "REPHRASED_USER_QUESTION"
-    DIRECT_ANSWER = "DIRECT_ANSWER"
-    SUBQUESTION = "SUBQUESTION"
-    RE_SUBANSWER = "RE_SUBANSWER"
-    OST_STEP = "OST_STEP"
 
 
 
@@ -241,14 +231,19 @@ class RStarEnv(CoTEnv):
         # return merge_action_dict, total_completion_tokens
 
 
-    def step(self, node):
-        # self.action_history.append(action)
-        # state = self.get_state()
-        # reward = self.get_reward()
-        terminated, truncated, info = self.get_done_and_info()
+    def is_terminal(self, node):
+
+        def is_valid_leaf_node(n):
+            # ! a valid solution can only be in SUBQUESTION type or DIRECT_ANSWER type
+            return (
+                    n.node_type is Node_Type.SUBQUESTION and reach_terminal_subquestion(n.subquestion,
+                                                                                           n.user_question)
+            ) or n.node_type is Node_Type.DIRECT_ANSWER
 
 
-        return state, reward, terminated, truncated, info
+        done = (node.depth >= node.max_depth_allowed) or is_valid_leaf_node(node)
+
+        return done
 
     def do_action_generate_ost_step(self, node, parent_is_subquestion=False):
         """

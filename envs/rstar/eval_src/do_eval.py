@@ -3,8 +3,7 @@
 import sys
 
 sys.path.append(".")
-from common.utils import read_json, save_json
-from eval_src.Evaluator import *
+from .Evaluator import *
 
 import warnings
 
@@ -12,6 +11,17 @@ warnings.filterwarnings("ignore")
 from tqdm import tqdm
 from argparse import ArgumentParser
 
+def read_json(file_path):
+    assert str(file_path).endswith(".json")
+    with open(file_path, "r", encoding="utf-8") as f:
+        data = json.load(f)
+    return data
+
+
+def save_json(js_obj, file_path):
+    assert str(file_path).endswith(".json")
+    with open(file_path, "w", encoding="utf-8") as f:
+        json.dump(js_obj, f, indent=4)
 
 def extract_trace(data_item, num_votes):
     res = []

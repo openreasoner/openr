@@ -1,6 +1,6 @@
 # Licensed under the MIT license.
 
-from eval_src.toolkit_for_MATH.latex_answer_check import latex_answer_check as latex_equiv
+from .toolkit_for_MATH.latex_answer_check import latex_answer_check as latex_equiv
 
 import os, json, re
 from typing import List, Dict, Tuple

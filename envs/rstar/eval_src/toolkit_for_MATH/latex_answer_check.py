@@ -9,7 +9,7 @@
 import sys
 sys.path.append(".")
 
-from eval_src.toolkit_for_MATH.parsing_lib import *
+from .parsing_lib import *
 
 from typing import Union, Any
 

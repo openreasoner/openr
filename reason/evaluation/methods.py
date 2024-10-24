@@ -5,6 +5,7 @@ from reason.inference.lm_call import LMCallingConfig, LanguageModelCallingFuncti
 from reason.inference.rm_call import RewardModelCallingFunction
 from reason.evaluation.evaluator import SolutionOutput, Task, TreeSearchSolutionOutput
 from reason.guided_search.tree import SearchTree
+from reason.guided_search.rstar import RstarSearchTree
 
 
 @dataclass
@@ -242,7 +243,7 @@ def rstar_mcts(
         llm_gen_fn=lm_call,
     )
 
-    search_tree = SearchTree(
+    search_tree = RstarSearchTree(
         cfg={
             "pb_c_base": config.pb_c_base,
             "pb_c_init": config.pb_c_init,

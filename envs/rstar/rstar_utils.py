@@ -1,15 +1,25 @@
 from typing import List, Dict, Tuple
 import json
-from .rstar_env import Node_Type
 
 from abc import ABC, abstractmethod
 from collections import defaultdict
 from typing import Dict, List
 import math, random
-
+from copy import deepcopy
+from enum import Enum, unique
 
 def override(f):
     return f
+
+@unique
+class Node_Type(Enum):
+    USER_QUESTION = "USER_QUESTION"
+    REPHRASED_USER_QUESTION = "REPHRASED_USER_QUESTION"
+    DIRECT_ANSWER = "DIRECT_ANSWER"
+    SUBQUESTION = "SUBQUESTION"
+    RE_SUBANSWER = "RE_SUBANSWER"
+    OST_STEP = "OST_STEP"
+
 
 
 class GeneratorError(Exception):
@@ -255,4 +265,311 @@ class MCTS_Node(ABC):
         raise NotImplementedError
 
 
+class RstarLanguageNode(MCTS_Node):
+    def __init__(
+        self,
+        parent: "Reasoning_MCTS_Node",
+        depth: int,
+        node_type: Node_Type,
+        verbose: bool = False,
+        # --- For instantiating root node ---
+        node_value: float = None,
+        disable_a5: bool = None,
+        user_question: str = None,
+        max_depth_allowed: int = None,
+        disable_a1: bool = None,
+
+        # --- For instantiating REPHRASED_USER_QUESTION node ---
+        rephrased_user_question: str = None,
+        # ------------------------------------------------------
+        expected_answer: str = None,
+        # --- For instantiating DIRECT_ANSWER node ---
+        direct_answer: str = None,
+        # --------------------------------------------
+        # --- For instantiating SUBQUESTION node ---
+        subquestion: str = None,
+        subanswer: str = None,
+        is_new_subquestion: bool = None,
+        # ------------------------------------------
+        # --- For instantiating RE_SUBANSWER node ---
+        re_subanswer: str = None,
+        # -------------------------------------------
+        # --- For instantiating OST_STEP node ---
+        ost_step: str = None,
+        question_index: int = None,
+    ) -> None:
+        super().__init__()
+
+        #! sanity checks
+        try:
+            assert depth is not None
+            assert node_type is not None
+            if node_value is not None:
+                assert node_value > 0, breakpoint()
+
+            if node_type is Node_Type.USER_QUESTION:
+                assert depth == 0
+                assert all(
+                    attr is None
+                    for attr in [
+                        parent,
+                        node_value,
+                        rephrased_user_question,
+                        direct_answer,
+                        subquestion,
+                        subanswer,
+                        is_new_subquestion,
+                        re_subanswer,
+                        ost_step,
+                    ]
+                )
+                assert all(
+                    attr is not None
+                    for attr in [disable_a5, user_question, expected_answer, max_depth_allowed, disable_a1]
+                )
+            elif node_type is Node_Type.REPHRASED_USER_QUESTION:
+                assert depth == 1
+                assert all(
+                    attr is None
+                    for attr in [
+                        node_value,
+                        disable_a5,
+                        user_question,
+                        expected_answer,
+                        direct_answer,
+                        subquestion,
+                        subanswer,
+                        is_new_subquestion,
+                        re_subanswer,
+                        ost_step,
+                        max_depth_allowed,
+                        disable_a1,
+                    ]
+                )
+                assert all(attr is not None for attr in [parent, rephrased_user_question])
+            elif node_type is Node_Type.DIRECT_ANSWER:
+                assert depth > 0
+                assert all(
+                    attr is None
+                    for attr in [
+                        disable_a5,
+                        user_question,
+                        expected_answer,
+                        subquestion,
+                        subanswer,
+                        is_new_subquestion,
+                        re_subanswer,
+                        ost_step,
+                        max_depth_allowed,
+                        disable_a1,
+                    ]
+                )
+                assert all(attr is not None for attr in [parent, node_value, direct_answer])
+            elif node_type is Node_Type.SUBQUESTION:
+                assert depth > 0
+                assert all(
+                    attr is None
+                    for attr in [
+                        disable_a5,
+                        user_question,
+                        expected_answer,
+                        direct_answer,
+                        re_subanswer,
+                        ost_step,
+                        max_depth_allowed,
+                        disable_a1,
+                    ]
+                )
+                assert all(
+                    attr is not None for attr in [parent, node_value, subquestion, subanswer, is_new_subquestion]
+                )
+            elif node_type is Node_Type.RE_SUBANSWER:
+                assert depth > 0
+                assert all(
+                    attr is None
+                    for attr in [
+                        disable_a5,
+                        user_question,
+                        expected_answer,
+                        direct_answer,
+                        subquestion,
+                        subanswer,
+                        is_new_subquestion,
+                        ost_step,
+                        max_depth_allowed,
+                        disable_a1,
+                    ]
+                )
+                assert all(attr is not None for attr in [parent, node_value, re_subanswer])
+            elif node_type is Node_Type.OST_STEP:
+                assert depth > 0
+                assert all(
+                    attr is None
+                    for attr in [
+                        node_value,
+                        disable_a5,
+                        user_question,
+                        rephrased_user_question,
+                        expected_answer,
+                        direct_answer,
+                        subquestion,
+                        subanswer,
+                        is_new_subquestion,
+                        re_subanswer,
+                        max_depth_allowed,
+                        disable_a1,
+                    ]
+                )
+                assert all(attr is not None for attr in [parent, ost_step])
+        except AssertionError:
+            print(f"Instantiating node with type {node_type} failed!")
+            breakpoint()
+            exit()
+
+        #! attributes
+        self.parent = parent  # if parent is None, then the node is the root
+        self.children: List["Reasoning_MCTS_Node"] = []
+        self.depth = depth
+        self.node_type = node_type
+        self.node_value = node_value
+        self.direct_answer = direct_answer
+        self.subquestion = subquestion
+        self.subanswer = subanswer
+        self.is_new_subquestion = is_new_subquestion
+        self.re_subanswer = re_subanswer
+        self.ost_step = ost_step
+
+        ## additional parameter
+        self._visit_count = 0
+        self._value_sum = 0     # self.node_value
+
+        if parent is None:  # root
+            self.verbose = verbose
+            self.user_question = user_question
+            self.expected_answer = expected_answer
+            self.disable_a5 = disable_a5
+            self.question_index = question_index
+            self.max_depth_allowed = max_depth_allowed
+            self.disable_a1 = disable_a1
+        else:  # inherit from parent
+            self.verbose = parent.verbose
+            self.user_question = parent.user_question
+            self.expected_answer = parent.expected_answer
+            self.disable_a5 = parent.disable_a5
+            self.question_index = parent.question_index
+            self.max_depth_allowed = parent.max_depth_allowed
+            self.disable_a1 = parent.disable_a1
+
+        #! keep track of paraphrasing
+        if node_type is Node_Type.USER_QUESTION:
+            self.paraphrased = False
+        elif node_type is Node_Type.REPHRASED_USER_QUESTION:
+            self.paraphrased = True
+            self.user_question = rephrased_user_question
+        else:
+            assert parent is not None
+            self.paraphrased = parent.paraphrased
+
+        #! record number of subquestions till now
+        if parent is None:  # root
+            self.subquestion_counter = 0
+        else:
+            if node_type is Node_Type.SUBQUESTION and is_new_subquestion:
+                self.subquestion_counter = parent.subquestion_counter + 1
+            else:
+                self.subquestion_counter = parent.subquestion_counter
+
+        #! record number of one-step thought steps till now
+        if parent is None:  # root
+            self.ost_step_counter = 0
+        else:
+            if node_type is Node_Type.OST_STEP:
+                self.ost_step_counter = parent.ost_step_counter + 1
+            else:
+                self.ost_step_counter = parent.ost_step_counter
+
+        #! record solution trace from root to the current node. key: subquestion id
+        if parent is None:  # root
+            assert self.node_type is Node_Type.USER_QUESTION
+            self.solution_trace: Dict[int, Dict[str, str]] = {0: {"user_question": user_question, "ost_step": {}}}
+        else:
+            assert self.node_type is not Node_Type.USER_QUESTION
+            self.solution_trace = deepcopy(parent.solution_trace)
+
+            if node_type is Node_Type.REPHRASED_USER_QUESTION:
+                self.solution_trace[0]["user_question"] = rephrased_user_question
+            elif node_type is Node_Type.DIRECT_ANSWER:
+                assert self.subquestion_counter in self.solution_trace.keys()
+                assert self.subquestion_counter == parent.subquestion_counter
+                self.solution_trace[self.subquestion_counter]["direct_answer"] = {
+                    "text": direct_answer,
+                    "value": node_value,
+                }
+            elif node_type is Node_Type.SUBQUESTION:
+                assert is_new_subquestion and self.subquestion_counter == parent.subquestion_counter + 1
+                self.solution_trace[self.subquestion_counter] = {
+                    "subquestion": subquestion,
+                    "subanswer": {"text": subanswer, "value": node_value},
+                    "ost_step": {},
+                }
+            elif node_type is Node_Type.RE_SUBANSWER:
+                assert parent.subquestion is not None
+                assert self.subquestion_counter == parent.subquestion_counter
+                assert self.solution_trace[self.subquestion_counter]["subquestion"] == parent.subquestion
+                self.solution_trace[self.subquestion_counter]["subanswer"] = {"text": re_subanswer, "value": node_value}
+            elif node_type is Node_Type.OST_STEP:
+                assert "ost_step" in self.solution_trace[self.subquestion_counter].keys()
+                self.solution_trace[self.subquestion_counter]["ost_step"][self.ost_step_counter] = ost_step
+
+    def __str__(self) -> str:
+        type2str = {
+            Node_Type.USER_QUESTION: "U",
+            Node_Type.REPHRASED_USER_QUESTION: "RU",
+            Node_Type.DIRECT_ANSWER: "DA",
+            Node_Type.SUBQUESTION: "SQ",
+            Node_Type.RE_SUBANSWER: "RS",
+            Node_Type.OST_STEP: "TS",
+        }
+        return f"{type2str[self.node_type]}-{self.id}"
+
+
+    def is_valid_leaf_node(self):
+        #! a valid solution can only be in SUBQUESTION type or DIRECT_ANSWER type
+        return (
+            self.node_type is Node_Type.SUBQUESTION and reach_terminal_subquestion(self.subquestion, self.user_question)
+        ) or self.node_type is Node_Type.DIRECT_ANSWER
+
+    def is_valid_solution_node(self):
+        #! a valid solution can only be in SUBQUESTION type or DIRECT_ANSWER type or OST_STEP type
+        return (
+            (
+                self.node_type is Node_Type.SUBQUESTION
+                and reach_terminal_subquestion(self.subquestion, self.user_question)
+            )
+            or (self.node_type is Node_Type.OST_STEP and reach_terminal_ost_step(self.ost_step))
+            or self.node_type is Node_Type.DIRECT_ANSWER
+        )
+
+    @property
+    def value(self) -> float:
+        """
+        Overview:
+            The value of the current node.
+        Returns:
+            - output (:obj:`Int`): Current value, used to compute ucb score.
+        """
+        if self._visit_count == 0:
+            # if not visited, return the initial value
+            return self._value_sum
+        return self._value_sum / self._visit_count
+
+    def update(self, value: float) -> None:
+        """
+        Overview:
+            Updata the current node information, such as visit_count and value_sum.
+        Arguments:
+            - value (:obj:`Int`): The value of the node.
+        """
+        self._visit_count += 1
+        self._value_sum += value
 

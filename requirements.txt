@@ -29,3 +29,6 @@ flash_attn
 python_dateutil
 tensorboardX
 sklearn
+# for rstar
+pyparsing
+fuzzywuzzy
