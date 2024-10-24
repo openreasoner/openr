@@ -85,6 +85,11 @@ def judge_ans(
 @dataclass
 class SolutionOutput:
     solutions: List[str]
+    # Define the completion tokens for each solution
+    #  For best_of_n, it's a list of int, indicate how many tokens in each
+    #      generation
+    #  for beam search, it's a list of zeros, except the last element indicates total tokens
+    #  for mcts, it's a list of int, indicate how many tokens comsumed between two paths
     completion_tokens: List[int]
 
 
@@ -119,6 +124,8 @@ class MathEvaluator:
             o["completion_tokens"] = solution.completion_tokens[i]
             if isinstance(solution, TreeSearchSolutionOutput):
                 o["tree_completion_tokens"] = solution.tree_completion_tokens[i]
+            # We define the completion_tokens as the tokens comsumed between two generated
+            #  answers, therefore we need to take sum here.
             total_completion_token += solution.completion_tokens[i]
         result["total_completion_tokens"] = total_completion_token
         return problem_inst, result, output
@@ -128,6 +135,8 @@ class MathEvaluator:
 
         if len(gen_answers) > 1:
             input_list = [(problem_inst["question"], txt) for txt in gen_answers]
+            # XXX(ziyu): for tree search methods with value_fn, should not call rm 
+            #  to compute it again
             value_list = self.rm_call(input_list, lm_step_tag=self.lm_call.lm_step_tag)
         else:
             value_list = [[0]]
