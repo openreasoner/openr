@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import List, Optional
+from typing import List, Optional, Union
 from reason.inference.text_generation import ConcatedLMGenResult, _generate_fastchat
 
 
@@ -11,7 +11,7 @@ class LMCallingConfig:
     top_k: int = -1  # -1 for vllm by default
     max_new_tokens: int = 512
     stop_token_ids: Optional[List[int]] = None
-    stop_str: Optional[str] = None
+    stop_str: Optional[Union[str, List[str]]] = None
     include_stop_str_in_output: bool = False
 
 

@@ -235,9 +235,8 @@ class MCTS_Node(ABC):
     def __init__(self) -> None:
         super().__init__()
 
-        global node_cnt
-        self.id = node_cnt
-        node_cnt += 1
+        # global node_cnt
+        self.id = None      # defined when creating one RstarLanguageNode
 
         self.rollout_id = None
 
@@ -297,10 +296,11 @@ class RstarLanguageNode(MCTS_Node):
         # --- For instantiating OST_STEP node ---
         ost_step: str = None,
         question_index: int = None,
+        id: int=None,
     ) -> None:
         super().__init__()
 
-        #! sanity checks
+        # ! sanity checks
         try:
             assert depth is not None
             assert node_type is not None
@@ -426,6 +426,7 @@ class RstarLanguageNode(MCTS_Node):
             breakpoint()
             exit()
 
+        self.id = id
         #! attributes
         self.parent = parent  # if parent is None, then the node is the root
         self.children: List["Reasoning_MCTS_Node"] = []
@@ -467,7 +468,7 @@ class RstarLanguageNode(MCTS_Node):
             self.paraphrased = True
             self.user_question = rephrased_user_question
         else:
-            assert parent is not None
+            assert parent is not None, breakpoint()
             self.paraphrased = parent.paraphrased
 
         #! record number of subquestions till now
@@ -573,3 +574,21 @@ class RstarLanguageNode(MCTS_Node):
         self._visit_count += 1
         self._value_sum += value
 
+    def find_children(self, rollout_id: int):
+        "All possible successors of this board state"
+        raise NotImplementedError
+
+    def is_terminal(self):
+        "Returns True if the node has no children"
+        raise NotImplementedError
+
+    def calculate_reward(self):
+        if self.is_valid_leaf_node():
+            assert self.node_value is not None, breakpoint()
+            return self.node_value
+        else:
+            return 0
+
+    def skip_backprop(self):
+        "If True, the reward of this node will not be accumulated in the backpropagation step."
+        raise NotImplementedError

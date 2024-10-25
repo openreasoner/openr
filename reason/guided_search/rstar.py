@@ -16,19 +16,11 @@ from tqdm import tqdm
 import heapq
 from copy import deepcopy
 from tqdm import tqdm
+from collections import defaultdict
 
 from .tree import Node, LanguageNode, SearchTree
 from envs.rstar.rstar_utils import *
 
-
-@unique
-class Node_Type(Enum):
-    USER_QUESTION = "USER_QUESTION"
-    REPHRASED_USER_QUESTION = "REPHRASED_USER_QUESTION"
-    DIRECT_ANSWER = "DIRECT_ANSWER"
-    SUBQUESTION = "SUBQUESTION"
-    RE_SUBANSWER = "RE_SUBANSWER"
-    OST_STEP = "OST_STEP"
 
 
 class RstarSearchTree(SearchTree):
@@ -107,7 +99,7 @@ class RstarSearchTree(SearchTree):
         simulate_env.reset()
         # api_call_completion_tokens += info["api_completion_token"]
         if self.root is None:
-            root = RstarLanguageNode(
+            root = RstarLanguageNode(id=0,
                                     parent=None,
                                     depth=0,
                                     node_type=Node_Type.USER_QUESTION,
@@ -156,8 +148,9 @@ class RstarSearchTree(SearchTree):
 
                 if not done and is_leaf:     # expand when encounter a leaf node one step further
                     next_node_children = env_copy.try_update_legal_action(node = next_node)
-                    next_node_children.set_rollout_id(i_path)
-                    self.parent2children[next_node] = next_node_children
+                    for c in next_node_children:
+                        c.set_rollout_id(i_path)
+                    self.parent2children[next_node]=next_node_children
                     # self._expand_leaf_node()
 
                 if done:

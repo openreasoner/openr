@@ -10,27 +10,57 @@ import numpy as np
 from envs.MATH.env import CoTEnv
 from envs.base_env import NoLegalActionException, ResetException
 from enum import Enum, unique
+from typing import List, Optional
+from tqdm import tqdm
+
 
 from reason.inference.lm_call import LMCallingConfig
 from .rstar_utils import *
 from .eval_src.Evaluator import MATHEvaluator
+from envs.MATH.parse_utils_qwen import extract_answer as extract_fn, parse_ground_truth
+from envs.MATH.grader import math_equal
+from envs.MATH.prompt import COT_EXAMPLES, COT_TASK_DESC, PROBLEM_FORMAT_STR, SEP
+
+
 from pathlib import Path
 
 # Get the file path of the current script
 CURRENT_DIR = Path(__file__).parent
 
+def extract_answer(answer_str: str) -> str:
+    return extract_fn(answer_str, data_name='math')
+
+
+def extract_groundtruth(groundtruth_str: str) -> str:
+    return parse_ground_truth(groundtruth_str, data_name='math')
+
+
+def judge_correct(
+    problem_str: str, extracted_groundtruth: Optional[str], answer: str
+) -> bool:
+    # return grade_answer(given_answer=answer, ground_truth=extracted_groundtruth)
+    result = math_equal(answer, extracted_groundtruth)
+    return result
 
 
 
-class RStarEnv(CoTEnv):
+class IDCounter:
+    def __init__(self):
+        self.id = 0
+
+    def count(self):
+        self.id += 1
+        return self.id
+
+class Env(CoTEnv):
     def __init__(
         self,
         config,
         math_problems,
         llm_gen_fn,
-        task_desc_str: str,
-        cot_example_str: str,
-        problem_format_str: str,
+        task_desc_str: str = COT_TASK_DESC,
+        cot_example_str: str = COT_EXAMPLES,
+        problem_format_str: str = PROBLEM_FORMAT_STR,
         reset=True,
     ):
         """
@@ -58,43 +88,52 @@ class RStarEnv(CoTEnv):
         self.disable_a5 = False
         self.enable_potential_score = False
         # potential score is disable due to https://github.com/zhentingqi/rStar/issues/12
-        self.num_a1_steps = 3   # these are generator parameters
-        self.mcts_num_last_votes = 32
-        self.num_subquestions = 3
-        self.num_votes = 10
+        self.num_a1_steps = 2   # these are generator parameters
+        self.mcts_num_last_votes = 3
+        self.num_subquestions = 2
+        self.num_votes = 2
+        self.node_counter = IDCounter()       # root
+        self.ost_new_tokens = 64
+        self.direct_answer_new_tokens=256
+        self.subquestion_new_tokens1 = 32
+        self.subquestion_new_tokens2 = 128
+        self.rephrased_q_new_tokens = 128
+        self.re_subanswer_new_tokens = 256
 
-        self.task_name = "MATH"
+        # self.task_name = "MATH"
         self.sep = "\n\n"
+        self._init_query = None
+        self._next_state_terminated = None
 
         # loading template
         with open(os.path.join(
-                CURRENT_DIR, f"prompts/{self.task_name}/decompose/decompose_template.json"),
+                CURRENT_DIR, f"prompts/MATH/decompose/decompose_template.json"),
                 "r") as f:
             decompose_template = json.load(f)
             self.question_index = decompose_template["index"]
 
         self.decompose_prompt = read_txt(
-            os.path.join(CURRENT_DIR, f"prompts/{self.task_name}/decompose/decompose_prompt.txt"))
+            os.path.join(CURRENT_DIR, f"prompts/MATH/decompose/decompose_prompt.txt"))
         self.fewshot_cot_prompt = read_txt(
-            os.path.join(CURRENT_DIR, f"prompts/{self.task_name}/fewshot_cot/fewshot_cot_prompt.txt"))
+            os.path.join(CURRENT_DIR, f"prompts/MATH/fewshot_cot/fewshot_cot_prompt.txt"))
         self.fewshot_cot_config = read_json(
-            os.path.join(CURRENT_DIR, f"prompts/{self.task_name}/fewshot_cot/fewshot_cot_config.json"))
+            os.path.join(CURRENT_DIR, f"prompts/MATH/fewshot_cot/fewshot_cot_config.json"))
 
         if not self.disable_a1:  # A1: Propose an one-step thought.
             self.fewshot_ost_prompt = read_txt(
-                os.path.join(CURRENT_DIR, f"prompts/{self.task_name}/fewshot_ost/fewshot_ost_prompt.txt"))
+                os.path.join(CURRENT_DIR, f"prompts/MATH/fewshot_ost/fewshot_ost_prompt.txt"))
             self.fewshot_ost_config = read_json(
-                os.path.join(CURRENT_DIR, f"prompts/{self.task_name}/fewshot_ost/fewshot_ost_config.json"))
+                os.path.join(CURRENT_DIR, f"prompts/MATH/fewshot_ost/fewshot_ost_config.json"))
 
         if not self.disable_a5:  # A5: Rephrase the question/sub-question.
             self.rephrasing_prompt_template = read_txt(
-                os.path.join(CURRENT_DIR, f"prompts/{self.task_name}/rephrasing_prompt_template.txt"))
+                os.path.join(CURRENT_DIR, f"prompts/MATH/rephrasing_prompt_template.txt"))
             self.decompose_prompt_rephrased = read_txt(
-                os.path.join(CURRENT_DIR, f"prompts/{self.task_name}/decompose/decompose_prompt_rephrased.txt"))
+                os.path.join(CURRENT_DIR, f"prompts/MATH/decompose/decompose_prompt_rephrased.txt"))
             self.fewshot_cot_prompt_rephrased = read_txt(
-                os.path.join(CURRENT_DIR, f"prompts/{self.task_name}/fewshot_cot/fewshot_cot_prompt_rephrased.txt"))
+                os.path.join(CURRENT_DIR, f"prompts/MATH/fewshot_cot/fewshot_cot_prompt_rephrased.txt"))
             self.fewshot_ost_prompt_rephrased = read_txt(
-                os.path.join(CURRENT_DIR, f"prompts/{self.task_name}/fewshot_cot/fewshot_ost_prompt_rephrased.txt"))
+                os.path.join(CURRENT_DIR, f"prompts/MATH/fewshot_ost/fewshot_ost_prompt.txt"))
 
         # load evaluator
         self.evaluator = MATHEvaluator()
@@ -125,6 +164,7 @@ class RStarEnv(CoTEnv):
 
         # return self.user_question
 
+    @override
     def try_update_legal_action(self, node):
         cnt = 0
         while cnt < 3:
@@ -141,7 +181,7 @@ class RStarEnv(CoTEnv):
         # info = {"api_completion_token": api_completion_token}
         return updated_node
 
-
+    @override
     def update_legal_actions(self, current_node):
         """
         Think differently depending on current nodetype (status)
@@ -224,7 +264,7 @@ class RStarEnv(CoTEnv):
             # A2: Propose the remaining thought steps
             self.do_action_generate_direct_answers(current_node)
 
-        return current_node
+        return current_node.children        # a list of children
         # total_completion_tokens = sum([i['completion_tokens'] for i in merge_action_dict.values()])
 
 
@@ -273,13 +313,13 @@ class RStarEnv(CoTEnv):
             + existing_ost_steps
             + f"Step {next_ost_step_id}:"
         )
-
+        # breakpoint()
         io_output_list = self.llm_gen_fn(
             input_str=io_input,
             config=LMCallingConfig(
                 n=self.num_a1_steps,
                 stop_str=["\n", "\n\n"],     # check stopping token
-                max_tokens=256
+                max_new_tokens=self.ost_new_tokens
             ),
         )
         ost_step_list = [io_output.strip() for io_output in io_output_list.text]
@@ -292,6 +332,7 @@ class RStarEnv(CoTEnv):
         for ost_step, potential_answers in zip(ost_step_list, potential_answers_list):
             node.children.append(
                 RstarLanguageNode(
+                    id = self.node_counter.count(),
                     parent=node,            # TODO[yan]: check over-nesting
                     depth=node.depth + 1,
                     node_type=Node_Type.OST_STEP,
@@ -314,16 +355,16 @@ class RStarEnv(CoTEnv):
         direct_answer_list, value_list = [], []
 
         num_return = self.mcts_num_last_votes
-        fewshot_cot_prompt = self.fewshot_cot_prompt if not self.paraphrased else self.fewshot_cot_prompt_rephrased
+        fewshot_cot_prompt = self.fewshot_cot_prompt if not node.paraphrased else self.fewshot_cot_prompt_rephrased
         question = node.user_question + "\n\n" + hint if hint is not None else ""
         io_input = self.fewshot_cot_config["prompt_template"].format(examples=fewshot_cot_prompt,
                                                                      instruction = question)
-
+        # breakpoint()
         io_output_list = self.llm_gen_fn(
             input_str=io_input,
             config=LMCallingConfig(
                 n=num_return,
-                max_tokens=1024,
+                max_new_tokens=self.direct_answer_new_tokens,
                 stop_str=self.fewshot_cot_config["stop_tokens"],
             )
         )
@@ -360,6 +401,7 @@ class RStarEnv(CoTEnv):
                 raise NotImplementedError
             node.children.append(
                 RstarLanguageNode(
+                    id = self.node_counter.count(),
                     parent=node,
                     depth=node.depth + 1,
                     node_type=Node_Type.DIRECT_ANSWER,
@@ -374,7 +416,7 @@ class RStarEnv(CoTEnv):
         print(f"---- Generating subquestions for node ...")
 
         subquestion_list, subanswer_list, value_list = [], [], []
-        decompose_prompt = self.decompose_prompt if not node.paraphrased else node.decompose_prompt_rephrased
+        decompose_prompt = self.decompose_prompt if not node.paraphrased else self.decompose_prompt_rephrased
 
         # ! generate subquestions
         existing_subquestions_and_subanswers, next_subquestion_id = concat_subqs_and_subas(
@@ -388,12 +430,12 @@ class RStarEnv(CoTEnv):
                 + existing_subquestions_and_subanswers
                 + f"Question {self.question_index}.{next_subquestion_id}:"
         )
-
+        # breakpoint()
         io_output_list = self.llm_gen_fn(
             input_str=io_input,
             config=LMCallingConfig(
                 n=self.num_subquestions,
-                max_tokens=128,
+                max_new_tokens=self.subquestion_new_tokens1,
                 stop_str=[
                 "\n",
                 "\n\n",
@@ -406,7 +448,7 @@ class RStarEnv(CoTEnv):
             )
         )
 
-        subquestion_list = [o.strip() for o in io_output_list]
+        subquestion_list = [o.strip() for o in io_output_list.text]
 
         # ! generate subanswers to the subquestions generated above
         io_input_list = []
@@ -429,23 +471,29 @@ class RStarEnv(CoTEnv):
         else:
             num_return = self.num_votes
 
-        io_output_list = self.llm_gen_fn(
-            input_str=io_input_list,
-            config=LMCallingConfig(
-                n=num_return,
-                max_tokens=512,
-                stop_str=[
-                "\n",
-                "\n\n",
-                f"Question {self.question_index}.{next_subquestion_id + 1}",
-            ],
+
+        io_output_list = []
+        for i in io_input_list:
+            # breakpoint()
+            _each_output = self.llm_gen_fn(
+                input_str=i,
+                config=LMCallingConfig(
+                    n=num_return,
+                    max_new_tokens=self.subquestion_new_tokens2,
+                    stop_str=[
+                    "\n",
+                    "\n\n",
+                    f"Question {self.question_index}.{next_subquestion_id + 1}",
+                ],
+                )
             )
-        )
+            io_output_list.append(_each_output.text)
+
         cleaned_io_output_list = [
             [io_output.strip() for io_output in io_output_group] for io_output_group in io_output_list
         ]
-        completion_tokens = io_output_list.completion_tokens
 
+        # completion_tokens = io_output_list.completion_tokens
 
         for i, cleaned_io_output_group in enumerate(cleaned_io_output_list):
             try:
@@ -469,6 +517,7 @@ class RStarEnv(CoTEnv):
                 # breakpoint()
             node.children.append(
                 RstarLanguageNode(
+                    id = self.node_counter.count(),
                     parent=node,
                     depth=node.depth + 1,
                     node_type=Node_Type.SUBQUESTION,
@@ -491,21 +540,23 @@ class RStarEnv(CoTEnv):
         io_input += "\n\n"
         io_input += "Original Question: " + node.user_question + "\n"
         io_input += "Rephrased Question: Given a list of conditions, please answer the question. Condition 1: "
-        io_output = self.llm_gen_fn(
+        # breakpoint()
+        _io_output = self.llm_gen_fn(
             input_str=io_input,
             config=LMCallingConfig(
                 n=1,
-                max_tokens=512,
-                stop_tokens=["\n", "\n\n"],
+                max_new_tokens=self.rephrased_q_new_tokens,
+                stop_str=["\n", "\n\n"],
             )
-        ).text
-        token_len = io_output.num_tokens
-        finish_reason_list = io_output.finish_reason
-        completion_tokens = io_output.completion_tokens
+        )
+        io_output = _io_output.text
+        token_len = _io_output.num_tokens
+        finish_reason_list = _io_output.finish_reason
+        completion_tokens = _io_output.completion_tokens
 
 
         assert len(io_output)==1
-        io_output = "Given a list of conditions, please answer the question. Condition 1: " + io_output
+        io_output = "Given a list of conditions, please answer the question. Condition 1: " + io_output[0]
         rephrased_user_question_list.append(io_output)
         potential_answers_list = [None] * len(rephrased_user_question_list)
 
@@ -513,6 +564,7 @@ class RStarEnv(CoTEnv):
         for rephrased_user_question, potential_answers in zip(rephrased_user_question_list, potential_answers_list):
             node.children.append(
                 RstarLanguageNode(
+                    id = self.node_counter.count(),
                     parent=node,
                     depth=node.depth + 1,
                     node_type=Node_Type.REPHRASED_USER_QUESTION,
@@ -539,12 +591,13 @@ class RStarEnv(CoTEnv):
         fewshot_cot_prompt = self.fewshot_cot_prompt if not node.paraphrased else self.fewshot_cot_prompt_rephrased
         question += "\n\n"  # hint is None
         io_input = self.fewshot_cot_config["prompt_template"].format(examples=fewshot_cot_prompt, instruction=question)
+        # breakpoint()
         io_output_list = self.llm_gen_fn(
             input_str=io_input,
             config=LMCallingConfig(
                 n=self.num_votes,
-                max_tokens=self.max_tokens,
-                stop_tokens=self.fewshot_cot_config["stop_tokens"],
+                max_new_tokens=self.re_subanswer_new_tokens,
+                stop_str=self.fewshot_cot_config["stop_tokens"],
             )
         )
         token_len = io_output_list.num_tokens
@@ -570,6 +623,7 @@ class RStarEnv(CoTEnv):
                 breakpoint()
             node.children.append(
                 RstarLanguageNode(
+                    id = self.node_counter.count(),
                     parent=node,        # check node chck node, do we need to pass children as well?
                     depth=node.depth + 1,
                     node_type=Node_Type.RE_SUBANSWER,
