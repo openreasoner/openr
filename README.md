@@ -273,6 +273,16 @@ OpenR is released under the MIT License.
 If you do find our resources helpful, please cite our paper:
 
 ```
+@misc{wang2024tutorial,
+  author = {Jun Wang},
+  title = {A Tutorial on LLM Reasoning: Relevant Methods Behind ChatGPT o1},
+  year = {2024},
+  url = {https://github.com/openreasoner/openr/blob/main/reports/tutorial.pdf},
+  note = {Available on GitHub}
+}
+```
+
+```
 @article{wang2024openr,
   title={OpenR: An Open Source Framework for Advanced Reasoning with Large Language Models},
   author={Wang, Jun and Fang, Meng and Wan, Ziyu and Wen, Muning and Zhu, Jiachen and Liu, Anjie and Gong, Ziqin and Song, Yan and Chen, Lei and Ni, Lionel M and others},
