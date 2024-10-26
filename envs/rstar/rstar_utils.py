@@ -3,10 +3,14 @@ import json
 
 from abc import ABC, abstractmethod
 from collections import defaultdict
-from typing import Dict, List
+from typing import Dict, List, Optional
 import math, random
 from copy import deepcopy
 from enum import Enum, unique
+
+from envs.MATH.parse_utils_qwen import extract_answer as extract_fn, parse_ground_truth
+from envs.MATH.grader import math_equal
+
 
 def override(f):
     return f
@@ -48,6 +52,22 @@ def save_json(js_obj, file_path):
     assert str(file_path).endswith(".json")
     with open(file_path, "w", encoding="utf-8") as f:
         json.dump(js_obj, f, indent=4)
+
+
+def extract_answer(answer_str: str) -> str:
+    return extract_fn(answer_str, data_name='math')
+
+
+def extract_groundtruth(groundtruth_str: str) -> str:
+    return parse_ground_truth(groundtruth_str, data_name='math')
+
+
+def judge_correct(
+    problem_str: str, extracted_groundtruth: Optional[str], answer: str
+) -> bool:
+    # return grade_answer(given_answer=answer, ground_truth=extracted_groundtruth)
+    result = math_equal(answer, extracted_groundtruth)
+    return result
 
 
 
@@ -98,7 +118,7 @@ def split_user_question(user_question: str):
 def reach_terminal_subquestion(subquestion: str, user_question: str):
     assert subquestion is not None
 
-    if "Now we can answer" in subquestion:
+    if "Now we can answer" in subquestion:      # in the prompt template
         #! remember that: when the original question is answerable, please start the subquestion with "Now we can answer the question: "
         return True
 
@@ -189,10 +209,14 @@ def stochastic_find_best_solution(
         return None, None
 
     def extract_solution_from_node(node):
+        # original repo has bug here, the .is_valid_solution_node consider SUBQUESTION, OST and DIRECT ANSWER,
+        # but here it does not consider OST!!!!
         if node.node_type is Node_Type.SUBQUESTION:
             return node.subanswer
         elif node.node_type is Node_Type.DIRECT_ANSWER:
             return node.direct_answer
+        elif node.node_type is Node_Type.OST_STEP:
+            return node.ost_step
         else:
             return None
 
@@ -546,12 +570,12 @@ class RstarLanguageNode(MCTS_Node):
             (
                 self.node_type is Node_Type.SUBQUESTION
                 and reach_terminal_subquestion(self.subquestion, self.user_question)
+                # if the subquestion and already answer the question
             )
-            or (self.node_type is Node_Type.OST_STEP and reach_terminal_ost_step(self.ost_step))
+            or (self.node_type is Node_Type.OST_STEP and reach_terminal_ost_step(self.ost_step))        # if the ost contain answer
             or self.node_type is Node_Type.DIRECT_ANSWER
         )
 
-    @property
     def value(self) -> float:
         """
         Overview:
@@ -559,20 +583,8 @@ class RstarLanguageNode(MCTS_Node):
         Returns:
             - output (:obj:`Int`): Current value, used to compute ucb score.
         """
-        if self._visit_count == 0:
-            # if not visited, return the initial value
-            return self._value_sum
-        return self._value_sum / self._visit_count
+        raise NotImplementedError
 
-    def update(self, value: float) -> None:
-        """
-        Overview:
-            Updata the current node information, such as visit_count and value_sum.
-        Arguments:
-            - value (:obj:`Int`): The value of the node.
-        """
-        self._visit_count += 1
-        self._value_sum += value
 
     def find_children(self, rollout_id: int):
         "All possible successors of this board state"

@@ -9,39 +9,17 @@ import numpy as np
 
 from envs.MATH.env import CoTEnv
 from envs.base_env import NoLegalActionException, ResetException
-from enum import Enum, unique
-from typing import List, Optional
 from tqdm import tqdm
-
 
 from reason.inference.lm_call import LMCallingConfig
 from .rstar_utils import *
 from .eval_src.Evaluator import MATHEvaluator
-from envs.MATH.parse_utils_qwen import extract_answer as extract_fn, parse_ground_truth
-from envs.MATH.grader import math_equal
 from envs.MATH.prompt import COT_EXAMPLES, COT_TASK_DESC, PROBLEM_FORMAT_STR, SEP
-
 
 from pathlib import Path
 
 # Get the file path of the current script
 CURRENT_DIR = Path(__file__).parent
-
-def extract_answer(answer_str: str) -> str:
-    return extract_fn(answer_str, data_name='math')
-
-
-def extract_groundtruth(groundtruth_str: str) -> str:
-    return parse_ground_truth(groundtruth_str, data_name='math')
-
-
-def judge_correct(
-    problem_str: str, extracted_groundtruth: Optional[str], answer: str
-) -> bool:
-    # return grade_answer(given_answer=answer, ground_truth=extracted_groundtruth)
-    result = math_equal(answer, extracted_groundtruth)
-    return result
-
 
 
 class IDCounter:
@@ -88,17 +66,26 @@ class Env(CoTEnv):
         self.disable_a5 = False
         self.enable_potential_score = False
         # potential score is disable due to https://github.com/zhentingqi/rStar/issues/12
-        self.num_a1_steps = 2   # these are generator parameters
-        self.mcts_num_last_votes = 3
-        self.num_subquestions = 2
-        self.num_votes = 2
+        # self.parent_is_subquestion = False          # TODO(yan): in rStar this seems to be false alltime, need to check
+
+        # LLM generation config
+        self.gen_cfg = config['generation_config']
+
+        # default parameter setting in original repo
+        self.num_a1_steps = 3
+        self.mcts_num_last_votes = 32
+        self.num_subquestions = 3
+        self.num_votes = 10
         self.node_counter = IDCounter()       # root
-        self.ost_new_tokens = 64
-        self.direct_answer_new_tokens=256
-        self.subquestion_new_tokens1 = 32
-        self.subquestion_new_tokens2 = 128
-        self.rephrased_q_new_tokens = 128
-        self.re_subanswer_new_tokens = 256
+        self.ost_new_tokens = 256
+        self.direct_answer_new_tokens=1024
+        self.subquestion_new_tokens1 = 128
+        self.subquestion_new_tokens2 = 512
+        self.rephrased_q_new_tokens = 512
+        self.re_subanswer_new_tokens = 1024
+        self.print_log = False
+        self.total_api_call_completion = 0
+        self.total_tree_completion = 0
 
         # self.task_name = "MATH"
         self.sep = "\n\n"
@@ -142,27 +129,7 @@ class Env(CoTEnv):
         self.math_problem = self.math_problems[idx]
 
     def reset(self, update_legal_action=True):
-        self.set_problem(idx=0)                     # retrive the first question set {'question': xxx, 'answer': xxx}
-        self.action_history = []
-        # self._init_query = self.build_query_str(
-        #     cot_examples=self._cot_example_str,
-        #     cot_task_desc=self._task_desc_str,
-        #     problem_format_str=self._problem_format_str,
-        #     problem_input=self.math_problem["question"],
-        #     is_few_shot=self.is_few_shot,
-        # )
-        # self.user_question = self.math_problem['question']
-        # self.expected_answer = self.math_problem['answer']
-
-        # there are things we need to take records globally, as rStar store and pass them in nodes
-        # self.current_node_type = Node_Type.USER_QUESTION        # record current node type
-        # self.user_question_trace = []
-        # self.solution_trace: Dict[int, Dict[str, str]] = {0: {"user_question": self.get_state(), "ost_step": {}}} # step id: step tuple
-        # self.paraphrased = False                    # dynamically changed
-        # self.parent_is_subquestion = False          # TODO(yan): in rStar this seems to be false alltime, need to check
-        # self.user_question: str = self.get_state()
-
-        # return self.user_question
+        self.set_problem(idx=0)      # retrive the first question set {'question': xxx, 'answer': xxx}
 
     @override
     def try_update_legal_action(self, node):
@@ -184,7 +151,8 @@ class Env(CoTEnv):
     @override
     def update_legal_actions(self, current_node):
         """
-        Think differently depending on current nodetype (status)
+        Think differently depending on current nodetype (status). The function directly create children node and
+        add them to the parent node
         Returns:
 
         """
@@ -265,10 +233,6 @@ class Env(CoTEnv):
             self.do_action_generate_direct_answers(current_node)
 
         return current_node.children        # a list of children
-        # total_completion_tokens = sum([i['completion_tokens'] for i in merge_action_dict.values()])
-
-
-        # return merge_action_dict, total_completion_tokens
 
 
     def is_terminal(self, node):
@@ -280,10 +244,8 @@ class Env(CoTEnv):
                                                                                            n.user_question)
             ) or n.node_type is Node_Type.DIRECT_ANSWER
 
+        return (node.depth >= node.max_depth_allowed) or is_valid_leaf_node(node)
 
-        done = (node.depth >= node.max_depth_allowed) or is_valid_leaf_node(node)
-
-        return done
 
     def do_action_generate_ost_step(self, node, parent_is_subquestion=False):
         """
@@ -294,13 +256,14 @@ class Env(CoTEnv):
         Returns:
 
         """
-        print(f"---- Generating one-step thought steps for node ...")
+        if self.print_log:
+            print(f"---- Generating one-step thought steps for node ...")
 
         #! ACTION: generate one-step thought step
         ost_step_list = []
         # formating
         if parent_is_subquestion:
-            raise NotImplementedError
+            raise NotImplementedError       # this branche seems unreachable
             #existing_ost_steps, next_ost_step_id = concat_subqs_subas_as_ost_steps(solution_trace)
         else:
             existing_ost_steps, next_ost_step_id = concat_ost_steps(node.solution_trace)
@@ -314,20 +277,20 @@ class Env(CoTEnv):
             + f"Step {next_ost_step_id}:"
         )
         # breakpoint()
-        io_output_list = self.llm_gen_fn(
+        io_output = self.llm_gen_fn(
             input_str=io_input,
             config=LMCallingConfig(
                 n=self.num_a1_steps,
                 stop_str=["\n", "\n\n"],     # check stopping token
-                max_new_tokens=self.ost_new_tokens
+                max_new_tokens=self.ost_new_tokens,
+                **self.gen_cfg
             ),
         )
-        ost_step_list = [io_output.strip() for io_output in io_output_list.text]
-        logps_avg_by_len = io_output_list.logp_avg_by_len
-        token_len = io_output_list.num_tokens
-        finish_reason_list = io_output_list.finish_reason
+        ost_step_list = [io_output.strip() for io_output in io_output.text]
+        self.total_api_call_completion += io_output.completion_tokens
+        self.total_tree_completion += sum(io_output.num_tokens)          # incase of action post-processing
+
         potential_answers_list = [None] * len(ost_step_list)
-        completion_tokens = io_output_list.completion_tokens
 
         for ost_step, potential_answers in zip(ost_step_list, potential_answers_list):
             node.children.append(
@@ -340,9 +303,12 @@ class Env(CoTEnv):
                 )
             )
 
+        return
+
 
     def do_action_generate_direct_answers(self, node):
-        print(f"---- Generating direct answers for node ...")
+        if self.print_log:
+            print(f"---- Generating direct answers for node ...")
         # ! ACTION: generate direct answer for the user question (w/ or w/o hint)
         if (
                 node.node_type is not Node_Type.USER_QUESTION
@@ -360,19 +326,19 @@ class Env(CoTEnv):
         io_input = self.fewshot_cot_config["prompt_template"].format(examples=fewshot_cot_prompt,
                                                                      instruction = question)
         # breakpoint()
-        io_output_list = self.llm_gen_fn(
+        io_output = self.llm_gen_fn(
             input_str=io_input,
             config=LMCallingConfig(
                 n=num_return,
                 max_new_tokens=self.direct_answer_new_tokens,
                 stop_str=self.fewshot_cot_config["stop_tokens"],
+                **self.gen_cfg
             )
         )
-        token_len = io_output_list.num_tokens
-        finish_reason_list = io_output_list.finish_reason
-        completion_tokens = io_output_list.completion_tokens
+        self.total_api_call_completion += io_output.completion_tokens
+        self.total_tree_completion += sum(io_output.num_tokens)          # incase of action post-processing
 
-        cleaned_io_output_list = [io_output.strip() for io_output in io_output_list.text]  # ! cleaning
+        cleaned_io_output_list = [io_output.strip() for io_output in io_output.text]  # ! cleaning
 
         try:
             assert len(cleaned_io_output_list) > 0
@@ -410,10 +376,13 @@ class Env(CoTEnv):
                 )
             )
 
+        return
+
 
 
     def do_action_generate_subquestions(self, node):
-        print(f"---- Generating subquestions for node ...")
+        if self.print_log:
+            print(f"---- Generating subquestions for node ...")
 
         subquestion_list, subanswer_list, value_list = [], [], []
         decompose_prompt = self.decompose_prompt if not node.paraphrased else self.decompose_prompt_rephrased
@@ -431,7 +400,7 @@ class Env(CoTEnv):
                 + f"Question {self.question_index}.{next_subquestion_id}:"
         )
         # breakpoint()
-        io_output_list = self.llm_gen_fn(
+        io_output = self.llm_gen_fn(
             input_str=io_input,
             config=LMCallingConfig(
                 n=self.num_subquestions,
@@ -445,10 +414,13 @@ class Env(CoTEnv):
                 f"Answer {self.question_index}.{next_subquestion_id}:",
                 f"Answer {self.question_index}.{next_subquestion_id}: ",
             ],
+                **self.gen_cfg
             )
         )
+        self.total_api_call_completion += io_output.completion_tokens
+        self.total_tree_completion += sum(io_output.num_tokens)          # incase of action post-processing
 
-        subquestion_list = [o.strip() for o in io_output_list.text]
+        subquestion_list = [o.strip() for o in io_output.text]
 
         # ! generate subanswers to the subquestions generated above
         io_input_list = []
@@ -485,9 +457,12 @@ class Env(CoTEnv):
                     "\n\n",
                     f"Question {self.question_index}.{next_subquestion_id + 1}",
                 ],
+                    **self.gen_cfg
                 )
             )
             io_output_list.append(_each_output.text)
+            self.total_api_call_completion += _each_output.completion_tokens
+            self.total_tree_completion += sum(_each_output.num_tokens)  # incase of action post-processing
 
         cleaned_io_output_list = [
             [io_output.strip() for io_output in io_output_group] for io_output_group in io_output_list
@@ -528,12 +503,12 @@ class Env(CoTEnv):
                 )
             )
 
-
-
+        return
 
 
     def do_action_generate_rephrased_user_question(self, node):
-        print(f"---- Generating rephrased user question for node ...")
+        if self.print_log:
+            print(f"---- Generating rephrased user question for node ...")
 
         rephrased_user_question_list = []
         io_input = self.rephrasing_prompt_template
@@ -547,13 +522,12 @@ class Env(CoTEnv):
                 n=1,
                 max_new_tokens=self.rephrased_q_new_tokens,
                 stop_str=["\n", "\n\n"],
+                **self.gen_cfg
             )
         )
         io_output = _io_output.text
-        token_len = _io_output.num_tokens
-        finish_reason_list = _io_output.finish_reason
-        completion_tokens = _io_output.completion_tokens
-
+        self.total_api_call_completion += _io_output.completion_tokens
+        self.total_tree_completion += sum(_io_output.num_tokens)  # incase of action post-processing
 
         assert len(io_output)==1
         io_output = "Given a list of conditions, please answer the question. Condition 1: " + io_output[0]
@@ -572,10 +546,12 @@ class Env(CoTEnv):
                 )
             )
 
+        return
 
 
     def do_action_generate_re_subanswers(self, node):
-        print(f"---- Generating re-subanswers for node ...")
+        if self.print_log:
+            print(f"---- Generating re-subanswers for node ...")
         re_subanswer_list, value_list = [], []
 
         user_question_context, _ = split_user_question(node.user_question)
@@ -592,19 +568,19 @@ class Env(CoTEnv):
         question += "\n\n"  # hint is None
         io_input = self.fewshot_cot_config["prompt_template"].format(examples=fewshot_cot_prompt, instruction=question)
         # breakpoint()
-        io_output_list = self.llm_gen_fn(
+        io_output = self.llm_gen_fn(
             input_str=io_input,
             config=LMCallingConfig(
                 n=self.num_votes,
                 max_new_tokens=self.re_subanswer_new_tokens,
                 stop_str=self.fewshot_cot_config["stop_tokens"],
+                **self.gen_cfg
             )
         )
-        token_len = io_output_list.num_tokens
-        finish_reason_list = io_output_list.finish_reason
-        completion_tokens = io_output_list.completion_tokens
+        self.total_api_call_completion += io_output.completion_tokens
+        self.total_tree_completion += sum(io_output.num_tokens)  # incase of action post-processing
 
-        cleaned_io_output_list = [io_output.strip() for io_output in io_output_list.text]  # ! cleaning
+        cleaned_io_output_list = [io_output.strip() for io_output in io_output.text]  # ! cleaning
         try:
             most_likely_answer, likelihood = self._get_most_likely_answer(cleaned_io_output_list)
         except Exception as e:
@@ -632,6 +608,7 @@ class Env(CoTEnv):
                 )
             )
 
+        return
 
     def _get_most_likely_answer(self, io_output_list: List[str]) -> Tuple[str, float]:
         assert len(io_output_list) > 0

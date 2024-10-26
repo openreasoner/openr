@@ -228,10 +228,9 @@ def rstar_mcts(
             "max_length": config.tree_max_depth,
             "stop_str": "The answer is ",
             "generation_config": {
-                "max_new_tokens": gen_config.max_new_tokens,
                 "temperature": gen_config.temperature,
                 "top_p": gen_config.top_p,
-                "top_k": gen_config.top_k,
+                "top_k": gen_config.top_k,      # this is fixed for each llm call
             },
         },
         math_problems=[

@@ -1,8 +1,7 @@
 python reason/evaluation/evaluate.py \
     --LM Qwen2.5-Math-1.5B-Instruct \
-    --RM checkpoint-2127 \
-    --task_name MATH \
-    --temperature 0.7 \
+    --RM math-shepherd-mistral-7b-prm \
+    --task_name rstar \
     --max_new_tokens 2048 \
     --num_sequence 1 \
     --tree_max_width 4 \
@@ -11,6 +10,10 @@ python reason/evaluation/evaluate.py \
     --method rstar_mcts \
     --num_worker 32 \
     --controller_addr http://0.0.0.0:28777 \
-    --local
+    --top_k 40 \
+    --top_p 0.95 \
+    --temperature 0.8 \
+#    --local
+
 
 # math-shepherd-mistral-7b-prm

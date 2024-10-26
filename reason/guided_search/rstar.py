@@ -32,6 +32,8 @@ class RstarSearchTree(SearchTree):
         self.Q: Dict[MCTS_Node, float] = defaultdict(lambda: 0.0)  # total reward of each node
         self.weight_scheduler = 'const'
         self.mcts_exploration_weight = 2.0
+        self.max_depth_allowed = 5
+        self.show_tree_expansion = True
 
     @override
     def _select_child(self,
@@ -53,12 +55,15 @@ class RstarSearchTree(SearchTree):
             return next_node, True
 
         # if all have been explord, from parent2children dict, select one node with highest UCB score
-        next_node = max(
-            self.parent2children[node],
-            key=lambda n: self._compute_uct(
-                parent_node=node, node=n, rollout_id=rollout_id
-            )
-        )
+
+        # Get the list of children for the current node
+        children = self.parent2children[node]
+
+        # Compute UCT values for each child node
+        uct_values = {n: self._compute_uct(parent_node=node, node=n, rollout_id=rollout_id) for n in children}
+        # print(f"@@@ uct = {uct_values}, node type = {[i.node_type for i in children]}")
+        # Find the child with the maximum UCT value
+        next_node = max(uct_values, key=uct_values.get)
 
         return next_node, False
 
@@ -95,7 +100,6 @@ class RstarSearchTree(SearchTree):
         reward_model_fn: Optional[Callable] = None,
         select_by_prior: bool = False,
     ) -> List[Dict]:
-        api_call_completion_tokens = 0
         simulate_env.reset()
         # api_call_completion_tokens += info["api_completion_token"]
         if self.root is None:
@@ -106,13 +110,9 @@ class RstarSearchTree(SearchTree):
                                     disable_a5=False,
                                     user_question=simulate_env.math_problem['question'],
                                     expected_answer=simulate_env.math_problem['answer'],
-                                    max_depth_allowed=5,
+                                    max_depth_allowed=self.max_depth_allowed,
                                     disable_a1=False,
                                     )
-            # updated_node = simulate_env.try_update_legal_action(node=root)          # creating children on root
-            # api_call_completion_tokens += info["api_completion_token"]
-
-            # self._expand_leaf_node(root, simulate_env, reward_model_fn)     # this we do expansion in simulated env already, here we just compute the
             self.root = root
 
         traj_list = []
@@ -122,14 +122,11 @@ class RstarSearchTree(SearchTree):
         model_all_solutions = []
         model_rollout_nodes = []
 
-        for i_path in tqdm(range(num_path), desc="Running MCTS"):
+        for i_path in tqdm(range(num_path), desc=f"Running {num_path} MCTS paths"):
             node = self.root
-            # node.set_rollout_id(i_path)
-            # node.set_unique_id()        # set unique id
-
             env_copy = simulate_env.copy()
             done = False
-            path = []
+            node_path = []      # for boostrapping
             while not done:
                 # this is the whole process of navigating from root to a terminate node, along the way,
                 # there are explored nodes with children where we do UCB, and there are unexplored nodes where we
@@ -138,54 +135,66 @@ class RstarSearchTree(SearchTree):
                 # have been explored, select UCB
                 next_node, is_leaf = self._select_child(node, env_copy, i_path)     # find a leaf node or
                                                                             # simulate the remaining
-                path.append(next_node)
+                node_path.append(next_node)
+
                 done = env_copy.is_terminal(
                     next_node
                 )       # checking terminal condition
                 # update legal action (expand) when the current code is not a leaf (no children)
                 # no env.step only use for checking termination when is not leaf, and update legal action
                 # when the current node is leaf
+                # print(f"Path {i_path}: depth = {next_node.depth}, done = {done}, is leaf = {is_leaf}")
 
                 if not done and is_leaf:     # expand when encounter a leaf node one step further
                     next_node_children = env_copy.try_update_legal_action(node = next_node)
                     for c in next_node_children:
                         c.set_rollout_id(i_path)
                     self.parent2children[next_node]=next_node_children
-                    # self._expand_leaf_node()
+
+                if self.show_tree_expansion:
+                    self.draw_tree()
 
                 if done:
                     self.explored_nodes.add(next_node)
 
+                node=next_node
+
             else:
                 # boostrapping
                 reward = next_node.calculate_reward()
-                for node in reversed(path):
+
+                for node in reversed(node_path):
                     self.Q[node] += reward
                     self.N[node] += 1
                     self.explored_nodes.add(node)
-
-
-            traj_data = {
-                "path_idx": i_path,
-                "text": env_copy.answer,
-                "value": reward,
-                "api_completion_tokens": api_call_completion_tokens,
-                "tree_completion_tokens": self._completion_tokens,
-            }
-
-            traj_list.append(traj_data)
-
-            # reset api_call_completion_tokens
-            # api_call_completion_tokens = 0
 
             model_rollout_nodes.append(next_node)
             _, best_solution, _, chosen_node, all_solution_nodes, all_solutions = stochastic_find_best_solution(
                 self.root, env_copy.evaluator, enable_potential_score=False
             )
 
-            model_solutions.append(best_solution)
-            model_all_solutions.append(all_solutions)
+            # model_solutions.append(best_solution)
+            # model_all_solutions.append(all_solutions)
+            assert best_solution is not None
 
+            traj_data = {
+                "path_idx": i_path,
+                "text": best_solution,
+                "value": reward,
+                "api_completion_tokens": env_copy.total_api_call_completion,
+                "tree_completion_tokens": env_copy.total_tree_completion,
+            }
 
-        return []
+            traj_list.append(traj_data)
 
+        return traj_list
+
+    def draw_tree(self):
+
+        def display_tree(node):
+            print("|" + "-" * (node.depth * 4) + str(node))
+            for child in node.children:
+                display_tree(child)
+
+        print(f"\n---------Expanded Tree---------")
+        display_tree(self.root)
