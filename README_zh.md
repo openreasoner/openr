@@ -64,8 +64,8 @@
 
 <!-- TABLE OF CONTENTS -->
 
-[//]: # (<details>)
-  <summary>目录</summary>
+<details>
+  <summary><span style="font-size: 1.5em;"><strong>目录</strong> 📖 </span></summary>
   <ol>
     <li><a href="#新闻与更新">新闻与更新</a></li>
     <li><a href="#功能">功能</a></li>
@@ -86,12 +86,12 @@
     <li><a href="#参考引用">参考引用</a></li>
   </ol>
 
-[//]: # (</details>)
+</details>
 
 <!-- News and Updates -->
 
 ## 新闻与更新
-
+- **[24/10/2024]** ***OpenR*** 现已支持 **MCTS** 推理 ([#24](https://github.com/openreasoner/openr/pull/24))! 🌲
 - **[15/10/2024]** 我们的报告已发布在 [**Arxiv**](https://arxiv.org/abs/2410.09671) 上! 
 - **[12/10/2024]** ***OpenR*** 已经发布！ 🚀 
 
@@ -212,6 +212,7 @@ sh scripts/eval/beam_search.sh
 
 # Method: beam_search. Average result: ({'majority_vote': 0.74, 'total_completion_tokens': 2350.492},)
 
+sh scripts/eval/vanila_mcts.sh
 
 ```
 
