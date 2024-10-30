@@ -14,6 +14,3 @@ python reason/evaluation/evaluate.py \
     --top_p 0.95 \
     --temperature 0.8 \
 #    --local
-
-
-# math-shepherd-mistral-7b-prm
