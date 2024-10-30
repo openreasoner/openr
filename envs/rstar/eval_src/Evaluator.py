@@ -8,6 +8,9 @@ from collections import defaultdict
 import random
 from fuzzywuzzy import fuzz, process
 
+from envs.MATH.parse_utils_qwen import extract_answer as extract_fn, parse_ground_truth, strip_string
+from ...MATH.grader import math_equal
+
 
 class Evaluator:
     def __init__(self) -> None:
@@ -208,67 +211,6 @@ class Evaluator:
         raise NotImplementedError
 
 
-class GSM8KEvaluator(Evaluator):
-    def __init__(self) -> None:
-        super().__init__()
-
-    def check_answers_equiv(self, answer_a: str, answer_b: str):
-        """Judge whether two answers are equivalent."""
-        is_number_a, number_a = self._is_number(answer_a)
-        is_number_b, number_b = self._is_number(answer_b)
-        if is_number_a and is_number_b:
-            correct = number_a == number_b
-        else:
-            correct = False
-
-        return correct
-
-    def extract_answer_from_gold_solution(self, solution: str | float):
-        """Extract the answer from the gold solution."""
-        if isinstance(solution, float):
-            return str(solution)
-        return solution.split("#### ")[-1].strip()
-
-    def extract_answer_from_model_completion(self, completion: str):
-        """Extract the answer from the model completion."""
-        if completion is None:
-            return None
-
-        assert isinstance(completion, str)
-
-        preds = completion
-        preds = preds.split(self.answer_marker)
-        answer_flag = True if len(preds) > 1 else False
-        if answer_flag:
-            pred = preds[1]
-        else:
-            pred = preds[-1]
-
-        pred = pred.replace(",", "")
-        pred = [s for s in re.findall(r"-?\d+\.?\d*", pred)]
-
-        if len(pred) == 0:
-            return None
-        else:
-            if answer_flag:
-                pred = pred[0]
-            else:
-                pred = pred[-1]
-
-        if pred != "" and pred[-1] == ".":
-            pred = pred[:-1]
-
-        pred = pred.replace(",", "").replace("\n", "")
-        is_number, pred = self._is_number(pred)
-        if is_number:
-            return pred
-        else:
-            return None
-
-
-GSM8KHARDEvaluator = GSM8KEvaluator
-MULTIARITHEvaluator = GSM8KEvaluator
-
 
 class MATHEvaluator(Evaluator):
     def __init__(self) -> None:
@@ -339,102 +281,102 @@ class MATHEvaluator(Evaluator):
         return answer_split
 
 
-class SVAMPEvaluator(Evaluator):
+
+class QwenMATHEvaluator(Evaluator):
     def __init__(self) -> None:
         super().__init__()
 
-    def check_answers_equiv(self, answer_a: str, answer_b: str):
-        """Judge whether two answers are equivalent."""
-        is_number_a, number_a = self._is_number(answer_a)
-        is_number_b, number_b = self._is_number(answer_b)
-        if is_number_a and is_number_b:
-            correct = number_a == number_b
-        else:
-            correct = False
-
-        return correct
-
-    def extract_answer_from_gold_solution(self, solution: str | float):
-        """Extract the answer from the gold solution."""
-        if isinstance(solution, float):
-            return str(solution)
-        return solution.strip()
-
-    def extract_answer_from_model_completion(self, completion: str):
-        """Extract the answer from the model completion."""
-        if completion is None:
+    def isolate_answer(self, text: str):
+        if text is None:
             return None
 
-        assert isinstance(completion, str)
+        use_last_number = True
+        data_name = 'math'
 
-        preds = completion
-        preds = preds.split(self.answer_marker)
-        answer_flag = True if len(preds) > 1 else False
-        if answer_flag:
-            pred = preds[1]
-        else:
-            pred = preds[-1]
-
-        pred = pred.replace(",", "")
-        pred = [s for s in re.findall(r"-?\d+\.?\d*", pred)]
-
-        if len(pred) == 0:
-            return None
-        else:
-            if answer_flag:
-                pred = pred[0]
+        pred_str = text.replace("\u043a\u0438", "")
+        if "answer is" in pred_str and "$. I hope" in pred_str:
+            # minerva_math
+            tmp = pred_str.split("answer is", 1)[1]
+            pred = tmp.split("$. I hope", 1)[0].strip()
+        elif "boxed" in pred_str:
+            ans = pred_str.split("boxed")[-1]
+            if len(ans) == 0:
+                return ""
+            elif ans[0] == "{":
+                stack = 1
+                a = ""
+                for c in ans[1:]:
+                    if c == "{":
+                        stack += 1
+                        a += c
+                    elif c == "}":
+                        stack -= 1
+                        if stack == 0:
+                            break
+                        a += c
+                    else:
+                        a += c
             else:
-                pred = pred[-1]
+                a = ans.split("$")[0].strip()
+            pred = a
+        elif "he answer is" in pred_str:
+            pred = pred_str.split("he answer is")[-1].strip()
+        elif "final answer is" in pred_str:
+            pred = pred_str.split("final answer is")[-1].strip()
+        elif "答案是" in pred_str:
+            # Handle Chinese few-shot multiple choice problem answer extraction
+            pred = pred_str.split("答案是")[1].strip().split("\n\n")[0].strip()
+        else:  # use the last number
+            if use_last_number:
+                pattern = "-?\d*\.?\d+"
+                pred = re.findall(pattern, pred_str.replace(",", ""))
+                if len(pred) >= 1:
+                    pred = pred[-1]
+                else:
+                    pred = ""
+            else:
+                pred = ""
 
+        # multiple line
+        # pred = pred.split("\n")[0]
+        pred = re.sub(r"\n\s*", "", pred)
+        if pred != "" and pred[0] == ":":
+            pred = pred[1:]
         if pred != "" and pred[-1] == ".":
             pred = pred[:-1]
-
-        pred = pred.replace(",", "").replace("\n", "")
-        is_number, pred = self._is_number(pred)
-        if is_number:
-            return pred
-        else:
-            return None
+        if pred != "" and pred[-1] == "/":
+            pred = pred[:-1]
+        pred = strip_string(pred, skip_unit=data_name in ["carp_en", "minerva_math"])
+        return pred
 
 
-class STGEvaluator(Evaluator):
-    def __init__(self) -> None:
-        super().__init__()
 
-    def _format_answer(self, answer: str):
-        if answer.lower() in ["proved", "true", "yes", "correct", "positive", "affirmative", "right", "1", "t", "y"]:
-            return "true"
-        elif answer.lower() in ["disproved", "false", "no", "incorrect", "negative", "wrong", "0", "f", "n"]:
-            return "false"
-        else:
-            return answer.lower()
+    def extract_answer_from_model_completion(self, completion):
+        answer_split = self.isolate_answer(completion)
+        return answer_split
+
 
     def check_answers_equiv(self, answer_a: str, answer_b: str):
+
         if answer_a is None or answer_b is None:
             return False
 
-        assert isinstance(answer_a, str) and isinstance(answer_b, str)
+        if answer_a == "" or answer_b == "":
+            return False
 
-        format_answer_a = self._format_answer(answer_a)
-        format_answer_b = self._format_answer(answer_b)
-        return format_answer_a == format_answer_b or fuzz.token_sort_ratio(format_answer_a, format_answer_b) >= 90
+        answer_a = answer_a.strip()
+        answer_b = answer_b.strip()
 
-    def extract_answer_from_gold_solution(self, solution: str):
-        if solution is None:
-            return None
+        if answer_a.lower() == answer_b.lower():
+            return True
 
-        assert isinstance(solution, str)
+        if math_equal(answer_a, answer_b):
+            return True
 
-        return self._format_answer(solution)
+        try:
+            res = latex_equiv(answer_a, answer_b)
+        except Exception as e:
+            print(e)
+            res = False
 
-    def extract_answer_from_model_completion(self, completion: str):
-        if completion is None:
-            return None
-
-        assert isinstance(completion, str)
-
-        answer = self.isolate_answer(completion)
-        if answer is None:
-            return None
-
-        return self._format_answer(answer)
+        return res

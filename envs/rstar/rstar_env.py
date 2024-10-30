@@ -13,7 +13,7 @@ from tqdm import tqdm
 
 from reason.inference.lm_call import LMCallingConfig
 from .rstar_utils import *
-from .eval_src.Evaluator import MATHEvaluator
+from .eval_src.Evaluator import MATHEvaluator, QwenMATHEvaluator
 from envs.MATH.prompt import COT_EXAMPLES, COT_TASK_DESC, PROBLEM_FORMAT_STR, SEP
 
 from pathlib import Path
@@ -123,7 +123,7 @@ class Env(CoTEnv):
                 os.path.join(CURRENT_DIR, f"prompts/MATH/fewshot_ost/fewshot_ost_prompt.txt"))
 
         # load evaluator
-        self.evaluator = MATHEvaluator()
+        self.evaluator = QwenMATHEvaluator() #MATHEvaluator()
 
     def set_problem(self, idx):
         self.math_problem = self.math_problems[idx]
@@ -282,6 +282,7 @@ class Env(CoTEnv):
             config=LMCallingConfig(
                 n=self.num_a1_steps,
                 stop_str=["\n", "\n\n"],     # check stopping token
+                include_stop_str_in_output=True,
                 max_new_tokens=self.ost_new_tokens,
                 **self.gen_cfg
             ),
@@ -331,6 +332,7 @@ class Env(CoTEnv):
             config=LMCallingConfig(
                 n=num_return,
                 max_new_tokens=self.direct_answer_new_tokens,
+                include_stop_str_in_output=True,
                 stop_str=self.fewshot_cot_config["stop_tokens"],
                 **self.gen_cfg
             )
@@ -405,6 +407,7 @@ class Env(CoTEnv):
             config=LMCallingConfig(
                 n=self.num_subquestions,
                 max_new_tokens=self.subquestion_new_tokens1,
+                include_stop_str_in_output=True,
                 stop_str=[
                 "\n",
                 "\n\n",
@@ -452,6 +455,7 @@ class Env(CoTEnv):
                 config=LMCallingConfig(
                     n=num_return,
                     max_new_tokens=self.subquestion_new_tokens2,
+                    include_stop_str_in_output=True,
                     stop_str=[
                     "\n",
                     "\n\n",
@@ -521,6 +525,7 @@ class Env(CoTEnv):
             config=LMCallingConfig(
                 n=1,
                 max_new_tokens=self.rephrased_q_new_tokens,
+                include_stop_str_in_output=True,
                 stop_str=["\n", "\n\n"],
                 **self.gen_cfg
             )
@@ -573,6 +578,7 @@ class Env(CoTEnv):
             config=LMCallingConfig(
                 n=self.num_votes,
                 max_new_tokens=self.re_subanswer_new_tokens,
+                include_stop_str_in_output=True,
                 stop_str=self.fewshot_cot_config["stop_tokens"],
                 **self.gen_cfg
             )
