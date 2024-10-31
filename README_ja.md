@@ -29,21 +29,21 @@
     <img src="figure/openr_logo.png" alt="Logo" width="200">
   </a>
   
-<h1 align="center" style="font-size: 30px;"><strong><em>OpenR</em></strong>: An Open Source Framework for Advanced Reasoning with Large Language Models</h1>
+<h1 align="center" style="font-size: 30px;"><strong><em>OpenR</em></strong>: 大規模言語モデルによる高度な推論のためのオープンソースフレームワーク</h1>
 <p align="center">
-    <a href="https://arxiv.org/abs/2410.09671">Paper</a>
+    <a href="https://arxiv.org/abs/2410.09671">論文</a>
     ·
-    <a href="https://github.com/openreasoner/openr/blob/main/reports/Tutorial-LLM-Reasoning-Wang.pdf">Tutorial</a>
+    <a href="https://github.com/openreasoner/openr/blob/main/reports/Tutorial-LLM-Reasoning-Wang.pdf">チュートリアル</a>
     ·
-    <a href="https://github.com/openreasoner/openr">Code</a>
+    <a href="https://github.com/openreasoner/openr">コード</a>
     ·
-    <a href="https://openreasoner.github.io/">Docs</a>
+    <a href="https://openreasoner.github.io/">ドキュメント</a>
     ·
-    <a href="https://huggingface.co/datasets/openreasoner/MATH-APS">Data</a>
+    <a href="https://huggingface.co/datasets/openreasoner/MATH-APS">データ</a>
     ·
-    <a href="https://huggingface.co/openreasoner/Math-psa">Model</a>
+    <a href="https://huggingface.co/openreasoner/Math-psa">モデル</a>
     ·
-    <a href="https://github.com/openreasoner/openr/issues">Issue</a>
+    <a href="https://github.com/openreasoner/openr/issues">問題</a>
   </p>
     <p align="center">
      [ <a href="https://github.com/openreasoner/openr/blob/main/README.md">English</a> ][ <a href="https://github.com/openreasoner/openr/blob/main/README_zh.md">中文</a> ][ <a href="https://github.com/openreasoner/openr/blob/main/README_ja.md">日本語</a> ]
@@ -65,38 +65,38 @@
 <!-- TABLE OF CONTENTS -->
 
 <details>
-  <summary><span style="font-size: 1.5em;"><strong>Table of Contents</strong> 📖 </span></summary>
+  <summary><span style="font-size: 1.5em;"><strong>目次</strong> 📖 </span></summary>
   <ol>
-    <li><a href="#news-and-updates">News and Updates</a></li>
-    <li><a href="#features">Features</a></li>
-    <li><a href="#plots">Plots</a></li>
-    <li><a href="#provided-datasets-and-models">Datasets and Models</a></li>
+    <li><a href="#ニュースと更新">ニュースと更新</a></li>
+    <li><a href="#機能">機能</a></li>
+    <li><a href="#プロット">プロット</a></li>
+    <li><a href="#提供されるデータセットとモデル">提供されるデータセットとモデル</a></li>
     <li>
-      <a href="#getting-started">Getting Started</a>
+      <a href="#始めに">始めに</a>
       <ul>
-        <li><a href="#installation">Installation</a></li>
-        <li><a href="#quickstart">Quick Start</a></li>
+        <li><a href="#インストール">インストール</a></li>
+        <li><a href="#クイックスタート">クイックスタート</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#join-us">Join Us</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#response-examples">Response Examples</a></li>
-    <li><a href="#community">Community</a></li>
-    <li><a href="#reference">Reference</a></li>
+    <li><a href="#使用法">使用法</a></li>
+    <li><a href="#参加">参加</a></li>
+    <li><a href="#連絡先">連絡先</a></li>
+    <li><a href="#応答例">応答例</a></li>
+    <li><a href="#コミュニティ">コミュニティ</a></li>
+    <li><a href="#参考文献">参考文献</a></li>
   </ol>
 
 </details>
 
 <!-- News and Updates -->
 
-## News and Updates
-- **[24/10/2024]** ***OpenR*** now supports **MCTS** reasoning ([#24](https://github.com/openreasoner/openr/pull/24))! 🌲
-- **[15/10/2024]** Our report is on [**Arxiv**](https://arxiv.org/abs/2410.09671)! 
-- **[12/10/2024]** ***OpenR*** has been released! 🚀 
+## ニュースと更新
+- **[2024年10月24日]** ***OpenR*** は **MCTS** 推論をサポートしました ([#24](https://github.com/openreasoner/openr/pull/24))! 🌲
+- **[2024年10月15日]** 私たちのレポートが [**Arxiv**](https://arxiv.org/abs/2410.09671) に掲載されました! 
+- **[2024年10月12日]** ***OpenR*** がリリースされました! 🚀 
 
 
-## Features
+## 機能
 
 <p align="center">
   <img src="./figure/logo_text.png" alt="Description" style="width: 300px; margin-left: 50px; float: right;">
@@ -104,33 +104,33 @@
 
 <div style="display: flex; align-items: center;">
 <ul style="list-style-type: none; padding: 0;">
-    <li><strong>✅ Process-supervision Data Generation</strong></li>
-    <li><strong>✅ Online Policy Training</strong></li>
-    <li><strong>✅ Generative and Discriminative PRM Training</strong></li>
-    <li><strong>✅ Multiple Search Strategies</strong></li>
-    <li><strong>✅ Test-time Computation and Scaling Law</strong></li>
+    <li><strong>✅ プロセス監督データ生成</strong></li>
+    <li><strong>✅ オンラインポリシートレーニング</strong></li>
+    <li><strong>✅ 生成的および識別的PRMトレーニング</strong></li>
+    <li><strong>✅ 複数の検索戦略</strong></li>
+    <li><strong>✅ テスト時の計算とスケーリング法則</strong></li>
 </ul>
 </div>
 
-## Plots
+## プロット
 
 <p align="center">
   <img src="./figure/compare_prm_by_boN.png" alt="PRM_Results" width="45%" />
   <img src="./figure/MATH_subsampled.png" alt="Inference_Results" width="45%" />
 </p>
 
-## Provided Datasets and Models
+## 提供されるデータセットとモデル
 
 [//]: # ([PRM800K]&#40;https://github.com/openai/prm800k&#41; &#40;Process Supervision Dataset&#41;)
 
-[MATH-APS](https://huggingface.co/datasets/mengfang/MATH-APS) (Our Dataset)
+[MATH-APS](https://huggingface.co/datasets/mengfang/MATH-APS) (私たちのデータセット)
 
-[MATH-psa](https://huggingface.co/openreasoner/Math-psa) (Our Process Reward Model)
+[MATH-psa](https://huggingface.co/openreasoner/Math-psa) (私たちのプロセス報酬モデル)
 
-## Getting Started
+## 始めに
 
 
-### Installation
+### インストール
 
 ```
 conda create -n open_reasoner python=3.10
@@ -144,49 +144,52 @@ cd -
 ```
 
 
-### Download Base Models
+### ベースモデルのダウンロード
 
-
-Before running the project, please ensure that all required base models are downloaded. The models used in this project include:
+プロジェクトを実行する前に、必要なベースモデルがすべてダウンロードされていることを確認してください。このプロジェクトで使用されるモデルには以下が含まれます：
 
 - `Qwen2.5-Math-1.5B-Instruct`, `Qwen2.5-Math-7B-Instruct`
 - `peiyi9979/mistral-7b-sft`
 - `peiyi9979/math-shepherd-mistral-7b-prm`
 
-To download these models, please refer to the [Hugging Face model downloading tutorial](https://huggingface.co/docs/hub/models-downloading) for step-by-step guidance on downloading models from the Hugging Face Hub.
+これらのモデルをダウンロードするには、[Hugging Faceモデルダウンロードチュートリアル](https://huggingface.co/docs/hub/models-downloading)を参照してください。
 
-Please make sure that all models are saved in their directories according to the project setup before proceeding.
+プロジェクトの設定に従って、すべてのモデルが各ディレクトリに保存されていることを確認してください。
 
 
-### Quickstart
+### クイックスタート
 
-Before running inference, please modify the following variables in the scripts under `reason/llm_service/` to set the appropriate base models for your usage:
+推論を実行する前に、`reason/llm_service/`ディレクトリ内のスクリプトで以下の変数を変更して、使用するベースモデルを設定してください：
 
-- `$MODEL_BASE`: Set this to the directory where your models are stored.
-- `$POLICY_MODEL_NAME`: Set this to the name of the policy model you wish to use.
-- `$VALUE_MODEL_NAME`: Set this to the name of the value model you wish to use.
-- `$NUM_LM_WORKER`: Set this to the number of language model (LM) workers to start.
-- `$NUM_RM_WORKER`: Set this to the number of reward model (RM) workers to start.
+- `$MODEL_BASE`: モデルが保存されているディレクトリのパスを設定します。
+- `$POLICY_MODEL_NAME`: 使用するポリシーモデルの名前を設定します。
+- `$VALUE_MODEL_NAME`: 使用するバリューモデルの名前を設定します。
+- `$NUM_LM_WORKER`: 起動する言語モデル（LM）ワーカーの数を設定します。
+- `$NUM_RM_WORKER`: 起動する報酬モデル（RM）ワーカーの数を設定します。
 
-Then it prepares and runs inference using different techniques.
+次に、異なる技術を使用して推論を実行します。
 
-#### Start LM & RM Services
-For example, to start the LM and RM services for the Math Shepherd model, run the following command:
+#### LM & RM サービスの開始
+
+例えば、Math ShepherdモデルのLMとRMサービスを開始するには、以下のコマンドを実行します：
+
+
+
 ```bash
 sh reason/llm_service/create_service_math_shepherd.sh
 ```
 
-To kill the server processes, recommend using the following command:
+サーバープロセスを終了するには、以下のコマンドを使用することをお勧めします：
 ```bash
-tmux kill-session -t {Your Session Name} # default is `FastChat`
+tmux kill-session -t {Your Session Name} # デフォルトは`FastChat`
 ```
 
-## Usage
+## 使用法
 
-#### Run Inference
+#### 推論の実行
 
 
-⚠️ Make sure the input (`--LM`, `--RM`) in the script aligns with the variables (`$POLICY_MODEL_NAME`, `$VALUE_MODEL_NAME`) in the pending worker!
+⚠️ スクリプト内の入力パラメータ（`--LM`, `--RM`）が、保留中のワーカー内の変数（`$POLICY_MODEL_NAME`, `$VALUE_MODEL_NAME`）と一致していることを確認してください！
 
 
 
@@ -213,16 +216,16 @@ sh scripts/eval/vanila_mcts.sh
 
 ```
 
-#### Run Training
+#### トレーニングの実行
 
-⚠️ Before training, please modify the `$dataset_path`, `$model_name_or_path` and `$prm_name_or_path` in `train/mat/scripts/train_llm.sh`.
+⚠️ トレーニングを実行する前に、`train/mat/scripts/train_llm.sh`ファイル内の`$dataset_path`, `$model_name_or_path`および`$prm_name_or_path`を変更してください。
 
 ```bash
 cd train/mat/scripts
 bash train_llm.sh
 ```
 
-#### Run PRM Learning
+#### PRM学習の実行
 
 ```bash
 cd prm/code
@@ -239,49 +242,37 @@ torchrun --nproc_per_node=2 finetune_qwen.py --model_path $YOUR_MODEL_PATH \
                                              --datasets both \
 ```
 
-## Join Us
+## 参加
 
-> Every contribution is valuable to the community.
+> すべての貢献はコミュニティにとって価値があります。
 
-Thank you for your interest in ***OpenR*** ! 🥰 We are deeply committed to the open-source community, 
-and we welcome contributions from everyone. Your efforts, whether big or small, help us grow and improve. 
-Contributions aren’t limited to code—answering questions, helping others, enhancing our 
-documentation, and sharing the project are equally impactful. 
+***OpenR*** にご関心をお寄せいただきありがとうございます！🥰 私たちはオープンソースコミュニティに深くコミットしており、皆さんの貢献を歓迎します。あなたの努力は大小にかかわらず、私たちの成長と改善に役立ちます。貢献はコードに限らず、質問に答えたり、他の人を助けたり、ドキュメントを改善したり、プロジェクトを共有したりすることも同様に影響力があります。
 
-Feel free to checkout the [contribution guidance](CONTRIBUTING.md) ! 
+[貢献ガイド](CONTRIBUTING.md) をご覧ください！ 
 
-### Future Plan
+### 将来の計画
 
-- Add More Comprehensive Evaluations on RL Training and Search Strategies
+- RLトレーニングと検索戦略に関するより包括的な評価を追加
 
-- Scaling the Prove-Verifier Model Size
+- Prove-Verifierモデルのサイズを拡大
 
-- Support Self-improvement Training
+- 自己改善トレーニングのサポート
 
 <!-- CONTACT -->
 
-## Contact
+## 連絡先
 
-The ***OpenR*** community is maintained by:
+***OpenR*** コミュニティは以下のチームによって維持されています：
 
 - **Openreasoner Team** (openreasoner@gmail.com)
 
-## License
-OpenR is released under the MIT License.
+## ライセンス
 
-## Citation
+***OpenR*** はMITライセンスの下でリリースされています。
 
-If you do find our resources helpful, please cite our paper:
+## 引用
 
-```
-@misc{wang2024tutorial,
-  author = {Jun Wang},
-  title = {A Tutorial on LLM Reasoning: Relevant Methods Behind ChatGPT o1},
-  year = {2024},
-  url = {https://github.com/openreasoner/openr/blob/main/reports/tutorial.pdf},
-  note = {Available on GitHub}
-}
-```
+私たちのリソースが役立つと感じた場合は、私たちの論文を引用してください：
 
 ```
 @article{wang2024openr,
@@ -291,10 +282,11 @@ If you do find our resources helpful, please cite our paper:
   year={2024}
 }
 ```
+ありがとうございます！
 
-## Response Examples
+## 応答例
 
-### Comparing PRM, Math-psa (Ours) V.S. Math-Shepherd 
+### PRMの比較、Math-psa（私たちのもの）対Math-Shepherd 
 
 <p align="center">
   <img src="./figure/QA/QA1.png" alt="QA 1" width="49%" />
@@ -302,14 +294,14 @@ If you do find our resources helpful, please cite our paper:
 </p>
 
 
-### Justifing RL Training
+### RLトレーニングの正当化
 
 <p align="center">
   <img src="./figure/QA/QA3.png" alt="QA 3" width="49%" />
   <img src="./figure/QA/QA4.png" alt="QA 4" width="49%" />
 </p>
 
-### Exploring Test-time Computation
+### テスト時の計算の探索
 
 <p align="center">
   <img src="./figure/QA/QA5.png" alt="QA 5" width="70%" />
@@ -318,7 +310,7 @@ If you do find our resources helpful, please cite our paper:
 </p>
 
 
-## Community
+## コミュニティ
 
 **WeChat**:
 
@@ -326,9 +318,9 @@ If you do find our resources helpful, please cite our paper:
 
 
 
-## Reference
+## 参考文献
 
-### Inference-time Computing
+### 推論時の計算
 [1] [Alphazero-like tree-search can guide large language model decoding and training.](https://arxiv.org/pdf/2309.17179)
 
 [2] [Reasoning with language model is planning with world model.](https://arxiv.org/pdf/2305.14992)
@@ -338,7 +330,7 @@ If you do find our resources helpful, please cite our paper:
 [4] [Think before you speak: Training language models with pause tokens](https://arxiv.org/pdf/2310.02226)
 
 
-### From Outcome Supervision to Process Supervision
+### 結果監督からプロセス監督へ
 
 [1] [Training verifiers to solve math word problems](https://arxiv.org/pdf/2110.14168)
 
@@ -353,7 +345,7 @@ mathematical reasoning](https://aclanthology.org/2024.findings-naacl.55.pdf)
 
 [6] [Generative verifiers: Reward modeling as next-token prediction](https://arxiv.org/pdf/2408.15240)
 
-### Data Acquisition
+### データ取得
 
 [1] [Star: Bootstrapping reasoning with reasoning](https://proceedings.neurips.cc/paper_files/paper/2022/file/639a9a172c044fbb64175b5fad42e9a5-Paper-Conference.pdf)
 
