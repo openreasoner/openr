@@ -144,6 +144,14 @@ class Node(object):
 
         rets = {"children": childrens, "info": self.get_info()}
         return rets
+    
+    def __str__(self) -> str:
+        if self.is_root():
+            return "root"
+        else:
+            return "child: value: {:.3f}, prior: {:.3f}".format(
+                self.last_action, self.value, self.prior_p
+            )
 
 
 class LanguageNode(Node):
@@ -187,7 +195,7 @@ class LanguageNode(Node):
         return info_dict
     
     def __str__(self):
-        if self.parent is None:
+        if self.is_root():
             return "root: {}".format(self.text_state)
         else: 
             return "action: {}, value: {:.3f}, prior: {:.3f}".format(
