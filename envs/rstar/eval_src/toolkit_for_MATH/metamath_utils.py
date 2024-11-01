@@ -84,7 +84,9 @@ def _clean_numbers(string):
             if num_prev_digits > 3:
                 # Some fixing
                 string_number = new_string[-num_prev_digits:]
-                new_string = new_string[:-num_prev_digits] + "{0:,}".format(int(string_number))
+                new_string = new_string[:-num_prev_digits] + "{0:,}".format(
+                    int(string_number)
+                )
             num_prev_digits = 0
         new_string += c
 

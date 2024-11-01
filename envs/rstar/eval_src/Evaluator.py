@@ -8,7 +8,11 @@ from collections import defaultdict
 import random
 from fuzzywuzzy import fuzz, process
 
-from envs.MATH.parse_utils_qwen import extract_answer as extract_fn, parse_ground_truth, strip_string
+from envs.MATH.parse_utils_qwen import (
+    extract_answer as extract_fn,
+    parse_ground_truth,
+    strip_string,
+)
 from ...MATH.grader import math_equal
 
 
@@ -56,7 +60,9 @@ class Evaluator:
         else:
             return text
 
-    def find_most_confident_answer(self, completions: List[str], prior_weights: List[float] = None):
+    def find_most_confident_answer(
+        self, completions: List[str], prior_weights: List[float] = None
+    ):
         """Returns the most confident answer, its completion, its id in the input list, and its confidence."""
         if completions is None or len(completions) == 0:
             return None, None, None, None
@@ -94,7 +100,9 @@ class Evaluator:
                 score = prior_weight * (count / len(completions))
                 completion2score[completion] = score
 
-            most_confident_completion = max(completion2score.keys(), key=lambda x: completion2score[x])
+            most_confident_completion = max(
+                completion2score.keys(), key=lambda x: completion2score[x]
+            )
 
             return (
                 self.extract_answer_from_model_completion(most_confident_completion),
@@ -103,11 +111,15 @@ class Evaluator:
                 completion2score[most_confident_completion],
             )
         else:
-            most_confident_answer = max(answer2completions.keys(), key=lambda x: len(answer2completions[x]))
+            most_confident_answer = max(
+                answer2completions.keys(), key=lambda x: len(answer2completions[x])
+            )
             assert (
                 len(answer2completions[most_confident_answer]) > 0
             ), "There are no completions for the most confident answer."
-            confidence = len(answer2completions[most_confident_answer]) / len(completions)
+            confidence = len(answer2completions[most_confident_answer]) / len(
+                completions
+            )
             assert confidence > 0
             return (
                 most_confident_answer,
@@ -116,7 +128,9 @@ class Evaluator:
                 confidence,
             )
 
-    def stochastic_select_answer(self, completion2score, answer2completions, completions):
+    def stochastic_select_answer(
+        self, completion2score, answer2completions, completions
+    ):
         answer2score = {}
         answer_counts = {}
         for completion, score in completion2score.items():
@@ -161,18 +175,29 @@ class Evaluator:
         return completion2score
 
     def stochastic_select_response(self, completion2score, completions):
-        sorted_completions = sorted(completion2score.items(), key=lambda x: x[1], reverse=True)[:1]
+        sorted_completions = sorted(
+            completion2score.items(), key=lambda x: x[1], reverse=True
+        )[:1]
         completions, scores = zip(*sorted_completions)
         total_score = sum(scores)
         try:
             probabilities = [score / total_score for score in scores]
-            sampled_completion = random.choices(completions, weights=probabilities, k=1)[0]
+            sampled_completion = random.choices(
+                completions, weights=probabilities, k=1
+            )[0]
         except:
             sampled_completion = random.choices(completions, k=1)[0]
         confidence = completion2score[sampled_completion]
-        most_confident_answer = self.extract_answer_from_model_completion(sampled_completion)
+        most_confident_answer = self.extract_answer_from_model_completion(
+            sampled_completion
+        )
         id_of_most_confident = completions.index(sampled_completion)
-        return most_confident_answer, sampled_completion, id_of_most_confident, confidence
+        return (
+            most_confident_answer,
+            sampled_completion,
+            id_of_most_confident,
+            confidence,
+        )
 
     def stochastic_find_most_confident_answer(
         self,
@@ -194,12 +219,19 @@ class Evaluator:
         if not answer2completions:
             return None, None, None, None
 
-        completion2score = self.stochastic_calculate_completion_scores(prior_weights, answer2completions)
-
-        most_confident_answer, sampled_completion, id_of_most_confident, confidence = self.stochastic_select_response(
-            completion2score, completions
+        completion2score = self.stochastic_calculate_completion_scores(
+            prior_weights, answer2completions
         )
-        return most_confident_answer, sampled_completion, id_of_most_confident, confidence
+
+        most_confident_answer, sampled_completion, id_of_most_confident, confidence = (
+            self.stochastic_select_response(completion2score, completions)
+        )
+        return (
+            most_confident_answer,
+            sampled_completion,
+            id_of_most_confident,
+            confidence,
+        )
 
     def check_answers_equiv(self, answer_a: str, answer_b: str):
         raise NotImplementedError
@@ -209,7 +241,6 @@ class Evaluator:
 
     def extract_answer_from_model_completion(self, completion: str) -> str:
         raise NotImplementedError
-
 
 
 class MATHEvaluator(Evaluator):
@@ -281,7 +312,6 @@ class MATHEvaluator(Evaluator):
         return answer_split
 
 
-
 class QwenMATHEvaluator(Evaluator):
     def __init__(self) -> None:
         super().__init__()
@@ -291,7 +321,7 @@ class QwenMATHEvaluator(Evaluator):
             return None
 
         use_last_number = True
-        data_name = 'math'
+        data_name = "math"
 
         pred_str = text.replace("\u043a\u0438", "")
         if "answer is" in pred_str and "$. I hope" in pred_str:
@@ -349,12 +379,9 @@ class QwenMATHEvaluator(Evaluator):
         pred = strip_string(pred, skip_unit=data_name in ["carp_en", "minerva_math"])
         return pred
 
-
-
     def extract_answer_from_model_completion(self, completion):
         answer_split = self.isolate_answer(completion)
         return answer_split
-
 
     def check_answers_equiv(self, answer_a: str, answer_b: str):
 

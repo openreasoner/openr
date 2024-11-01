@@ -15,6 +15,7 @@ from envs.MATH.grader import math_equal
 def override(f):
     return f
 
+
 @unique
 class Node_Type(Enum):
     USER_QUESTION = "USER_QUESTION"
@@ -23,7 +24,6 @@ class Node_Type(Enum):
     SUBQUESTION = "SUBQUESTION"
     RE_SUBANSWER = "RE_SUBANSWER"
     OST_STEP = "OST_STEP"
-
 
 
 class GeneratorError(Exception):
@@ -41,6 +41,7 @@ def read_txt(file_path):
         data = f.read()
     return data
 
+
 def read_json(file_path):
     assert str(file_path).endswith(".json")
     with open(file_path, "r", encoding="utf-8") as f:
@@ -55,11 +56,11 @@ def save_json(js_obj, file_path):
 
 
 def extract_answer(answer_str: str) -> str:
-    return extract_fn(answer_str, data_name='math')
+    return extract_fn(answer_str, data_name="math")
 
 
 def extract_groundtruth(groundtruth_str: str) -> str:
-    return parse_ground_truth(groundtruth_str, data_name='math')
+    return parse_ground_truth(groundtruth_str, data_name="math")
 
 
 def judge_correct(
@@ -68,7 +69,6 @@ def judge_correct(
     # return grade_answer(given_answer=answer, ground_truth=extracted_groundtruth)
     result = math_equal(answer, extracted_groundtruth)
     return result
-
 
 
 def concat_ost_steps(solution_trace: Dict[int, Dict[str, str]]) -> Tuple[str, int]:
@@ -85,7 +85,10 @@ def concat_ost_steps(solution_trace: Dict[int, Dict[str, str]]) -> Tuple[str, in
         # no one-step thought step yet
         return "", 1
 
-def concat_subqs_and_subas(solution_trace: Dict[int, Dict[str, str]], question_index: int) -> Tuple[str, int]:
+
+def concat_subqs_and_subas(
+    solution_trace: Dict[int, Dict[str, str]], question_index: int
+) -> Tuple[str, int]:
     """Return: concatenated subqs and suba, next subquestion id"""
     solution_trace_str = ""
 
@@ -94,12 +97,23 @@ def concat_subqs_and_subas(solution_trace: Dict[int, Dict[str, str]], question_i
             continue
 
         assert subquestion_id > 0
-        assert "subquestion" in solution_step.keys() and "subanswer" in solution_step.keys()
+        assert (
+            "subquestion" in solution_step.keys()
+            and "subanswer" in solution_step.keys()
+        )
 
-        solution_trace_str += f"Question {question_index}." + str(subquestion_id) + ": " + solution_step["subquestion"]
+        solution_trace_str += (
+            f"Question {question_index}."
+            + str(subquestion_id)
+            + ": "
+            + solution_step["subquestion"]
+        )
         solution_trace_str += "\n"
         solution_trace_str += (
-            f"Answer {question_index}." + str(subquestion_id) + ": " + solution_step["subanswer"]["text"]
+            f"Answer {question_index}."
+            + str(subquestion_id)
+            + ": "
+            + solution_step["subanswer"]["text"]
         )
         solution_trace_str += "\n"
 
@@ -115,10 +129,11 @@ def split_user_question(user_question: str):
     user_question_problem = user_question[last_period_id + 1 :].strip()
     return user_question_context, user_question_problem
 
+
 def reach_terminal_subquestion(subquestion: str, user_question: str):
     assert subquestion is not None
 
-    if "Now we can answer" in subquestion:      # in the prompt template
+    if "Now we can answer" in subquestion:  # in the prompt template
         #! remember that: when the original question is answerable, please start the subquestion with "Now we can answer the question: "
         return True
 
@@ -136,7 +151,11 @@ def reach_terminal_ost_step(ost_step: str):
 
 
 def make_hint(
-    solution_trace: Dict[int, Dict[str, str]], node_type: Node_Type, new_subq=None, new_suba=None, new_ost_step=None
+    solution_trace: Dict[int, Dict[str, str]],
+    node_type: Node_Type,
+    new_subq=None,
+    new_suba=None,
+    new_ost_step=None,
 ) -> str:
     if node_type in [Node_Type.SUBQUESTION, Node_Type.RE_SUBANSWER]:
         hint = ""
@@ -146,7 +165,10 @@ def make_hint(
                 continue
 
             assert subquestion_id > 0
-            assert "subquestion" in solution_step.keys() and "subanswer" in solution_step.keys()
+            assert (
+                "subquestion" in solution_step.keys()
+                and "subanswer" in solution_step.keys()
+            )
 
             hint += f"Hint " + str(subquestion_id) + ": " + solution_step["subquestion"]
             hint += " "
@@ -223,15 +245,20 @@ def stochastic_find_best_solution(
     solutions = [extract_solution_from_node(node) for node in solution_nodes]
 
     def calculate_potential_score_for_solution_node(node):
-        model_answer = evaluator.extract_answer_from_model_completion(extract_solution_from_node(node))
-        potential_answers_history = node.potential_answers_history  # {depth -> [potential answers]}
+        model_answer = evaluator.extract_answer_from_model_completion(
+            extract_solution_from_node(node)
+        )
+        potential_answers_history = (
+            node.potential_answers_history
+        )  # {depth -> [potential answers]}
         assert potential_answers_history[node.depth] is None
 
         potential_score = 1
         for depth, depth_potential_answers in potential_answers_history.items():
             if depth < node.depth:
                 depth_score = sum(
-                    evaluator.check_answers_equiv(dpa, model_answer) for dpa in depth_potential_answers
+                    evaluator.check_answers_equiv(dpa, model_answer)
+                    for dpa in depth_potential_answers
                 ) / len(depth_potential_answers)
                 potential_score *= depth_score
 
@@ -243,10 +270,19 @@ def stochastic_find_best_solution(
         if enable_potential_score
         else None
     )
-    top_answer, top_completion, top_completion_id, top_confidence = evaluator.stochastic_find_most_confident_answer(
-        completions=solutions, prior_weights=prior_weights
+    top_answer, top_completion, top_completion_id, top_confidence = (
+        evaluator.stochastic_find_most_confident_answer(
+            completions=solutions, prior_weights=prior_weights
+        )
     )
-    return top_answer, top_completion, top_confidence, solution_nodes[top_completion_id], solution_nodes, solutions
+    return (
+        top_answer,
+        top_completion,
+        top_confidence,
+        solution_nodes[top_completion_id],
+        solution_nodes,
+        solutions,
+    )
 
 
 class MCTS_Node(ABC):
@@ -260,7 +296,7 @@ class MCTS_Node(ABC):
         super().__init__()
 
         # global node_cnt
-        self.id = None      # defined when creating one RstarLanguageNode
+        self.id = None  # defined when creating one RstarLanguageNode
 
         self.rollout_id = None
 
@@ -301,7 +337,6 @@ class RstarLanguageNode(MCTS_Node):
         user_question: str = None,
         max_depth_allowed: int = None,
         disable_a1: bool = None,
-
         # --- For instantiating REPHRASED_USER_QUESTION node ---
         rephrased_user_question: str = None,
         # ------------------------------------------------------
@@ -320,7 +355,7 @@ class RstarLanguageNode(MCTS_Node):
         # --- For instantiating OST_STEP node ---
         ost_step: str = None,
         question_index: int = None,
-        id: int=None,
+        id: int = None,
     ) -> None:
         super().__init__()
 
@@ -349,7 +384,13 @@ class RstarLanguageNode(MCTS_Node):
                 )
                 assert all(
                     attr is not None
-                    for attr in [disable_a5, user_question, expected_answer, max_depth_allowed, disable_a1]
+                    for attr in [
+                        disable_a5,
+                        user_question,
+                        expected_answer,
+                        max_depth_allowed,
+                        disable_a1,
+                    ]
                 )
             elif node_type is Node_Type.REPHRASED_USER_QUESTION:
                 assert depth == 1
@@ -370,7 +411,9 @@ class RstarLanguageNode(MCTS_Node):
                         disable_a1,
                     ]
                 )
-                assert all(attr is not None for attr in [parent, rephrased_user_question])
+                assert all(
+                    attr is not None for attr in [parent, rephrased_user_question]
+                )
             elif node_type is Node_Type.DIRECT_ANSWER:
                 assert depth > 0
                 assert all(
@@ -388,7 +431,9 @@ class RstarLanguageNode(MCTS_Node):
                         disable_a1,
                     ]
                 )
-                assert all(attr is not None for attr in [parent, node_value, direct_answer])
+                assert all(
+                    attr is not None for attr in [parent, node_value, direct_answer]
+                )
             elif node_type is Node_Type.SUBQUESTION:
                 assert depth > 0
                 assert all(
@@ -405,7 +450,14 @@ class RstarLanguageNode(MCTS_Node):
                     ]
                 )
                 assert all(
-                    attr is not None for attr in [parent, node_value, subquestion, subanswer, is_new_subquestion]
+                    attr is not None
+                    for attr in [
+                        parent,
+                        node_value,
+                        subquestion,
+                        subanswer,
+                        is_new_subquestion,
+                    ]
                 )
             elif node_type is Node_Type.RE_SUBANSWER:
                 assert depth > 0
@@ -424,7 +476,9 @@ class RstarLanguageNode(MCTS_Node):
                         disable_a1,
                     ]
                 )
-                assert all(attr is not None for attr in [parent, node_value, re_subanswer])
+                assert all(
+                    attr is not None for attr in [parent, node_value, re_subanswer]
+                )
             elif node_type is Node_Type.OST_STEP:
                 assert depth > 0
                 assert all(
@@ -466,7 +520,7 @@ class RstarLanguageNode(MCTS_Node):
 
         ## additional parameter
         self._visit_count = 0
-        self._value_sum = 0     # self.node_value
+        self._value_sum = 0  # self.node_value
 
         if parent is None:  # root
             self.verbose = verbose
@@ -516,7 +570,9 @@ class RstarLanguageNode(MCTS_Node):
         #! record solution trace from root to the current node. key: subquestion id
         if parent is None:  # root
             assert self.node_type is Node_Type.USER_QUESTION
-            self.solution_trace: Dict[int, Dict[str, str]] = {0: {"user_question": user_question, "ost_step": {}}}
+            self.solution_trace: Dict[int, Dict[str, str]] = {
+                0: {"user_question": user_question, "ost_step": {}}
+            }
         else:
             assert self.node_type is not Node_Type.USER_QUESTION
             self.solution_trace = deepcopy(parent.solution_trace)
@@ -531,7 +587,10 @@ class RstarLanguageNode(MCTS_Node):
                     "value": node_value,
                 }
             elif node_type is Node_Type.SUBQUESTION:
-                assert is_new_subquestion and self.subquestion_counter == parent.subquestion_counter + 1
+                assert (
+                    is_new_subquestion
+                    and self.subquestion_counter == parent.subquestion_counter + 1
+                )
                 self.solution_trace[self.subquestion_counter] = {
                     "subquestion": subquestion,
                     "subanswer": {"text": subanswer, "value": node_value},
@@ -540,11 +599,21 @@ class RstarLanguageNode(MCTS_Node):
             elif node_type is Node_Type.RE_SUBANSWER:
                 assert parent.subquestion is not None
                 assert self.subquestion_counter == parent.subquestion_counter
-                assert self.solution_trace[self.subquestion_counter]["subquestion"] == parent.subquestion
-                self.solution_trace[self.subquestion_counter]["subanswer"] = {"text": re_subanswer, "value": node_value}
+                assert (
+                    self.solution_trace[self.subquestion_counter]["subquestion"]
+                    == parent.subquestion
+                )
+                self.solution_trace[self.subquestion_counter]["subanswer"] = {
+                    "text": re_subanswer,
+                    "value": node_value,
+                }
             elif node_type is Node_Type.OST_STEP:
-                assert "ost_step" in self.solution_trace[self.subquestion_counter].keys()
-                self.solution_trace[self.subquestion_counter]["ost_step"][self.ost_step_counter] = ost_step
+                assert (
+                    "ost_step" in self.solution_trace[self.subquestion_counter].keys()
+                )
+                self.solution_trace[self.subquestion_counter]["ost_step"][
+                    self.ost_step_counter
+                ] = ost_step
 
     def __str__(self) -> str:
         type2str = {
@@ -557,11 +626,11 @@ class RstarLanguageNode(MCTS_Node):
         }
         return f"{type2str[self.node_type]}-{self.id}"
 
-
     def is_valid_leaf_node(self):
         #! a valid solution can only be in SUBQUESTION type or DIRECT_ANSWER type
         return (
-            self.node_type is Node_Type.SUBQUESTION and reach_terminal_subquestion(self.subquestion, self.user_question)
+            self.node_type is Node_Type.SUBQUESTION
+            and reach_terminal_subquestion(self.subquestion, self.user_question)
         ) or self.node_type is Node_Type.DIRECT_ANSWER
 
     def is_valid_solution_node(self):
@@ -572,7 +641,10 @@ class RstarLanguageNode(MCTS_Node):
                 and reach_terminal_subquestion(self.subquestion, self.user_question)
                 # if the subquestion and already answer the question
             )
-            or (self.node_type is Node_Type.OST_STEP and reach_terminal_ost_step(self.ost_step))        # if the ost contain answer
+            or (
+                self.node_type is Node_Type.OST_STEP
+                and reach_terminal_ost_step(self.ost_step)
+            )  # if the ost contain answer
             or self.node_type is Node_Type.DIRECT_ANSWER
         )
 
@@ -584,7 +656,6 @@ class RstarLanguageNode(MCTS_Node):
             - output (:obj:`Int`): Current value, used to compute ucb score.
         """
         raise NotImplementedError
-
 
     def find_children(self, rollout_id: int):
         "All possible successors of this board state"

@@ -7,6 +7,7 @@
 # ---------------------------------------------------------
 
 import sys
+
 sys.path.append(".")
 
 from .parsing_lib import *
@@ -20,7 +21,6 @@ from sympy.parsing.sympy_parser import parse_expr
 from sympy.parsing.latex import parse_latex
 
 
-
 def has_numbers(input_string: str) -> bool:
     """
     Checks if a string contains a number.
@@ -32,7 +32,19 @@ def has_structure(input_string: str) -> bool:
     """
     Checks if a string contains structured content.
     """
-    if "(" in input_string or ")" in input_string or "[" in input_string or "]" in input_string or "\\" in input_string or "<" in input_string or ">" in input_string or "," in input_string or 'x' in input_string or 'y' in input_string or 'z' in input_string:
+    if (
+        "(" in input_string
+        or ")" in input_string
+        or "[" in input_string
+        or "]" in input_string
+        or "\\" in input_string
+        or "<" in input_string
+        or ">" in input_string
+        or "," in input_string
+        or "x" in input_string
+        or "y" in input_string
+        or "z" in input_string
+    ):
         return True
     return False
 
@@ -57,13 +69,15 @@ def symbolic_equal(a: str, b: str) -> Union[bool, None]:
     b = sympy_parse(b)
 
     try:
-        if simplify(a-b) == 0:
+        if simplify(a - b) == 0:
             return True
     except:
         pass
 
     try:
-        if isclose(N(a), float(N(a)), rel_tol=1e-9) and isclose(N(a), float(N(a)), rel_tol=1e-9):
+        if isclose(N(a), float(N(a)), rel_tol=1e-9) and isclose(
+            N(a), float(N(a)), rel_tol=1e-9
+        ):
             return False
     except:
         pass
@@ -126,13 +140,23 @@ def literal_check(model_generated_answer: str, ground_truth: str) -> Union[bool,
     """
     Check if two strings are the same character by character
     """
-    model_remove = deepcopy(model_generated_answer).replace(",", " ").replace(" ", "").replace(" ", "")
-    gt_remove = deepcopy(ground_truth).replace(",", " ").replace(" ", "").replace(" ", "")
+    model_remove = (
+        deepcopy(model_generated_answer)
+        .replace(",", " ")
+        .replace(" ", "")
+        .replace(" ", "")
+    )
+    gt_remove = (
+        deepcopy(ground_truth).replace(",", " ").replace(" ", "").replace(" ", "")
+    )
 
     if model_remove == gt_remove:
         return True
 
-    if has_numbers(model_generated_answer) == False and has_numbers(ground_truth) == False:
+    if (
+        has_numbers(model_generated_answer) == False
+        and has_numbers(ground_truth) == False
+    ):
         model_generated_answer = model_remove.strip("[]() ")
         ground_truth = gt_remove.strip("[]() ")
         if model_generated_answer == ground_truth:
@@ -148,7 +172,9 @@ def number_check(model_generated_answer: str, ground_truth: str) -> None:
     if "," in model_generated_answer or "," in ground_truth:
         return None
 
-    model_generated_answer = remove_prefix_and_suffix(remove_equals(model_generated_answer))
+    model_generated_answer = remove_prefix_and_suffix(
+        remove_equals(model_generated_answer)
+    )
     ground_truth = remove_prefix_and_suffix(remove_equals(ground_truth))
 
     numerical_equal_result = numerical_equal(model_generated_answer, ground_truth)
@@ -163,7 +189,13 @@ def number_check(model_generated_answer: str, ground_truth: str) -> None:
     return None
 
 
-def latex_answer_check(model_output, gt_answer, split=None, extract_policy: str="flex", eval_policy: str="aggressive"):
+def latex_answer_check(
+    model_output,
+    gt_answer,
+    split=None,
+    extract_policy: str = "flex",
+    eval_policy: str = "aggressive",
+):
     assert gt_answer is not None
     assert len(gt_answer) > 0
 
@@ -172,7 +204,9 @@ def latex_answer_check(model_output, gt_answer, split=None, extract_policy: str=
 
     # Step 1: Extract answer from response
     if split is not None:
-        model_output = extract_answer(model_output, split, extract_policy = extract_policy)
+        model_output = extract_answer(
+            model_output, split, extract_policy=extract_policy
+        )
 
     if model_output is None or model_output == "":
         return False
@@ -186,7 +220,10 @@ def latex_answer_check(model_output, gt_answer, split=None, extract_policy: str=
     gt_norm = string_normalization(gt_answer)
     gt_norm_wo_boxes = remove_boxes_keep_content(gt_norm)
 
-    literal_check_result = literal_check(remove_prefix_and_suffix(model_ans_norm_wo_boxes), remove_prefix_and_suffix(gt_norm_wo_boxes))
+    literal_check_result = literal_check(
+        remove_prefix_and_suffix(model_ans_norm_wo_boxes),
+        remove_prefix_and_suffix(gt_norm_wo_boxes),
+    )
     if literal_check_result is not None:
         return literal_check_result
 
@@ -213,12 +250,19 @@ def latex_answer_check(model_output, gt_answer, split=None, extract_policy: str=
         # x \\leq -5 vs. x \\geq -5
         # (-\\infty, 5) vs. (5, +\\infty)
         # TODO: We may have better methods to check if the numbers are simple enough
-        if len(model_ans_num_lst) == 1 and len(gt_num_lst) == 1 and \
-            not has_structure(model_output.replace(model_ans_num_lst[0], "")) and \
-            not has_structure(gt_answer.replace(gt_num_lst[0], "")):
+        if (
+            len(model_ans_num_lst) == 1
+            and len(gt_num_lst) == 1
+            and not has_structure(model_output.replace(model_ans_num_lst[0], ""))
+            and not has_structure(gt_answer.replace(gt_num_lst[0], ""))
+        ):
 
-            model_num = remove_prefix_and_suffix(remove_boxes_keep_content(remove_text_box_only(model_ans_num_lst[0])))
-            gt_num = remove_prefix_and_suffix(remove_boxes_keep_content(remove_text_box_only(gt_num_lst[0])))
+            model_num = remove_prefix_and_suffix(
+                remove_boxes_keep_content(remove_text_box_only(model_ans_num_lst[0]))
+            )
+            gt_num = remove_prefix_and_suffix(
+                remove_boxes_keep_content(remove_text_box_only(gt_num_lst[0]))
+            )
             parse_result = number_check(model_num, gt_num)  #! problematic
 
             # As an additional method of judgment, even if it returns False we can't say that the answer is wrong, it could be caused by an unreasonable extraction of numbers
