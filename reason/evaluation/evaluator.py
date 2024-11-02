@@ -24,9 +24,12 @@ class Task:
     def __init__(self, task_name: str, is_few_shot: bool = False):
         self.task_name = task_name
         task_module = importlib.import_module(f"envs.{task_name}")
-        self.extract_answer = task_module.extract_answer
-        self.extract_groundtruth = task_module.extract_groundtruth
-        self.judge_correct = task_module.judge_correct
+        if task_name == "MATH" or "rstar":
+            self.extract_answer = task_module.extract_answer
+            self.extract_groundtruth = task_module.extract_groundtruth
+            self.judge_correct = task_module.judge_correct
+        else:
+            raise NotImplementedError(f"Task {task_name} is not supported")
 
         self._is_few_shot = is_few_shot
         self.env_fn = task_module.Env
