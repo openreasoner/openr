@@ -26,7 +26,7 @@ This script runs `OmegaPRM` on multiple GPUs, with each GPU handling a different
 
 ```bash
 CUDA_VISIBLE_DEVICES=0 python run_omegaprm.py \
-    --question_file extracted_problems_and_answers.json \
+    --question_file ../extracted_problems_and_answers.json \
     --output_dir output_results \
     --model_name "Your model name or path " \
     --device "cuda" \
