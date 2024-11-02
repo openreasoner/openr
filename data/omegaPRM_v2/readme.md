@@ -19,3 +19,26 @@ This script runs `OmegaPRM` on multiple GPUs, with each GPU handling a different
    run_omegaprm_multi_gpu.sh
     ```
    Results are saved in `output_results`.
+
+## Run on a Single GPU
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python run_omegaprm.py \
+    --question_file extracted_problems_and_answers.json \
+    --output_dir output_results \
+    --model_name "Your model name or path " \
+    --device "cuda" \
+    --max_new_tokens 2048 \
+    --temperature 0.7 \
+    --top_k 30 \
+    --top_p 0.9 \
+    --c_puct 0.125 \
+    --alpha 0.5 \
+    --beta 0.9 \
+    --length_scale 500 \
+    --num_rollouts 16 \
+    --max_search_count 20 \
+    --rollout_budget 200 \
+    --log_file_prefix "log/omega_prm_single_gpu"
+
+```
