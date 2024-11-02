@@ -52,7 +52,7 @@ if __name__ == "__main__":
     # LM gen config
     parser.add_argument("--temperature", type=float, default=0.0)
     parser.add_argument("--top_k", type=int, default=-1)
-    parser.add_argument("--top_p", type=int, default=1)
+    parser.add_argument("--top_p", type=float, default=1)
     parser.add_argument("--max_new_tokens", type=int, default=256)
     # Tree construction config
     parser.add_argument("--tree_max_depth", type=int, default=None)
@@ -147,7 +147,9 @@ if __name__ == "__main__":
         )
         res_q = actor_pool.map_unordered(
             lambda p, x: p.evaluate_problem.remote(x, solver_fn), test_ds
-        )
+        )       # Distributes tasks from the test_ds dataset across the worker pool asynchronously and
+                # collects results in any order as they complete. Every worker has a new searching tree as we reset the
+                # tree in solver_fn
         for i, (problem_inst, result, output) in enumerate(
             tqdm(res_q, total=len(test_ds))
         ):
@@ -207,6 +209,16 @@ if __name__ == "__main__":
             num_path=config.num_sequence,
         )
         solver_fn = partial(vanila_mcts, method_config, gen_config)
+    elif config.method == "rstar_mcts":
+        method_config = VanilaMCTSConfig(
+            task_name=config.task_name,
+            tree_max_depth=config.tree_max_depth,
+            tree_max_width=config.tree_max_width,
+            select_by_prior=False,
+            num_path=config.num_sequence,
+        )
+        solver_fn = partial(rstar_mcts, method_config, gen_config)
+
     else:
         raise ValueError(f"Unknown method: {config.method}")
     cfg_dict_record["method"] = config.method

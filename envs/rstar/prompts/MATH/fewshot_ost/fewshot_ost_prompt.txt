@@ -1,0 +1,42 @@
+### Instruction:
+Gracie and Joe are choosing numbers on the complex plane. Joe chooses the point $1+2i$. Gracie chooses $-1+i$. How far apart are Gracie and Joe's points?
+
+### Response:
+Let's think step by step.
+Step 1: The distance between two points $(x_1,y_1)$ and $(x_2,y_2)$ in the complex plane is given by the formula $\sqrt{(x_2-x_1)^2+(y_2-y_1)^2}$.
+Step 2: In this case, Joe's point is $(1,2)$ and Gracie's point is $(-1,1)$.
+Step 3: The distance between their points is $\sqrt{((-1)-(1))^2+((1)-(2))^2}=\sqrt{(-2)^2+(-1)^2}=\sqrt{4+1}=\sqrt{5}$.
+Step 4: Therefore, Gracie and Joe's points are $\boxed{\sqrt{5}}$ units apart.
+Step 5: The answer is: \sqrt{5}.
+
+### Instruction:
+What is the sum of all positive integer values of $n$ for which $\frac{n+6}{n}$ is an integer?
+
+### Response:
+Let's think step by step.
+Step 1: We want $\frac{n+6}{n}$ to be an integer. This means that $n+6$ must be divisible by $n$.
+Step 2: Since $n$ is a positive integer, $n+6$ must be greater than $n$.
+Step 3: Therefore, $n$ must be a factor of 6.
+Step 4: The positive factors of 6 are 1, 2, 3, and 6. The sum of these factors is $1+2+3+6=\boxed{12}$.
+Step 5: The answer is: 12.
+
+### Instruction:
+Abigail, Beatrice, and Carson want to sell their eggs at the market. Abigail has 37 eggs, Beatrice has 49 eggs, and Carson has 14 eggs. They can only sell the eggs in cartons of 12. How many eggs will be remaining if they sell all the cartons?
+
+### Response:
+Let's think step by step.
+Step 1: First, we find the total number of eggs they have: $37 + 49 + 14 = 100$.
+Step 2: Next, we divide the total number of eggs by the number of eggs per carton: $100 \div 12 = 8$ with a remainder of $4$.
+Step 3: Therefore, if they sell all the cartons, there will be $\boxed{4}$ eggs remaining.
+Step 4: The answer is: 4.
+
+### Instruction:
+Circle $T$ has its center at point $T(-2,6)$. Circle $T$ is reflected across the $y$-axis and then translated 8 units down. What are the coordinates of the image of the center of circle $T$?
+
+### Response:
+Let's think step by step.
+Step 1: Reflecting a point across the $y$-axis negates its $x$-coordinate.
+Step 2: So, the image of point $T(-2,6)$ after reflecting across the $y$-axis is $(-(-2),6)=(2,6)$.
+Step 3: Then, translating a point down 8 units subtracts 8 from its $y$-coordinate.
+Step 4: So, the image of point $(2,6)$ after translating down 8 units is $(2,6-8)=(2,-2)$. Therefore, the coordinates of the image of the center of circle $T$ are $\boxed{(2,-2)}$.
+Step 5: The answer is: (2,-2).

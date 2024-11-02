@@ -1,0 +1,10 @@
+{
+    "prompt_template": "{examples}\n\nQ: {instruction}\nA: Let's think step by step. ",
+    "stop_tokens": [
+        "Q:",
+        "A:",
+        "Q: ",
+        "A: "
+    ],
+    "answer_marker": "The answer is "
+}
