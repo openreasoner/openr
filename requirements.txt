@@ -28,7 +28,7 @@ timeout-decorator
 flash_attn
 python_dateutil
 tensorboardX
-sklearn
+scikit-learn
 # for rstar
 pyparsing
 fuzzywuzzy
