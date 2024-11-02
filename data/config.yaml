@@ -6,9 +6,9 @@ output:
   log_file_path: 'processing_log.log'
 
 processing:
-  initial_rollouts: 10
-  num_rollouts: 5
-  max_iterations: 20
+  initial_rollouts: 20
+  num_rollouts: 20
+  max_iterations: 100
 
 model:
   # supported model_types: "hf", "openai", "anthropic"
