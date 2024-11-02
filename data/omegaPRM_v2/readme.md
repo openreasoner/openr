@@ -13,12 +13,14 @@ This script runs `OmegaPRM` on multiple GPUs, with each GPU handling a different
    ```
    
 2. **Run the Script**
-
+   
    Use `run_omegaprm_multi_gpu.sh` to start processing with OmegaPRM on each GPU:
     ``` bash
    run_omegaprm_multi_gpu.sh
     ```
    Results are saved in `output_results`.
+   
+   **Note**: Make sure to set the correct values for parameters in the script, such as MODEL_NAME (path to the model), MAX_NEW_TOKENS, and other hyperparameters according to your needs.
 
 ## Run on a Single GPU
 
