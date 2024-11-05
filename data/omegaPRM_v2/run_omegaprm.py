@@ -35,9 +35,11 @@ def should_process_question(question: Dict[str, str], llm: LanguageModel) -> boo
     has_correct = False
     has_incorrect = False
 
-    for _ in tqdm(range(32)):
-        response = llm.generate_rollout(prompt)
-        if llm.evaluate_correctness(response, correct_answer):
+    initial_batch_answers = llm.generate_rollout(prompt, 32)
+
+    for answer in initial_batch_answers:
+
+        if llm.evaluate_correctness(answer, correct_answer):
             has_correct = True
         else:
             has_incorrect = True
@@ -139,6 +141,8 @@ if __name__ == "__main__":
                         help="Number of rollouts for Monte Carlo estimation in OmegaPRM")
     parser.add_argument("--max_search_count", type=int, default=20, help="Max search count in OmegaPRM")
     parser.add_argument("--rollout_budget", type=int, default=200, help="Rollout budget for OmegaPRM")
+    parser.add_argument("--save_data_tree", type=bool, default=True, help="Save data in tree structure for OmegaPRM")
+
 
     args = parser.parse_args()
     main(args)

@@ -1,7 +1,7 @@
 import os
 import threading
 from transformers import pipeline
-
+from typing import List
 # Set the environment variable for the endpoint
 os.environ['HF_ENDPOINT'] = 'https://hf-mirror.com'
 
@@ -49,27 +49,47 @@ class LLMService:
                 )
                 print("Model loaded successfully.")
 
-    def generate_response(self, prompt: str) -> str:
+    def generate_response(self, prompt: str, num_copies: int = 2) -> List[str]:
         """
-        Generate a response from the model based on the provided prompt.
+        Generate responses from the model based on the provided prompt, duplicated to form a batch.
 
         Parameters:
-        - prompt (str): The input prompt to generate a response for.
+        - prompt (str): The input prompt to generate responses for.
+        - num_copies (int): The number of copies of the prompt to create for batch processing (default is 16).
 
         Returns:
-        - str: The generated response from the model.
+        - List[str]: A list of generated responses, each corresponding to a duplicate of the input prompt.
         """
         if self.pipe is None:
             raise ValueError("LLM service not started. Please call start_service() first.")
 
-        # Generate response from the model
-        messages = [{"role": "user", "content": prompt}]
-        response_message = self.pipe(
-            messages,
+        # Create a batch of the same prompt
+        prompts = [prompt] * num_copies
+
+        # Generate responses from the model
+        responses = self.pipe(
+            prompts,
             max_new_tokens=self.max_new_tokens,
+            batch_size=num_copies,
             do_sample=True,
             temperature=self.temperature,
             top_k=self.top_k,
-            top_p=self.top_p
-        )[0]["generated_text"]
-        return response_message
+            top_p=self.top_p,
+            return_full_text=False
+        )
+        response_message_batch = [result[0]["generated_text"] for result in responses]
+
+        # Extract and return the generated text for each response
+        return response_message_batch
+
+
+if __name__ == "__main__":
+    # Initialize the service
+    llm_service = LLMService()
+    llm_service.start_service()
+
+    prompt = "What is game theory?"
+    responses = llm_service.generate_response(prompt)
+
+    print(responses)
+

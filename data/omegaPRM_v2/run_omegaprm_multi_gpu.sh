@@ -14,6 +14,7 @@ LENGTH_SCALE=500
 NUM_ROLLOUTS=16
 MAX_SEARCH_COUNT=20
 ROLLOUT_BUDGET=200
+SAVE_DATA_TREE=True
 OUTPUT_DIR="output_results"
 
 # Split files directory
@@ -48,6 +49,7 @@ do
         --num_rollouts $NUM_ROLLOUTS \
         --max_search_count $MAX_SEARCH_COUNT \
         --rollout_budget $ROLLOUT_BUDGET \
+        --save_data_tree $SAVE_DATA_TREE
         --log_file_prefix $LOG_FILE_PREFIX &
 done
 

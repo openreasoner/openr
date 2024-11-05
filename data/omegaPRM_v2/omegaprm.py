@@ -58,7 +58,7 @@ class LanguageModel:
         )
         self.llm_service.start_service()
 
-    def generate_rollout(self, state_prefix: str) -> str:
+    def generate_rollout(self, state_prefix: str, num_copies) -> List[str]:
         """
         Combine the default prompt with the state prefix and generate a response.
 
@@ -69,8 +69,8 @@ class LanguageModel:
         - str: Generated response from LLM.
         """
         prompt = self.default_prompt + state_prefix
-        response = self.llm_service.generate_response(prompt)
-        return response[1]['content']  # Assuming the response format has ['role'] entries and 'assistant' response
+        batch_response = self.llm_service.generate_response(prompt, num_copies)
+        return batch_response # Assuming the response format has ['role'] entries and 'assistant' response
 
     def update_prompt(self, new_prompt: str):
         """
@@ -107,6 +107,7 @@ class State:
         self.Q: Dict[str, float] = {}  # Q(s, r): estimated value for each rollout
         self.R: List[str] = []  # Set of all rollouts from this state
         self.incorrect_rollouts: List[str] = []  # List of incorrect rollouts
+        self.children: List['State'] = []  # List of child states
 
     def add_rollout(self, rollout: str):
         self.R.append(rollout)
@@ -121,6 +122,33 @@ class State:
             return self.parent.get_full_solution() + '\n\n' + self.solution_prefix
         else:
             return self.solution_prefix
+
+    def get_new_text(self) -> str:
+        """
+        Return the new text added at this node compared to the parent.
+        """
+        if self.parent:
+            parent_text = self.parent.solution_prefix
+            new_text = self.solution_prefix[len(parent_text):].strip()
+            return new_text
+        else:
+            # Root node (the question)
+            return self.solution_prefix.strip()
+
+    def get_text_with_labels(self) -> Dict[str, Any]:
+        """
+        Return a nested dictionary where each node contains:
+        - 'text': The new text at this node.
+        - 'mc_value': The MC value at this node.
+        - 'children': A list of child nodes with the same structure.
+        """
+        data = {
+            'text': self.get_new_text(),
+            'mc_value': self.MC,
+            'children': [child.get_text_with_labels() for child in self.children]
+        }
+        return data
+
 
 # Define the Search Tree class
 class SearchTree:
@@ -199,7 +227,7 @@ class CandidatePool:
 # Define the OmegaPRM algorithm
 class OmegaPRM:
     def __init__(self, LM: LanguageModel,  c_puct: float, alpha: float, beta: float, L: int, k: int, N: int,
-                 rollout_budget: int):
+                 rollout_budget: int, save_data_tree: bool):
         """
         Initialize the OmegaPRM algorithm.
 
@@ -222,13 +250,16 @@ class OmegaPRM:
         self.k = k
         self.N = N
         self.rollout_budget = rollout_budget
+        self.save_data_tree = save_data_tree
 
         self.T = SearchTree()
         self.C = CandidatePool()
 
         self.n = 0
         self.total_rollouts = 0
-        self.collected_data = []
+
+
+
 
     def reset(self):
         """Reset internal state variables to prepare for a fresh run."""
@@ -270,13 +301,6 @@ class OmegaPRM:
                 print("No more candidates to explore. Terminating search.\n")
                 break
 
-            # Log the selected rollout
-            state_id = self.T.nodes.index(selected_state)
-            print(f"Selection Phase: Selected rollout from State ID {state_id}")
-            print(f"Selected Rollout:\n{selected_rollout}\n")
-
-            # Proceed to expansion phase with binary search
-
             self.expansion_phase_binary_search(selected_state, selected_rollout)
 
             # Maintenance Phase
@@ -285,8 +309,11 @@ class OmegaPRM:
             # Increment search count
             self.n += 1
 
-        self.collect_solution_prefixes()
-        return self.collected_data
+        if self.save_data_tree:
+            data = self.collect_tree_structure()
+        else:
+            data = self.collect_solution_prefixes()
+        return data
 
     def monte_carlo_estimation(self, state: State):
         """
@@ -296,13 +323,13 @@ class OmegaPRM:
         c = 0  # Correct rollouts count
         incorrect_rollouts = []
         correct_rollouts = []
-
-        for i in range(self.k):
+        batct_rollouts = self.LM.generate_rollout(state.solution_prefix, self.k)
+        for i, rollout in enumerate(batct_rollouts):
             # Increment number of total rollouts
             self.total_rollouts += 1
 
             # Generate rollout r_i
-            rollout = self.LM.generate_rollout(state.solution_prefix)
+
             state.add_rollout(rollout)
 
             # Evaluate correctness of final answer in rollout
@@ -391,9 +418,8 @@ class OmegaPRM:
         new_state.total_rollouts = 0
         new_state.correct_rollouts = 0
         self.T.add_state(new_state)
-        state_id_new = len(self.T.nodes) - 1
-        # print(f"Added Correct Rollout as State ID {state_id_new}:")
-        # print(f"Solution Prefix:\n{new_solution_prefix}\n")
+        parent_state.children.append(new_state)  # Add to parent's children
+
 
     def expansion_phase_binary_search(self, parent_state: State, rollout: str):
         """
@@ -425,15 +451,18 @@ class OmegaPRM:
             return
 
         mid = (left + right) // 2
-        # Create prefix solution up to mid
-        new_steps = steps[:mid + 1]
-        prefix_solution = (s_ast.solution_prefix + '\n\n' + separate_steps(new_steps, mode='join')).strip() if s_ast.solution_prefix else separate_steps(new_steps, mode='join').strip()
+        new_steps = steps[left:mid + 1]
+        if new_steps:
+            prefix_solution = s_ast.solution_prefix + '\n\n' + separate_steps(new_steps, mode='join')
+        else:
+            prefix_solution = s_ast.solution_prefix
         # Create new state s_new
-        s_new = State(solution_prefix=prefix_solution, parent=s_ast)
+        s_new = State(solution_prefix=prefix_solution.strip(), parent=s_ast)
         self.T.add_state(s_new)
-        state_id_new = len(self.T.nodes) - 1
-        # print(f"Creating State ID {state_id_new} with Prefix up to Step {mid + 1}:")
-        # print(f"Solution Prefix:\n{prefix_solution}\n")
+        s_ast.children.append(s_new)
+
+        # Perform Monte Carlo estimation for s_new
+        self.monte_carlo_estimation(s_new)
 
         # Perform Monte Carlo estimation for s_new
         self.monte_carlo_estimation(s_new)
@@ -441,11 +470,11 @@ class OmegaPRM:
         if s_new.MC == 0:
 
             # Found incorrect step; continue searching in the left half to find earlier incorrect steps
-            print(f"State ID {state_id_new} has MC == 0. Incorrect step found. Searching earlier steps.\n")
+
             self.binary_search_incorrect_step(s_ast, steps, left, mid - 1)
         else:
             # Steps up to mid are correct; continue searching in the right half
-            print(f"State ID {state_id_new} has MC == {s_new.MC:.2f}. Steps up to Step {mid + 1} are correct. Searching later steps.\n")
+
             self.binary_search_incorrect_step(s_new, steps, mid + 1, right)
 
     def maintenance_phase(self, state: State):
@@ -467,14 +496,38 @@ class OmegaPRM:
 
         # print("Maintenance Phase Completed.\n")
 
-    def collect_solution_prefixes(self):
+    def collect_solution_prefixes(self) -> List[Dict[str, Any]]:
         """
         Collect all solution prefixes and their corresponding MC values from the search tree.
+
+        Returns:
+            List[Dict[str, Any]]: A list of dictionaries containing solution prefixes and their MC values.
         """
+        collected_data = []
         for node in self.T.nodes:
             solution_prefix = node.solution_prefix
             mc_value = node.MC
-            self.collected_data.append({"solution_prefix": solution_prefix, "mc_value": mc_value})
+            collected_data.append({
+                "solution_prefix": solution_prefix,
+                "mc_value": mc_value
+            })
+        return collected_data
+
+    def collect_tree_structure(self) -> Dict[str, Any]:
+        """
+        Collect the tree structure starting from the root.
+
+        Returns:
+            Dict[str, Any]: A nested dictionary representing the tree structure.
+        """
+        if self.T.root:
+            tree_data = self.T.root.get_text_with_labels()
+            return tree_data
+        return {}
+
+
+
+
 
 
 # Example usage
@@ -487,8 +540,8 @@ if __name__ == "__main__":
     )
 
     # Define the question and expected answer
-    question = "I have 5 marbles numbered 1 through 5 in a bag.  Suppose I take out two different marbles at random.  What is the expected value of the sum of the numbers on the marbles?"
-    expected_answer = "6"
+    question = "Melinda will roll two standard six-sided dice and make a two-digit number with the two numbers she rolls. For example, if she rolls a 6 and a 3, she can either form 36 or 63. What is the probability that she will be able to make an integer between 10 and 20, inclusive? Express your answer as a common fraction."
+    expected_answer =  "\\frac{11}{36}"
 
     # Initialize OmegaPRM with parameters
     omega_prm = OmegaPRM(
@@ -500,6 +553,7 @@ if __name__ == "__main__":
         k=16,
         N=10,
         rollout_budget=100,
+        save_data_tree=True,
     )
 
     # Run the OmegaPRM algorithm
@@ -509,15 +563,4 @@ if __name__ == "__main__":
     with open("collected_solutions2.json", "w") as f:
         json.dump(collected_data, f, indent=4)
 
-    # Print the collected states and their Monte Carlo estimations
-    print("\nFinal Collected States:")
-    for idx, state in enumerate(search_tree.nodes):
-        print(f"State {idx}:")
-        print(f"Solution Prefix:\n{state.solution_prefix}")
-        print(f"MC: {state.MC}, N: {state.N}, Total Rollouts: {state.total_rollouts}, Correct Rollouts: {state.correct_rollouts}\n")
 
-    # Print collected solutions with MC values
-    print("\nCollected Solution Prefixes and MC Values:")
-    for solution in omega_prm.collected_data:
-        print(f"Solution Prefix: {solution['solution_prefix']}")
-        print(f"MC Value: {solution['mc_value']}\n")
