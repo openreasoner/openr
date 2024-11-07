@@ -29,7 +29,6 @@ class LLMService:
         - temperature (float): Sampling temperature for response generation.
         - top_k (int): Top-K sampling parameter for response diversity.
         - top_p (float): Top-P sampling parameter for response diversity.
-         - model_type (str): Model type, either "hf" for Hugging Face or "vllm" for vLLM.
         """
         self.model_name = model_name
         self.device = device
@@ -137,5 +136,13 @@ class LLMService:
         return [response.outputs[0].text for response in responses]
 
 
+if __name__ == "__main__":
+    # Initialize the service for vLLM
+    llm_service = LLMService(model_type="vllm")
+    llm_service.start_service()
 
+    prompt = "What is game theory?"
+    responses = llm_service.generate_response(prompt, num_copies=3)
+
+    print(responses)
 

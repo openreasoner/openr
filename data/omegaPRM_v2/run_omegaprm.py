@@ -90,7 +90,8 @@ def main(args):
         max_new_tokens=args.max_new_tokens,
         temperature=args.temperature,
         top_k=args.top_k,
-        top_p=args.top_p
+        top_p=args.top_p,
+        model_type=args.model_type
     )
 
     omega_prm = OmegaPRM(
@@ -101,7 +102,8 @@ def main(args):
         L=args.length_scale,
         k=args.num_rollouts,
         N=args.max_search_count,
-        rollout_budget=args.rollout_budget
+        rollout_budget=args.rollout_budget,
+        save_data_tree=args.save_data_tree,
     )
 
     processed_count = 0  # Counter for processed questions
