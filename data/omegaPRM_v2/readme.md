@@ -47,6 +47,7 @@ CUDA_VISIBLE_DEVICES=0 python run_omegaprm.py \
     --num_rollouts 16 \
     --max_search_count 20 \
     --rollout_budget 200 \
+    --save_data_tree True\
     --log_file_prefix "log/omega_prm_single_gpu"
 
 ```
