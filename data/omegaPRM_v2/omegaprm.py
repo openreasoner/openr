@@ -32,7 +32,7 @@ def check_correctness(generated_response: str, expected_answer: str) -> bool:
 
 class LanguageModel:
     def __init__(self, model_name="/root/.cache/modelscope/hub/Qwen/Qwen2___5-Math-7B-Instruct",
-                 device="cuda", max_new_tokens=512, temperature=0.7, top_k=30, top_p=0.9):
+                 device="cuda", max_new_tokens=512, temperature=0.7, top_k=30, top_p=0.9, model_type="vllm"):
         """
         Initialize the LanguageModel with parameters for the LLM service.
 
@@ -50,7 +50,8 @@ class LanguageModel:
             max_new_tokens=max_new_tokens,
             temperature=temperature,
             top_k=top_k,
-            top_p=top_p
+            top_p=top_p,
+            model_type=model_type
         )
         self.default_prompt = (
             "Please complete the answer for the question based on the given steps without generating existing steps again, "
@@ -536,7 +537,8 @@ if __name__ == "__main__":
     LM = LanguageModel(
 
         device="cuda",
-        max_new_tokens=2048
+        max_new_tokens=2048,
+        model_type="vllm"
     )
 
     # Define the question and expected answer

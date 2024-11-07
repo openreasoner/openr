@@ -29,6 +29,7 @@ CUDA_VISIBLE_DEVICES=0 python run_omegaprm.py \
     --question_file ../extracted_problems_and_answers.json \
     --output_dir output_results \
     --model_name "Your model name or path " \
+    --model_type $MODEL_TYPE \
     --device "cuda" \
     --max_new_tokens 2048 \
     --temperature 0.7 \

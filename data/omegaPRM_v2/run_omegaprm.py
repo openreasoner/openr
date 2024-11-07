@@ -131,6 +131,8 @@ if __name__ == "__main__":
     parser.add_argument("--temperature", type=float, default=0.7, help="Sampling temperature for LLM generation")
     parser.add_argument("--top_k", type=int, default=30, help="Top-K sampling for LLM generation")
     parser.add_argument("--top_p", type=float, default=0.9, help="Top-P sampling for LLM generation")
+    parser.add_argument("--model_type", type=str, default="hf",
+                        help="Model backend to use ('hf' for Hugging Face or 'vllm')")
 
     # OmegaPRM parameters with provided defaults
     parser.add_argument("--c_puct", type=float, default=0.125, help="Exploration constant for OmegaPRM")

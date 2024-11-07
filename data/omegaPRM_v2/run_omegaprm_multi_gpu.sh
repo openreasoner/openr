@@ -2,6 +2,7 @@
 
 # Set the model and other parameters
 MODEL_NAME="/root/.cache/modelscope/hub/Qwen/Qwen2___5-Math-7B-Instruct"
+MODEL_TYPE="hf"  # Set to "vllm" for vLLM or "hf" for Hugging Face
 DEVICE="cuda"
 MAX_NEW_TOKENS=2048
 TEMPERATURE=0.7
@@ -37,6 +38,7 @@ do
         --question_file $SPLIT_FILE \
         --output_dir $OUTPUT_FILE \
         --model_name $MODEL_NAME \
+        --model_type $MODEL_TYPE \
         --device $DEVICE \
         --max_new_tokens $MAX_NEW_TOKENS \
         --temperature $TEMPERATURE \
@@ -49,7 +51,7 @@ do
         --num_rollouts $NUM_ROLLOUTS \
         --max_search_count $MAX_SEARCH_COUNT \
         --rollout_budget $ROLLOUT_BUDGET \
-        --save_data_tree $SAVE_DATA_TREE
+        --save_data_tree $SAVE_DATA_TREE \
         --log_file_prefix $LOG_FILE_PREFIX &
 done
 
