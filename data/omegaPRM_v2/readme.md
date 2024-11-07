@@ -26,7 +26,7 @@ This script runs `OmegaPRM` on multiple GPUs, with each GPU handling a different
 
         -`MODEL_TYPE`: Set to "hf" for Hugging Face or "vllm" for vLLM support.
    
-        -`Other parameters` like MAX_NEW_TOKENS, TEMPERATURE, TOP_K, and other hyperparameters according to your needs.
+        -`Other parameters` like `MAX_NEW_TOKENS`, `TEMPERATURE`, `TOP_K`, and other hyperparameters according to your needs.
 ## Run on a Single GPU
 
 ```bash
