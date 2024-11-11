@@ -8,6 +8,8 @@ from omegaprm import LanguageModel, OmegaPRM
 
 DS_NAME = "math-aps-v2"
 
+logger: logging.Logger
+
 
 # Set up logging based on provided log file prefix
 def setup_logging(log_file_prefix: str):
