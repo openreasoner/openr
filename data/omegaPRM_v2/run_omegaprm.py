@@ -67,21 +67,22 @@ def process_question(omega_prm: OmegaPRM, question: Dict[str, str]):
 
 
 # Save collected data for each question
-def save_question_data(collected_data: Dict, index: int, output_dir: str):
-    os.makedirs(output_dir, exist_ok=True)  # Ensure the output directory exists
-    filename = os.path.join(output_dir, f"question_{index}.json")
-    with open(filename, 'w') as f:
+def save_question_data(collected_data: Dict, index: int, output_path: str):
+    with open(output_path, 'w') as f:
         json.dump(collected_data, f, indent=4)
-    logger.info(f"Saved processed data to {filename}")
+    logger.info(f"Saved processed data to {output_path}")
 
 
 def main(args):
     global logger
     logger = setup_logging(args.log_file_prefix)
 
+    os.makedirs(args.output_dir, exist_ok=True)
+    output_file = os.path.join(args.output_dir, f"{DS_NAME}.jsonl")
+
     logger.info("Starting OmegaPRM processing")
     logger.info(f"Using model: {args.model_name} on device: {args.device}")
-    logger.info(f"Output directory: {args.output_dir}")
+    logger.info(f"Output file: {output_file}")
     logger.info(f"Question file: {args.question_file}")
 
     questions = load_questions(args.question_file)
@@ -113,7 +114,7 @@ def main(args):
     for idx, question in enumerate(questions):
         if should_process_question(question, llm):
             collected_data = process_question(omega_prm, question)
-            save_question_data(collected_data, idx, args.output_dir)
+            save_question_data(collected_data, idx, output_file)
             processed_count += 1
         else:
             logger.info(f"Skipping question: {question['problem']}")
