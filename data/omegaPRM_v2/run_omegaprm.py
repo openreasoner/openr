@@ -6,6 +6,8 @@ from omegaprm import OmegaPRM, LanguageModel
 from tqdm import tqdm
 from typing import Dict
 
+DS_NAME = "math-aps-v2"
+
 
 # Set up logging based on provided log file prefix
 def setup_logging(log_file_prefix: str):
@@ -124,7 +126,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Run OmegaPRM on filtered questions")
 
     parser.add_argument("--question_file", type=str, required=True, help="Path to the questions JSON file")
-    parser.add_argument("--output_dir", type=str, default="output", help="Directory to save output JSON files")
+    parser.add_argument("--output_dir", type=str, default="output", help=f"Directory to save the output file {DS_NAME}.jsonl")
     parser.add_argument("--log_file_prefix", type=str, default="omega_prm", help="Prefix for the log files")
     parser.add_argument("--model_name", type=str, default="/root/.cache/modelscope/hub/Qwen/Qwen2___5-Math-7B-Instruct",
                         help="Model name or path for the language model")
