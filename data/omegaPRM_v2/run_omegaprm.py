@@ -68,9 +68,11 @@ def process_question(omega_prm: OmegaPRM, question: Dict[str, str]):
 
 # Save collected data for each question
 def save_question_data(collected_data: Dict, index: int, output_path: str):
-    with open(output_path, 'w') as f:
-        json.dump(collected_data, f, indent=4)
-    logger.info(f"Saved processed data to {output_path}")
+    collected_data["question_id"] = index
+    with open(output_path, "a") as fd:
+        line = json.dumps(collected_data)
+        fd.write(f"{line}\n")
+    logger.info(f"Question {index} is saved to {output_path}")
 
 
 def main(args):
