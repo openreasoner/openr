@@ -79,6 +79,9 @@ def main(args):
 
     os.makedirs(args.output_dir, exist_ok=True)
     output_file = os.path.join(args.output_dir, f"{DS_NAME}.jsonl")
+    # ensure output_file is empty since we are appending to it later
+    with open(output_file, "w") as fd:
+        fd.write("")
 
     logger.info("Starting OmegaPRM processing")
     logger.info(f"Using model: {args.model_name} on device: {args.device}")
