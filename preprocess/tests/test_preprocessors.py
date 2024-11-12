@@ -9,28 +9,28 @@ from tests.test_data_types import (
     example_prm800k_path,
 )
 
-STEP_TAG = 'च'
+STEP_TAG = "च"
 
 
 def test_prm800k_preprocessor(example_prm800k_path: Path) -> None:
-  runner = PRM800KPreprocessor(example_prm800k_path, STEP_TAG)
-  runner.convert()
+    runner = PRM800KPreprocessor(example_prm800k_path, STEP_TAG)
+    runner.convert()
 
-  assert runner.converted_items is not None
-  assert len(runner.converted_items) > 0
+    assert runner.converted_items is not None
+    assert len(runner.converted_items) > 0
 
 
 def test_math_aps_preprocessor(example_math_aps_path: Path) -> None:
-  runner = MathAPSPreprocessor(example_math_aps_path, STEP_TAG)
-  runner.convert()
+    runner = MathAPSPreprocessor(example_math_aps_path, STEP_TAG)
+    runner.convert()
 
-  assert runner.converted_items is not None
-  assert len(runner.converted_items) > 0
+    assert runner.converted_items is not None
+    assert len(runner.converted_items) > 0
 
 
 def test_math_shepherd_preprocessor(example_math_shepherd_path: Path) -> None:
-  runner = MathShepherdPreprocessor(example_math_shepherd_path, STEP_TAG)
-  runner.convert()
+    runner = MathShepherdPreprocessor(example_math_shepherd_path, STEP_TAG)
+    runner.convert()
 
-  assert runner.converted_items is not None
-  assert len(runner.converted_items) > 0
+    assert runner.converted_items is not None
+    assert len(runner.converted_items) > 0
