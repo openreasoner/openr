@@ -56,7 +56,7 @@ def convert_math_aps_item(
         return ConvertedItem(
             question=question,
             process=f"{mathaps_state.state} {step_tag}",
-            label=["+" if mathaps_state.mcs > 0.5 else "-"],
+            label=[label_from_mc_value(mathaps_state.mcs, 0.5)],
         )
 
     def filter_item(mathaps_state: State) -> bool:
@@ -73,9 +73,10 @@ def convert_math_aps_item(
 
 def recover_rollouts_from_tree_node(
     node: ReasoningNode, step_tag: str
-) -> list[tuple[str, list[float]]]:
+) -> list[tuple[str, list[str]]]:
+    label=label_from_mc_value(node.mc_value,0.5)
     if len(node.children) == 0:  # leaf
-        return [(f"{node.text} {step_tag}", [node.mc_value])]
+        return [(f"{node.text} {step_tag}", [label])]
     else:
         cur_step = node.text
         res = []
@@ -83,10 +84,15 @@ def recover_rollouts_from_tree_node(
         for child in node.children:
             for future_rollout in recover_rollouts_from_tree_node(child, step_tag):
                 future_steps, future_vals = future_rollout
-                future_vals.insert(0, node.mc_value)
+                future_vals.insert(0, label)
                 res.append((f"{cur_step} {step_tag} {future_steps}", future_vals))
 
         return res
+
+
+def label_from_mc_value(mc_value: float, threshold: float = 0.5) -> str:
+    """If `mc_value` > `threshold` returns `+` otherwise `-`."""
+    return "+" if mc_value > threshold else "-"
 
 
 # Sifters for cleaning Math-APS data

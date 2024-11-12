@@ -51,7 +51,7 @@ def example_reasoning_node() -> ReasoningNode:
                 "text": "s1-0",
                 "mc_value": 0.1,
                 "children": [
-                    {"text": "s2-0", "mc_value": 0.2, "children": []},
+                    {"text": "s2-0", "mc_value": 0.92, "children": []},
                     {
                         "text": "s2-1",
                         "mc_value": 0.21,
@@ -61,8 +61,8 @@ def example_reasoning_node() -> ReasoningNode:
             },
             {
                 "text": "s1-1",
-                "mc_value": 0.11,
-                "children": [{"text": "s2-0", "mc_value": 0.2, "children": []}],
+                "mc_value": 0.99,
+                "children": [{"text": "s2-0", "mc_value": 0.9, "children": []}],
             },
         ],
     }
@@ -74,9 +74,10 @@ def test_recover_rollouts_from_tree_node(example_reasoning_node: ReasoningNode) 
 
     assert len(rollouts) == 3
 
-    reasonings = set(map(lambda x: x[0], rollouts))
-    assert reasonings == {
+    reasonings, labels = zip(*rollouts)
+    assert set(reasonings) == {
         f"s0 {STEP_TAG} s1-0 {STEP_TAG} s2-0 {STEP_TAG}",
         f"s0 {STEP_TAG} s1-0 {STEP_TAG} s2-1 {STEP_TAG} s3-0 {STEP_TAG}",
         f"s0 {STEP_TAG} s1-1 {STEP_TAG} s2-0 {STEP_TAG}",
     }
+    assert list(labels) == [["-", "-", "+"], ["-", "-", "-", "-"], ["-", "+", "+"]]
