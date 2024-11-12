@@ -71,10 +71,9 @@ class TreeSearchConfig(BasicConfig):
     init_critic_value: bool = True
 
     def __post_init__(self):
-        assert self.tree_max_width > 0, \
-            "Tree width must be greater than 0"
-        assert self.tree_max_depth > 0, \
-            "Tree depth must be greater than 0"
+        assert self.tree_max_width > 0, "Tree width must be greater than 0"
+        assert self.tree_max_depth > 0, "Tree depth must be greater than 0"
+
 
 @dataclass
 class BeamSearchConfig(TreeSearchConfig):
@@ -82,10 +81,9 @@ class BeamSearchConfig(TreeSearchConfig):
 
     def __post_init__(self):
         super().__post_init__()
-        assert self.beam_size > 0, \
-            "Beam size must be greater than 0"
-        assert self.init_critic_value, \
-            "BeamSearch should set init_critic_value to True"
+        assert self.beam_size > 0, "Beam size must be greater than 0"
+        assert self.init_critic_value, "BeamSearch should set init_critic_value to True"
+
 
 def beam_search(
     config: BeamSearchConfig,
@@ -128,33 +126,37 @@ def beam_search(
         tree_completion_tokens=[t["tree_completion_tokens"] for t in traj_list],
     )
 
+
 @dataclass
 class MCTSBaseConfig(TreeSearchConfig):
     # PUCT hparams
     pb_c_base: float = 19652
     pb_c_init: float = 1.25
 
+
 @dataclass
 class VanilaMCTSConfig(MCTSBaseConfig):
     # rollout step strategy, if `select_by_prior` is False,
     #  then select by the initial critic value
     # otherwise, random choice by the prior probability
-    select_by_prior: bool = False 
+    select_by_prior: bool = False
     num_path: int = 1
-    
+
     def __post_init__(self):
         super().__post_init__()
         if not self.select_by_prior:
-            assert self.init_critic_value, \
-                "VanilaMCTS with greedy as rollout method should set init_critic_value to True"
+            assert (
+                self.init_critic_value
+            ), "VanilaMCTS with greedy as rollout method should set init_critic_value to True"
         assert self.num_path > 0
+
 
 def vanila_mcts(
     config: VanilaMCTSConfig,
     gen_config: LMCallingConfig,
     problem_inst: Dict[str, str],
     lm_call: LanguageModelCallingFunction,
-    rm_call: RewardModelCallingFunction
+    rm_call: RewardModelCallingFunction,
 ):
     task = Task(task_name=config.task_name)
     env = task.env_fn(
@@ -190,7 +192,7 @@ def vanila_mcts(
         simulate_env=env,
         num_path=config.num_path,
         reward_model_fn=rm_call_fn,
-        select_by_prior=config.select_by_prior
+        select_by_prior=config.select_by_prior,
     )
     return TreeSearchSolutionOutput(
         solutions=[t["text"] for t in traj_list],
@@ -210,16 +212,18 @@ class RStarMCTSConfig(MCTSBaseConfig):
     def __post_init__(self):
         super().__post_init__()
         if not self.select_by_prior:
-            assert self.init_critic_value, \
-                "VanilaMCTS with greedy as rollout method should set init_critic_value to True"
+            assert (
+                self.init_critic_value
+            ), "VanilaMCTS with greedy as rollout method should set init_critic_value to True"
         assert self.num_path > 0
 
+
 def rstar_mcts(
-        config: RStarMCTSConfig,
-        gen_config: LMCallingConfig,
-        problem_inst: Dict[str, str],
-        lm_call: LanguageModelCallingFunction,
-        rm_call: RewardModelCallingFunction
+    config: RStarMCTSConfig,
+    gen_config: LMCallingConfig,
+    problem_inst: Dict[str, str],
+    lm_call: LanguageModelCallingFunction,
+    rm_call: RewardModelCallingFunction,
 ):
     task = Task(task_name=config.task_name)
     env = task.env_fn(
@@ -230,7 +234,7 @@ def rstar_mcts(
             "generation_config": {
                 "temperature": gen_config.temperature,
                 "top_p": gen_config.top_p,
-                "top_k": gen_config.top_k,      # this is fixed for each llm call
+                "top_k": gen_config.top_k,  # this is fixed for each llm call
             },
         },
         math_problems=[
@@ -254,7 +258,7 @@ def rstar_mcts(
         simulate_env=env,
         num_path=config.num_path,
         reward_model_fn=rm_call_fn,
-        select_by_prior=config.select_by_prior
+        select_by_prior=config.select_by_prior,
     )
     return TreeSearchSolutionOutput(
         solutions=[t["text"] for t in traj_list],

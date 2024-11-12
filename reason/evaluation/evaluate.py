@@ -39,8 +39,19 @@ def setup_seed(seed):
 if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("--LM", type=str, required=True)
+    parser.add_argument(
+        "--LM_addr",
+        type=str,
+        default="http://0.0.0.0:28778",
+        desc="locate which LM we use",
+    )
     parser.add_argument("--RM", type=str, default="dummy")
-    parser.add_argument("--controller_addr", type=str, default="http://0.0.0.0:28778")
+    parser.add_argument(
+        "--RM_addr",
+        type=str,
+        default="http://0.0.0.0:28778",
+        desc="locate which RM we use",
+    )
     # task config
     parser.add_argument("--task_name", type=str, default="gsm8k")
     parser.add_argument("--test", type=str2bool, default=True)
@@ -54,6 +65,10 @@ if __name__ == "__main__":
     parser.add_argument("--top_k", type=int, default=-1)
     parser.add_argument("--top_p", type=float, default=1)
     parser.add_argument("--max_new_tokens", type=int, default=256)
+    parser.add_argument("--step_str", type=str, default=None, desc="step str for LM")
+    parser.add_argument(
+        "--stop_str", type=str, nargs="+", desc="customized stopping str for LM"
+    )
     # Tree construction config
     parser.add_argument("--tree_max_depth", type=int, default=None)
     parser.add_argument("--tree_max_width", type=int, default=None)
@@ -77,16 +92,18 @@ if __name__ == "__main__":
     else:
         # assume qwen
         prm_step_tag = "\n\n\n\n\n "
+
     prm_format_str = "{question} {answer}"
 
-    if "qwen" in config.LM.lower():
-        lm_step_tag = "\n\n"
+    if config.step_str is not None:
+        lm_step_tag = config.step_str
     else:
-        lm_step_tag = "ки\n"
+        if "qwen" in config.LM.lower():
+            lm_step_tag = "\n\n"
+        else:
+            lm_step_tag = "ки\n"
 
-    llm_gen_fn = VLLMRemoteCaller(
-        config.LM, config.controller_addr, lm_step_tag=lm_step_tag
-    )
+    llm_gen_fn = VLLMRemoteCaller(config.LM, config.LM_addr, lm_step_tag=lm_step_tag)
     if config.RM == "dummy":
         rm_config = RewardModelBaseConfig(
             step_tag=prm_step_tag, format_str=prm_format_str
@@ -97,7 +114,7 @@ if __name__ == "__main__":
             step_tag=prm_step_tag,
             format_str=prm_format_str,
             model_name=config.RM,
-            controller_addr=config.controller_addr,
+            controller_addr=config.RM_addr,
         )
         rm_call = RMRemoteCaller(rm_config)
 
@@ -147,9 +164,9 @@ if __name__ == "__main__":
         )
         res_q = actor_pool.map_unordered(
             lambda p, x: p.evaluate_problem.remote(x, solver_fn), test_ds
-        )       # Distributes tasks from the test_ds dataset across the worker pool asynchronously and
-                # collects results in any order as they complete. Every worker has a new searching tree as we reset the
-                # tree in solver_fn
+        )  # Distributes tasks from the test_ds dataset across the worker pool asynchronously and
+        # collects results in any order as they complete. Every worker has a new searching tree as we reset the
+        # tree in solver_fn
         for i, (problem_inst, result, output) in enumerate(
             tqdm(res_q, total=len(test_ds))
         ):
@@ -181,6 +198,7 @@ if __name__ == "__main__":
         top_k=config.top_k,
         top_p=config.top_p,
         max_new_tokens=config.max_new_tokens,
+        stop_str=config.stop_str,
     )
     cfg_dict_record["gen_config"] = gen_config.__dict__
 

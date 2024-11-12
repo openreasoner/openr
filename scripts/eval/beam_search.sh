@@ -10,6 +10,7 @@ python reason/evaluation/evaluate.py \
     --save_dir debug \
     --method beam_search \
     --num_worker 32 \
-    --controller_addr http://0.0.0.0:28777
+    --LM_addr http://0.0.0.0:28777 \
+    --RM_addr http://0.0.0.0:28777
 
 # math-shepherd-mistral-7b-prm
