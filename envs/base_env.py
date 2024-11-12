@@ -165,6 +165,7 @@ class CoTEnv(BaseEnv):
                 try:
                     self._legal_actions, api_completion_token = self.update_legal_actions()
                     info["api_completion_token"] = api_completion_token
+                    break
                 except NoLegalActionException as e:
                     if cnt == 3:
                         terminated = True
