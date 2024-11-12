@@ -465,8 +465,6 @@ class OmegaPRM:
         # Perform Monte Carlo estimation for s_new
         self.monte_carlo_estimation(s_new)
 
-        # Perform Monte Carlo estimation for s_new
-        self.monte_carlo_estimation(s_new)
 
         if s_new.MC == 0:
 
