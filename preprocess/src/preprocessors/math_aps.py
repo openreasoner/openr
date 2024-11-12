@@ -6,7 +6,7 @@ from pathlib import Path
 from typing import Iterable
 
 from src.data_types import ConvertedItem
-from src.data_types.math_aps import MathAPSItem, State
+from src.data_types.math_aps import MathAPSItem, ReasoningNode, State
 from src.preprocessors.base import PreprocessorBase
 from src.preprocessors.utils import dump_converted_ds, read_math_aps_ds
 
@@ -69,6 +69,24 @@ def convert_math_aps_item(
     distinct_items = set(extracted_items)
 
     return list(distinct_items)
+
+
+def recover_rollouts_from_tree_node(
+    node: ReasoningNode, step_tag: str
+) -> list[tuple[str, list[float]]]:
+    if len(node.children) == 0:  # leaf
+        return [(f"{node.text} {step_tag}", [node.mc_value])]
+    else:
+        cur_step = node.text
+        res = []
+
+        for child in node.children:
+            for future_rollout in recover_rollouts_from_tree_node(child, step_tag):
+                future_steps, future_vals = future_rollout
+                future_vals.insert(0, node.mc_value)
+                res.append((f"{cur_step} {step_tag} {future_steps}", future_vals))
+
+        return res
 
 
 # Sifters for cleaning Math-APS data

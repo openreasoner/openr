@@ -1,6 +1,11 @@
 from pathlib import Path
 
-from src.preprocessors.math_aps import MathAPSPreprocessor
+import pytest
+from src.data_types.math_aps import ReasoningNode
+from src.preprocessors.math_aps import (
+    MathAPSPreprocessor,
+    recover_rollouts_from_tree_node,
+)
 from src.preprocessors.math_shepherd import MathShepherdPreprocessor
 from src.preprocessors.prm800k import PRM800KPreprocessor
 from tests.test_data_types import (
@@ -34,3 +39,44 @@ def test_math_shepherd_preprocessor(example_math_shepherd_path: Path) -> None:
 
     assert runner.converted_items is not None
     assert len(runner.converted_items) > 0
+
+
+@pytest.fixture
+def example_reasoning_node() -> ReasoningNode:
+    data = {
+        "text": "s0",
+        "mc_value": 0.0,
+        "children": [
+            {
+                "text": "s1-0",
+                "mc_value": 0.1,
+                "children": [
+                    {"text": "s2-0", "mc_value": 0.2, "children": []},
+                    {
+                        "text": "s2-1",
+                        "mc_value": 0.21,
+                        "children": [{"text": "s3-0", "mc_value": 0.3, "children": []}],
+                    },
+                ],
+            },
+            {
+                "text": "s1-1",
+                "mc_value": 0.11,
+                "children": [{"text": "s2-0", "mc_value": 0.2, "children": []}],
+            },
+        ],
+    }
+    return ReasoningNode.from_dict(data)
+
+
+def test_recover_rollouts_from_tree_node(example_reasoning_node: ReasoningNode) -> None:
+    rollouts = recover_rollouts_from_tree_node(example_reasoning_node, STEP_TAG)
+
+    assert len(rollouts) == 3
+
+    reasonings = set(map(lambda x: x[0], rollouts))
+    assert reasonings == {
+        f"s0 {STEP_TAG} s1-0 {STEP_TAG} s2-0 {STEP_TAG}",
+        f"s0 {STEP_TAG} s1-0 {STEP_TAG} s2-1 {STEP_TAG} s3-0 {STEP_TAG}",
+        f"s0 {STEP_TAG} s1-1 {STEP_TAG} s2-0 {STEP_TAG}",
+    }
