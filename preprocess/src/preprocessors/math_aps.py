@@ -6,7 +6,7 @@ from pathlib import Path
 from typing import Iterable
 
 from src.data_types import ConvertedItem
-from src.data_types.math_aps import MathAPSItem, ReasoningNode, State
+from src.data_types.math_aps import MathAPSItem, MathAPSItemV2Tree, ReasoningNode, State
 from src.preprocessors.base import PreprocessorBase
 from src.preprocessors.utils import dump_converted_ds, read_math_aps_ds
 
@@ -71,10 +71,30 @@ def convert_math_aps_item(
     return list(distinct_items)
 
 
+def convert_math_aps_v2_tree_item(
+    original_item: MathAPSItemV2Tree,
+    step_tag: str,
+) -> list[ConvertedItem]:
+    question = original_item.question
+    rollouts = recover_rollouts_from_tree_node(original_item.reasoning_steps, step_tag)
+
+    def filter_rollout(rollout: tuple[str, list[str]]) -> bool:
+        return not contain_non_ascii_text(rollout[0])
+
+    def extract_item(rollout: tuple[str, list[str]]) -> ConvertedItem:
+        process, labels = rollout
+        return ConvertedItem(question, process, labels)
+
+    extracted_items = map(extract_item, filter(filter_rollout, rollouts))
+    distinct_items = set(extracted_items)
+
+    return list(distinct_items)
+
+
 def recover_rollouts_from_tree_node(
     node: ReasoningNode, step_tag: str
 ) -> list[tuple[str, list[str]]]:
-    label=label_from_mc_value(node.mc_value,0.5)
+    label = label_from_mc_value(node.mc_value, 0.5)
     if len(node.children) == 0:  # leaf
         return [(f"{node.text} {step_tag}", [label])]
     else:
