@@ -3,7 +3,7 @@ from pathlib import Path
 from typing import NamedTuple
 
 from src.preprocessors.base import PreprocessorBase
-from src.preprocessors.math_aps import MathAPSPreprocessor
+from src.preprocessors.math_aps import MathAPSPreprocessor, MathAPSV2TreePreprocessor
 from src.preprocessors.math_shepherd import MathShepherdPreprocessor
 from src.preprocessors.prm800k import PRM800KPreprocessor
 
@@ -13,7 +13,7 @@ class Args(NamedTuple):
     Stores cli arguments.
 
     Attributes:
-      dataset_type: One of prm800k, math-aps, and math-shepherd
+      dataset_type: One of prm800k, math-aps, math-aps-tree, and math-shepherd
       file: Path to the original dataset
       step_tag: Step tag to be appended to each step
       suffix: Suffix to be appended to `file` for the output path
@@ -34,7 +34,7 @@ def parse_args() -> Args:
     parser.add_argument(
         "dataset_type",
         type=str,
-        help="Which dataset FILE is (prm800k, math-aps, or math-shepherd)",
+        help="Which dataset FILE is (prm800k, math-aps, math-aps-tree, or math-shepherd)",
     )
     parser.add_argument(
         "file",
@@ -82,6 +82,7 @@ def main(args: Args) -> None:
     runner = {
         "prm800k": PRM800KPreprocessor,
         "math-aps": MathAPSPreprocessor,
+        "math-aps-tree": MathAPSV2TreePreprocessor,
         "math-shepherd": MathShepherdPreprocessor,
     }[args.dataset_type](**runner_args)
     runner.convert()

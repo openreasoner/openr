@@ -115,7 +115,7 @@ def convert_math_aps_v2_tree_item(
     rollouts = recover_rollouts_from_tree_node(original_item.reasoning_steps, step_tag)
 
     def filter_rollout(rollout: tuple[str, list[str]]) -> bool:
-        return not contain_non_ascii_text(rollout[0])
+        return not contain_non_ascii_text(rollout[0])  # CAUTION: step_tag maybe non-ascii
 
     def extract_item(rollout: tuple[str, list[str]]) -> ConvertedItem:
         process, labels = rollout
