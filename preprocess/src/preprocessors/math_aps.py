@@ -8,7 +8,11 @@ from typing import Iterable
 from src.data_types import ConvertedItem
 from src.data_types.math_aps import MathAPSItem, MathAPSItemV2Tree, ReasoningNode, State
 from src.preprocessors.base import PreprocessorBase
-from src.preprocessors.utils import dump_converted_ds, read_math_aps_ds
+from src.preprocessors.utils import (
+    dump_converted_ds,
+    read_math_aps_ds,
+    read_math_aps_v2_tree_ds,
+)
 
 
 class MathAPSPreprocessor(PreprocessorBase):
@@ -69,6 +73,38 @@ def convert_math_aps_item(
     distinct_items = set(extracted_items)
 
     return list(distinct_items)
+
+
+class MathAPSV2TreePreprocessor(PreprocessorBase):
+    def __init__(
+        self, ds_path: str | Path, step_tag: str, suffix: str = "new", **kwargs
+    ) -> None:
+        del kwargs  # for compatibility with PRM800KPreprocessor
+        super().__init__(ds_path, step_tag, suffix)
+
+    def _read_ds(self) -> None:
+        self.original_items = read_math_aps_v2_tree_ds(self.ds_path)
+
+    def convert(self) -> None:
+        self._read_ds()
+        assert self.original_items is not None
+
+        convert_fn = ft.partial(convert_math_aps_v2_tree_item, step_tag=self.step_tag)
+        with mp.Pool(mp.cpu_count()) as p:
+            unflattened_items = p.map(convert_fn, self.original_items)
+
+        self.converted_items = list(
+            ft.reduce(
+                lambda res, items: res + items,  # type: ignore
+                unflattened_items,
+                [],
+            )
+        )
+
+    def dump(self) -> None:
+        assert self.converted_items is not None
+
+        dump_converted_ds(self.output_path, list(self.converted_items))
 
 
 def convert_math_aps_v2_tree_item(
