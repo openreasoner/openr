@@ -2,58 +2,57 @@ from dataclasses import dataclass
 from typing import Any
 
 from src.data_types.base import OriginalItemBase
-from src.data_types.utils import (
-    from_float,
-    from_int,
-    from_list,
-    from_str,
-    to_dict,
-    to_float,
-)
+from src.data_types.utils import (from_float, from_int, from_list, from_str,
+                                  to_dict, to_float)
 
 
 @dataclass
-class State:
-    rollout: str
-    state: str
-    mcs: float
+class ReasoningStep:
+    solution_prefix: str
+    mc_value: float
 
     @staticmethod
-    def from_dict(obj: Any) -> "State":
+    def from_dict(obj: Any) -> "ReasoningStep":
         assert isinstance(obj, dict)
 
-        rollout = from_str(obj.get("rollout"))
-        state = from_str(obj.get("state"))
-        mcs = from_float(obj.get("mcs"))
+        solution_prefix = from_str(obj.get("solution_prefix"))
+        mc_value = from_float(obj.get("mc_value"))
 
-        return State(rollout, state, mcs)
+        return ReasoningStep(solution_prefix, mc_value)
 
     def to_dict(self) -> dict:
         return dict(
-            rollout=from_str(self.rollout),
-            state=from_str(self.state),
-            mcs=to_float(self.mcs),
+            solution_prefix=from_str(self.solution_prefix),
+            mc_value=from_float(self.mc_value),
         )
 
 
 @dataclass
 class MathAPSItem(OriginalItemBase):
-    q: str
-    states: list[State]
+    question_id: int
+    question: str
+    final_answer: str
+    reasoning_steps: list[ReasoningStep]
 
     @staticmethod
     def from_dict(obj: Any) -> "MathAPSItem":
         assert isinstance(obj, dict)
 
-        q = from_str(obj.get("q"))
-        states = from_list(State.from_dict, obj.get("states"))
+        question_id = from_int(obj.get("question_id"))
+        question = from_str(obj.get("question"))
+        final_answer = from_str(obj.get("final_answer"))
+        reasoning_steps = from_list(ReasoningStep.from_dict, obj.get("reasoning_steps"))
 
-        return MathAPSItem(q, states)
+        return MathAPSItem(question_id, question, final_answer, reasoning_steps)
 
     def to_dict(self) -> dict:
         return dict(
-            q=from_str(self.q),
-            states=from_list(lambda x: to_dict(State, x), self.states),
+            question_id=from_int(self.question_id),
+            question=from_str(self.question),
+            final_answer=from_str(str(self.final_answer)),
+            reasoning_steps=from_list(
+                lambda x: to_dict(ReasoningStep, x), self.reasoning_steps
+            ),
         )
 
 
@@ -105,54 +104,4 @@ class MathAPSItemV2Tree(OriginalItemBase):
             question=from_str(self.question),
             final_answer=from_str(self.final_answer),
             reasoning_steps=to_dict(ReasoningNode, self.reasoning_steps),
-        )
-
-
-@dataclass
-class ReasoningStep:
-    solution_prefix: str
-    mc_value: float
-
-    @staticmethod
-    def from_dict(obj: Any) -> "ReasoningStep":
-        assert isinstance(obj, dict)
-
-        solution_prefix = from_str(obj.get("solution_prefix"))
-        mc_value = from_float(obj.get("mc_value"))
-
-        return ReasoningStep(solution_prefix, mc_value)
-
-    def to_dict(self) -> dict:
-        return dict(
-            solution_prefix=from_str(self.solution_prefix),
-            mc_value=from_float(self.mc_value),
-        )
-
-
-@dataclass
-class MathAPSItemV2:
-    question_id: int
-    question: str
-    final_answer: str
-    reasoning_steps: list[ReasoningStep]
-
-    @staticmethod
-    def from_dict(obj: Any) -> "MathAPSItemV2":
-        assert isinstance(obj, dict)
-
-        question_id = from_int(obj.get("question_id"))
-        question = from_str(obj.get("question"))
-        final_answer = from_str(obj.get("final_answer"))
-        reasoning_steps = from_list(ReasoningStep.from_dict, obj.get("reasoning_steps"))
-
-        return MathAPSItemV2(question_id, question, final_answer, reasoning_steps)
-
-    def to_dict(self) -> dict:
-        return dict(
-            question_id=from_int(self.question_id),
-            question=from_str(self.question),
-            final_answer=from_str(str(self.final_answer)),
-            reasoning_steps=from_list(
-                lambda x: to_dict(ReasoningStep, x), self.reasoning_steps
-            ),
         )

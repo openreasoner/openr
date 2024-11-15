@@ -2,7 +2,7 @@ import json
 from pathlib import Path
 
 import pytest
-from src.data_types.math_aps import MathAPSItem, MathAPSItemV2, MathAPSItemV2Tree
+from src.data_types.math_aps import MathAPSItem, MathAPSItemV2Tree
 from src.data_types.math_shepherd import MathShepherdItem
 from src.data_types.prm800k import PRM800KItem
 
@@ -16,7 +16,7 @@ def example_prm800k_path() -> Path:
 
 @pytest.fixture(scope="module")
 def example_math_aps_path() -> Path:
-    return TEST_DIR / "samples_math-aps.json"
+    return TEST_DIR / "samples_math-aps.jsonl"
 
 
 @pytest.fixture(scope="module")
@@ -44,7 +44,7 @@ def test_prm800k_item(example_prm800k_path: Path) -> None:
 
 def test_math_aps_item(example_math_aps_path: Path) -> None:
     with open(example_math_aps_path, "r") as fd:
-        item = MathAPSItem.from_dict(json.load(fd)[0])
+        item = MathAPSItem.from_dict(json.loads(fd.readline()))
 
     print(item)
     assert True
@@ -61,14 +61,6 @@ def test_math_shepherd_item(example_math_shepherd_path: Path) -> None:
 def test_math_aps_item_v2_tree(example_math_aps_v2_tree_path: Path) -> None:
     with open(example_math_aps_v2_tree_path, "r") as fd:
         item = MathAPSItemV2Tree.from_dict(json.loads(fd.readline()))
-
-    print(item)
-    assert True
-
-
-def test_math_aps_item_v2(example_math_aps_v2_path: Path) -> None:
-    with open(example_math_aps_v2_path, "r") as fd:
-        item = MathAPSItemV2.from_dict(json.loads(fd.readline()))
 
     print(item)
     assert True

@@ -6,13 +6,11 @@ from pathlib import Path
 from typing import Iterable
 
 from src.data_types import ConvertedItem
-from src.data_types.math_aps import MathAPSItem, MathAPSItemV2Tree, ReasoningNode, State
+from src.data_types.math_aps import (MathAPSItem, MathAPSItemV2Tree,
+                                     ReasoningNode, ReasoningStep)
 from src.preprocessors.base import PreprocessorBase
-from src.preprocessors.utils import (
-    dump_converted_ds,
-    read_math_aps_ds,
-    read_math_aps_v2_tree_ds,
-)
+from src.preprocessors.utils import (dump_converted_ds, read_math_aps_ds,
+                                     read_math_aps_v2_tree_ds)
 
 
 class MathAPSPreprocessor(PreprocessorBase):
@@ -54,22 +52,24 @@ def convert_math_aps_item(
     original_item: MathAPSItem,
     step_tag: str,
 ) -> list[ConvertedItem]:
-    question = original_item.q
+    question = original_item.question
 
-    def extract_item(mathaps_state: State) -> ConvertedItem:
+    def extract_item(reasoning_step: ReasoningStep) -> ConvertedItem:
         return ConvertedItem(
             question=question,
-            process=f"{mathaps_state.state} {step_tag}",
-            label=[label_from_mc_value(mathaps_state.mcs, 0.5)],
+            process=f"{reasoning_step.solution_prefix} {step_tag}",
+            label=[label_from_mc_value(reasoning_step.mc_value, 0.5)],
         )
 
-    def filter_item(mathaps_state: State) -> bool:
+    def filter_item(reasoning_step: ReasoningStep) -> bool:
         return not (
-            completion_too_short(mathaps_state.state)
-            or contain_non_ascii_text(mathaps_state.state)
+            completion_too_short(reasoning_step.solution_prefix)
+            or contain_non_ascii_text(reasoning_step.solution_prefix)
         )
 
-    extracted_items = map(extract_item, filter(filter_item, original_item.states))
+    extracted_items = map(
+        extract_item, filter(filter_item, original_item.reasoning_steps)
+    )
     distinct_items = set(extracted_items)
 
     return list(distinct_items)
@@ -115,7 +115,9 @@ def convert_math_aps_v2_tree_item(
     rollouts = recover_rollouts_from_tree_node(original_item.reasoning_steps, step_tag)
 
     def filter_rollout(rollout: tuple[str, list[str]]) -> bool:
-        return not contain_non_ascii_text(rollout[0])  # CAUTION: step_tag maybe non-ascii
+        return not contain_non_ascii_text(
+            rollout[0]
+        )  # CAUTION: step_tag maybe non-ascii
 
     def extract_item(rollout: tuple[str, list[str]]) -> ConvertedItem:
         process, labels = rollout

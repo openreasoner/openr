@@ -20,7 +20,7 @@ def read_prm800k_ds(ds_path: Path) -> Iterable[PRM800KItem]:
 
 def read_math_aps_ds(ds_path: Path) -> Iterable[MathAPSItem]:
     with open(ds_path, "r", encoding="utf-8") as fd:
-        dict_lst = json.load(fd)
+        dict_lst = map(json.loads, fd.readlines())
 
     return map(MathAPSItem.from_dict, dict_lst)
 
