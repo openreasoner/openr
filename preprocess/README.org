@@ -22,7 +22,11 @@ options:
 #+end_example
 
 Note that if you directly pass ~"\n\n"~ to ~--step-tag~, the script receive ~"\\n\\n"~ instead of two
-newlines. Several solutions are suggested in [[https://stackoverflow.com/a/50642130][this answer]], but none worked for me.
+newlines. Several solutions are suggested in [[https://stackoverflow.com/a/50642130][this answer]], but none worked for me. Also be cautious
+about using step tags that contain non-ascii characters when preprocessing Math-APS datasets,
+because for now this script drops any rationale that contains non-ascii characters, even if it is
+only the step tag that contains them. You are welcome to open an issue or pull request to make an
+improvement.
 
 ** Datasets
 - PRM800K: [[https://github.com/openai/prm800k][GitHub repo]]
