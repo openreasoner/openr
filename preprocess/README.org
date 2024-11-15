@@ -26,6 +26,6 @@ newlines. Several solutions are suggested in [[https://stackoverflow.com/a/50642
 
 ** Datasets
 - PRM800K: [[https://github.com/openai/prm800k][GitHub repo]]
-- Math-APS: collected by ~data/gen_data.py~
+- Math-APS: collected by ~data/omegaPRM_v2/~ with ~save_data_tree=False~
 - Math-APS-tree: collected by ~data/omegaPRM_v2/~ with ~save_data_tree=True~
 - Math-Shepherd: [[https://huggingface.co/datasets/peiyi9979/Math-Shepherd][Hugging Face dataset]]
