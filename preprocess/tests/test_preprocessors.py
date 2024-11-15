@@ -1,22 +1,18 @@
 from pathlib import Path
 
 import pytest
-from src.data_types.math_aps import MathAPSItemV2Tree, ReasoningNode
-from src.preprocessors.math_aps import (
-    MathAPSPreprocessor,
-    MathAPSV2TreePreprocessor,
-    convert_math_aps_v2_tree_item,
-    recover_rollouts_from_tree_node,
-)
+from src.data_types.math_aps import MathAPSItemTree, ReasoningNode
+from src.preprocessors.math_aps import (MathAPSPreprocessor,
+                                        MathAPSTreePreprocessor,
+                                        convert_math_aps_tree_item,
+                                        recover_rollouts_from_tree_node)
 from src.preprocessors.math_shepherd import MathShepherdPreprocessor
 from src.preprocessors.prm800k import PRM800KPreprocessor
-from src.preprocessors.utils import read_math_aps_v2_tree_ds
-from tests.test_data_types import (
-    example_math_aps_path,
-    example_math_aps_v2_tree_path,
-    example_math_shepherd_path,
-    example_prm800k_path,
-)
+from src.preprocessors.utils import read_math_aps_tree_ds
+from tests.test_data_types import (example_math_aps_path,
+                                   example_math_aps_tree_path,
+                                   example_math_shepherd_path,
+                                   example_prm800k_path)
 
 STEP_TAG = "च"
 
@@ -88,26 +84,26 @@ def test_recover_rollouts_from_tree_node(example_reasoning_node: ReasoningNode) 
 
 
 @pytest.fixture
-def example_math_aps_v2_tree_ds(
-    example_math_aps_v2_tree_path: Path,
-) -> list[MathAPSItemV2Tree]:
-    return list(read_math_aps_v2_tree_ds(example_math_aps_v2_tree_path))
+def example_math_aps_tree_ds(
+    example_math_aps_tree_path: Path,
+) -> list[MathAPSItemTree]:
+    return list(read_math_aps_tree_ds(example_math_aps_tree_path))
 
 
 STEP_TAG = "<|STEP|>"  # change to ascii step-tag to pass non-ascii filter
 
 
-def test_convert_math_aps_v2_tree_item(
-    example_math_aps_v2_tree_ds: list[MathAPSItemV2Tree],
+def test_convert_math_aps_tree_item(
+    example_math_aps_tree_ds: list[MathAPSItemTree],
 ) -> None:
-    for i, item in enumerate(example_math_aps_v2_tree_ds):
+    for i, item in enumerate(example_math_aps_tree_ds):
         assert (
-            len(convert_math_aps_v2_tree_item(item, STEP_TAG)) > 0
+            len(convert_math_aps_tree_item(item, STEP_TAG)) > 0
         ), f"Item {i} find none"
 
 
-def test_math_aps_v2_tree_preprocessor(example_math_aps_v2_tree_path: Path) -> None:
-    runner = MathAPSV2TreePreprocessor(example_math_aps_v2_tree_path, STEP_TAG)
+def test_math_aps_tree_preprocessor(example_math_aps_tree_path: Path) -> None:
+    runner = MathAPSTreePreprocessor(example_math_aps_tree_path, STEP_TAG)
     runner.convert()
 
     assert runner.converted_items is not None

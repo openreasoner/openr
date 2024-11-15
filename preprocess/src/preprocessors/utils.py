@@ -2,13 +2,8 @@ import json
 from pathlib import Path
 from typing import Iterable
 
-from src.data_types import (
-    ConvertedItem,
-    MathAPSItem,
-    MathAPSItemV2Tree,
-    MathShepherdItem,
-    PRM800KItem,
-)
+from src.data_types import (ConvertedItem, MathAPSItem, MathAPSItemTree,
+                            MathShepherdItem, PRM800KItem)
 
 
 def read_prm800k_ds(ds_path: Path) -> Iterable[PRM800KItem]:
@@ -32,11 +27,11 @@ def read_math_shepherd_ds(ds_path: Path) -> Iterable[MathShepherdItem]:
     return map(MathShepherdItem.from_dict, dict_lst)
 
 
-def read_math_aps_v2_tree_ds(ds_path: Path) -> Iterable[MathAPSItemV2Tree]:
+def read_math_aps_tree_ds(ds_path: Path) -> Iterable[MathAPSItemTree]:
     with open(ds_path, "r", encoding="utf-8") as fd:
         dict_lst = map(json.loads, fd.readlines())
 
-    return map(MathAPSItemV2Tree.from_dict, dict_lst)
+    return map(MathAPSItemTree.from_dict, dict_lst)
 
 
 def dump_converted_ds(save_path: Path, items: list[ConvertedItem]) -> None:

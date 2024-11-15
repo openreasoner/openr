@@ -81,14 +81,14 @@ class ReasoningNode:
 
 
 @dataclass
-class MathAPSItemV2Tree(OriginalItemBase):
+class MathAPSItemTree(OriginalItemBase):
     question_id: int
     question: str
     final_answer: str
     reasoning_steps: ReasoningNode
 
     @staticmethod
-    def from_dict(obj: Any) -> "MathAPSItemV2Tree":
+    def from_dict(obj: Any) -> "MathAPSItemTree":
         assert isinstance(obj, dict)
 
         question_id = from_int(obj.get("question_id"))
@@ -96,7 +96,7 @@ class MathAPSItemV2Tree(OriginalItemBase):
         final_answer = from_str(obj.get("final_answer"))
         reasoning_steps = ReasoningNode.from_dict(obj.get("reasoning_steps"))
 
-        return MathAPSItemV2Tree(question_id, question, final_answer, reasoning_steps)
+        return MathAPSItemTree(question_id, question, final_answer, reasoning_steps)
 
     def to_dict(self) -> dict:
         return dict(

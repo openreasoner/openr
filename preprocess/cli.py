@@ -3,7 +3,8 @@ from pathlib import Path
 from typing import NamedTuple
 
 from src.preprocessors.base import PreprocessorBase
-from src.preprocessors.math_aps import MathAPSPreprocessor, MathAPSV2TreePreprocessor
+from src.preprocessors.math_aps import (MathAPSPreprocessor,
+                                        MathAPSTreePreprocessor)
 from src.preprocessors.math_shepherd import MathShepherdPreprocessor
 from src.preprocessors.prm800k import PRM800KPreprocessor
 
@@ -82,7 +83,7 @@ def main(args: Args) -> None:
     runner = {
         "prm800k": PRM800KPreprocessor,
         "math-aps": MathAPSPreprocessor,
-        "math-aps-tree": MathAPSV2TreePreprocessor,
+        "math-aps-tree": MathAPSTreePreprocessor,
         "math-shepherd": MathShepherdPreprocessor,
     }[args.dataset_type](**runner_args)
     runner.convert()
