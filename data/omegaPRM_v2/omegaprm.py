@@ -325,6 +325,10 @@ class OmegaPRM:
         incorrect_rollouts = []
         correct_rollouts = []
         batct_rollouts = self.LM.generate_rollout(state.solution_prefix, self.k)
+
+        # Increment visit count of selected state
+        state.N += 1
+
         for i, rollout in enumerate(batct_rollouts):
             # Increment number of total rollouts
             self.total_rollouts += 1
