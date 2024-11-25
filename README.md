@@ -45,7 +45,7 @@
     ·
     <a href="https://github.com/openreasoner/openr/issues">Issue</a>
     ·
-    <a href="https://www.modelscope.cn/studios/modelscope/OpenR_Inference/summary">Demo</a>
+    <a href="https://www.modelscope.cn/studios/modelscope/OpenR_Inference">Demo</a>
   </p>
     <p align="center">
      [ <a href="https://github.com/openreasoner/openr/blob/main/README.md">English</a> ][ <a href="https://github.com/openreasoner/openr/blob/main/README_zh.md">中文</a> ]

@@ -1,11 +1,4 @@
-<div id="top"></div>
-<!--
-*** Thanks for checking out the Best-README-Template. If you have a suggestion
-*** that would make this better, please fork the repo and create a pull request
-*** or simply open an issue with the tag "enhancement".
-*** Don't forget to give the project a star!
-*** Thanks again! Now go create something AMAZING! :D
--->
+span
 
 <!-- PROJECT SHIELDS -->
 
@@ -28,7 +21,7 @@
   <a href="https://github.com/openreasoner/openr/">
     <img src="figure/openr_logo.png" alt="Logo" width="200">
   </a>
-  
+
 <h1 align="center" style="font-size: 30px;"><strong><em>OpenR</em></strong>: 专注大型语言模型进阶推理能力的开源框架</h1>
 <p align="center">
     <a href="https://arxiv.org/abs/2410.09671">技术报告</a>
@@ -45,7 +38,7 @@
     ·
     <a href="https://github.com/openreasoner/openr/issues">问答</a>
     ·
-    <a href="https://www.modelscope.cn/studios/modelscope/OpenR_Inference/summary">推理服务</a>
+    <a href="https://www.modelscope.cn/studios/modelscope/OpenR_Inference">推理服务</a>
   </p>
     <p align="center">
      [ <a href="https://github.com/openreasoner/openr/blob/main/README.md">English</a> ][ <a href="https://github.com/openreasoner/openr/blob/main/README_zh.md">中文</a> ]
@@ -53,6 +46,7 @@
 </div>
 
 ---
+
 [![GitHub contributors](https://img.shields.io/github/contributors/openreasoner/openr)][contributors-url]
 [![arXiv](https://img.shields.io/badge/ArXiv-2410.09671-b31b1b.svg)](https://arxiv.org/pdf/2410.09671)
 ![GitHub License](https://img.shields.io/github/license/openreasoner/openr)
@@ -62,7 +56,6 @@
 [![HuggingFace Dataset](https://img.shields.io/badge/Hugging%20Face-FFD21E?logo=huggingface&logoColor=000)](https://huggingface.co/openreasoner)
 [![X](https://img.shields.io/badge/openreasoner-%23000000.svg?logo=X&logoColor=white)](https://x.com/openreasoner)
 [![WeChat](https://img.shields.io/badge/WeChat_Group-07C160?logo=wechat&logoColor=white)](#community)
-
 
 <!-- TABLE OF CONTENTS -->
 
@@ -93,10 +86,10 @@
 <!-- News and Updates -->
 
 ## 新闻与更新
-- **[24/10/2024]** ***OpenR*** 现已支持 **MCTS** 推理 ([#24](https://github.com/openreasoner/openr/pull/24))! 🌲
-- **[15/10/2024]** 我们的报告已发布在 [**Arxiv**](https://arxiv.org/abs/2410.09671) 上! 
-- **[12/10/2024]** ***OpenR*** 已经发布！ 🚀 
 
+- **[24/10/2024]** ***OpenR*** 现已支持 **MCTS** 推理 ([#24](https://github.com/openreasoner/openr/pull/24))! 🌲
+- **[15/10/2024]** 我们的报告已发布在 [**Arxiv**](https://arxiv.org/abs/2410.09671) 上!
+- **[12/10/2024]** ***OpenR*** 已经发布！ 🚀
 
 ## 功能
 
@@ -123,14 +116,12 @@
 
 ## 数据集与模型
 
-[//]: # ([PRM800K]&#40;https://github.com/openai/prm800k&#41; &#40;Process Supervision Dataset&#41;)
-
+[//]: #
 [MATH-APS](https://huggingface.co/datasets/mengfang/MATH-APS) (我们发布的数据集)
 
 [MATH-psa](https://huggingface.co/openreasoner/Math-psa) (我们发布的过程奖励模型)
 
 ## 快速入门
-
 
 ### 安装
 
@@ -145,7 +136,6 @@ pip install -e .
 cd -
 ```
 
-
 ### 下载基座模型
 
 在运行项目之前，请确保已下载所有所需的基础模型。本项目使用的模型包括：
@@ -157,7 +147,6 @@ cd -
 Huggingface 具体下载方式可参考 [Huggingface 下载教程](https://huggingface.co/docs/hub/models-downloading)
 
 在继续之前，请确保所有模型已根据项目设置保存在各自的目录中。
-
 
 ### 快速开始
 
@@ -175,13 +164,12 @@ Huggingface 具体下载方式可参考 [Huggingface 下载教程](https://huggi
 
 例如，要启动 Math Shepherd 模型的 LM 和 RM 服务，请运行以下命令：
 
-
-
 ```bash
 sh reason/llm_service/create_service_math_shepherd.sh
 ```
 
 关闭服务进程可以参考以下命令:
+
 ```bash
 tmux kill-session -t {Your Session Name} # default is `FastChat`
 ```
@@ -190,10 +178,7 @@ tmux kill-session -t {Your Session Name} # default is `FastChat`
 
 #### 运行 推理(Inference)
 
-
 ⚠️ 确保脚本中的输入参数(`--LM`, `--RM`)与待运行的进程中的变量(`$POLICY_MODEL_NAME`, `$VALUE_MODEL_NAME`)保持一致！
-
-
 
 ```bash
 export PYTHONPATH=$(pwd)
@@ -250,14 +235,12 @@ torchrun --nproc_per_node=2 finetune_qwen.py --model_path $YOUR_MODEL_PATH \
 
 感谢您对 ***OpenR*** 的关注！🥰 我们致力于发展开源社区，并十分欢迎大家的contribution。无论大小，您的努力都将帮助我们成长和进步。贡献不仅限于代码——解答问题、帮助他人、改进我们的文档、分享项目同样具有深远的影响。
 
-欢迎查阅 [贡献指南](CONTRIBUTING.md) ! 
+欢迎查阅 [贡献指南](CONTRIBUTING.md) !
 
 ### 未来计划
 
 - 更全面的强化学习训练和搜索方法的实验
-
 - 更大规模的Prove-Verifier模型
-
 - 支持自我提升训练功能
 
 <!-- CONTACT -->
@@ -284,17 +267,17 @@ torchrun --nproc_per_node=2 finetune_qwen.py --model_path $YOUR_MODEL_PATH \
   year={2024}
 }
 ```
+
 十分感谢！
 
 ## 问答示例
 
-### 对比 过程奖励模型（PRM）：Math-psa (Ours) V.S. Math-Shepherd 
+### 对比 过程奖励模型（PRM）：Math-psa (Ours) V.S. Math-Shepherd
 
 <p align="center">
   <img src="./figure/QA/QA1.png" alt="QA 1" width="49%" />
   <img src="./figure/QA/QA2.png" alt="QA 2" width="49%" />
 </p>
-
 
 ### 验证强化学习训练 （RL Training）
 
@@ -311,18 +294,16 @@ torchrun --nproc_per_node=2 finetune_qwen.py --model_path $YOUR_MODEL_PATH \
   <img src="./figure/QA/QA7.png" alt="QA 7" width="70%" />
 </p>
 
-
 ## 社区
 
 **微信群聊**:
 
 <img src="./figure/wechat_qrcode.jpg" width="30%" />
 
-
-
 ## 参考引用
 
 ### Inference-time Computing
+
 [1] [Alphazero-like tree-search can guide large language model decoding and training.](https://arxiv.org/pdf/2309.17179)
 
 [2] [Reasoning with language model is planning with world model.](https://arxiv.org/pdf/2305.14992)
@@ -330,7 +311,6 @@ torchrun --nproc_per_node=2 finetune_qwen.py --model_path $YOUR_MODEL_PATH \
 [3] [Scaling LLM test-time compute optimally can be more effective than scaling model parameters](https://arxiv.org/pdf/2408.03314?)
 
 [4] [Think before you speak: Training language models with pause tokens](https://arxiv.org/pdf/2310.02226)
-
 
 ### From Outcome Supervision to Process Supervision
 
@@ -372,6 +352,5 @@ process supervision](https://arxiv.org/pdf/2406.06592)
 [stars-url]: https://github.com/openreasoner/openr/stargazers
 [issues-shield]: https://img.shields.io/github/issues/openreasoner/openr.svg?style=for-the-badge
 [issues-url]: https://github.com/openreasoner/openr/issues
-
 [license-shield]: https://img.shields.io/github/license/openreasoner/openr.svg?style=for-the-badge
 [license-url]: https://github.com/openreasoner/openr/blob/main/LICENSE.txt
