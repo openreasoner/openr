@@ -44,6 +44,8 @@
     <a href="https://huggingface.co/openreasoner/Math-psa">模型文件</a>
     ·
     <a href="https://github.com/openreasoner/openr/issues">问答</a>
+    ·
+    <a href="https://www.modelscope.cn/studios/modelscope/OpenR_Inference">推理</a>
   </p>
     <p align="center">
      [ <a href="https://github.com/openreasoner/openr/blob/main/README.md">English</a> ][ <a href="https://github.com/openreasoner/openr/blob/main/README_zh.md">中文</a> ]
