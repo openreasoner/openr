@@ -8,6 +8,7 @@ import argparse
 import asyncio
 import json
 from typing import List
+from typing import Any, Callable, Dict, List, Optional, Union
 
 from fastapi import FastAPI, Request, BackgroundTasks
 from fastapi.responses import StreamingResponse, JSONResponse
@@ -16,6 +17,7 @@ from vllm import AsyncLLMEngine
 from vllm.engine.arg_utils import AsyncEngineArgs
 from vllm.sampling_params import SamplingParams
 from vllm.utils import random_uuid
+from vllm.lora.request import LoRARequest
 
 from reason.llm_service.workers.base_model_worker import BaseModelWorker
 from fastchat.serve.model_worker import (
@@ -40,6 +42,7 @@ class VLLMWorker(BaseModelWorker):
         no_register: bool,
         llm_engine: AsyncLLMEngine,
         conv_template: str,
+        lora_path: Union[str, None],
     ):
         super().__init__(
             controller_addr,
@@ -56,6 +59,7 @@ class VLLMWorker(BaseModelWorker):
         )
         self.tokenizer = llm_engine.engine.tokenizer.tokenizer
         self.context_len = get_context_length(llm_engine.engine.model_config.hf_config)
+        self.lora_request = LoRARequest("lm-lora", 1, lora_path) if lora_path else None
 
         if not no_register:
             self.init_heart_beat()
@@ -80,6 +84,7 @@ class VLLMWorker(BaseModelWorker):
         use_beam_search = params.get("use_beam_search", False)
         best_of = params.get("best_of", None)
         include_stop_str_in_output = params.get("include_stop_str_in_output", False)
+        use_lora = params.get("use_lora", False)
 
         # Handle stop_str
         stop = set()
@@ -112,7 +117,12 @@ class VLLMWorker(BaseModelWorker):
             logprobs=1,
             include_stop_str_in_output=include_stop_str_in_output,
         )
-        results_generator = engine.generate(context, sampling_params, request_id)
+        results_generator = engine.generate(
+            context,
+            sampling_params,
+            request_id,
+            lora_request=self.lora_request if use_lora else None,
+        )
 
         async for request_output in results_generator:
             prompt = request_output.prompt
@@ -234,6 +244,8 @@ if __name__ == "__main__":
         type=lambda s: s.split(","),
         help="Optional display comma separated names",
     )
+    parser.add_argument("--lora-path", type=str, default=None)
+
     parser.add_argument("--limit-worker-concurrency", type=int, default=1024)
     parser.add_argument("--no-register", action="store_true")
     parser.add_argument("--num-gpus", type=int, default=1)
@@ -265,6 +277,14 @@ if __name__ == "__main__":
     if args.num_gpus > 1:
         args.tensor_parallel_size = args.num_gpus
 
+    if (
+        args.lora_path
+    ):  # see https://github.com/vllm-project/vllm/blob/main/examples/multilora_inference.py
+        args.enable_lora = True
+        args.max_loras = 1
+        args.max_lora_rank = 8
+        args.max_cpu_loras = 2
+
     engine_args = AsyncEngineArgs.from_cli_args(args)
     engine = AsyncLLMEngine.from_engine_args(engine_args)
     worker = VLLMWorker(
@@ -277,5 +297,6 @@ if __name__ == "__main__":
         args.no_register,
         engine,
         args.conv_template,
+        args.lora_path,
     )
     uvicorn.run(app, host=args.host, port=args.port, log_level="info")

@@ -22,7 +22,14 @@ from envs.base_env import INVALID_ANS
 
 
 class Task:
-    def __init__(self, task_name: str, is_few_shot: bool = False):
+    def __init__(
+        self,
+        task_name: str,
+        is_few_shot: bool = False,
+        cot_task_desc: str = None,
+        cot_examples: str = None,
+        problem_format_str: str = None,
+    ):
         self.task_name = task_name
         task_module = importlib.import_module(f"envs.{task_name}")
         if task_name == "MATH" or "rstar":
@@ -35,10 +42,17 @@ class Task:
         self._is_few_shot = is_few_shot
         self.env_fn = task_module.Env
 
+        self.cot_task_desc = cot_task_desc
+        self.cot_examples = cot_examples
+        self.problem_format_str = problem_format_str
+
     def prompt_fn(self, problem_input: str):
-        return get_default_query_str_builder(self.task_name)(
-            problem_input, is_few_shot=self._is_few_shot
-        )
+        return get_default_query_str_builder(
+            self.task_name,
+            cot_task_desc=self.cot_task_desc,
+            cot_examples=self.cot_examples,
+            problem_format_str=self.problem_format_str,
+        )(problem_input, is_few_shot=self._is_few_shot)
 
     @property
     def test_ds(self):

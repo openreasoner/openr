@@ -1,0 +1,10 @@
+{
+  "_comment": "For Qwen2.5 Instruction model series",
+  "cot_task_desc": "",
+  "cot_examples": "",
+  "eot_token": null,
+  "eot_id": null,
+  "problem_format_str": "{question} {answer}",
+  "lm_step_tag": null,
+  "prm_step_tag": "\n\n\n\n\n"
+}

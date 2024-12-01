@@ -9,12 +9,15 @@ def get_env_datasets(env_name: str, **kwargs):
 
 def get_default_query_str_builder(env_name: str, **kwargs):
     task_module = import_module(f"envs.{env_name}")
+    cot_task_desc = kwargs.get('cot_task_desc', task_module.COT_TASK_DESC)
+    cot_examples = kwargs.get('cot_examples', task_module.COT_EXAMPLES)
+    problem_format_str = kwargs.get('problem_format_str', task_module.PROBLEM_FORMAT_STR)
 
     def fn(problem_input: str, is_few_shot: bool):
         return task_module.Env.build_query_str(
-            cot_task_desc=task_module.COT_TASK_DESC,
-            cot_examples=task_module.COT_EXAMPLES,
-            problem_format_str=task_module.PROBLEM_FORMAT_STR,
+            cot_task_desc=cot_task_desc,
+            cot_examples=cot_examples,
+            problem_format_str=problem_format_str,
             problem_input=problem_input,
             is_few_shot=is_few_shot,
         )

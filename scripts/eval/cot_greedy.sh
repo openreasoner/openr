@@ -1,9 +1,10 @@
 python reason/evaluation/evaluate.py \
     --LM Qwen2.5-Math-1.5B-Instruct \
+    --LM_config "reason/resource/qwen2.5/config.json" \
     --task_name MATH \
     --temperature 0.0 \
     --max_new_tokens 2048 \
-    --save_dir results \
+    --save_dir qwen_results \
     --method cot \
     --num_worker 32 \
     --LM_addr http://0.0.0.0:28777 \

@@ -1,0 +1,11 @@
+{
+  "_comment": "For Qwen2.5 Instruction model series",
+  "cot_task_desc": "<|im_start|>system\nPlease reason step by step, and put your final answer within \\boxed{{}}.<|im_end|>",
+  "cot_examples": "",
+  "eot_token": "<|im_end|>",
+  "eot_id": 151645,
+  "problem_format_str": "<|im_start|>user\n{question}<|im_end|>\n<|im_start|>assistant\n",
+  "lm_step_tag": "\n\n",
+  "prm_step_tag": "\n\n"
+}
+

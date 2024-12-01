@@ -36,6 +36,69 @@ def setup_seed(seed):
     torch.backends.cudnn.deterministic = True
 
 
+def parallel_evaluate_test_dataset(
+    method_name: str, solver_fn: Callable, save_dir: Optional[Path] = None
+) -> List[Dict[str, Any]]:
+    if save_dir is not None:
+        record_writer = jsonlines.open(save_dir / f"record.jsonl", mode="w")
+    else:
+        record_writer = None
+
+    test_ds = task.test_ds
+    # test_ds = [test_ds[i] for i in range(32)]
+
+    results = []
+    if config.resume_dir is not None:
+        answered_questions = set()
+        with jsonlines.open(Path(config.resume_dir) / "record.jsonl", "r") as reader:
+            cnt = 0
+            for obj in reader:
+                results.append(obj["result"])
+                answered_questions.add(obj["question"])
+                if record_writer is not None:
+                    record_writer.write(obj)
+                    cnt += 1
+        print(f"Resumed {cnt} questions from {config.resume_dir}")
+        total_cnt = len(test_ds)
+        test_ds = [
+            problem_inst
+            for problem_inst in test_ds
+            if problem_inst["question"] not in answered_questions
+        ]
+        new_cnt = len(test_ds)
+        print(
+            f"After resuming, there are {new_cnt}/{total_cnt} new questions to answer."
+        )
+
+    actor_pool = ActorPool(
+        [
+            RemoteMathEvaluator.remote(config.task_name, llm_gen_fn, rm_call)
+            for _ in range(config.num_worker)
+        ]
+    )
+    res_q = actor_pool.map_unordered(
+        lambda p, x: p.evaluate_problem.remote(x, solver_fn), test_ds
+    )  # Distributes tasks from the test_ds dataset across the worker pool asynchronously and
+    # collects results in any order as they complete. Every worker has a new searching tree as we reset the
+    # tree in solver_fn
+    for i, (problem_inst, result, output) in enumerate(tqdm(res_q, total=len(test_ds))):
+        results.append(result)
+        if record_writer:
+            obj = {
+                # "i": i,
+                "question": problem_inst["question"],
+                "groundtruth": problem_inst["answer"],
+                "result": result,
+                "output": output,
+            }
+            record_writer.write(obj)
+    avg_res = (tree.map_structure(lambda *xs: np.mean(xs), *results),)
+    if record_writer:
+        json.dump(avg_res, open(save_dir / "avg_result.json", "w"))
+    print("Method: {}. Average result: {}".format(method_name, avg_res))
+    return results
+
+
 if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("--LM", type=str, required=True)
@@ -45,6 +108,9 @@ if __name__ == "__main__":
         default="http://0.0.0.0:28778",
         desc="locate which LM we use",
     )
+    parser.add_argument(
+        "--LM_config", type=str, default="reason/resource/qwen2.5/config.json"
+    )
     parser.add_argument("--RM", type=str, default="dummy")
     parser.add_argument(
         "--RM_addr",
@@ -52,6 +118,7 @@ if __name__ == "__main__":
         default="http://0.0.0.0:28778",
         desc="locate which RM we use",
     )
+    parser.add_argument("--RM_config", type=str, default="reason/resource/mistral")
     # task config
     parser.add_argument("--task_name", type=str, default="gsm8k")
     parser.add_argument("--test", type=str2bool, default=True)
@@ -65,9 +132,13 @@ if __name__ == "__main__":
     parser.add_argument("--top_k", type=int, default=-1)
     parser.add_argument("--top_p", type=float, default=1)
     parser.add_argument("--max_new_tokens", type=int, default=256)
-    parser.add_argument("--step_str", type=str, default=None, desc="step str for LM")
     parser.add_argument(
         "--stop_str", type=str, nargs="+", desc="customized stopping str for LM"
+    )
+    parser.add_argument(
+        "--use_lora",
+        action="store_true",
+        help="whether to use lora adapter for generation",
     )
     # Tree construction config
     parser.add_argument("--tree_max_depth", type=int, default=None)
@@ -86,22 +157,15 @@ if __name__ == "__main__":
         config.num_worker = 1
         ray.init(local_mode=True)
 
-    # TODO(ziyu): move into some configuration file
-    if "math-shepherd" in config.RM.lower():
-        prm_step_tag = "ки\n"
-    else:
-        # assume qwen
-        prm_step_tag = "\n\n\n\n\n "
+    # load necessary config file
+    with open(config.LM_config, "r", encoding="utf-8") as file:
+        lm_cfg = json.load(file)
+    with open(config.RM_config, "r", encoding="utf-8") as file:
+        rm_cfg = json.load(file)
 
-    prm_format_str = "{question} {answer}"
-
-    if config.step_str is not None:
-        lm_step_tag = config.step_str
-    else:
-        if "qwen" in config.LM.lower():
-            lm_step_tag = "\n\n"
-        else:
-            lm_step_tag = "ки\n"
+    prm_step_tag = rm_cfg.prm_step_tag
+    prm_format_str = rm_cfg.problem_format_str
+    lm_step_tag = lm_cfg.step_str
 
     llm_gen_fn = VLLMRemoteCaller(config.LM, config.LM_addr, lm_step_tag=lm_step_tag)
     if config.RM == "dummy":
@@ -118,73 +182,13 @@ if __name__ == "__main__":
         )
         rm_call = RMRemoteCaller(rm_config)
 
-    task = Task(task_name=config.task_name, is_few_shot=config.is_few_shot)
-
-    def parallel_evaluate_test_dataset(
-        method_name: str, solver_fn: Callable, save_dir: Optional[Path] = None
-    ) -> List[Dict[str, Any]]:
-        if save_dir is not None:
-            record_writer = jsonlines.open(save_dir / f"record.jsonl", mode="w")
-        else:
-            record_writer = None
-
-        test_ds = task.test_ds
-        # test_ds = [test_ds[i] for i in range(32)]
-
-        results = []
-        if config.resume_dir is not None:
-            answered_questions = set()
-            with jsonlines.open(
-                Path(config.resume_dir) / "record.jsonl", "r"
-            ) as reader:
-                cnt = 0
-                for obj in reader:
-                    results.append(obj["result"])
-                    answered_questions.add(obj["question"])
-                    if record_writer is not None:
-                        record_writer.write(obj)
-                        cnt += 1
-            print(f"Resumed {cnt} questions from {config.resume_dir}")
-            total_cnt = len(test_ds)
-            test_ds = [
-                problem_inst
-                for problem_inst in test_ds
-                if problem_inst["question"] not in answered_questions
-            ]
-            new_cnt = len(test_ds)
-            print(
-                f"After resuming, there are {new_cnt}/{total_cnt} new questions to answer."
-            )
-
-        actor_pool = ActorPool(
-            [
-                RemoteMathEvaluator.remote(config.task_name, llm_gen_fn, rm_call)
-                for _ in range(config.num_worker)
-            ]
-        )
-        res_q = actor_pool.map_unordered(
-            lambda p, x: p.evaluate_problem.remote(x, solver_fn), test_ds
-        )  # Distributes tasks from the test_ds dataset across the worker pool asynchronously and
-        # collects results in any order as they complete. Every worker has a new searching tree as we reset the
-        # tree in solver_fn
-        for i, (problem_inst, result, output) in enumerate(
-            tqdm(res_q, total=len(test_ds))
-        ):
-            results.append(result)
-            if record_writer:
-                obj = {
-                    # "i": i,
-                    "question": problem_inst["question"],
-                    "groundtruth": problem_inst["answer"],
-                    "result": result,
-                    "output": output,
-                }
-                record_writer.write(obj)
-        avg_res = (tree.map_structure(lambda *xs: np.mean(xs), *results),)
-        if record_writer:
-            json.dump(avg_res, open(save_dir / "avg_result.json", "w"))
-        print("Method: {}. Average result: {}".format(method_name, avg_res))
-        return results
+    task = Task(
+        task_name=config.task_name,
+        is_few_shot=config.is_few_shot,
+        cot_task_desc=lm_cfg.cot_task_desc,
+        cot_examples=lm_cfg.cot_examples,
+        problem_format_str=lm_cfg.problem_format_str,
+    )
 
     solver_fns = {"cot": cot, "best_of_n": best_of_n}
 
@@ -199,6 +203,7 @@ if __name__ == "__main__":
         top_p=config.top_p,
         max_new_tokens=config.max_new_tokens,
         stop_str=config.stop_str,
+        use_lora=config.use_lora,
     )
     cfg_dict_record["gen_config"] = gen_config.__dict__
 

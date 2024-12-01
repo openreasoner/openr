@@ -1,0 +1,10 @@
+{
+  "_comment": "For deepseek-math-7b-instruct",
+  "cot_task_desc": "",
+  "cot_examples": "",
+  "eot_token": "<| end_of_sentence |>",
+  "eot_id": 100001,
+  "problem_format_str": "<| begin_of_sentence |>User: {question}\nPlease reason step by step, and put your final answer within \\boxed{}.\n\nAssistant:",
+  "lm_step_tag": null,
+  "prm_step_tag": null
+}
