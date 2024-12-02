@@ -9,7 +9,7 @@ from reason.inference.rm_call import (
     RewardModelBaseConfig,
     RemoteRewardModelConfig,
 )
-from reason.evaluation.evaluator import SolutionOutput, Task, RemoteMathEvaluator
+from reason.evaluation.evaluator import SolutionOutput, Task, RemoteMathEvaluator, RemoteCodeForceEvaluator
 import torch
 from functools import partial
 import json
@@ -138,13 +138,20 @@ if __name__ == "__main__":
             print(
                 f"After resuming, there are {new_cnt}/{total_cnt} new questions to answer."
             )
-
-        actor_pool = ActorPool(
-            [
-                RemoteMathEvaluator.remote(config.task_name, llm_gen_fn, rm_call)
-                for _ in range(config.num_worker)
-            ]
-        )
+        if config.task_name == 'CodeForce':
+            actor_pool = ActorPool(
+                [
+                    RemoteCodeForceEvaluator.remote(config.task_name, llm_gen_fn, rm_call)
+                    for _ in range(config.num_worker)
+                ]
+            )
+        else:
+            actor_pool = ActorPool(
+                [
+                    RemoteMathEvaluator.remote(config.task_name, llm_gen_fn, rm_call)
+                    for _ in range(config.num_worker)
+                ]
+            )
         res_q = actor_pool.map_unordered(
             lambda p, x: p.evaluate_problem.remote(x, solver_fn), test_ds
         )       # Distributes tasks from the test_ds dataset across the worker pool asynchronously and

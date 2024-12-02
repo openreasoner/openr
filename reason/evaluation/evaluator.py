@@ -24,7 +24,7 @@ class Task:
     def __init__(self, task_name: str, is_few_shot: bool = False):
         self.task_name = task_name
         task_module = importlib.import_module(f"envs.{task_name}")
-        if task_name == "MATH" or "rstar":
+        if task_name == "MATH" or "rstar" or "CodeForce":
             self.extract_answer = task_module.extract_answer
             self.extract_groundtruth = task_module.extract_groundtruth
             self.judge_correct = task_module.judge_correct
@@ -166,6 +166,77 @@ class MathEvaluator:
 
 @ray.remote
 class RemoteMathEvaluator(MathEvaluator):
+    def __init__(
+        self,
+        task: str,
+        lm_call: LanguageModelCallingFunction,
+        rm_call: RewardModelCallingFunction,
+    ):
+        super().__init__(task, lm_call, rm_call)
+
+class CodeForceEvaluator:
+
+    def __init__(
+        self,
+        task: Union[str, Task],
+        lm_call: LanguageModelCallingFunction,
+        rm_call: RewardModelCallingFunction,
+    ):
+        if isinstance(task, str):
+            self._task = Task(task_name=task)
+        else:
+            assert isinstance(task, Task)
+            self._task = task
+        self.lm_call = lm_call
+        self.rm_call = rm_call
+
+    def evaluate_problem(
+        self, problem_inst: Dict[str, str], solver_fn: Callable
+    ) -> List[str]:
+        solution: SolutionOutput = solver_fn(problem_inst, self.lm_call, self.rm_call)
+        result, output = self.analyze_output(problem_inst, solution.solutions)
+        total_completion_token = 0
+        for i, o in enumerate(output):
+            o["completion_tokens"] = solution.completion_tokens[i]
+            if isinstance(solution, TreeSearchSolutionOutput):
+                o["tree_completion_tokens"] = solution.tree_completion_tokens[i]
+            # We define the completion_tokens as the tokens comsumed between two generated
+            #  answers, therefore we need to take sum here.
+            total_completion_token += solution.completion_tokens[i]
+        result["total_completion_tokens"] = total_completion_token
+        return problem_inst, result, output
+
+    def analyze_output(self, problem_inst: Dict[str, str], gen_answers: List[str]):
+        extracted_groundtruth = self._task.extract_groundtruth(problem_inst["answer"])
+
+        if len(gen_answers) > 1:
+            input_list = [(problem_inst["question"], txt) for txt in gen_answers]
+            value_list = self.rm_call(input_list, lm_step_tag=self.lm_call.lm_step_tag)
+        else:
+            value_list = [[0]]
+        output_list = [
+            {"path_idx": i, "text": txt, "value": v}
+            for i, (txt, v) in enumerate(zip(gen_answers, value_list))
+        ]
+        res = {
+            agg_method: judge_ans(
+                problem_inst["question"],
+                extracted_groundtruth,
+                gen_answers,
+                value_list,
+                agg_method,
+                self._task.extract_answer,
+                self._task.judge_correct,
+            )
+            for agg_method in (
+                CHOSEN_AGGR_METHODS if len(gen_answers) > 1 else [MAJORITY_VOTE]
+            )
+        }
+        return res, output_list
+
+
+@ray.remote
+class RemoteCodeForceEvaluator(CodeForceEvaluator):
     def __init__(
         self,
         task: str,
