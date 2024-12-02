@@ -9,7 +9,7 @@ from reason.inference.rm_call import (
     RewardModelBaseConfig,
     RemoteRewardModelConfig,
 )
-from reason.evaluation.evaluator import SolutionOutput, Task, RemoteMathEvaluator
+from reason.evaluation.evaluator import SolutionOutput, Task, RemoteMathEvaluator, RemoteAPPSEvaluator
 import torch
 from functools import partial
 import json
@@ -40,9 +40,9 @@ if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("--LM", type=str, required=True)
     parser.add_argument("--RM", type=str, default="dummy")
-    parser.add_argument("--controller_addr", type=str, default="http://0.0.0.0:28778")
+    parser.add_argument("--controller_addr", type=str, default="http://0.0.0.0:28777")
     # task config
-    parser.add_argument("--task_name", type=str, default="gsm8k")
+    parser.add_argument("--task_name", type=str, default="APPS")
     parser.add_argument("--test", type=str2bool, default=True)
     parser.add_argument("--is_few_shot", type=str2bool, default=False)
     parser.add_argument("--seed", type=int, default=0)
@@ -53,7 +53,7 @@ if __name__ == "__main__":
     parser.add_argument("--temperature", type=float, default=0.0)
     parser.add_argument("--top_k", type=int, default=-1)
     parser.add_argument("--top_p", type=float, default=1)
-    parser.add_argument("--max_new_tokens", type=int, default=256)
+    parser.add_argument("--max_new_tokens", type=int, default=1024)
     # Tree construction config
     parser.add_argument("--tree_max_depth", type=int, default=None)
     parser.add_argument("--tree_max_width", type=int, default=None)
@@ -139,12 +139,21 @@ if __name__ == "__main__":
                 f"After resuming, there are {new_cnt}/{total_cnt} new questions to answer."
             )
 
-        actor_pool = ActorPool(
-            [
-                RemoteMathEvaluator.remote(config.task_name, llm_gen_fn, rm_call)
-                for _ in range(config.num_worker)
-            ]
-        )
+        if config.task_name == 'APPS':
+            actor_pool = ActorPool(
+                [
+                    RemoteAPPSEvaluator.remote(config.task_name, llm_gen_fn, rm_call)
+                    for _ in range(config.num_worker)
+                ]
+            )
+        else:
+            actor_pool = ActorPool(
+                [
+                    RemoteMathEvaluator.remote(config.task_name, llm_gen_fn, rm_call)
+                    for _ in range(config.num_worker)
+                ]
+            )
+
         res_q = actor_pool.map_unordered(
             lambda p, x: p.evaluate_problem.remote(x, solver_fn), test_ds
         )       # Distributes tasks from the test_ds dataset across the worker pool asynchronously and
