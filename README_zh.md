@@ -71,6 +71,8 @@
   <ol>
     <li><a href="#新闻与更新">新闻与更新</a></li>
     <li><a href="#功能">功能</a></li>
+    <li><a href="#todo">TODO</a></li>
+    <li><a href="#benchmark">Benchmark</a></li>
     <li><a href="#图表">图表</a></li>
     <li><a href="#数据集与模型">数据集与模型</a></li>
     <li>
@@ -93,6 +95,7 @@
 <!-- News and Updates -->
 
 ## 新闻与更新
+- **[29/11/2024]** 已添加 [**demo**](https://www.modelscope.cn/studios/modelscope/OpenR_Inference) 页面至 *ModelScope*. 感谢 [@wangxingjun778](https://github.com/wangxingjun778) !
 - **[24/10/2024]** ***OpenR*** 现已支持 **MCTS** 推理 ([#24](https://github.com/openreasoner/openr/pull/24))! 🌲
 - **[15/10/2024]** 我们的报告已发布在 [**Arxiv**](https://arxiv.org/abs/2410.09671) 上! 
 - **[12/10/2024]** ***OpenR*** 已经发布！ 🚀 
@@ -113,6 +116,30 @@
     <li><strong>✅ Test-time 计算和 Scaling Law</strong></li>
 </ul>
 </div>
+
+| 功能                                      | 内容                                                                                                                                                                                                                     |
+|-----------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ✅ 过程监督的数据生成                             | - [**OmegaPRM**](https://arxiv.org/abs/2406.06592): Improve Mathematical Reasoning in Language Models by Automated Process Supervision                                                                                 |
+| ✅ 在线策略训练                                | - **强化学习训练**: 使用PRM进行在线RL训练                                                                                                                                                                                            |
+| ✅ PRM奖励模型的训练                            | - **PRM 训练**: Supervised Training for PRMs<br> - **生成式奖励模型训练**: Direct GenRM                                                                                                                                           |
+| ✅ 多种搜索策略            | - **Greedy Search**<br> - **Best-of-N**<br> - **Beam Search**<br> - **MCTS**<br> - [**rStar**](https://arxiv.org/pdf/2408.06195v1): Mutual Reasoning Makes Smaller LLMs Stronger Problem-Solvers<br> - **Critic-MCTS** |
+| ✅ Test-time Computation and Scaling Law | 详见 [benchmark](#benchmark)                                                                                                                                                                                             |
+
+## TODO
+
+
+| 功能        | TODO (<span style="color:red;">高优先级</span>, 欢迎加入开发！)            |
+|-----------|-----------------------------------------------------------------|
+| 👨‍💻数据   | - 复现 [**Journey Learning**](https://arxiv.org/abs/2410.18982)   |
+| 👨‍💻RL训练 | - 分布式训练                                                         |
+| 👨‍💻PRM  | - 更大规模训练<br> - GenRM-CoT 的训练实现                                  |
+| 👨‍💻推理   | - 优化代码结构 <br> - 添加更多推理任务 (AIME, etc.)<br> - 多模态推理 <br> - 代码生成推理 |
+
+## Benchmark
+
+详见 [Benchmark](benchmark) !
+
+
 
 ## 图表
 
