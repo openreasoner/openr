@@ -1,1 +1,0 @@
-{"fn_name": "valid_parentheses", "inputs": [[")"], ["("], [""], ["hi)("], ["hi(hi)"], ["hi(hi)("], ["((())()())"], ["(c(b(a)))(d)"], ["hi(hi))("], ["())(()"]], "outputs": [[false], [false], [true], [false], [true], [false], [true], [true], [false], [false]]}

@@ -1,1 +1,0 @@
-{"fn_name": "possible_positions", "inputs": [["a1"], ["f7"], ["c3"]], "outputs": [[["b3", "c2"]], [["d6", "d8", "e5", "g5", "h6", "h8"]], [["a2", "a4", "b1", "b5", "d1", "d5", "e2", "e4"]]]}

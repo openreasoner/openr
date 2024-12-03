@@ -1,2 +1,0 @@
-def encrypt(text,key):
-	

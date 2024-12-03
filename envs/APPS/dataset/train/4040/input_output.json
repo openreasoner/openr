@@ -1,1 +1,0 @@
-{"fn_name": "nth_char", "inputs": [[["yoda", "best", "has"]], [[]], [["X-ray"]], [["No", "No"]], [["Chad", "Morocco", "India", "Algeria", "Botswana", "Bahamas", "Ecuador", "Micronesia"]]], "outputs": [["yes"], [""], ["X"], ["No"], ["Codewars"]]}

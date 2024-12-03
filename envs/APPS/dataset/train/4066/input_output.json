@@ -1,1 +1,0 @@
-{"fn_name": "string_to_array", "inputs": [["Robin Singh"], ["CodeWars"], ["I love arrays they are my favorite"], ["1 2 3"], [""]], "outputs": [[["Robin", "Singh"]], [["CodeWars"]], [["I", "love", "arrays", "they", "are", "my", "favorite"]], [["1", "2", "3"]], [[""]]]}

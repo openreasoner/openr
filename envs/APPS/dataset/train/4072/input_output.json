@@ -1,1 +1,0 @@
-{"fn_name": "permutation_position", "inputs": [["a"], ["z"], ["aaa"], ["aaab"], ["foo"]], "outputs": [[1], [26], [1], [2], [3759]]}

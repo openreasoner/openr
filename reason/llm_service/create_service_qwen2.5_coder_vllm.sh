@@ -7,7 +7,7 @@ WORKER_BASE_PORT=30010
 echo PYTHON_EXECUTABLE=$(which python3)
 PYTHON_EXECUTABLE=$(which python3)
 
-MODEL_BASE=/hdd/data/LLMWeights/
+MODEL_BASE=/hdd/qyli/data/LLMWeights/
 CUDA_DEVICE_BASE=0
 POLICY_MODEL_NAME=Qwen2.5-Coder-7B-Instruct
 # VALUE_MODEL_NAME=qwen_prm/checkpoint-6898/

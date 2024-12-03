@@ -18,10 +18,25 @@ class APPSDataset(Dataset):
         super().__init__()
         self.data = []
         difficulty = 'introductory'
+
+        if not os.path.exists(f"{data_path}/{data_path.name}.json"):
+            self.from_raw_data(data_path, difficulty)
+        else:
+            self.data = json.load(open(f"{data_path}/{data_path.name}.json"))
+
+    def __len__(self):
+        return len(self.data)
+
+    def __getitem__(self, index):
+        x = self.data[index]
+        return {"question": x["prompt"],
+                "answer": x}
+
+    def from_raw_data(self, data_path, difficulty):
         if 'train' in data_path.name:
             problem_indices = range(4000, 4002)
         else:
-            problem_indices = range(4000, 4070)
+            problem_indices = range(4000, 4050)
         for idx in problem_indices:
             prob_dir = f"{data_path}/{idx:04d}"
             pro_metadata_path = os.path.join(prob_dir, "metadata.json")
@@ -71,11 +86,5 @@ class APPSDataset(Dataset):
             problem_instance["train_in_outs"] = train_in_outs
             problem_instance["test_in_outs"] = test_in_outs
             self.data.append(problem_instance)
-
-    def __len__(self):
-        return len(self.data)
-
-    def __getitem__(self, index):
-        x = self.data[index]
-        return {"question": x["prompt"],
-                "answer": x}
+        # with open(f"{data_path}/{data_path.name}.json", "w") as f:
+        #     json.dump(self.data, f)

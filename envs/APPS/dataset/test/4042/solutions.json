@@ -1,1 +1,0 @@
-["r=float(input())\na=0\nh=0\nfor i in range(1,11):\n    for j in range(1,11):\n        c=pow(j*j+i*i/4.,0.5)\n        rtest=i*j*0.5/c\n        if abs(rtest-r)<0.00001:\n            a=i\n            h=j\nprint(a,h)"]

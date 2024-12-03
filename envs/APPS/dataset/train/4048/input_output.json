@@ -1,1 +1,0 @@
-{"fn_name": "pig_latin", "inputs": [["hello"], ["hi"]], "outputs": [["ellohay"], ["hi"]]}

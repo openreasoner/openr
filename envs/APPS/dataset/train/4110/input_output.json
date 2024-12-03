@@ -1,1 +1,0 @@
-{"fn_name": "matrixfy", "inputs": [[""], ["G"], ["Beyonce"], ["Franklin"], ["Bill"], ["Frank"]], "outputs": [["name must be at least one letter"], [[["G"]]], [[["B", "e", "y"], ["o", "n", "c"], ["e", ".", "."]]], [[["F", "r", "a"], ["n", "k", "l"], ["i", "n", "."]]], [[["B", "i"], ["l", "l"]]], [[["F", "r", "a"], ["n", "k", "."], [".", ".", "."]]]]}

@@ -1,1 +1,0 @@
-{"fn_name": "arr_check", "inputs": [[[]], [[["string"]]], [[[], {}]], [[[1], [2], [3]]], [["A", "R", "R", "A", "Y"]]], "outputs": [[true], [true], [false], [true], [false]]}

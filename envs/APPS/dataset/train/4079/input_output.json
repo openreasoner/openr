@@ -1,1 +1,0 @@
-{"fn_name": "encode", "inputs": [["abc"], ["ABCD"], ["ZzzzZ"], ["abc-#@5"], ["this is a long string!! Please [encode] @C0RrEctly"]], "outputs": [["123"], ["1234"], ["2626262626"], ["123-#@5"], ["208919 919 1 1215147 1920189147!! 161251195 [51431545] @30181853201225"]]}

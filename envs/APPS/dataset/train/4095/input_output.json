@@ -1,1 +1,0 @@
-{"fn_name": "added_char", "inputs": [["hello", "checlclo"], ["aabbcc", "aacccbbcc"], ["abcde", "2db2a2ec"]], "outputs": [["c"], ["c"], ["2"]]}

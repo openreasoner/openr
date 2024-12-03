@@ -1,1 +1,0 @@
-{"fn_name": "reverse_list", "inputs": [[[1, 2, 3]], [[]]], "outputs": [[[3, 2, 1]], [[]]]}

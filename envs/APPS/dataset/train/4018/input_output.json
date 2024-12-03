@@ -1,1 +1,0 @@
-{"fn_name": "isDigit", "inputs": [["s2324"], ["-234.4"], ["3 4"], ["3-4"], ["3 4   "], ["34.65"], ["-0"], ["0.0"], [""], [" "]], "outputs": [[false], [true], [false], [false], [false], [true], [true], [true], [false], [false]]}

@@ -1,1 +1,0 @@
-{"fn_name": "validate_hello", "inputs": [["hello"], ["ciao bella!"], ["salut"], ["hallo, salut"], ["hombre! Hola!"], ["Hallo, wie geht's dir?"], ["AHOJ!"], ["czesc"], ["meh"], ["Ahoj"]], "outputs": [[true], [true], [true], [true], [true], [true], [true], [true], [false], [true]]}

@@ -1,9 +1,0 @@
-# Task
-
-Given the birthdates of two people, find the date when the younger one is exactly half the age of the other.
-
-# Notes
-
-* The dates are given in the format YYYY-MM-DD and are not sorted in any particular order
-* Round **down** to the nearest day
-* Return the result as a string, like the input dates

@@ -46,7 +46,7 @@ class AppsExecutor:
                     begin_main = True
 
             code = new_code
-            print(code)
+            # print(code)
         manager = multiprocessing.Manager()
         result = manager.list()
         p = multiprocessing.Process(target=self._temp_run, args=(prob_instance, code, mode, result, with_verbal))
@@ -167,7 +167,7 @@ class AppsExecutor:
                     signal.alarm(0)
                 except Exception as e:
                     signal.alarm(0)
-                    print(f"type 1 compilation error = {e}")
+                    # print(f"type 1 compilation error = {e}")
                     # results.append(-2)
                     if not with_verbal:
                         results.append(-2)
@@ -185,7 +185,7 @@ class AppsExecutor:
             except:
                 signal.alarm(0)
                 e = sys.exc_info()
-                print(f"unable to get function error = {e}")
+                # print(f"unable to get function error = {e}")
                 # results.append(-2)
                 if not with_verbal:
                     results.append(-2)
@@ -244,7 +244,7 @@ class AppsExecutor:
                     except Exception as e:
                         signal.alarm(0)
                         faulthandler.disable()
-                        print(f"Standard input runtime error or time limit exceeded error = {e}")
+                        # print(f"Standard input runtime error or time limit exceeded error = {e}")
                         results.append(-1)
                         continue
                     faulthandler.disable()
@@ -271,7 +271,7 @@ class AppsExecutor:
                         except Exception as e:
                             # runtime error or took too long
                             signal.alarm(0)
-                            print(f"Call-based runtime error or time limit exceeded error = {repr(e)}{e}")
+                            # print(f"Call-based runtime error or time limit exceeded error = {repr(e)}{e}")
                             if not with_verbal:
                                 results.append(-1)
                         signal.alarm(0)
@@ -318,7 +318,7 @@ class AppsExecutor:
                             if isinstance(output[0], str):
                                 tmp_result = tmp_result or ([e.strip() for e in output] == in_outs["outputs"][index])
                     except Exception as e:
-                        print(f"Failed check1 exception = {e}")
+                        # print(f"Failed check1 exception = {e}")
                         pass
 
                     if tmp_result == True:
@@ -343,7 +343,7 @@ class AppsExecutor:
                         if isinstance(in_outs["outputs"][index], list):
                             tmp_result = tmp_result or (output == in_outs["outputs"][index])
                     except Exception as e:
-                        print(f"Failed check2 exception = {e}")
+                        # print(f"Failed check2 exception = {e}")
                         pass
 
                     if tmp_result == True:
@@ -378,7 +378,7 @@ class AppsExecutor:
                         if isinstance(in_outs["outputs"][index], list):
                             tmp_result = tmp_result or (output == in_outs["outputs"][index])
                     except Exception as e:
-                        print(f"Failed check3 exception = {e}")
+                        # print(f"Failed check3 exception = {e}")
                         pass
 
                     try:
@@ -414,7 +414,7 @@ class AppsExecutor:
                     try:
                         tmp_result = (output == in_outs["outputs"][index])
                     except Exception as e:
-                        print(f"Failed check4 exception = {e}")
+                        # print(f"Failed check4 exception = {e}")
                         continue
 
                     if tmp_result == True:
@@ -440,14 +440,16 @@ class AppsExecutor:
                         tmp_result = (set(frozenset(s) for s in output) == set(
                             frozenset(s) for s in in_outs["outputs"][index]))
                     except Exception as e:
-                        print(f"Failed check5 exception = {e}")
+                        # print(f"Failed check5 exception = {e}")
+                        pass
 
                     # if they are all numbers, round so that similar numbers are treated as identical
                     try:
                         tmp_result = tmp_result or (set(frozenset(round(float(t), 3) for t in s) for s in output) == set(frozenset(round(float(t), 3) for t in s) for s in
                                                                                                                          in_outs["outputs"][index]))
                     except Exception as e:
-                        print(f"Failed check6 exception = {e}")
+                        # print(f"Failed check6 exception = {e}")
+                        pass
 
                     if tmp_result == True and debug:
                         print("PASSED")
