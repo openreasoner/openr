@@ -1,0 +1,65 @@
+# Task
+
+John won the championship of a TV show. He can get some bonuses.
+
+He needs to play a game to determine the amount of his bonus.
+
+Here are `n` rows and `m` columns of cards were placed on the ground. A non-negative number is written on each card.
+
+The rules of the game are:
+
+- Player starts from the top-left coner, walk to the bottom-right coner. 
+
+- Players can only walk downward or right. 
+
+- The sum of the numbers collected by the players will be used as the bonus.
+
+John has two chances to play this game on a game map. Specifically, when John finishes the game, the card on his path will be removed, and then he can walk again.
+
+Your task is to help John calculate the maximum amount of bonuses he can get.
+
+# Input
+
+- `gameMap/gamemap`: A `n` x `m` integer array. Each element represents the number on the card.
+  - `4 <= n,m <= 40(Pyhon)/100(JS)`
+
+
+- All inputs are valid.
+
+# Output
+
+An integer. the maximum amount of bonuses John can get.
+
+# Eaxmple
+
+For 
+```
+gameMap=
+[
+[1, 3, 9],
+[2, 8, 5],
+[5, 7, 4]
+]
+```
+The output should be `39`.
+
+One of the possible solution is:
+```
+1st game:
+[
+[>, >, v],
+[2, 8, v],
+[5, 7, v]
+]
+1+3+9+5+4=22
+
+2nd game:
+[
+[v, 0, 0],
+[>, v, 0],
+[5, >, >]
+]
+0+2+8+7+0=17
+
+Final bonus = 22 + 17 = 39
+```

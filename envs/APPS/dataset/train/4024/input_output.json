@@ -1,0 +1,1 @@
+{"fn_name": "special_number", "inputs": [[2], [3], [5], [9], [7], [23], [79], [32], [39], [55], [11350224]], "outputs": [["Special!!"], ["Special!!"], ["Special!!"], ["NOT!!"], ["NOT!!"], ["Special!!"], ["NOT!!"], ["Special!!"], ["NOT!!"], ["Special!!"], ["Special!!"]]}

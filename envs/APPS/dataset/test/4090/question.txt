@@ -1,0 +1,54 @@
+You are given a text consisting of $n$ space-separated words. There is exactly one space character between any pair of adjacent words. There are no spaces before the first word and no spaces after the last word. The length of text is the number of letters and spaces in it. $w_i$ is the $i$-th word of text. All words consist only of lowercase Latin letters.
+
+Let's denote a segment of words $w[i..j]$ as a sequence of words $w_i, w_{i + 1}, \dots, w_j$. Two segments of words $w[i_1 .. j_1]$ and $w[i_2 .. j_2]$ are considered equal if $j_1 - i_1 = j_2 - i_2$, $j_1 \ge i_1$, $j_2 \ge i_2$, and for every $t \in [0, j_1 - i_1]$ $w_{i_1 + t} = w_{i_2 + t}$. For example, for the text "to be or not to be" the segments $w[1..2]$ and $w[5..6]$ are equal, they correspond to the words "to be".
+
+An abbreviation is a replacement of some segments of words with their first uppercase letters. In order to perform an abbreviation, you have to choose at least two non-intersecting equal segments of words, and replace each chosen segment with the string consisting of first letters of the words in the segment (written in uppercase). For example, for the text "a ab a a b ab a a b c" you can replace segments of words $w[2..4]$ and $w[6..8]$ with an abbreviation "AAA" and obtain the text "a AAA b AAA b c", or you can replace segments of words $w[2..5]$ and $w[6..9]$ with an abbreviation "AAAB" and obtain the text "a AAAB AAAB c".
+
+What is the minimum length of the text after at most one abbreviation?
+
+
+-----Input-----
+
+The first line of the input contains one integer $n$ ($1 \le n \le 300$) — the number of words in the text.
+
+The next line contains $n$ space-separated words of the text $w_1, w_2, \dots, w_n$. Each word consists only of lowercase Latin letters.
+
+It is guaranteed that the length of text does not exceed $10^5$.
+
+
+-----Output-----
+
+Print one integer — the minimum length of the text after at most one abbreviation.
+
+
+-----Examples-----
+Input
+6
+to be or not to be
+
+Output
+12
+
+Input
+10
+a ab a a b ab a a b c
+
+Output
+13
+
+Input
+6
+aa bb aa aa bb bb
+
+Output
+11
+
+
+
+-----Note-----
+
+In the first example you can obtain the text "TB or not TB".
+
+In the second example you can obtain the text "a AAAB AAAB c".
+
+In the third example you can obtain the text "AB aa AB bb".

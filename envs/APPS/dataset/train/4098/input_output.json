@@ -1,0 +1,1 @@
+{"fn_name": "new_numeral_system", "inputs": [["G"], ["A"], ["D"], ["E"], ["O"]], "outputs": [[["A + G", "B + F", "C + E", "D + D"]], [["A + A"]], [["A + D", "B + C"]], [["A + E", "B + D", "C + C"]], [["A + O", "B + N", "C + M", "D + L", "E + K", "F + J", "G + I", "H + H"]]]}

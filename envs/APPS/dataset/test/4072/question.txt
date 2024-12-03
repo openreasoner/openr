@@ -1,0 +1,28 @@
+-----Input-----
+
+The input contains a single integer a (10 ≤ a ≤ 999).
+
+
+-----Output-----
+
+Output 0 or 1.
+
+
+-----Examples-----
+Input
+13
+
+Output
+1
+
+Input
+927
+
+Output
+1
+
+Input
+48
+
+Output
+0

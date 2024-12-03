@@ -1,0 +1,43 @@
+Programmers' kids solve this riddle in 5-10 minutes. How fast can you do it?
+
+
+-----Input-----
+
+The input contains a single integer n (0 ≤ n ≤ 2000000000).
+
+
+-----Output-----
+
+Output a single integer.
+
+
+-----Examples-----
+Input
+11
+
+Output
+2
+
+Input
+14
+
+Output
+0
+
+Input
+61441
+
+Output
+2
+
+Input
+571576
+
+Output
+10
+
+Input
+2128506
+
+Output
+3

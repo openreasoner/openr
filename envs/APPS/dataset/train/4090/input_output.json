@@ -1,0 +1,1 @@
+{"fn_name": "get_animals_count", "inputs": [[34, 11, 6], [154, 42, 10], [74, 20, 34], [152, 38, 34], [56, 17, 0]], "outputs": [[{"rabbits": 3, "chickens": 5, "cows": 3}], [{"rabbits": 30, "chickens": 7, "cows": 5}], [{"rabbits": 0, "chickens": 3, "cows": 17}], [{"rabbits": 21, "chickens": 0, "cows": 17}], [{"rabbits": 11, "chickens": 6, "cows": 0}]]}

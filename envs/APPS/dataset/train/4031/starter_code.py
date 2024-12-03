@@ -1,0 +1,2 @@
+def interpreter(code, tape):
+	

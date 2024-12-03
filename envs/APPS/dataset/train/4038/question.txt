@@ -1,0 +1,26 @@
+# Task
+ Given a position of a knight on the standard chessboard, find the number of different moves the knight can perform.
+
+ The knight can move to a square that is two squares horizontally and one square vertically, or two squares vertically and one square horizontally away from it. The complete move therefore looks like the letter L. Check out the image below to see all valid moves for a knight piece that is placed on one of the central squares.
+
+ ![](https://codefightsuserpics.s3.amazonaws.com/tasks/chessKnight/img/knight.jpg?_tm=1473533979951)
+
+# Example
+
+ For `cell = "a1"`, the output should be `2`.
+
+ ![](https://codefightsuserpics.s3.amazonaws.com/tasks/chessKnight/img/ex_1.jpg?_tm=1473533980197)
+
+ For `cell = "c2"`, the output should be `6`.
+
+ ![](https://codefightsuserpics.s3.amazonaws.com/tasks/chessKnight/img/ex_2.jpg?_tm=1473533980368)
+
+# Input/Output
+
+
+ - `[input]` string `cell`
+
+    String consisting of letter+number - coordinates of the knight on an 8 × 8 chessboard in chess notation.
+
+
+ - `[output]` an integer

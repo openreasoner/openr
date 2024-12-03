@@ -1,0 +1,2 @@
+def contamination(text, char):
+	

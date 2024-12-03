@@ -1,0 +1,1 @@
+{"fn_name": "search_substr", "inputs": [["aa_bb_cc_dd_bb_e", "bb"], ["aaabbbcccc", "bbb"], ["aaacccbbbcccc", "cc"], ["aaa", "aa"], ["aaa", "aa", false], ["aaabbbaaa", "bb", false], ["a", ""], ["", "a"], ["", ""], ["", "", false]], "outputs": [[2], [1], [5], [2], [1], [1], [0], [0], [0], [0]]}

@@ -1,0 +1,2 @@
+def isDigit(string):
+	

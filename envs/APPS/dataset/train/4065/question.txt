@@ -1,0 +1,18 @@
+In mathematics, a **pandigital number** is a number that in a given base has among its significant digits each digit used in the base at least once. For example, 1234567890 is a pandigital number in base 10.
+
+For simplification, in this kata, we will consider pandigital numbers in *base 10* and with all digits used *exactly once*. The challenge is to calculate a sorted sequence of pandigital numbers, starting at a certain `offset` and with a specified `size`.
+
+Example:
+```python
+  > get_sequence(0, 5)
+  [1023456789, 1023456798, 1023456879, 1023456897, 1023456978]
+```
+
+Rules:
+- We are looking for positive pandigital numbers in base 10.
+- Each digit should occur `exactly once`.
+- A pandigital number can't start with digit zero.
+- The offset is an integer (negative, zero or positive number) (long in Java)
+- The size is a positive integer number (int in Java)
+- Return the `size` pandigital numbers which are not smaller than the `offset`. If there is not enough `size` pandigital numbers, just return all of them.
+- Return an empty array if nothing is found.

@@ -1,0 +1,1 @@
+{"fn_name": "string_suffix", "inputs": [["aa"], ["abc"], ["ababaa"], ["aaaa"], ["aaaaa"], ["aaaaaa"], ["mnsomn"], ["apple"], ["a"], ["pippi"]], "outputs": [[3], [3], [11], [10], [15], [21], [8], [5], [1], [8]]}

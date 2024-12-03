@@ -1,0 +1,44 @@
+# Task
+
+**_Given_** an *array/list [] of n integers* , *find maximum triplet sum in the array* **_Without duplications_**   .
+___
+
+# Notes :
+
+* **_Array/list_** size is *at least 3* .
+
+* **_Array/list_** numbers could be a *mixture of positives , negatives and zeros* .
+
+* **_Repetition_** of numbers in *the array/list could occur* , So **_(duplications are not included when summing)_**.
+___
+# Input >> Output Examples 
+
+## **_Explanation_**:
+
+* As the **_triplet_** that *maximize the sum* **_{6,8,3}_** in order , **_their sum is (17)_** 
+
+* *Note* : **_duplications_** *are not included when summing* , **(i.e) the numbers added only once** .
+___
+## **_Explanation_**:
+
+* As the **_triplet_** that *maximize the sum* **_{8, 6, 4}_** in order , **_their sum is (18)_** , 
+* *Note* : **_duplications_** *are not included when summing* , **(i.e) the numbers added only once** .
+___
+## **_Explanation_**:
+
+* As the **_triplet_** that *maximize the sum* **_{12 , 29 , 0}_** in order , **_their sum is (41)_** , 
+* *Note* : **_duplications_** *are not included when summing* , **(i.e) the numbers added only once** .
+___
+# [Playing with Numbers Series](https://www.codewars.com/collections/playing-with-numbers)
+
+# [Playing With Lists/Arrays Series](https://www.codewars.com/collections/playing-with-lists-slash-arrays)
+
+# [For More Enjoyable Katas](http://www.codewars.com/users/MrZizoScream/authored)
+___
+___
+___
+
+## ALL translations are welcomed
+
+## Enjoy Learning !!
+# Zizou

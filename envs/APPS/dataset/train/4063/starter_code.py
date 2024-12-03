@@ -1,0 +1,2 @@
+def evenator(s):
+	

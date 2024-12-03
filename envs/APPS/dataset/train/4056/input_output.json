@@ -1,0 +1,1 @@
+{"fn_name": "leaderboard_sort", "inputs": [[["John", "Brian", "Jim", "Dave", "Fred"], ["Dave +1", "Fred +4", "Brian -1"]], [["Bob", "Larry", "Kevin", "Jack", "Max"], ["Max +3", "Kevin -1", "Kevin +3"]]], "outputs": [[["Fred", "John", "Dave", "Brian", "Jim"]], [["Bob", "Kevin", "Max", "Larry", "Jack"]]]}

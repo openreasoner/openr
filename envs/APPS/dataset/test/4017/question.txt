@@ -1,0 +1,58 @@
+Let's call an array good if there is an element in the array that equals to the sum of all other elements. For example, the array $a=[1, 3, 3, 7]$ is good because there is the element $a_4=7$ which equals to the sum $1 + 3 + 3$.
+
+You are given an array $a$ consisting of $n$ integers. Your task is to print all indices $j$ of this array such that after removing the $j$-th element from the array it will be good (let's call such indices nice).
+
+For example, if $a=[8, 3, 5, 2]$, the nice indices are $1$ and $4$:   if you remove $a_1$, the array will look like $[3, 5, 2]$ and it is good;  if you remove $a_4$, the array will look like $[8, 3, 5]$ and it is good. 
+
+You have to consider all removals independently, i. e. remove the element, check if the resulting array is good, and return the element into the array.
+
+
+-----Input-----
+
+The first line of the input contains one integer $n$ ($2 \le n \le 2 \cdot 10^5$) — the number of elements in the array $a$.
+
+The second line of the input contains $n$ integers $a_1, a_2, \dots, a_n$ ($1 \le a_i \le 10^6$) — elements of the array $a$.
+
+
+-----Output-----
+
+In the first line print one integer $k$ — the number of indices $j$ of the array $a$ such that after removing the $j$-th element from the array it will be good (i.e. print the number of the nice indices).
+
+In the second line print $k$ distinct integers $j_1, j_2, \dots, j_k$ in any order — nice indices of the array $a$.
+
+If there are no such indices in the array $a$, just print $0$ in the first line and leave the second line empty or do not print it at all.
+
+
+-----Examples-----
+Input
+5
+2 5 1 2 2
+
+Output
+3
+4 1 5
+Input
+4
+8 3 5 2
+
+Output
+2
+1 4 
+
+Input
+5
+2 1 2 4 3
+
+Output
+0
+
+
+
+
+-----Note-----
+
+In the first example you can remove any element with the value $2$ so the array will look like $[5, 1, 2, 2]$. The sum of this array is $10$ and there is an element equals to the sum of remaining elements ($5 = 1 + 2 + 2$).
+
+In the second example you can remove $8$ so the array will look like $[3, 5, 2]$. The sum of this array is $10$ and there is an element equals to the sum of remaining elements ($5 = 3 + 2$). You can also remove $2$ so the array will look like $[8, 3, 5]$. The sum of this array is $16$ and there is an element equals to the sum of remaining elements ($8 = 3 + 5$).
+
+In the third example you cannot make the given array good by removing exactly one element.
