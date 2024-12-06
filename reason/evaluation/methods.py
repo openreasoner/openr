@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 import random
 import functools
 from typing import Dict
@@ -68,16 +68,21 @@ class DotsConfig(BasicConfig):
     depth: int = 5
     num_sequence: int = 1
 
-    empty_prompt: str = ""
-    rewriting_prompt: str = read_txt("reason/evaluation/dots_prompts/MATH/rewriting_prompt.txt")
-    decomposition_prompt: str = read_txt("reason/evaluation/dots_prompts/MATH/decomposition_prompt.txt")
-    cot_prompt: str = read_txt("reason/evaluation/dots_prompts/MATH/cot_prompt.txt")
-    pot_prompt: str = read_txt("reason/evaluation/dots_prompts/MATH/pot_prompt.txt")
-    self_verification_prompt: str = read_txt("reason/evaluation/dots_prompts/MATH/self_verification_prompt.txt")
+    analysis_layer_prompts: list[str] = field(default_factory=list)
+    solution_layer_prompts: list[str] = field(default_factory=list)
+    verification_layer_prompts: list[str] = field(default_factory=list)
 
-    analysis_layer_prompts = [empty_prompt, rewriting_prompt, decomposition_prompt]
-    solution_layer_prompts = [cot_prompt, pot_prompt]
-    verification_layer_prompts = [empty_prompt, self_verification_prompt]
+    def __post_init__(self):
+        empty_prompt: str = ""
+        rewriting_prompt: str = read_txt("reason/evaluation/dots_prompts/MATH/rewriting_prompt.txt")
+        decomposition_prompt: str = read_txt("reason/evaluation/dots_prompts/MATH/decomposition_prompt.txt")
+        cot_prompt: str = read_txt("reason/evaluation/dots_prompts/MATH/cot_prompt.txt")
+        pot_prompt: str = read_txt("reason/evaluation/dots_prompts/MATH/pot_prompt.txt")
+        self_verification_prompt: str = read_txt("reason/evaluation/dots_prompts/MATH/self_verification_prompt.txt")
+
+        self.analysis_layer_prompts = [empty_prompt, rewriting_prompt, decomposition_prompt]
+        self.solution_layer_prompts = [cot_prompt, pot_prompt]
+        self.verification_layer_prompts = [empty_prompt, self_verification_prompt]
 
 def dots(
     config: DotsConfig,
