@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+import random
 import functools
 from typing import Dict
 from reason.inference.lm_call import LMCallingConfig, LanguageModelCallingFunction
@@ -6,6 +7,7 @@ from reason.inference.rm_call import RewardModelCallingFunction
 from reason.evaluation.evaluator import SolutionOutput, Task, TreeSearchSolutionOutput
 from reason.guided_search.tree import SearchTree
 from reason.guided_search.rstar import RstarSearchTree
+from reason.evaluation.utils import read_txt
 
 
 @dataclass
@@ -61,6 +63,69 @@ def best_of_n(
         completion_tokens=completion_tokens,
     )
 
+@dataclass        # TODO: no need to load every time...right?
+class DotsConfig(BasicConfig):
+    depth: int = 5
+    num_sequence: int = 1
+
+    empty_prompt: str = ""
+    rewriting_prompt: str = read_txt("reason/evaluation/dots_prompts/MATH/rewriting_prompt.txt")
+    decomposition_prompt: str = read_txt("reason/evaluation/dots_prompts/MATH/decomposition_prompt.txt")
+    cot_prompt: str = read_txt("reason/evaluation/dots_prompts/MATH/cot_prompt.txt")
+    pot_prompt: str = read_txt("reason/evaluation/dots_prompts/MATH/pot_prompt.txt")
+    self_verification_prompt: str = read_txt("reason/evaluation/dots_prompts/MATH/self_verification_prompt.txt")
+
+    analysis_layer_prompts = [empty_prompt, rewriting_prompt, decomposition_prompt]
+    solution_layer_prompts = [cot_prompt, pot_prompt]
+    verification_layer_prompts = [empty_prompt, self_verification_prompt]
+
+def dots(
+    config: DotsConfig,
+    gen_config: LMCallingConfig,
+    problem_inst: Dict[str, str],
+    lm_call: LanguageModelCallingFunction,
+    rm_call: RewardModelCallingFunction,
+) -> SolutionOutput:
+    if gen_config.max_new_tokens < 256:
+        print("Warning: max_new_tokens is less than 256")
+
+    gen_config.n = config.num_sequence
+    task = Task(task_name=config.task_name)
+    # prompt = task.prompt_fn(problem_inst["question"])
+    prompt = problem_inst["question"] + "\n"
+
+    # analysis layer
+    analysis_prompt = random.choice(config.analysis_layer_prompts)
+    if analysis_prompt != "": # EMPTY actions means bypass
+        output = lm_call(prompt+analysis_prompt, gen_config)
+        prompt += (output.text[0] + "\n")
+
+    step_num = 0
+    completion_tokens = 0
+    while step_num <= config.depth:
+        step_num += 1
+
+        # solution layer
+        solution_prompt = random.choice(config.solution_layer_prompts)
+        output = lm_call(prompt+solution_prompt, gen_config)    # TODO: PoT run the code
+        completion_tokens += output.num_tokens[0]
+        prompt += (output.text[0] + "\n")
+
+        # verification layer
+        verification_prompt = random.choice(config.verification_layer_prompts)
+        if verification_prompt == "":     # EMPTY actions means bypass
+            continue
+        output = lm_call(prompt+verification_prompt, gen_config)
+        prompt += (output.text[0] + "\n")
+        completion_tokens += output.num_tokens[0]
+
+        if "The answer is: correct" in output.text[0]:
+            break
+
+    return SolutionOutput(
+        solutions=[prompt],
+        completion_tokens=[completion_tokens],
+    )
 
 @dataclass
 class TreeSearchConfig(BasicConfig):
