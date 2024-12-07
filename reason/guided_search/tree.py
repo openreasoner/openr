@@ -702,7 +702,7 @@ class SearchTree:
                     # raise RuntimeError("Tokenizer problems")
                     child_values.append(0.0)
 
-                if len(rs) == 0:
+                elif len(rs) == 0:
                     logger.warning(
                         "Empty PRM value for: \nState: \n{} \naction: \n{}, will be set to 0.0".format(
                             text_state, act
