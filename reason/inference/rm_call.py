@@ -88,20 +88,19 @@ class RMRemoteCaller(RewardModelCallingFunction):
     ) -> Union[List[int], List[List[int]]]:
 
         if isinstance(question_answer_pairs[0], str):
-            response = self.replace_step_tag(question_answer_pairs[1], lm_step_tag)
-            input_str = self.format_str.format(
-                question=question_answer_pairs[0], answer=response
-            )
+            new_question = question_answer_pairs[0]
+            new_answer = self.replace_step_tag(question_answer_pairs[1], lm_step_tag)
         else:
-            input_str = [
-                self.format_str.format(
-                    question=s[0],
-                    answer=self.replace_step_tag(s[1], lm_step_tag),
-                )
-                for s in question_answer_pairs
+            new_question = [s[0] for s in question_answer_pairs]
+            new_answer = [
+                self.replace_step_tag(s[1], lm_step_tag) for s in question_answer_pairs
             ]
+
         return _value_inference_fastchat(
-            input_str=input_str,
+            question=new_question,
+            answer=new_answer,
+            format=self.format_str,
+            prm_step_tag=self.step_tag,
             model_name=self.model_name,
             controller_addr=self.controller_addr,
         )

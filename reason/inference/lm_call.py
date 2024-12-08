@@ -13,6 +13,7 @@ class LMCallingConfig:
     stop_token_ids: Optional[List[int]] = None
     stop_str: Optional[Union[str, List[str]]] = None
     include_stop_str_in_output: bool = False
+    use_lora: bool = False
 
 
 class LanguageModelCallingFunction:
@@ -29,25 +30,57 @@ class VLLMRemoteCaller(LanguageModelCallingFunction):
         model_name,
         controller_addr="http://0.0.0.0:28777",
         lm_step_tag: str = None,
+        batch_limit: int = None,
     ):
         self.model_name = model_name
         self.controller_addr = controller_addr
         super().__init__(lm_step_tag)
 
+        self.batch_limit = batch_limit  # when we want to control the amount of request sent to asyncEngine
+
     def __call__(self, input_str: str, config: LMCallingConfig) -> ConcatedLMGenResult:
-        return _generate_fastchat(
-            query_str=input_str,
-            model_name=self.model_name,
-            n=config.n,
-            temperature=config.temperature,
-            top_p=config.top_p,
-            top_k=config.top_k,
-            max_new_tokens=config.max_new_tokens,
-            stop_token_ids=config.stop_token_ids,
-            stop_str=config.stop_str,
-            controller_addr=self.controller_addr,
-            include_stop_str_in_output=config.include_stop_str_in_output,
-        )
+        if self.batch_limit is None or config.n <= self.batch_limit:
+            # send unlimited request
+            return _generate_fastchat(
+                query_str=input_str,
+                model_name=self.model_name,
+                n=config.n,
+                temperature=config.temperature,
+                top_p=config.top_p,
+                top_k=config.top_k,
+                max_new_tokens=config.max_new_tokens,
+                stop_token_ids=config.stop_token_ids,
+                stop_str=config.stop_str,
+                controller_addr=self.controller_addr,
+                include_stop_str_in_output=config.include_stop_str_in_output,
+                use_lora=config.use_lora,
+            )
+        else:
+            batch_ret = []
+            batches = [self.batch_limit] * (config.n // self.batch_limit)
+            remainder = config.n % self.batch_limit
+            if remainder > 0:
+                batches.append(remainder)
+
+            for b in batches:
+                batch_ret.append(
+                    _generate_fastchat(
+                        query_str=input_str,
+                        model_name=self.model_name,
+                        n=b,
+                        temperature=config.temperature,
+                        top_p=config.top_p,
+                        top_k=config.top_k,
+                        max_new_tokens=config.max_new_tokens,
+                        stop_token_ids=config.stop_token_ids,
+                        stop_str=config.stop_str,
+                        controller_addr=self.controller_addr,
+                        include_stop_str_in_output=config.include_stop_str_in_output,
+                        use_lora=config.use_lora,
+                    )
+                )
+            final_ret = ConcatedLMGenResult.merge(batch_ret)
+            return final_ret
 
 
 class FastChatRemoteCaller(LanguageModelCallingFunction):
@@ -83,6 +116,7 @@ class FastChatRemoteCaller(LanguageModelCallingFunction):
                 stop_str=config.stop_str,
                 controller_addr=self.controller_addr,
                 include_stop_str_in_output=config.include_stop_str_in_output,
+                use_lora=config.use_lora,
             )
             text.append(res.text[0])
             cumulative_logprob.append(res.cumulative_logprob[0])

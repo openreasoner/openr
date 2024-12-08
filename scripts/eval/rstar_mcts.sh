@@ -9,8 +9,9 @@ python reason/evaluation/evaluate.py \
     --save_dir debug \
     --method rstar_mcts \
     --num_worker 32 \
-    --controller_addr http://0.0.0.0:28777 \
     --top_k 40 \
     --top_p 0.95 \
     --temperature 0.8 \
+    --LM_addr http://0.0.0.0:28777 \
+    --RM_addr http://0.0.0.0:28777 \
 #    --local
