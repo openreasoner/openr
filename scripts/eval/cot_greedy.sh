@@ -2,10 +2,12 @@ python reason/evaluation/evaluate.py \
     --LM Qwen2.5-Math-1.5B-Instruct \
     --LM_config "reason/resource/qwen2.5/config.json" \
     --task_name MATH \
+    --test_data_path "envs/MATH/dataset/test500.jsonl" \
     --temperature 0.0 \
     --max_new_tokens 2048 \
-    --save_dir qwen_results \
+    --save_dir qwen1.5_results \
     --method cot \
-    --num_worker 32 \
+    --num_worker 16 \
     --LM_addr http://0.0.0.0:28777 \
-    --RM_addr http://0.0.0.0:28777
+    --RM_addr http://0.0.0.0:28777 \
+    --local

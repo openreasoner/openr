@@ -63,7 +63,7 @@ def LLM_as_Judge(cfg, llm_gen_fn, gen_cfg, datasets, save_dir, num_seq):
     )
 
     all_collection = defaultdict(list)
-    for i, (problem_inst, score, review_text) in enumerate(
+    for i, (problem_inst, score, review_text, summary_answer) in enumerate(
         tqdm(res_q, total=len(datasets))
     ):
         obj = {
@@ -73,6 +73,7 @@ def LLM_as_Judge(cfg, llm_gen_fn, gen_cfg, datasets, save_dir, num_seq):
             "value": problem_inst["value"],
             "score": score,
             "review_text": review_text,
+            "summary_answer": summary_answer
         }
         all_collection[problem_inst["question_idx"]].append(obj)
 
@@ -84,7 +85,7 @@ def LLM_as_Judge(cfg, llm_gen_fn, gen_cfg, datasets, save_dir, num_seq):
     for agg_method in CHOSEN_AGGR_METHODS if num_seq > 1 else [CHOSEN_AGGR_METHODS[0]]:
         total_score = []
         for p in all_collection.values():
-            ans_list = [task_answer_extractor(i["answer"]) for i in p]
+            ans_list = [task_answer_extractor(i["summary_answer"]) for i in p]
             value_list = [i["value"] for i in p]
             score_list = [i["score"] for i in p]
 

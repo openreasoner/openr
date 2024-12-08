@@ -26,6 +26,7 @@ from ray.util.actor_pool import ActorPool
 from reason.evaluation.methods import *
 import ray
 
+BASE_DIR = Path(__file__).parent.parent.parent.resolve()
 
 def setup_seed(seed):
     torch.manual_seed(seed)
@@ -37,7 +38,7 @@ def setup_seed(seed):
 
 
 def parallel_evaluate_test_dataset(
-    method_name: str, solver_fn: Callable, save_dir: Optional[Path] = None
+    task: Task, method_name: str, solver_fn: Callable, save_dir: Optional[Path] = None
 ) -> List[Dict[str, Any]]:
     if save_dir is not None:
         record_writer = jsonlines.open(save_dir / f"record.jsonl", mode="w")
@@ -72,7 +73,7 @@ def parallel_evaluate_test_dataset(
 
     actor_pool = ActorPool(
         [
-            RemoteMathEvaluator.remote(config.task_name, llm_gen_fn, rm_call)
+            RemoteMathEvaluator.remote(task, llm_gen_fn, rm_call)
             for _ in range(config.num_worker)
         ]
     )
@@ -106,7 +107,7 @@ if __name__ == "__main__":
         "--LM_addr",
         type=str,
         default="http://0.0.0.0:28778",
-        desc="locate which LM we use",
+        help="locate which LM we use",
     )
     parser.add_argument(
         "--LM_config", type=str, default="reason/resource/qwen2.5/config.json"
@@ -116,14 +117,16 @@ if __name__ == "__main__":
         "--RM_addr",
         type=str,
         default="http://0.0.0.0:28778",
-        desc="locate which RM we use",
+        help="locate which RM we use",
     )
-    parser.add_argument("--RM_config", type=str, default="reason/resource/mistral")
+    parser.add_argument("--RM_config", type=str, default="reason/resource/mistral/shepherd_prm_config.json")
     # task config
     parser.add_argument("--task_name", type=str, default="gsm8k")
     parser.add_argument("--test", type=str2bool, default=True)
     parser.add_argument("--is_few_shot", type=str2bool, default=False)
     parser.add_argument("--seed", type=int, default=0)
+    parser.add_argument("--train_data_path", type=str, default="")
+    parser.add_argument("--test_data_path", type=str, default="")
     # method config
     parser.add_argument("--method", type=str, required=True)
     parser.add_argument("--num_sequence", type=int, default=1)
@@ -132,9 +135,9 @@ if __name__ == "__main__":
     parser.add_argument("--top_k", type=int, default=-1)
     parser.add_argument("--top_p", type=float, default=1)
     parser.add_argument("--max_new_tokens", type=int, default=256)
-    parser.add_argument(
-        "--stop_str", type=str, nargs="+", desc="customized stopping str for LM"
-    )
+    # parser.add_argument(
+    #     "--stop_str", type=str, nargs="+", help="customized stopping str for LM"
+    # )
     parser.add_argument(
         "--use_lora",
         action="store_true",
@@ -158,15 +161,18 @@ if __name__ == "__main__":
         ray.init(local_mode=True)
 
     # load necessary config file
-    with open(config.LM_config, "r", encoding="utf-8") as file:
+    with open(os.path.join(BASE_DIR, config.LM_config), "r", encoding="utf-8") as file:
         lm_cfg = json.load(file)
-    with open(config.RM_config, "r", encoding="utf-8") as file:
+    with open(os.path.join(BASE_DIR, config.RM_config), "r", encoding="utf-8") as file:
         rm_cfg = json.load(file)
+    #
+    prm_step_tag = rm_cfg["prm_step_tag"]
+    prm_format_str = rm_cfg["problem_format_str"]
+    lm_step_tag = lm_cfg["lm_step_tag"]
+    stop_str = lm_cfg["lm_stop_tag"]
+    print(f"stop at {stop_str}")
 
-    prm_step_tag = rm_cfg.prm_step_tag
-    prm_format_str = rm_cfg.problem_format_str
-    lm_step_tag = lm_cfg.step_str
-
+    # LM and RM
     llm_gen_fn = VLLMRemoteCaller(config.LM, config.LM_addr, lm_step_tag=lm_step_tag)
     if config.RM == "dummy":
         rm_config = RewardModelBaseConfig(
@@ -182,12 +188,15 @@ if __name__ == "__main__":
         )
         rm_call = RMRemoteCaller(rm_config)
 
+    # Task
     task = Task(
         task_name=config.task_name,
         is_few_shot=config.is_few_shot,
-        cot_task_desc=lm_cfg.cot_task_desc,
-        cot_examples=lm_cfg.cot_examples,
-        problem_format_str=lm_cfg.problem_format_str,
+        cot_task_desc=lm_cfg["cot_task_desc"],
+        cot_examples=lm_cfg["cot_examples"],
+        problem_format_str=lm_cfg["problem_format_str"],
+        train_data_path=config.train_data_path,
+        test_data_path=config.test_data_path,
     )
 
     solver_fns = {"cot": cot, "best_of_n": best_of_n}
@@ -202,19 +211,19 @@ if __name__ == "__main__":
         top_k=config.top_k,
         top_p=config.top_p,
         max_new_tokens=config.max_new_tokens,
-        stop_str=config.stop_str,
+        stop_str=stop_str,
         use_lora=config.use_lora,
     )
     cfg_dict_record["gen_config"] = gen_config.__dict__
 
     if config.method == "cot":
         method_config = CoTConfig(config.task_name)
-        solver_fn = partial(cot, method_config, gen_config)
+        solver_fn = partial(cot, task, method_config, gen_config)
     elif config.method == "best_of_n":
         method_config = BestOfNConfig(
             config.task_name, num_sequence=config.num_sequence
         )
-        solver_fn = partial(best_of_n, method_config, gen_config)
+        solver_fn = partial(best_of_n, task, method_config, gen_config)
     elif config.method == "beam_search":
         method_config = BeamSearchConfig(
             task_name=config.task_name,
@@ -222,7 +231,7 @@ if __name__ == "__main__":
             tree_max_width=config.tree_max_width,
             beam_size=config.num_sequence,
         )
-        solver_fn = partial(beam_search, method_config, gen_config)
+        solver_fn = partial(beam_search, task, method_config, gen_config)
     elif config.method == "vanila_mcts":
         method_config = VanilaMCTSConfig(
             task_name=config.task_name,
@@ -231,7 +240,7 @@ if __name__ == "__main__":
             select_by_prior=False,
             num_path=config.num_sequence,
         )
-        solver_fn = partial(vanila_mcts, method_config, gen_config)
+        solver_fn = partial(vanila_mcts, task, method_config, gen_config)
     elif config.method == "rstar_mcts":
         method_config = VanilaMCTSConfig(
             task_name=config.task_name,
@@ -240,7 +249,7 @@ if __name__ == "__main__":
             select_by_prior=False,
             num_path=config.num_sequence,
         )
-        solver_fn = partial(rstar_mcts, method_config, gen_config)
+        solver_fn = partial(rstar_mcts, task, method_config, gen_config)
 
     else:
         raise ValueError(f"Unknown method: {config.method}")
@@ -254,8 +263,10 @@ if __name__ == "__main__":
         record_writer = jsonlines.open(save_dir / f"record.jsonl", mode="w")
         cfg_dict_record["LM"] = config.LM
         cfg_dict_record["RM"] = config.RM
+        cfg_dict_record["LM_config"] = lm_cfg
+        cfg_dict_record["RM_config"] = rm_cfg
         json.dump(cfg_dict_record, open(save_dir / "config.json", "w"))
     else:
         save_dir = None
 
-    parallel_evaluate_test_dataset(config.method, solver_fn, save_dir)
+    parallel_evaluate_test_dataset(task, config.method, solver_fn, save_dir)

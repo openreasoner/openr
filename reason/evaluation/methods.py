@@ -19,6 +19,7 @@ class CoTConfig(BasicConfig):
 
 
 def cot(
+    task: Task,
     config: CoTConfig,
     gen_config: LMCallingConfig,
     problem_inst: Dict[str, str],
@@ -31,9 +32,12 @@ def cot(
         top_k=1,
         top_p=1.0,
         max_new_tokens=gen_config.max_new_tokens,
+        stop_str=gen_config.stop_str,
+        use_lora=gen_config.use_lora
     )
     config.num_sequence = 1
-    return best_of_n(config, gen_config, problem_inst, llm_call, rm_call)
+    assert isinstance(task, Task)
+    return best_of_n(task, config, gen_config, problem_inst, llm_call, rm_call)
 
 
 @dataclass
@@ -42,6 +46,7 @@ class BestOfNConfig(BasicConfig):
 
 
 def best_of_n(
+    task: Task,
     config: BestOfNConfig,
     gen_config: LMCallingConfig,
     problem_inst: Dict[str, str],
@@ -52,7 +57,8 @@ def best_of_n(
         print("Warning: max_new_tokens is less than 256")
 
     gen_config.n = config.num_sequence
-    task = Task(task_name=config.task_name)
+    assert isinstance(task, Task)
+    # task = Task(task_name=config.task_name)
     prompt = task.prompt_fn(problem_inst["question"])
     output = lm_call(prompt, gen_config)
     completion_tokens = output.num_tokens
@@ -86,13 +92,15 @@ class BeamSearchConfig(TreeSearchConfig):
 
 
 def beam_search(
+    task: Task,
     config: BeamSearchConfig,
     gen_config: LMCallingConfig,
     problem_inst: Dict[str, str],
     lm_call: LanguageModelCallingFunction,
     rm_call: RewardModelCallingFunction,
 ) -> SolutionOutput:
-    task = Task(task_name=config.task_name)
+    # task = Task(task_name=config.task_name)
+    assert isinstance(task, Task)
     env = task.env_fn(
         config={
             "max_actions": config.tree_max_width,
@@ -152,13 +160,15 @@ class VanilaMCTSConfig(MCTSBaseConfig):
 
 
 def vanila_mcts(
+    task: Task,
     config: VanilaMCTSConfig,
     gen_config: LMCallingConfig,
     problem_inst: Dict[str, str],
     lm_call: LanguageModelCallingFunction,
     rm_call: RewardModelCallingFunction,
 ):
-    task = Task(task_name=config.task_name)
+    # task = Task(task_name=config.task_name)
+    assert isinstance(task, Task)
     env = task.env_fn(
         config={
             "max_actions": config.tree_max_width,
@@ -219,13 +229,15 @@ class RStarMCTSConfig(MCTSBaseConfig):
 
 
 def rstar_mcts(
+    task: Task,
     config: RStarMCTSConfig,
     gen_config: LMCallingConfig,
     problem_inst: Dict[str, str],
     lm_call: LanguageModelCallingFunction,
     rm_call: RewardModelCallingFunction,
 ):
-    task = Task(task_name=config.task_name)
+    # task = Task(task_name=config.task_name)
+    assert isinstance(task, Task)
     env = task.env_fn(
         config={
             "max_actions": config.tree_max_width,

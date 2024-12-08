@@ -1,6 +1,7 @@
 from pathlib import Path
 import jsonlines
 import json
+import os
 from torch.utils.data import Dataset
 
 
@@ -12,6 +13,10 @@ def get_train_test_dataset(*args, **kwargs):
     train_ds = JsonlMathDataset(root_dir / train_data_path)
 
     return train_ds, test_ds
+
+def get_dataset(**kwargs):
+    root_dir = Path(__file__).parent.parent.parent.resolve()
+    return JsonlMathDataset(os.path.join(root_dir, kwargs['data_path']))
 
 
 class JsonlMathDataset(Dataset):
