@@ -1,0 +1,11 @@
+{
+  # For Skywork-o1-Open-PRM-Qwen-2.5-7B model series. Problem_format is not used
+  RM: "Skywork-o1-Open-PRM-Qwen-2.5-7B",
+  cot_task_desc: "",
+  cot_examples: "",
+  eot_token: null,
+  eot_id: null,
+  problem_format_str: "{question} {answer}",
+  lm_step_tag: null,
+  prm_step_tag: "\n\n"
+}

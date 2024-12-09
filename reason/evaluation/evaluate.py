@@ -25,8 +25,9 @@ import tree
 from ray.util.actor_pool import ActorPool
 from reason.evaluation.methods import *
 import ray
+from omegaconf import OmegaConf
 
-BASE_DIR = Path(__file__).parent.parent.parent.resolve()
+BASE_DIR = Path(__file__).parent.parent.parent
 
 def setup_seed(seed):
     torch.manual_seed(seed)
@@ -102,7 +103,7 @@ def parallel_evaluate_test_dataset(
 
 if __name__ == "__main__":
     parser = ArgumentParser()
-    parser.add_argument("--LM", type=str, required=True)
+    parser.add_argument("--LM", type=str, default=None)
     parser.add_argument(
         "--LM_addr",
         type=str,
@@ -110,16 +111,16 @@ if __name__ == "__main__":
         help="locate which LM we use",
     )
     parser.add_argument(
-        "--LM_config", type=str, default="reason/resource/qwen2.5/config.json"
+        "--LM_config", type=str, required=True
     )
-    parser.add_argument("--RM", type=str, default="dummy")
+    parser.add_argument("--RM", type=str, default=None)
     parser.add_argument(
         "--RM_addr",
         type=str,
         default="http://0.0.0.0:28778",
         help="locate which RM we use",
     )
-    parser.add_argument("--RM_config", type=str, default="reason/resource/mistral/shepherd_prm_config.json")
+    parser.add_argument("--RM_config", type=str, default="reason/resource/mistral/shepherd_prm_config.yaml")
     # task config
     parser.add_argument("--task_name", type=str, default="gsm8k")
     parser.add_argument("--test", type=str2bool, default=True)
@@ -161,15 +162,18 @@ if __name__ == "__main__":
         ray.init(local_mode=True)
 
     # load necessary config file
-    with open(os.path.join(BASE_DIR, config.LM_config), "r", encoding="utf-8") as file:
-        lm_cfg = json.load(file)
-    with open(os.path.join(BASE_DIR, config.RM_config), "r", encoding="utf-8") as file:
-        rm_cfg = json.load(file)
+    lm_cfg = OmegaConf.load(BASE_DIR / config.LM_config)
+    rm_cfg = OmegaConf.load(BASE_DIR / config.RM_config)
+    if config.LM is None:       # if LM or RM not specified, load it from config file
+        config.LM = lm_cfg.LM
+    if config.RM is None:
+        config.RM = rm_cfg.RM
+
     #
-    prm_step_tag = rm_cfg["prm_step_tag"]
-    prm_format_str = rm_cfg["problem_format_str"]
-    lm_step_tag = lm_cfg["lm_step_tag"]
-    stop_str = lm_cfg["lm_stop_tag"]
+    prm_step_tag = rm_cfg.prm_step_tag
+    prm_format_str = rm_cfg.problem_format_str
+    lm_step_tag = lm_cfg.lm_step_tag
+    stop_str = list(lm_cfg.lm_stop_tag)
     print(f"stop at {stop_str}")
 
     # LM and RM
@@ -263,8 +267,8 @@ if __name__ == "__main__":
         record_writer = jsonlines.open(save_dir / f"record.jsonl", mode="w")
         cfg_dict_record["LM"] = config.LM
         cfg_dict_record["RM"] = config.RM
-        cfg_dict_record["LM_config"] = lm_cfg
-        cfg_dict_record["RM_config"] = rm_cfg
+        cfg_dict_record["LM_config"] = OmegaConf.to_container(lm_cfg)
+        cfg_dict_record["RM_config"] = OmegaConf.to_container(rm_cfg)
         json.dump(cfg_dict_record, open(save_dir / "config.json", "w"))
     else:
         save_dir = None

@@ -1,6 +1,5 @@
 python reason/evaluation/evaluate.py \
-    --LM Qwen2.5-Math-1.5B-Instruct \
-    --LM_config "reason/resource/qwen2.5/config.json" \
+    --LM_config "reason/resource/qwen2.5/config.yaml" \
     --task_name MATH \
     --test_data_path "envs/MATH/dataset/test500.jsonl" \
     --temperature 0.0 \
@@ -9,5 +8,4 @@ python reason/evaluation/evaluate.py \
     --method cot \
     --num_worker 16 \
     --LM_addr http://0.0.0.0:28777 \
-    --RM_addr http://0.0.0.0:28777 \
-    --local
+    --RM_addr http://0.0.0.0:28777
