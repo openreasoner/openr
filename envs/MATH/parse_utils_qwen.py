@@ -482,6 +482,32 @@ def extract_theoremqa_answer(pred: str, answer_flag: bool = True):
 
     return pred
 
+def check_boxed(pred_str):
+    ans = pred_str.split("boxed")[-1]
+    if len(ans) == 0:
+        return ""
+    elif ans[0] == "{":
+        stack = 1
+        a = ""
+        for c in ans[1:]:
+            if c == "{":
+                stack += 1
+                a += c
+            elif c == "}":
+                stack -= 1
+                if stack == 0:
+                    break
+                a += c
+            else:
+                a += c
+    else:
+        a = ans.split("$")[0].strip()
+
+    # if the answer is a equation
+    if "=" in a:
+        a = a.split('=')[-1]
+
+    return a
 
 def extract_answer(pred_str, data_name, use_last_number=True):
     pred_str = pred_str.replace("\u043a\u0438", "")
@@ -490,27 +516,16 @@ def extract_answer(pred_str, data_name, use_last_number=True):
         # minerva_math
         tmp = pred_str.split("final answer is $", 1)[1]
         pred = tmp.split("$. I hope", 1)[0].strip()
+        if "boxed" in pred:         # llama3 case, check boxed
+            pred = check_boxed(pred)
+    elif "final answer is" in pred_str and ". I hope" in pred_str:      # llama3-8b-instruct case
+        tmp = pred_str.split("final answer is", 1)[1]
+        pred = tmp.split(". I hope", 1)[0].strip()
+    elif "final answer is" in pred_str:
+        tmp = pred_str.split("final answer is", 1)[1]
+        pred = tmp.strip()
     elif "boxed" in pred_str:
-        ans = pred_str.split("boxed")[-1]
-        if len(ans) == 0:
-            return ""
-        elif ans[0] == "{":
-            stack = 1
-            a = ""
-            for c in ans[1:]:
-                if c == "{":
-                    stack += 1
-                    a += c
-                elif c == "}":
-                    stack -= 1
-                    if stack == 0:
-                        break
-                    a += c
-                else:
-                    a += c
-        else:
-            a = ans.split("$")[0].strip()
-        pred = a
+        pred = check_boxed(pred_str)
     elif "he answer is" in pred_str:
         pred = pred_str.split("he answer is")[-1].strip()
     elif "final answer is" in pred_str:
@@ -617,3 +632,25 @@ def parse_question(example, data_name):
             question += " (Yes or No)"
     return question.strip()
 
+def extract_groundtruth(groundtruth_str: str) -> str:
+    return parse_ground_truth(groundtruth_str, data_name='math')
+
+
+if __name__ == "__main__":
+    # run examples
+    # test_text = "n\nLet's figure out how much the math club made:\n\\begin{align*} \n &\\text{Cookies: } \\frac{54}{3}=18 \\text{ sets of } 3 cookies, \\text{ so } 18 \\cdot \\$1 = \\$18. \\\\\n &\\text{Cupcakes: } 20 \\cdot \\$2 = \\$40. \\\\\n &\\text{Brownies: } 35 \\cdot \\$1 = \\$35. \\\\\n &\\text{Total: } \\$18 + \\$40 + \\$35 = \\$93.\n\\end{align*}The math club spent $\\$15$to bake these items, so their profit is $\\boxed{\\$93-\\$15 = \\$78}.$\n\n"
+    # test_text = "\nStep 1: List all the possible ways to insert parentheses. There are 6 possible ways to insert 3 pairs of parentheses into 4 terms. The 6 ways are: \\begin{align*}\n&(2\\cdot 3)\\cdot(4\\cdot 5)+1\\\\\n&2\\cdot(3\\cdot 4)\\cdot (5+1)\\\\\n&(2\\cdot 3)\\cdot(4\\cdot (5+1))\\\\\n&(2\\cdot (3\\cdot 4)\\cdot 5)+1\\\\\n&2\\cdot (3\\cdot (4\\cdot 5))+1\\\\\n&(2\\cdot ((3\\cdot 4)\\cdot 5))+1\n\\end{align*} Step \"\nFinal Answer: The final answer is 6. I hope it is correct.\n"
+    # test_text = "\nWe can simplify $f(x)$ as follows:\n$f(x) = \\frac{3x-2}{x-2} = \\frac{3x-2}{x-2} \\cdot \\frac{x+2}{x+2} = \\frac{3x^2 - 2x - 6}{x^2-4} = 3 - \\frac{8}{x^2-4}$.\nThen, we can find the values of $f(-2)$, $f(-1)$, and $f(0)$:\n$f(-2) = 3 - \\frac{8}{(-2)^2-4} = 3 - \\frac{8}{4} = 1$,\n$f(-1) = 3 - \\frac{8}{(-1)^2-4} = 3 - \\frac{8}{1-4} = 3 - (-8) = 11$,\n$f(0) = 3 - \\frac{8}{0^2-4}$ is undefined, because the denominator is zero.\nSo, the sum of the values is: $\\boxed{\\frac{1 + 11}{1} = 12}$.\n"
+    # test_text = "\nLet $n = 7k+2$ for some integer $k$. Then we have\n\\begin{align*}\n(n+2)(n+4)(n+6) & = (7k+2+2)(7k+2+4)(7k+2+6) \\\\\n& = (7k+4)(7k+6)(7k+8)\n\\end{align*}By Fermat's Little Theorem, $7^3 \\equiv 1 \\pmod{7}$. Therefore, we have\n$$(7k+4)(7k+6)(7k+8) = 7k(7k+1)(7k+2)$$ $$\\equiv k(k+1)(k+2) \\pmod{7}$$ $$\\equiv k(k+1)(k+3) \\pmod{7}$$ $$\\equiv k(k+1)(-1) \\pmod{7}$$ $$\\equiv -k(k+1) \\pmod{7}$$ $$\\equiv -(k^2+k) \\pmod{7}$$ $$\\equiv -(k^2+k-1+1) \\pmod{7}$$ $$\\equiv -(k^2+k-1)+1 \\pmod{7}$$ $$\\equiv -(k^2+k) + (k-1) + 1 \\pmod{7}$$ $$\\equiv (-k)(k-1) + (k-1) + 1 \\pmod{7}$$ $$\\equiv -k^2+k+k-1+1 \\pmod{7}$$ $$\\equiv -k^2+2k \\pmod{7}$$ $$\\equiv -k^2+2k-2+2 \\pmod{7}$$ $$\\equiv -(k^2+2k-2) + 2 \\pmod{7}$$ $$\\equiv -(k+1)^2+1+2 \\pmod{7}$$ $$\\equiv -(k+1)^2+3 \\pmod{7}$$ $$\\equiv -(k+1)(k+1)+3 \\pmod{7}$$ $$\\equiv -(k+1)(k+1)+2+1 \\pmod{7}$$ $$\\equiv -(k+1)(k+1)+(k+1)+1 \\pmod{7}$$ $$\\equiv -((k+1)^2+(k+1)) + 1 \\pmod{7}$$ $$\\equiv -((k+1)(k+1)+k+1) + 1 \\pmod{7}$$ $$\\equiv -((k+1)(k+1)+k+1-1+1) \\pmod{7}$$ $$\\equiv -((k+1)(k+1)+k) + 2 \\pmod{7}$$ $$\\equiv -((k+1)(k+1)-k)+2 \\pmod{7}$$ $$\\equiv -(k+1)^2+2 \\pmod{7}$$ $$\\equiv -(k+1)^2+2-2+2 \\pmod{7}$$ $$\\equiv -(k+1)^2+0+2 \\pmod{7}$$ $$\\equiv -(k+1)^2+2 \\pmod{7}$$ $$\\equiv -1^2+2 \\pmod{7}$$ $$\\equiv -1+2 \\pmod{7}$$ $$\\equiv 1 \\pmod{7}$$ $$\\boxed{\\equiv 1}$$\nFinal Answer: The final answer is 1. I hope it is correct.\n"
+    # test_text = "\\boxed{\\text{Step 1:} }  x^6 - 3 = x^6 + 0x^5 + 0x^4 + 0x^3 + 0x^2 + 0x - 3. \n\\boxed{\\text{Step 2:} } The dividend has been written in descending powers of $x$. Let us long divide.\n\\boxed{\\text{Step 3:} } \\begin{array}{r} x^5- x^4+x^3-x^2+x-1 \\\\ x + 1 \\enclose{longdiv}{ x^6-0x^5+0x^4+0x^3+0x^2-3} \\\\ \\underline{x^6+ x^5} \\\\ -x^5+0x^4+0x^3+0x^2-3 \\\\ \\underline{-x^5- x^4} \\\\ x^4+0x^3+0x^2-3 \\\\ \\underline{x^4+ x^3} \\\\ -x^3+0x^2-3 \\\\ \\underline{-x^3- x^2} \\\\ x^2-3 \\\\ \\underline{x^2+ x} \\\\ -x-3 \\\\ \\underline{-x-1} \\\\ -2 \\end{array} \n\\boxed{\\text{Step 4:} }  The quotient is $x^5- x^4+x^3-x^2+x-1$. The remainder is $-2$. \n\\boxed{\\text{Final Answer: } x^5- x^4+x^3-x^2+x-1}\n"
+    # test_text = "\\step{Step 1}\nWe are given that $2^8=4^x$. To solve for $x$, we can rewrite $4$ as $2^2$. \n$2^8=(2^2)^x$\nWe can now rewrite the equation as:\n$\\boxed{(2^2)^x=2^8}$\n\\step{Step 2}\nWe know that the exponent of $2$ is equal on both sides of the equation, so we can equate them:\n$2^x=2^8$\nTo solve for $x$, we can take the logarithm base 2 of both sides:\n$\\log_22^x=\\log_22^8$\nUsing the property of logarithms that $\\log_ab^x=x$, we get:\n$x\\log_22=8\\log_22$\nSimplifying:\n$x=8$\n\\step{Final Answer}\nThe final answer is $\\boxed{x=8}$. I hope it is correct.\n"
+    # test_text = "\n\\begin{step} \"Step 1: Split the equation into two cases\"\nThe equation $|5x-1|=x+3$ can be written as either $5x-1=x+3$ or $-(5x-1)=x+3$. The first equation becomes $4x=4$, which has the solution $x=1$. The second equation becomes $-5x+1=x+3$, which has the solution $x=-2$. So we have two solutions, $x=1$ and $x=-2$.\n\\end{step}\n\\begin{step} \"Step 2: Determine the larger solution\"\nThe solution $x=1$ is greater than $x=-2$, so it is the larger solution.\n\\end{step}\n\\begin{boxed} $\\boxed{x=1}$ \\end{boxed}\nFinal Answer: The final answer is 1. I hope it is correct.\n"
+    # test_text = "\\boxed{\\text{Step 1:}}\nThere are $6\\times 6=36$ possible outcomes for the two dice.  The product of the numbers on the dice can only be a multiple of 5 if one of the numbers is 5 and the other number is 1, or if both numbers are 5.  There are $2\\times1=2$ ways to get the first outcome, and one way to get the second outcome.\n\\boxed{\\text{Step 2:}}Therefore, there are 3 ways for the product to be a multiple of 5.  The probability of the product being a multiple of 5 is then \\begin{align*}\n\\frac{3}{36}&=\\frac{1}{12}.\n\\end{align*}\nFinal Answer: The final answer is \\frac{1}{12}.\n"
+    test_text = "}\\boxed{\\text{Step 1: Count the number of ways to choose 3 boys}}\\text{Mr. Brennan has 7 boys and he needs to choose 3 of them. We can do this in }\\binom{7}{3}=\\frac{7!}{3!(7-3)!}=\\frac{7!}{3!4!}=\\frac{7\\cdot6\\cdot5}{3\\cdot2\\cdot1}=35\\text{ ways.}\\text{Step }\"\n\\}\\boxed{\\text{Step 2: Count the number of ways to choose 2 girls}}\\text{Mr. Brennan has 4 girls and he needs to choose 2 of them. We can do this in }\\binom{4}{2}=\\frac{4!}{2!(4-2)!}=\\frac{4!}{2!2!}=\\frac{4\\cdot3}{2\\cdot1}=6\\text{ ways.}\\text{Step }\"\n\\}\\boxed{\\text{Step 3: Combine the results}}\\text{The total number of ways Mr. Brennan can pick 3 boys and 2 girls is the product of the number of ways to choose each set. Therefore, the total number of ways is }35\\cdot 6=210.\\text{Step }\"\nFinal Answer: The final answer is 210. I hope it is correct.\n"
+
+    # true_text = "To find the profit, we want to find out how much the math club earned from selling the various baked goods and subtract the cost of producing those goods, $\\$15$, from the number we get.\n\nFirst let's calculate how much the math club earned from selling cookies. The cookies were sold at a price of three for $\\$1$, so the math club earned $54\\div 3\\cdot\\$1=18\\cdot\\$1=\\$18$ from selling cookies.\n\nNext, let's calculate how much the club earned from selling cupcakes. At a price of $\\$2$ each, the club earned $20\\cdot \\$2=\\$40$ from selling cupcakes.\n\nFinally, let's calculate how much the club earned from selling brownies. At a price of $\\$1$ each, the club earned $35\\cdot\\$1=\\$35$ from selling brownies.\n\nNow let's add up these numbers to find out how much the club earned in total and subtract $\\$15$ from that number to find the club's profit. We obtain \\begin{align*}\n\\$18+\\$40+\\$35-\\$15&=\\$18+\\$40+\\$35-\\$15\\\\\n&=\\$18+\\$40+\\$35+(-\\$15)\\\\\n&=\\$18+\\$40+(\\$35+(-\\$15))\\\\\n&=\\$18+\\$40+(\\$20)\\\\\n&=\\boxed{78}.\n\\end{align*}Notice how we used the definition of subtraction, $a-b=a+(-b)$ to $\\$35-\\$15$ as $\\$35+(-\\$15)$ and the associative property of addition to group the numbers together."
+    true_text = "\nStep 1: The skater spins 2250 degrees to her right, which means she turns 6.25 full rotations to her right (since 2250 degrees is equal to 6.25 * 360 degrees).\nStep 2: Since she starts facing north, after each full rotation, she will be facing the original direction (north) again. So, after 6.25 full rotations, she will still be facing the original direction, which is north, but rotated 6.25 * 90 = 562.5 degrees to the right.\nStep 3: Since 562.5 degrees is equivalent to 1.5625 full rotations, and she turns 1.5625 * 90 = 140.625 degrees to the right, she will be facing slightly east of north.\nStep 4: So, when she finishes her spin, she will be facing east, since east is slightly more than 90 degrees to the right of north.\n\\boxed{East}\n"
+
+    answer = extract_answer(test_text, "MATH")
+    true_answer = extract_groundtruth(true_text)
+    print(f"answer = {answer}, true label = {true_answer}")
