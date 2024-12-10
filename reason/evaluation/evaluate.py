@@ -1,3 +1,10 @@
+import sys
+import os
+from pathlib import Path
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, BASE_DIR)
+print(sys.path)
+
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional, Union
@@ -45,6 +52,7 @@ if __name__ == "__main__":
     parser.add_argument("--task_name", type=str, default="gsm8k")
     parser.add_argument("--test", type=str2bool, default=True)
     parser.add_argument("--is_few_shot", type=str2bool, default=False)
+    parser.add_argument("--is_multimodal", type=str2bool, default=False)
     parser.add_argument("--seed", type=int, default=0)
     # method config
     parser.add_argument("--method", type=str, required=True)
@@ -52,7 +60,7 @@ if __name__ == "__main__":
     # LM gen config
     parser.add_argument("--temperature", type=float, default=0.0)
     parser.add_argument("--top_k", type=int, default=-1)
-    parser.add_argument("--top_p", type=float, default=1)
+    parser.add_argument("--top_p", type=int, default=1)
     parser.add_argument("--max_new_tokens", type=int, default=256)
     # Tree construction config
     parser.add_argument("--tree_max_depth", type=int, default=None)
@@ -63,6 +71,7 @@ if __name__ == "__main__":
     # parallel config
     parser.add_argument("--local", action="store_true", default=False)
     parser.add_argument("--num_worker", type=int, default=32)
+    parser.add_argument("--single_problem", type=str, default=None)  # New argument for single problem
     config = parser.parse_args()
 
     setup_seed(config.seed)
@@ -101,17 +110,20 @@ if __name__ == "__main__":
         )
         rm_call = RMRemoteCaller(rm_config)
 
-    task = Task(task_name=config.task_name, is_few_shot=config.is_few_shot)
+    task = Task(task_name=config.task_name, is_few_shot=config.is_few_shot, is_multimodal=config.is_multimodal)
 
     def parallel_evaluate_test_dataset(
-        method_name: str, solver_fn: Callable, save_dir: Optional[Path] = None
+        method_name: str, solver_fn: Callable, save_dir: Optional[Path] = None, single_problem: Optional[Dict[str, Any]] = None
     ) -> List[Dict[str, Any]]:
         if save_dir is not None:
             record_writer = jsonlines.open(save_dir / f"record.jsonl", mode="w")
         else:
             record_writer = None
 
-        test_ds = task.test_ds
+        if single_problem:
+            test_ds = [json.loads(config.single_problem)]  # new 
+        else:
+            test_ds = task.test_ds
         # test_ds = [test_ds[i] for i in range(32)]
 
         results = []
@@ -147,18 +159,18 @@ if __name__ == "__main__":
         )
         res_q = actor_pool.map_unordered(
             lambda p, x: p.evaluate_problem.remote(x, solver_fn), test_ds
-        )       # Distributes tasks from the test_ds dataset across the worker pool asynchronously and
-                # collects results in any order as they complete. Every worker has a new searching tree as we reset the
-                # tree in solver_fn
+        )
         for i, (problem_inst, result, output) in enumerate(
             tqdm(res_q, total=len(test_ds))
         ):
+            print(problem_inst)
             results.append(result)
             if record_writer:
                 obj = {
                     # "i": i,
                     "question": problem_inst["question"],
                     "groundtruth": problem_inst["answer"],
+                    "image": problem_inst.get("image"),
                     "result": result,
                     "output": output,
                 }
@@ -168,6 +180,8 @@ if __name__ == "__main__":
             json.dump(avg_res, open(save_dir / "avg_result.json", "w"))
         print("Method: {}. Average result: {}".format(method_name, avg_res))
         return results
+
+
 
     solver_fns = {"cot": cot, "best_of_n": best_of_n}
 
@@ -181,6 +195,7 @@ if __name__ == "__main__":
         top_k=config.top_k,
         top_p=config.top_p,
         max_new_tokens=config.max_new_tokens,
+        is_multimodal=config.is_multimodal,
     )
     cfg_dict_record["gen_config"] = gen_config.__dict__
 
@@ -209,16 +224,6 @@ if __name__ == "__main__":
             num_path=config.num_sequence,
         )
         solver_fn = partial(vanila_mcts, method_config, gen_config)
-    elif config.method == "rstar_mcts":
-        method_config = VanilaMCTSConfig(
-            task_name=config.task_name,
-            tree_max_depth=config.tree_max_depth,
-            tree_max_width=config.tree_max_width,
-            select_by_prior=False,
-            num_path=config.num_sequence,
-        )
-        solver_fn = partial(rstar_mcts, method_config, gen_config)
-
     else:
         raise ValueError(f"Unknown method: {config.method}")
     cfg_dict_record["method"] = config.method
@@ -235,4 +240,4 @@ if __name__ == "__main__":
     else:
         save_dir = None
 
-    parallel_evaluate_test_dataset(config.method, solver_fn, save_dir)
+    parallel_evaluate_test_dataset(config.method, solver_fn, save_dir, single_problem=config.single_problem)

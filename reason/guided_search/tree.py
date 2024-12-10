@@ -144,14 +144,6 @@ class Node(object):
 
         rets = {"children": childrens, "info": self.get_info()}
         return rets
-    
-    def __str__(self) -> str:
-        if self.is_root():
-            return "root"
-        else:
-            return "child: value: {:.3f}, prior: {:.3f}".format(
-                self.last_action, self.value, self.prior_p
-            )
 
 
 class LanguageNode(Node):
@@ -193,14 +185,6 @@ class LanguageNode(Node):
         else:
             info_dict["text_state"] = self.text_state
         return info_dict
-    
-    def __str__(self):
-        if self.is_root():
-            return "root: {}".format(self.text_state)
-        else: 
-            return "action: {}, value: {:.3f}, prior: {:.3f}".format(
-                self.last_action, self.value, self.prior_p
-            )
 
 
 def get_root(node: Node):
@@ -702,7 +686,7 @@ class SearchTree:
                     # raise RuntimeError("Tokenizer problems")
                     child_values.append(0.0)
 
-                elif len(rs) == 0:
+                if len(rs) == 0:
                     logger.warning(
                         "Empty PRM value for: \nState: \n{} \naction: \n{}, will be set to 0.0".format(
                             text_state, act
@@ -839,15 +823,3 @@ class SearchTree:
         obj = cls(cfg)
         obj.root = root_node
         return obj
-    
-    def draw_tree(self):
-        # Not tested yet
-        root = self.root
-        assert root, 'Root node is None'
-        def draw_node(node, depth):
-            print('|' + '-' * depth + str(node))
-            for child in node.children.values():
-                draw_node(child, depth + 1)
-        
-        print(f"\n---------Expanded Tree---------")
-        draw_node(self.root)

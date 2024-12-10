@@ -1,4 +1,5 @@
 from abc import ABC
 
 
-class OriginalItemBase(ABC): ...
+class OriginalItemBase(ABC):
+  ...

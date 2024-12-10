@@ -23,4 +23,4 @@ class JsonlMathDataset(Dataset):
 
     def __getitem__(self, index):
         x = self.data[index]
-        return {"question": x["problem"], "answer": x["solution"]}
+        return {"question": x["problem"], "answer": x["solution"], "image": x.get("image_path")}

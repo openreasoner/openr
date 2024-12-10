@@ -5,7 +5,7 @@ import copy
 import pdb
 import torch
 from distributed.utils import print_with_rank
-from transformers import PreTrainedTokenizer
+from transformers import PreTrainedTokenizer, AutoProcessor
 from reason.inference.lm_call import LMCallingConfig, ConcatedLMGenResult
 
 INVALID_ANS = "[invalid]"
@@ -165,7 +165,6 @@ class CoTEnv(BaseEnv):
                 try:
                     self._legal_actions, api_completion_token = self.update_legal_actions()
                     info["api_completion_token"] = api_completion_token
-                    break
                 except NoLegalActionException as e:
                     if cnt == 3:
                         terminated = True

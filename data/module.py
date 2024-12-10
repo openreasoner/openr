@@ -1,10 +1,17 @@
 import torch
+from transformers import AutoTokenizer, AutoModelForCausalLM, set_seed
 import random
 import json
 import re
 import os
 import math
-from model_utils import LM
+
+# Set your Hugging Face token here
+os.environ["HUGGINGFACE_HUB_TOKEN"] = "hf_yourkey"
+
+# For reproducibility
+set_seed(1234)
+random.seed(42)
 
 class Node:
     def __init__(self, question, partial_answer, correct_answer):
@@ -23,7 +30,24 @@ class Node:
     def increment_visits(self):
         self.visits += 1
 
-# Evaluation
+    def get_rollouts(self):
+        return self.rollouts
+
+def generate_completion(question, partial_answer, model_name="Qwen/Qwen2.5-Math-7B-Instruct"):
+    tokenizer = AutoTokenizer.from_pretrained(model_name)
+    model = AutoModelForCausalLM.from_pretrained(
+        model_name, torch_dtype=torch.float16, device_map="cuda"
+    )
+    prompt = question + partial_answer
+    inputs = tokenizer(prompt, return_tensors="pt").to('cuda')
+    temperature = random.choice([0.7, 1.0])
+    outputs = model.generate(
+        **inputs, do_sample=True, max_new_tokens=200, temperature=temperature
+    )
+    generated_tokens = outputs[0][inputs['input_ids'].shape[1]:]
+    result = tokenizer.decode(generated_tokens, skip_special_tokens=True)
+    return result
+
 def check_correctness(expected_answer, generated_response):
     sentences = re.split(
         r'(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?)\s', generated_response.strip()
@@ -31,10 +55,10 @@ def check_correctness(expected_answer, generated_response):
     last_sentence = sentences[-1] if sentences else ''
     return expected_answer.strip() in last_sentence.strip()
 
-def perform_rollouts(node, model: LM, num_rollouts=None):
+def perform_rollouts(node, num_rollouts=5):
     correctness_flags = []
-    results = model.generate(node.question, node.partial_answer, num_rollouts)
-    for result in results:
+    for _ in range(num_rollouts):
+        result = generate_completion(node.question, node.partial_answer)
         node.add_rollout(result)
         is_correct = check_correctness(node.correct_answer, result)
         correctness_flags.append(int(is_correct))
@@ -92,7 +116,7 @@ def split_text_middle(text):
     part2 = text[split_idx:].strip()
     return part1, part2
 
-def locate_error(node, rollout, model):
+def locate_error(node, rollout):
     current_span = rollout
     previous_text = ""
     nodes_to_expand = []
@@ -107,7 +131,7 @@ def locate_error(node, rollout, model):
         new_node = Node(
             node.question, previous_text + left_part, node.correct_answer
         )
-        perform_rollouts(new_node, model)
+        perform_rollouts(new_node)
         mc_score = calculate_mc_score(new_node)
         new_node.mc_score = mc_score
         if mc_score == 1:
@@ -133,7 +157,18 @@ def compute_u_value(node, all_nodes, exploration_param=0.125):
     denominator = 1 + node.visits
     return exploration_param * (numerator / denominator)
 
-def process_annotations(question, nodes, model: LM, filename='nodes_data.json', max_iterations=100):
+def append_to_json(filename, data_entry):
+    if os.path.exists(filename):
+        with open(filename, 'r') as file:
+            data = json.load(file)
+    else:
+        data = []
+    data.append(data_entry)
+    with open(filename, 'w') as file:
+        json.dump(data, file, indent=4)
+    print(f"Data appended to {filename}")
+
+def process_annotations(question, answer, nodes, filename='nodes_data.json'):
     print("++++++")
     iteration = 0
     leaf_nodes = []
@@ -147,7 +182,7 @@ def process_annotations(question, nodes, model: LM, filename='nodes_data.json', 
             }
             append_to_json(filename, new_entry)
             iteration += 1
-            if iteration > max_iterations:
+            if iteration > 100:
                 break
         if node is None:
             break
@@ -156,7 +191,7 @@ def process_annotations(question, nodes, model: LM, filename='nodes_data.json', 
         print(node)
         print("  Rollout:", rollout, " || QU Value:", max_qu)
         node.increment_visits()
-        expanded_nodes, leaves = locate_error(node, rollout, model)
+        expanded_nodes, leaves = locate_error(node, rollout)
         if not expanded_nodes:
             continue
         nodes.extend(
@@ -171,15 +206,3 @@ def process_annotations(question, nodes, model: LM, filename='nodes_data.json', 
         }
         append_to_json(filename, new_entry)
     print("++++++")
-
-# Utils
-def append_to_json(filename, data_entry):
-    if os.path.exists(filename):
-        with open(filename, 'r') as file:
-            data = json.load(file)
-    else:
-        data = []
-    data.append(data_entry)
-    with open(filename, 'w') as file:
-        json.dump(data, file, indent=4)
-    print(f"Data appended to {filename}")

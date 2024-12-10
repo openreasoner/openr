@@ -3,7 +3,8 @@ A model worker that executes the model based on vLLM.
 
 See documentations at docs/vllm_integration.md
 """
-
+import base64
+import io
 import argparse
 import asyncio
 import json
@@ -13,6 +14,8 @@ from fastapi import FastAPI, Request, BackgroundTasks
 from fastapi.responses import StreamingResponse, JSONResponse
 import uvicorn
 from vllm import AsyncLLMEngine
+from vllm.inputs import TextPrompt
+from vllm.multimodal.base import MultiModalDataBuiltins, MultiModalDataDict
 from vllm.engine.arg_utils import AsyncEngineArgs
 from vllm.sampling_params import SamplingParams
 from vllm.utils import random_uuid
@@ -24,7 +27,7 @@ from fastchat.serve.model_worker import (
 )
 from fastchat.utils import get_context_length
 
-
+from PIL import Image
 app = FastAPI()
 
 
@@ -63,7 +66,9 @@ class VLLMWorker(BaseModelWorker):
     async def generate_stream(self, params):
         self.call_ct += 1
 
-        context = params.pop("prompt")
+        prompt = params.pop("prompt")
+        image_path = params.pop("multi_modal_data")
+
         n = params.get("n", 1)
         request_id = params.pop("request_id")
         temperature = float(params.get("temperature", 1.0))
@@ -112,7 +117,18 @@ class VLLMWorker(BaseModelWorker):
             logprobs=1,
             include_stop_str_in_output=include_stop_str_in_output,
         )
-        results_generator = engine.generate(context, sampling_params, request_id)
+        if image_path is not None:
+            multi_modal_data = MultiModalDataBuiltins(image=Image.open(image_path).convert("RGB"))
+            text_prompt = TextPrompt(prompt=prompt, multi_modal_data=multi_modal_data)
+        else:
+            text_prompt = TextPrompt(prompt=prompt)
+        
+        try:
+            results_generator = engine.generate(text_prompt, sampling_params, request_id)
+            print("Results generator initialized successfully.")
+        except Exception as e:
+            print(f"Error initializing results generator: {e}")
+
 
         async for request_output in results_generator:
             prompt = request_output.prompt
@@ -150,7 +166,10 @@ class VLLMWorker(BaseModelWorker):
             }
             yield (json.dumps(ret) + "\0").encode()
 
+            
+
     async def generate(self, params):
+        print("Parameters for engine.generate:", params)
         async for x in self.generate_stream(params):
             pass
         return json.loads(x[:-1].decode())
