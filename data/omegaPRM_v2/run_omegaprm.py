@@ -11,8 +11,13 @@ DS_NAME = "math-aps-v2"
 logger: logging.Logger
 
 
-# Set up logging based on provided log file prefix
+# Set up logging based on provided log file prefix and create log directory if it doesn't exist
+
 def setup_logging(log_file_prefix: str):
+    log_dir = os.path.dirname(log_file_prefix)
+    if not os.path.exists(log_dir):
+        os.makedirs(log_dir)
+
     log_filename = f"{log_file_prefix}.log"
     logging.basicConfig(
         level=logging.INFO,
@@ -20,7 +25,6 @@ def setup_logging(log_file_prefix: str):
         handlers=[logging.FileHandler(log_filename), logging.StreamHandler()],
     )
     return logging.getLogger(__name__)
-
 
 # Load questions from JSON
 def load_questions(filepath: str):
