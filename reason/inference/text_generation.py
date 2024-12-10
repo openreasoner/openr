@@ -1,7 +1,7 @@
+import base64
 from typing import List, Optional
 import requests
 from dataclasses import dataclass
-
 
 @dataclass
 class ConcatedLMGenResult:
@@ -19,6 +19,7 @@ class ConcatedLMGenResult:
 
 def _generate_fastchat(
     query_str,
+    image_path,
     model_name,
     n,
     temperature,
@@ -30,11 +31,14 @@ def _generate_fastchat(
     include_stop_str_in_output,
     controller_addr,
 ) -> ConcatedLMGenResult:
-
+    
+    print(controller_addr, model_name)
     ret = requests.post(
         controller_addr + "/get_worker_address", json={"model": model_name}
     )
     worker_addr = ret.json()["address"]
+    print(ret.json())
+    print(ret.status_code)
     if not worker_addr:
         raise ValueError("Language Model name {} does not exist.".format(model_name))
 
@@ -42,6 +46,7 @@ def _generate_fastchat(
     gen_params = {
         "model": model_name,
         "prompt": query_str,
+        "multi_modal_data": image_path,
         "temperature": temperature,
         "n": n,
         "top_p": top_p,
@@ -58,6 +63,7 @@ def _generate_fastchat(
         json=gen_params,
         stream=True,
     )
+
     results = response.json()
     output_token_lens = results["output_token_len"]
     cum_logps = results["cumulative_logprob"]
@@ -65,6 +71,7 @@ def _generate_fastchat(
         clp / max(1, otl) for clp, otl in zip(cum_logps, output_token_lens)
     ]
     # return results["text"], avg_len_logps
+    
     return ConcatedLMGenResult(
         text=results["text"],
         prompt_tokens=results["usage"]["prompt_tokens"],
@@ -73,3 +80,5 @@ def _generate_fastchat(
         logp_avg_by_len=avg_len_logps,
         finish_reason=results["finish_reason"],
     )
+    
+   

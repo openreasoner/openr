@@ -21,22 +21,20 @@ from envs.base_env import INVALID_ANS
 
 
 class Task:
-    def __init__(self, task_name: str, is_few_shot: bool = False):
+    def __init__(self, task_name: str, is_few_shot: bool = False, is_multimodal: bool =False):
         self.task_name = task_name
         task_module = importlib.import_module(f"envs.{task_name}")
-        if task_name == "MATH" or "rstar":
-            self.extract_answer = task_module.extract_answer
-            self.extract_groundtruth = task_module.extract_groundtruth
-            self.judge_correct = task_module.judge_correct
-        else:
-            raise NotImplementedError(f"Task {task_name} is not supported")
+        self.extract_answer = task_module.extract_answer
+        self.extract_groundtruth = task_module.extract_groundtruth
+        self.judge_correct = task_module.judge_correct
 
         self._is_few_shot = is_few_shot
+        self._is_multimodal = is_multimodal
         self.env_fn = task_module.Env
 
     def prompt_fn(self, problem_input: str):
         return get_default_query_str_builder(self.task_name)(
-            problem_input, is_few_shot=self._is_few_shot
+            problem_input, is_few_shot=self._is_few_shot, is_multimodal=self._is_multimodal
         )
 
     @property

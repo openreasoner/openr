@@ -10,11 +10,11 @@ def get_env_datasets(env_name: str, **kwargs):
 def get_default_query_str_builder(env_name: str, **kwargs):
     task_module = import_module(f"envs.{env_name}")
 
-    def fn(problem_input: str, is_few_shot: bool):
+    def fn(problem_input: str, is_few_shot: bool, is_multimodal: bool):
         return task_module.Env.build_query_str(
             cot_task_desc=task_module.COT_TASK_DESC,
             cot_examples=task_module.COT_EXAMPLES,
-            problem_format_str=task_module.PROBLEM_FORMAT_STR,
+            problem_format_str=task_module.PROBLEM_FORMAT_STR_MM if is_multimodal else task_module.PROBLEM_FORMAT_STR,
             problem_input=problem_input,
             is_few_shot=is_few_shot,
         )

@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import List, Optional, Union
+from typing import List, Optional
 from reason.inference.text_generation import ConcatedLMGenResult, _generate_fastchat
 
 
@@ -11,15 +11,16 @@ class LMCallingConfig:
     top_k: int = -1  # -1 for vllm by default
     max_new_tokens: int = 512
     stop_token_ids: Optional[List[int]] = None
-    stop_str: Optional[Union[str, List[str]]] = None
+    stop_str: Optional[str] = None
     include_stop_str_in_output: bool = False
+    is_multimodal: bool = False
 
 
 class LanguageModelCallingFunction:
     def __init__(self, lm_step_tag: str = None):
         self.lm_step_tag = lm_step_tag
 
-    def __call__(self, input_str: str, config: LMCallingConfig) -> ConcatedLMGenResult:
+    def __call__(self, input_str: str, config: LMCallingConfig, image_path: str = None) -> ConcatedLMGenResult:
         raise NotImplementedError
 
 
@@ -34,9 +35,10 @@ class VLLMRemoteCaller(LanguageModelCallingFunction):
         self.controller_addr = controller_addr
         super().__init__(lm_step_tag)
 
-    def __call__(self, input_str: str, config: LMCallingConfig) -> ConcatedLMGenResult:
+    def __call__(self, input_str: str, config: LMCallingConfig, image_path: str = None) -> ConcatedLMGenResult:
         return _generate_fastchat(
             query_str=input_str,
+            image_path=image_path,
             model_name=self.model_name,
             n=config.n,
             temperature=config.temperature,

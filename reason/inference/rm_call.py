@@ -2,7 +2,6 @@ from dataclasses import dataclass
 from typing import List, Optional, Tuple, Union
 from reason.inference.value import _value_inference_fastchat
 
-
 @dataclass
 class RewardModelBaseConfig:
     step_tag: str
@@ -86,7 +85,6 @@ class RMRemoteCaller(RewardModelCallingFunction):
         question_answer_pairs: Union[Tuple[str, str], List[Tuple[str, str]]],
         lm_step_tag: str,
     ) -> Union[List[int], List[List[int]]]:
-
         if isinstance(question_answer_pairs[0], str):
             response = self.replace_step_tag(question_answer_pairs[1], lm_step_tag)
             input_str = self.format_str.format(
