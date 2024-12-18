@@ -267,6 +267,13 @@ class CoTEnv(BaseEnv):
 
     @property
     def answer(self):
+        """
+        partial answer
+        """
+        return "".join(self.action_history)
+
+    @property
+    def full_answer(self):
         return "".join(self.action_history)
 
     def get_done_and_info(self):
