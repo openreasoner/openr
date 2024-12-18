@@ -32,3 +32,21 @@ def _math_shepherd_infer_fn(input_str: str, model, tokenizer, device):
     scores = logits.softmax(dim=-1)[:,:,0] 
     step_scores = scores[input_id == step_tag_id]
     return step_scores
+
+@torch.inference_mode()
+def _genrm_infer_fn(input_str: str, model, tokenizer, device):
+    """
+    Generative Reward Model, Direct-GenRM
+    """
+    GOOD_TOKEN = 'Yes'
+    BAD_TOKEN = 'No'
+    STEP_TAG = '\n\n'
+    candidate_tokens = tokenizer.encode(f"{GOOD_TOKEN} {BAD_TOKEN}")
+    step_tag_id = tokenizer.encode(f"{STEP_TAG}")[-1]
+
+    input_id = torch.tensor(
+        [tokenizer.encode(input_str)], device=device)
+    logits = model(input_id).logits[:,:,candidate_tokens]
+    scores = logits.softmax(dim=-1)[:,:,0]
+    step_scores = scores[input_id == step_tag_id]
+    return step_scores

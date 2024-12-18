@@ -25,8 +25,13 @@ class JsonlMathDataset(Dataset):
         self.data = []
         if data_path.endswith(".jsonl"):
             with jsonlines.open(data_path, "r") as reader:
-                for obj in reader:
-                    self.data.append(obj)
+                for obj in reader:          # extract clean answer
+                    q = obj['question']
+                    full_answer = obj['answer']
+                    cleaned_answer = full_answer.split('####')[-1].strip()
+                    new_obj = {'question': q,
+                               "answer": cleaned_answer}
+                    self.data.append(new_obj)
         elif data_path.endswith(".json"):
             with open(data_path, "r") as reader:
                 self.data = json.load(reader)

@@ -1,15 +1,15 @@
 python reason/evaluation/evaluate.py \
-    --LM Qwen2.5-Math-1.5B-Instruct \
-    --RM checkpoint-6898 \
+    --LM_config "reason/resource/qwen2.5/config.yaml" \
+    --RM_config "reason/resource/mistral/shepherd_prm_config.yaml" \
     --task_name MATH \
+    --test_data_path "envs/MATH/dataset/test500.jsonl" \
     --temperature 0.7 \
     --max_new_tokens 2048 \
     --num_sequence 1 \
     --tree_max_width 4 \
     --tree_max_depth 50 \
-    --save_dir debug \
+    --save_dir qwen1.5_results \
     --method beam_search \
-    --num_worker 32 \
-    --controller_addr http://0.0.0.0:28777
-
-# math-shepherd-mistral-7b-prm
+    --num_worker 16 \
+    --LM_addr http://0.0.0.0:28777 \
+    --RM_addr http://0.0.0.0:28777
