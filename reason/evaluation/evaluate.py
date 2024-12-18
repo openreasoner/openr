@@ -169,7 +169,7 @@ if __name__ == "__main__":
         print("Method: {}. Average result: {}".format(method_name, avg_res))
         return results
 
-    solver_fns = {"cot": cot, "best_of_n": best_of_n}
+    solver_fns = {"cot": cot, "best_of_n": best_of_n, "dots": dots}
 
     cfg_dict_record = dict()
     # XXX: qwen-2.5 requires add more stop words
@@ -192,6 +192,9 @@ if __name__ == "__main__":
             config.task_name, num_sequence=config.num_sequence
         )
         solver_fn = partial(best_of_n, method_config, gen_config)
+    elif config.method == "dots":
+        method_config = DotsConfig(config.task_name)
+        solver_fn = partial(dots, method_config, gen_config)
     elif config.method == "beam_search":
         method_config = BeamSearchConfig(
             task_name=config.task_name,
