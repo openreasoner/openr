@@ -32,3 +32,9 @@ def setup_seed(seed):
     random.seed(seed)
     os.environ["PYTHONHASHSEED"] = str(seed)
     torch.backends.cudnn.deterministic = True
+
+def read_txt(file_path):
+    assert str(file_path).endswith(".txt")
+    with open(file_path, "r", encoding="utf-8") as f:
+        data = f.read()
+    return data
