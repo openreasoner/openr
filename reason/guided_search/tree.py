@@ -395,7 +395,7 @@ class SearchTree:
 
             traj_data = {
                 "path_idx": i_path,
-                "text": env_copy.answer,
+                "text": env_copy.full_answer,
                 "value": leaf_value,
                 "api_completion_tokens": api_call_completion_tokens,
                 "tree_completion_tokens": self._completion_tokens,
@@ -549,9 +549,9 @@ class SearchTree:
             if not self.no_terminal_reward:
                 if winner is not None:
                     if winner == 1:
-                        self.answers.add(simulate_env.answer)
+                        self.answers.add(simulate_env.full_answer)
                     else:
-                        self.wrong_answers.add(simulate_env.answer)
+                        self.wrong_answers.add(simulate_env.full_answer)
 
                 # if simulate_env.mcts_mode == 'self_play_mode':
                 #     if winner == -1:
@@ -585,7 +585,7 @@ class SearchTree:
             if self.visited_paths is not None:
                 self.visited_paths.append(
                     {
-                        "text": simulate_env.answer,
+                        "text": simulate_env.full_answer,
                         "correct": winner == 1,
                         "value": leaf_value,
                     }
@@ -744,7 +744,7 @@ class SearchTree:
             print_rank_0(
                 "Prune all current children at node {}".format(node.last_action)
             )
-        
+
         # collect num tokens
         if not node.has_collected_token_num:
             self._completion_tokens += sum(

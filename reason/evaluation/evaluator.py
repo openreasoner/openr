@@ -94,12 +94,12 @@ class SolutionOutput:
     #  for beam search, it's a list of zeros, except the last element indicates total tokens
     #  for mcts, it's a list of int, indicate how many tokens comsumed between two paths
     completion_tokens: List[int]
+    metadata: Optional[Dict] = None      # other information
 
 
 @dataclass
 class TreeSearchSolutionOutput(SolutionOutput):
-    tree_completion_tokens: List[int]
-
+    tree_completion_tokens: List[int]=None
 
 class MathEvaluator:
 
@@ -119,7 +119,7 @@ class MathEvaluator:
 
     def evaluate_problem(
         self, problem_inst: Dict[str, str], solver_fn: Callable
-    ) -> List[str]:
+    ) -> (str, str, str, Dict[str, str]):
         solution: SolutionOutput = solver_fn(problem_inst, self.lm_call, self.rm_call)
         result, output = self.analyze_output(problem_inst, solution.solutions)
         total_completion_token = 0
@@ -131,7 +131,9 @@ class MathEvaluator:
             #  answers, therefore we need to take sum here.
             total_completion_token += solution.completion_tokens[i]
         result["total_completion_tokens"] = total_completion_token
-        return problem_inst, result, output
+
+        processed_metadata = self.process_meta_data(solution.metadata)
+        return problem_inst, result, output, processed_metadata
 
     def analyze_output(self, problem_inst: Dict[str, str], gen_answers: List[str]):
         extracted_groundtruth = self._task.extract_groundtruth(problem_inst["answer"])
@@ -162,6 +164,12 @@ class MathEvaluator:
             )
         }
         return res, output_list
+
+    def process_meta_data(self, metadata_dict=None):
+        if metadata_dict is None:
+            return {}
+
+        return metadata_dict
 
 
 @ray.remote
