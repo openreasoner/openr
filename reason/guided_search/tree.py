@@ -144,7 +144,7 @@ class Node(object):
 
         rets = {"children": childrens, "info": self.get_info()}
         return rets
-    
+
     def __str__(self) -> str:
         if self.is_root():
             return "root"
@@ -193,11 +193,11 @@ class LanguageNode(Node):
         else:
             info_dict["text_state"] = self.text_state
         return info_dict
-    
+
     def __str__(self):
         if self.is_root():
             return "root: {}".format(self.text_state)
-        else: 
+        else:
             return "action: {}, value: {:.3f}, prior: {:.3f}".format(
                 self.last_action, self.value, self.prior_p
             )
@@ -347,7 +347,7 @@ class SearchTree:
         # TODO(ziyu): split with 1. select 2. expand 3. rollout 4. backprop
         #  for here is split the for loop with select and rollout
         #  so that arbitrary rollout function can be used here.
-        
+
         for i_path in range(num_path):
             node = self.root
             env_copy = simulate_env.copy()
@@ -362,7 +362,7 @@ class SearchTree:
                         # select with prior probability
                         action, node = self._select_by_prior(node, env_copy)
                     else:
-                        # select with highest value, since visit_count = 0 in self.ucb 
+                        # select with highest value, since visit_count = 0 in self.ucb
                         #  will select node with highest value
                         action, node = self._select_child(node, env_copy)
 
@@ -744,7 +744,7 @@ class SearchTree:
             print_rank_0(
                 "Prune all current children at node {}".format(node.last_action)
             )
-        
+
         # collect num tokens
         if not node.has_collected_token_num:
             self._completion_tokens += sum(
@@ -839,15 +839,16 @@ class SearchTree:
         obj = cls(cfg)
         obj.root = root_node
         return obj
-    
+
     def draw_tree(self):
         # Not tested yet
         root = self.root
-        assert root, 'Root node is None'
+        assert root, "Root node is None"
+
         def draw_node(node, depth):
-            print('|' + '-' * depth + str(node))
+            print("|" + "-" * depth + str(node))
             for child in node.children.values():
                 draw_node(child, depth + 1)
-        
+
         print(f"\n---------Expanded Tree---------")
         draw_node(self.root)

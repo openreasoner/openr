@@ -25,7 +25,9 @@ import tree
 from ray.util.actor_pool import ActorPool
 from reason.evaluation.methods import *
 import ray
+from omegaconf import OmegaConf
 
+BASE_DIR = Path(__file__).parent.parent.parent
 
 def setup_seed(seed):
     torch.manual_seed(seed)
@@ -36,16 +38,96 @@ def setup_seed(seed):
     torch.backends.cudnn.deterministic = True
 
 
+def parallel_evaluate_test_dataset(
+    task: Task, method_name: str, solver_fn: Callable, save_dir: Optional[Path] = None
+) -> List[Dict[str, Any]]:
+    if save_dir is not None:
+        record_writer = jsonlines.open(save_dir / f"record.jsonl", mode="w")
+    else:
+        record_writer = None
+
+    test_ds = task.test_ds
+    # test_ds = [test_ds[i] for i in range(32)]
+
+    results = []
+    if config.resume_dir is not None:
+        answered_questions = set()
+        with jsonlines.open(Path(config.resume_dir) / "record.jsonl", "r") as reader:
+            cnt = 0
+            for obj in reader:
+                results.append(obj["result"])
+                answered_questions.add(obj["question"])
+                if record_writer is not None:
+                    record_writer.write(obj)
+                    cnt += 1
+        print(f"Resumed {cnt} questions from {config.resume_dir}")
+        total_cnt = len(test_ds)
+        test_ds = [
+            problem_inst
+            for problem_inst in test_ds
+            if problem_inst["question"] not in answered_questions
+        ]
+        new_cnt = len(test_ds)
+        print(
+            f"After resuming, there are {new_cnt}/{total_cnt} new questions to answer."
+        )
+
+    actor_pool = ActorPool(
+        [
+            RemoteMathEvaluator.remote(task, llm_gen_fn, rm_call)
+            for _ in range(config.num_worker)
+        ]
+    )
+    res_q = actor_pool.map_unordered(
+        lambda p, x: p.evaluate_problem.remote(x, solver_fn), test_ds
+    )  # Distributes tasks from the test_ds dataset across the worker pool asynchronously and
+    # collects results in any order as they complete. Every worker has a new searching tree as we reset the
+    # tree in solver_fn
+    for i, (problem_inst, result, output) in enumerate(tqdm(res_q, total=len(test_ds))):
+        results.append(result)
+        if record_writer:
+            obj = {
+                # "i": i,
+                "question": problem_inst["question"],
+                "groundtruth": problem_inst["answer"],
+                "result": result,
+                "output": output,
+            }
+            record_writer.write(obj)
+    avg_res = (tree.map_structure(lambda *xs: np.mean(xs), *results),)
+    if record_writer:
+        json.dump(avg_res, open(save_dir / "avg_result.json", "w"))
+    print("Method: {}. Average result: {}".format(method_name, avg_res))
+    return results
+
+
 if __name__ == "__main__":
     parser = ArgumentParser()
-    parser.add_argument("--LM", type=str, required=True)
-    parser.add_argument("--RM", type=str, default="dummy")
-    parser.add_argument("--controller_addr", type=str, default="http://0.0.0.0:28778")
+    parser.add_argument("--LM", type=str, default=None)
+    parser.add_argument(
+        "--LM_addr",
+        type=str,
+        default="http://0.0.0.0:28778",
+        help="locate which LM we use",
+    )
+    parser.add_argument(
+        "--LM_config", type=str, required=True
+    )
+    parser.add_argument("--RM", type=str, default=None)
+    parser.add_argument(
+        "--RM_addr",
+        type=str,
+        default="http://0.0.0.0:28778",
+        help="locate which RM we use",
+    )
+    parser.add_argument("--RM_config", type=str, default="reason/resource/mistral/shepherd_prm_config.yaml")
     # task config
     parser.add_argument("--task_name", type=str, default="gsm8k")
     parser.add_argument("--test", type=str2bool, default=True)
     parser.add_argument("--is_few_shot", type=str2bool, default=False)
     parser.add_argument("--seed", type=int, default=0)
+    parser.add_argument("--train_data_path", type=str, default="")
+    parser.add_argument("--test_data_path", type=str, default="")
     # method config
     parser.add_argument("--method", type=str, required=True)
     parser.add_argument("--num_sequence", type=int, default=1)
@@ -54,6 +136,14 @@ if __name__ == "__main__":
     parser.add_argument("--top_k", type=int, default=-1)
     parser.add_argument("--top_p", type=float, default=1)
     parser.add_argument("--max_new_tokens", type=int, default=256)
+    # parser.add_argument(
+    #     "--stop_str", type=str, nargs="+", help="customized stopping str for LM"
+    # )
+    parser.add_argument(
+        "--use_lora",
+        action="store_true",
+        help="whether to use lora adapter for generation",
+    )
     # Tree construction config
     parser.add_argument("--tree_max_depth", type=int, default=None)
     parser.add_argument("--tree_max_width", type=int, default=None)
@@ -71,22 +161,23 @@ if __name__ == "__main__":
         config.num_worker = 1
         ray.init(local_mode=True)
 
-    # TODO(ziyu): move into some configuration file
-    if "math-shepherd" in config.RM.lower():
-        prm_step_tag = "ки\n"
-    else:
-        # assume qwen
-        prm_step_tag = "\n\n\n\n\n "
-    prm_format_str = "{question} {answer}"
+    # load necessary config file
+    lm_cfg = OmegaConf.load(BASE_DIR / config.LM_config)
+    rm_cfg = OmegaConf.load(BASE_DIR / config.RM_config)
+    if config.LM is None:       # if LM or RM not specified, load it from config file
+        config.LM = lm_cfg.LM
+    if config.RM is None:
+        config.RM = rm_cfg.RM
 
-    if "qwen" in config.LM.lower():
-        lm_step_tag = "\n\n"
-    else:
-        lm_step_tag = "ки\n"
+    #
+    prm_step_tag = rm_cfg.prm_step_tag
+    prm_format_str = rm_cfg.problem_format_str
+    lm_step_tag = lm_cfg.lm_step_tag
+    stop_str = list(lm_cfg.lm_stop_tag)
+    print(f"stop at {stop_str}")
 
-    llm_gen_fn = VLLMRemoteCaller(
-        config.LM, config.controller_addr, lm_step_tag=lm_step_tag
-    )
+    # LM and RM
+    llm_gen_fn = VLLMRemoteCaller(config.LM, config.LM_addr, lm_step_tag=lm_step_tag)
     if config.RM == "dummy":
         rm_config = RewardModelBaseConfig(
             step_tag=prm_step_tag, format_str=prm_format_str
@@ -97,77 +188,20 @@ if __name__ == "__main__":
             step_tag=prm_step_tag,
             format_str=prm_format_str,
             model_name=config.RM,
-            controller_addr=config.controller_addr,
+            controller_addr=config.RM_addr,
         )
         rm_call = RMRemoteCaller(rm_config)
 
-    task = Task(task_name=config.task_name, is_few_shot=config.is_few_shot)
-
-    def parallel_evaluate_test_dataset(
-        method_name: str, solver_fn: Callable, save_dir: Optional[Path] = None
-    ) -> List[Dict[str, Any]]:
-        if save_dir is not None:
-            record_writer = jsonlines.open(save_dir / f"record.jsonl", mode="w")
-        else:
-            record_writer = None
-
-        test_ds = task.test_ds
-        # test_ds = [test_ds[i] for i in range(32)]
-
-        results = []
-        if config.resume_dir is not None:
-            answered_questions = set()
-            with jsonlines.open(
-                Path(config.resume_dir) / "record.jsonl", "r"
-            ) as reader:
-                cnt = 0
-                for obj in reader:
-                    results.append(obj["result"])
-                    answered_questions.add(obj["question"])
-                    if record_writer is not None:
-                        record_writer.write(obj)
-                        cnt += 1
-            print(f"Resumed {cnt} questions from {config.resume_dir}")
-            total_cnt = len(test_ds)
-            test_ds = [
-                problem_inst
-                for problem_inst in test_ds
-                if problem_inst["question"] not in answered_questions
-            ]
-            new_cnt = len(test_ds)
-            print(
-                f"After resuming, there are {new_cnt}/{total_cnt} new questions to answer."
-            )
-
-        actor_pool = ActorPool(
-            [
-                RemoteMathEvaluator.remote(config.task_name, llm_gen_fn, rm_call)
-                for _ in range(config.num_worker)
-            ]
-        )
-        res_q = actor_pool.map_unordered(
-            lambda p, x: p.evaluate_problem.remote(x, solver_fn), test_ds
-        )       # Distributes tasks from the test_ds dataset across the worker pool asynchronously and
-                # collects results in any order as they complete. Every worker has a new searching tree as we reset the
-                # tree in solver_fn
-        for i, (problem_inst, result, output) in enumerate(
-            tqdm(res_q, total=len(test_ds))
-        ):
-            results.append(result)
-            if record_writer:
-                obj = {
-                    # "i": i,
-                    "question": problem_inst["question"],
-                    "groundtruth": problem_inst["answer"],
-                    "result": result,
-                    "output": output,
-                }
-                record_writer.write(obj)
-        avg_res = (tree.map_structure(lambda *xs: np.mean(xs), *results),)
-        if record_writer:
-            json.dump(avg_res, open(save_dir / "avg_result.json", "w"))
-        print("Method: {}. Average result: {}".format(method_name, avg_res))
-        return results
+    # Task
+    task = Task(
+        task_name=config.task_name,
+        is_few_shot=config.is_few_shot,
+        cot_task_desc=lm_cfg["cot_task_desc"],
+        cot_examples=lm_cfg["cot_examples"],
+        problem_format_str=lm_cfg["problem_format_str"],
+        train_data_path=config.train_data_path,
+        test_data_path=config.test_data_path,
+    )
 
     solver_fns = {"cot": cot, "best_of_n": best_of_n}
 
@@ -181,17 +215,19 @@ if __name__ == "__main__":
         top_k=config.top_k,
         top_p=config.top_p,
         max_new_tokens=config.max_new_tokens,
+        stop_str=stop_str,
+        use_lora=config.use_lora,
     )
     cfg_dict_record["gen_config"] = gen_config.__dict__
 
     if config.method == "cot":
         method_config = CoTConfig(config.task_name)
-        solver_fn = partial(cot, method_config, gen_config)
+        solver_fn = partial(cot, task, method_config, gen_config)
     elif config.method == "best_of_n":
         method_config = BestOfNConfig(
             config.task_name, num_sequence=config.num_sequence
         )
-        solver_fn = partial(best_of_n, method_config, gen_config)
+        solver_fn = partial(best_of_n, task, method_config, gen_config)
     elif config.method == "beam_search":
         method_config = BeamSearchConfig(
             task_name=config.task_name,
@@ -199,7 +235,7 @@ if __name__ == "__main__":
             tree_max_width=config.tree_max_width,
             beam_size=config.num_sequence,
         )
-        solver_fn = partial(beam_search, method_config, gen_config)
+        solver_fn = partial(beam_search, task, method_config, gen_config)
     elif config.method == "vanila_mcts":
         method_config = VanilaMCTSConfig(
             task_name=config.task_name,
@@ -208,7 +244,7 @@ if __name__ == "__main__":
             select_by_prior=False,
             num_path=config.num_sequence,
         )
-        solver_fn = partial(vanila_mcts, method_config, gen_config)
+        solver_fn = partial(vanila_mcts, task, method_config, gen_config)
     elif config.method == "rstar_mcts":
         method_config = VanilaMCTSConfig(
             task_name=config.task_name,
@@ -217,7 +253,7 @@ if __name__ == "__main__":
             select_by_prior=False,
             num_path=config.num_sequence,
         )
-        solver_fn = partial(rstar_mcts, method_config, gen_config)
+        solver_fn = partial(rstar_mcts, task, method_config, gen_config)
 
     else:
         raise ValueError(f"Unknown method: {config.method}")
@@ -231,8 +267,10 @@ if __name__ == "__main__":
         record_writer = jsonlines.open(save_dir / f"record.jsonl", mode="w")
         cfg_dict_record["LM"] = config.LM
         cfg_dict_record["RM"] = config.RM
+        cfg_dict_record["LM_config"] = OmegaConf.to_container(lm_cfg)
+        cfg_dict_record["RM_config"] = OmegaConf.to_container(rm_cfg)
         json.dump(cfg_dict_record, open(save_dir / "config.json", "w"))
     else:
         save_dir = None
 
-    parallel_evaluate_test_dataset(config.method, solver_fn, save_dir)
+    parallel_evaluate_test_dataset(task, config.method, solver_fn, save_dir)
