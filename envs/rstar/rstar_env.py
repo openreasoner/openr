@@ -353,7 +353,7 @@ class Env(CoTEnv):
             if not node.paraphrased
             else self.fewshot_cot_prompt_rephrased
         )
-        question = node.user_question + "\n\n" + hint if hint is not None else ""
+        question = node.user_question + "\n\n" + (hint if hint is not None else "")
         io_input = self.fewshot_cot_config["prompt_template"].format(
             examples=fewshot_cot_prompt, instruction=question
         )
