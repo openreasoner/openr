@@ -1,0 +1,11 @@
+Action Categories:
+1. Understanding process: query rewriting: Rewrite the question and answer it. Decomposi- tion: Decompose the questions into multiple subtasks to solve the sub-question. 2. Solving process: chain of thought: For step-by-step reasoning with language. programming: For programming solver. 3. Verification process: self-verification: To check the correctness of the solution.
+Task Instruction: For the given question, explain why the above Required actions are nec- essary.
+Example 1:
+Query: Find 2 · 5−1 + 8 · 11−1 (mod 56). Express your answer as an integer from 0 to 55, inclusive.
+Required Action: programming, self-verification
+Explanation: This is a Modular arithmetic problem. The problem can be solved using straightforward python code with sympy library, particularly modular arithmetic. Besides, this type of problem is relatively easy to verify. After computing the result, one can check the calculations step by step to ensure correctness and verify that the final answer is within the given range (0 to 55 inclusive). Programming solver is more efficient and accurate for this type of calculation and the verifier ensures the correctness of the result and adherence to the given constraints.
+... (multiple examples)
+Query: Given Query
+Required Action: Actions After Searching
+Explanation:
