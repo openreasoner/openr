@@ -150,7 +150,7 @@ if __name__ == "__main__":
         )       # Distributes tasks from the test_ds dataset across the worker pool asynchronously and
                 # collects results in any order as they complete. Every worker has a new searching tree as we reset the
                 # tree in solver_fn
-        for i, (problem_inst, result, output) in enumerate(
+        for i, (problem_inst, result, output, metadata_dict) in enumerate(
             tqdm(res_q, total=len(test_ds))
         ):
             results.append(result)
@@ -161,6 +161,7 @@ if __name__ == "__main__":
                     "groundtruth": problem_inst["answer"],
                     "result": result,
                     "output": output,
+                    **metadata_dict
                 }
                 record_writer.write(obj)
         avg_res = (tree.map_structure(lambda *xs: np.mean(xs), *results),)
@@ -218,6 +219,15 @@ if __name__ == "__main__":
             num_path=config.num_sequence,
         )
         solver_fn = partial(rstar_mcts, method_config, gen_config)
+    elif config.method == "critic_mcts":
+        method_config = VanilaMCTSConfig(
+            task_name=config.task_name,
+            tree_max_depth=config.tree_max_depth,
+            tree_max_width=config.tree_max_width,
+            select_by_prior=False,
+            num_path=config.num_sequence,
+        )
+        solver_fn = partial(critic_mcts, method_config, gen_config)
 
     else:
         raise ValueError(f"Unknown method: {config.method}")
