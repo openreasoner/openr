@@ -6,7 +6,7 @@ from dataclasses import dataclass
 @dataclass
 class ConcatedLMGenResult:
     text: List[str]
-    prompt_tokens: List[int]
+    prompt_tokens: int  # List[int]
     num_tokens: List[int]
     cumulative_logprob: List[float]
     logp_avg_by_len: List[float]
@@ -15,6 +15,30 @@ class ConcatedLMGenResult:
     # post init compute number of completion_tokens
     def __post_init__(self):
         self.completion_tokens = sum(self.num_tokens)
+
+    @classmethod
+    def merge(cls, results: List["ConcatedLMGenResult"]) -> "ConcatedLMGenResult":
+        merged_text = []
+        merged_prompt_tokens = 0
+        merged_num_tokens = []
+        merged_cumulative_logprob = []
+        merged_logp_avg_by_len = []
+        merged_finish_reason = []
+        for result in results:
+            merged_text.extend(result.text)
+            merged_prompt_tokens += result.prompt_tokens
+            merged_num_tokens.extend(result.num_tokens)
+            merged_cumulative_logprob.extend(result.cumulative_logprob)
+            merged_logp_avg_by_len.extend(result.logp_avg_by_len)
+            merged_finish_reason.extend(result.finish_reason)
+        return cls(
+            text=merged_text,
+            prompt_tokens=merged_prompt_tokens,
+            num_tokens=merged_num_tokens,
+            cumulative_logprob=merged_cumulative_logprob,
+            logp_avg_by_len=merged_logp_avg_by_len,
+            finish_reason=merged_finish_reason,
+        )
 
 
 def _generate_fastchat(
@@ -29,6 +53,7 @@ def _generate_fastchat(
     stop_str,
     include_stop_str_in_output,
     controller_addr,
+    use_lora,
 ) -> ConcatedLMGenResult:
 
     ret = requests.post(
@@ -51,6 +76,7 @@ def _generate_fastchat(
         "stop": stop_str,
         "echo": False,
         "include_stop_str_in_output": include_stop_str_in_output,
+        "use_lora": use_lora,
     }
     response = requests.post(
         worker_addr + "/worker_generate",

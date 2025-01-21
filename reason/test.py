@@ -10,7 +10,6 @@ x = _value_inference_fastchat(
 print(x)
 
 
-
 sample = """This is is <|im_start|>assistant\n### Counting Squares of Each Size
 
 1. **1x1 Squares:**
@@ -80,11 +79,20 @@ from reason.inference.lm_call import VLLMRemoteCaller, LMCallingConfig
 
 # print(len(x), x)
 
-x = '<|im_start|>system\nPlease reason step by step, and put your final answer within \\boxed{{}}.<|im_end|>\n<|im_start|>user\nSimplify $\\tan 100^\\circ + 4 \\sin 100^\\circ.$<|im_end|>\n<|im_start|>assistant\nTo simplify the expression \\(\\tan 100^\\circ + 4 \\sin 100^\\circ\\), we start by using the identity \\(\\tan 100^\\circ = \\tan (180^\\circ - 80^\\circ) = -\\tan 80^\\circ\\). Therefore, the expression becomes:\n\n\\[\n\\tan 100^\\circ + 4 \\sin 100^\\circ = -\\tan 80^\\circ + 4 \\sin 100^\\circ\n\\]\n\nNext, we use the identity \\(\\sin 100^\\circ = \\sin (180^\\circ - 80^\\circ) = \\sin 80^\\circ\\). So the expression further simplifies to:\n\n\\[\n-\\tan 80^\\circ + 4 \\sin 80^\\circ\n\\]\n\nWe can express \\(\\tan 80^\\circ\\) as \\(\\frac{\\sin 80^\\circ}{\\cos 80^\\circ}\\). Substituting this into the expression, we get:\n\n\\[\n-\\frac{\\sin 80^\\circ}{\\cos 80^\\circ} + 4 \\sin 80^\\circ\n\\]\n\nTo combine these terms, we need a common denominator. The common denominator is \\(\\cos 80^\\circ\\), so we rewrite the expression as:\n\n\\[\n-\\frac{\\sin 80^\\circ}{\\cos 80^\\circ} + \\frac{4 \\sin 80^\\circ \\cos 80^\\circ}{\\cos 80^\\circ} = \\frac{-\\sin 80^\\circ + 4 \\sin 80^\\circ \\cos 80^\\circ}{\\cos 80^\\circ}\n\\]\n\nWe can factor out \\(\\sin 80^\\circ\\) from the numerator:\n\n\\[\n\\frac{\\sin 80^\\circ (-1 + 4 \\cos 80^\\circ)}{\\cos 80^\\circ}\n\\]\n\nThis simplifies to:\n\n\\[\n\\sin 80^\\circ \\cdot \\frac{-1 + 4 \\cos 80^\\circ}{\\cos 80^\\circ} = \\sin 80^\\circ \\left( \\frac{-1}{\\cos 80^\\circ} + 4 \\right) = \\sin 80^\\circ \\left( -\\sec 80^\\circ + 4 \\right)\n\\]\n\nWe know from trigonometric identities that \\(\\sec 80^\\circ = \\frac{1}{\\cos 80^\\circ} = \\csc 10^\\circ\\) (since \\(\\sec (90^\\circ - \\theta) = \\csc \\theta\\)). Therefore, \\(-\\sec 80^\\circ = -\\csc 10^\\circ\\). So the expression becomes:\n\n\\[\n\\sin 80^\\circ \\left( -\\csc 10^\\circ + 4 \\right) = \\sin 80^\\circ \\left( -\\frac{1}{\\sin 10^\\circ} + 4 \\right)\n\\]\n\nWe can rewrite \\(\\sin 80^\\circ\\) as \\(\\cos 10^\\circ\\) (since \\(\\sin (90^\\circ - \\theta) = \\cos \\theta\\)). So the expression is:\n\n\\[\n\\cos 10^\\circ \\left( -\\frac{1}{\\sin 10^\\circ} + 4 \\right) = \\cos 10^\\circ \\left( -\\frac{1}{\\sin 10^\\circ} \\right) + \\cos 10^\\circ \\cdot 4 = -\\frac{\\cos 10^\\circ}{\\sin 10^\\circ} + 4 \\cos 10^\\circ = -\\cot 10^\\circ + 4 \\cos 10^\\circ\n\\]\n\nWe know from trigonometric identities that \\(\\cot 10^\\circ = \\frac{\\cos 10^\\circ}{\\sin 10^\\circ}\\). So we have:\n\n\\[\n-\\cot 10^\\circ + 4 \\cos 10^\\circ = -\\frac{\\cos 10^\\circ}{\\sin 10^\\circ} + 4 \\cos 10^\\circ = -\\frac{\\cos 10^\\circ}{\\sin 10^\\circ} + \\frac{4 \\cos 10^\\circ \\sin 10^\\circ}{\\sin 10^\\circ} = \\frac{-\\cos 10^\\circ + 4 \\cos 10^\\circ \\sin 10^\\circ}{\\sin 10^\\circ}\n\\]\n\nWe can factor out \\(\\cos 10^\\circ\\) from the numerator:\n\n'
+x = "<|im_start|>system\nPlease reason step by step, and put your final answer within \\boxed{{}}.<|im_end|>\n<|im_start|>user\nSimplify $\\tan 100^\\circ + 4 \\sin 100^\\circ.$<|im_end|>\n<|im_start|>assistant\nTo simplify the expression \\(\\tan 100^\\circ + 4 \\sin 100^\\circ\\), we start by using the identity \\(\\tan 100^\\circ = \\tan (180^\\circ - 80^\\circ) = -\\tan 80^\\circ\\). Therefore, the expression becomes:\n\n\\[\n\\tan 100^\\circ + 4 \\sin 100^\\circ = -\\tan 80^\\circ + 4 \\sin 100^\\circ\n\\]\n\nNext, we use the identity \\(\\sin 100^\\circ = \\sin (180^\\circ - 80^\\circ) = \\sin 80^\\circ\\). So the expression further simplifies to:\n\n\\[\n-\\tan 80^\\circ + 4 \\sin 80^\\circ\n\\]\n\nWe can express \\(\\tan 80^\\circ\\) as \\(\\frac{\\sin 80^\\circ}{\\cos 80^\\circ}\\). Substituting this into the expression, we get:\n\n\\[\n-\\frac{\\sin 80^\\circ}{\\cos 80^\\circ} + 4 \\sin 80^\\circ\n\\]\n\nTo combine these terms, we need a common denominator. The common denominator is \\(\\cos 80^\\circ\\), so we rewrite the expression as:\n\n\\[\n-\\frac{\\sin 80^\\circ}{\\cos 80^\\circ} + \\frac{4 \\sin 80^\\circ \\cos 80^\\circ}{\\cos 80^\\circ} = \\frac{-\\sin 80^\\circ + 4 \\sin 80^\\circ \\cos 80^\\circ}{\\cos 80^\\circ}\n\\]\n\nWe can factor out \\(\\sin 80^\\circ\\) from the numerator:\n\n\\[\n\\frac{\\sin 80^\\circ (-1 + 4 \\cos 80^\\circ)}{\\cos 80^\\circ}\n\\]\n\nThis simplifies to:\n\n\\[\n\\sin 80^\\circ \\cdot \\frac{-1 + 4 \\cos 80^\\circ}{\\cos 80^\\circ} = \\sin 80^\\circ \\left( \\frac{-1}{\\cos 80^\\circ} + 4 \\right) = \\sin 80^\\circ \\left( -\\sec 80^\\circ + 4 \\right)\n\\]\n\nWe know from trigonometric identities that \\(\\sec 80^\\circ = \\frac{1}{\\cos 80^\\circ} = \\csc 10^\\circ\\) (since \\(\\sec (90^\\circ - \\theta) = \\csc \\theta\\)). Therefore, \\(-\\sec 80^\\circ = -\\csc 10^\\circ\\). So the expression becomes:\n\n\\[\n\\sin 80^\\circ \\left( -\\csc 10^\\circ + 4 \\right) = \\sin 80^\\circ \\left( -\\frac{1}{\\sin 10^\\circ} + 4 \\right)\n\\]\n\nWe can rewrite \\(\\sin 80^\\circ\\) as \\(\\cos 10^\\circ\\) (since \\(\\sin (90^\\circ - \\theta) = \\cos \\theta\\)). So the expression is:\n\n\\[\n\\cos 10^\\circ \\left( -\\frac{1}{\\sin 10^\\circ} + 4 \\right) = \\cos 10^\\circ \\left( -\\frac{1}{\\sin 10^\\circ} \\right) + \\cos 10^\\circ \\cdot 4 = -\\frac{\\cos 10^\\circ}{\\sin 10^\\circ} + 4 \\cos 10^\\circ = -\\cot 10^\\circ + 4 \\cos 10^\\circ\n\\]\n\nWe know from trigonometric identities that \\(\\cot 10^\\circ = \\frac{\\cos 10^\\circ}{\\sin 10^\\circ}\\). So we have:\n\n\\[\n-\\cot 10^\\circ + 4 \\cos 10^\\circ = -\\frac{\\cos 10^\\circ}{\\sin 10^\\circ} + 4 \\cos 10^\\circ = -\\frac{\\cos 10^\\circ}{\\sin 10^\\circ} + \\frac{4 \\cos 10^\\circ \\sin 10^\\circ}{\\sin 10^\\circ} = \\frac{-\\cos 10^\\circ + 4 \\cos 10^\\circ \\sin 10^\\circ}{\\sin 10^\\circ}\n\\]\n\nWe can factor out \\(\\cos 10^\\circ\\) from the numerator:\n\n"
 print(x)
 lm_call = VLLMRemoteCaller("Qwen2.5-Math-7B-Instruct")
-y = lm_call(x, config=LMCallingConfig(n=5, temperature=0.7, max_new_tokens=2048, 
-                                    #   stop_str=['\n\n'], 
-                                      include_stop_str_in_output=True))
+y = lm_call(
+    x,
+    config=LMCallingConfig(
+        n=5,
+        temperature=0.7,
+        max_new_tokens=2048,
+        #   stop_str=['\n\n'],
+        include_stop_str_in_output=True,
+    ),
+)
 print(y)
-import pdb; pdb.set_trace()
+import pdb
+
+pdb.set_trace()

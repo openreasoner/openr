@@ -8,14 +8,12 @@ from typing import List, Dict, Tuple
 import os
 import numpy as np
 
-from envs.MATH.env import CoTEnv
-from envs.base_env import NoLegalActionException, ResetException
+from envs.base_env import CoTEnv, NoLegalActionException, ResetException
 from tqdm import tqdm
 
 from reason.inference.lm_call import LMCallingConfig
 from .rstar_utils import *
 from .eval_src.Evaluator import MATHEvaluator, QwenMATHEvaluator
-from envs.MATH.prompt import COT_EXAMPLES, COT_TASK_DESC, PROBLEM_FORMAT_STR, SEP
 
 from pathlib import Path
 
@@ -38,9 +36,9 @@ class Env(CoTEnv):
         config,
         math_problems,
         llm_gen_fn,
-        task_desc_str: str = COT_TASK_DESC,
-        cot_example_str: str = COT_EXAMPLES,
-        problem_format_str: str = PROBLEM_FORMAT_STR,
+        task_desc_str: str,
+        cot_example_str: str,
+        problem_format_str: str,
         reset=True,
     ):
         """

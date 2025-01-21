@@ -31,21 +31,17 @@ from fastchat.utils import (
     get_context_length,
     str_to_torch_dtype,
 )
-from prm.infer_fns import _qwen_math_infer_fn, _math_shepherd_infer_fn, _genrm_infer_fn
+from transformers import AutoTokenizer
+from prm.infer_fns import _qwen_math_infer_fn, _math_shepherd_infer_fn
+from ..utils.skywork_o1_prm_inference.prm_model import PRM_MODEL
+from ..utils.skywork_o1_prm_inference.io_utils import (
+    prepare_input,
+    prepare_batch_input_for_model,
+    derive_step_rewards,
+)
 
 worker_id = str(uuid.uuid4())[:8]
-logger = build_logger("reward_model_worker", f"reward_model_worker_{worker_id}.log")
-
-
-def get_infer_fn(model_path):
-    if "qwen" in model_path.lower():
-        return _qwen_math_infer_fn
-    elif "math-shepherd" in model_path.lower().replace("_", "-"):
-        return _math_shepherd_infer_fn
-    elif "genrm" in model_path.lower():
-        return _genrm_infer_fn
-    else:
-        raise ValueError("Model path: {} not recognized".format(model_path))
+logger = build_logger("skywork_prm_worker", f"skywork_prm_worker_{worker_id}.log")
 
 
 class ModelWorker(BaseModelWorker):
@@ -86,20 +82,13 @@ class ModelWorker(BaseModelWorker):
         )
 
         logger.info(f"Loading the model {self.model_names} on worker {worker_id} ...")
-        self.model, self.tokenizer = load_model(
-            model_path,
-            device=device,
-            num_gpus=num_gpus,
-            max_gpu_memory=max_gpu_memory,
-            dtype=dtype,
-            load_8bit=load_8bit,
-            cpu_offloading=cpu_offloading,
-            gptq_config=gptq_config,
-            awq_config=awq_config,
-            exllama_config=exllama_config,
-            xft_config=xft_config,
-            debug=debug,
+
+        self.tokenizer = AutoTokenizer.from_pretrained(
+            model_path, trust_remote_code=True
         )
+        self.model = PRM_MODEL.from_pretrained(
+            model_path, device_map=f"{device}"
+        ).eval()
         self.device = device
         if self.tokenizer.pad_token == None:
             self.tokenizer.pad_token = self.tokenizer.eos_token
@@ -112,51 +101,47 @@ class ModelWorker(BaseModelWorker):
         if not no_register:
             self.init_heart_beat()
 
-        infer_fn = get_infer_fn(model_path)
-        self.infer_fn = functools.partial(
-            infer_fn, model=self.model, tokenizer=self.tokenizer, device=self.device
-        )
-
     @torch.inference_mode()
     def value_inference_gate(self, params):
-        # input_str = params["input_str"]
-        q, a, format = (
-            params["Q"],
-            params["A"],
-            params["format"],
-        )  # TODO[yan]: configurate PRM_Step_TAG
+
+        q, a, format = params["Q"], params["A"], params["format"]
+        prm_step_tag = params["prm_step_tag"]
+
+        processed_data = []
         if isinstance(q, str):
-            input_str = format.format(question=q, answer=a)
+            _tuple = prepare_input(q, a, self.tokenizer, prm_step_tag)
+            input_str = q + " " + a
+            processed_data.append(_tuple)
         elif isinstance(q, list):
-            input_str = [
-                format.format(question=q[i], answer=a[i]) for i in range(len(q))
+            processed_data = [
+                prepare_input(q[i], a[i], self.tokenizer, prm_step_tag)
+                for i in range(0, len(q))
             ]
+            input_str = [f"{q[i]} {a[i]}" for i in range(0, len(q))]
         else:
-            raise ValueError(f"invalid question type {type(q)}, {q}")
+            raise ValueError(f"Not supported question type {type(q)}, {q}")
 
-        try:
-            if isinstance(input_str, list):
-                # value_2 = _batch_qwen_math_infer_fn(
-                #     input_str,
-                #     batch_size=16
-                # )
-                # value = value_2
+        input_ids, steps, reward_flags = zip(*processed_data)
+        input_ids, attention_mask, reward_flags = prepare_batch_input_for_model(
+            input_ids, reward_flags, self.tokenizer.pad_token_id
+        )
 
-                value = [self.infer_fn(s).tolist() for s in input_str]
-                # # verify two values
-                # for v1, v2 in zip(value, value_2):
-                #     assert torch.allclose(
-                #         torch.tensor(v1), torch.tensor(v2), 1e-6), [v1, v2]
-            else:
-                value = self.infer_fn(input_str).tolist()
-            ret = {"input": input_str, "value": value}
-            gc.collect()
-            torch.cuda.empty_cache()
-        except torch.cuda.OutOfMemoryError as e:
-            ret = {
-                "text": f"{SERVER_ERROR_MSG}\n\n({e})",
-                "error_code": ErrorCode.CUDA_OUT_OF_MEMORY,
-            }
+        # TODO[yan]: batch version, need to control GPU memory usage
+        rewards = []
+        for i in range(0, len(input_ids)):
+            _, _, _r = self.model(
+                input_ids=input_ids[i].unsqueeze(0).to(self.device),
+                attention_mask=attention_mask[i].unsqueeze(0).to(self.device),
+                return_probs=True,
+            )
+            rewards.append(_r)
+        rewards = torch.concatenate(rewards, dim=0)
+
+        value = derive_step_rewards(rewards, reward_flags)
+        ret = {"input": input_str, "value": value}
+        gc.collect()
+        torch.cuda.empty_cache()
+
         return ret
 
 

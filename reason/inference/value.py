@@ -8,7 +8,11 @@ import requests
 
 def _value_inference_fastchat(
     model_name: str,
-    input_str: Union[List[str], str],
+    # input_str: Union[List[str], str],
+    question: Union[str, List[str]],
+    answer: Union[str, List[str]],
+    format: str,
+    prm_step_tag: str = None,
     controller_addr="http://0.0.0.0:28777",
 ):
     ret = requests.post(
@@ -19,7 +23,12 @@ def _value_inference_fastchat(
         raise ValueError("Value Model name {} does not exist.".format(model_name))
 
     headers = {"User-Agent": "FastChat Client"}
-    gen_params = {"input_str": input_str}
+    gen_params = {
+        "Q": question,
+        "A": answer,
+        "format": format,
+        "prm_step_tag": prm_step_tag,
+    }
     response = requests.post(
         worker_addr + "/worker_value_inference",
         headers=headers,
