@@ -6,7 +6,7 @@ import json
 from typing import List, Tuple, Dict, Any, Optional
 import itertools
 from llm_utils import LLMService
-
+self.visited_rollouts = []
 # Helper function to separate reasoning steps
 def separate_steps(steps: List[str], mode: str = 'join') -> Any:
     delimiter = "\n\n"
@@ -109,6 +109,7 @@ class State:
         self.R: List[str] = []  # Set of all rollouts from this state
         self.incorrect_rollouts: List[str] = []  # List of incorrect rollouts
         self.children: List['State'] = []  # List of child states
+        self.visited_rollouts = []
 
     def add_rollout(self, rollout: str):
         self.R.append(rollout)
@@ -178,6 +179,8 @@ class CandidatePool:
         - rollout (str): The rollout string.
         - priority (float): The new priority score.
         """
+        if rollout in state.visited_rollouts:
+            return
         state_id = id(state)  # Unique identifier for the state object
         rollout_key = (state_id, rollout)
 
@@ -301,7 +304,7 @@ class OmegaPRM:
             if selected_state is None or selected_rollout is None:
                 # print("No more candidates to explore. Terminating search.\n")
                 break
-
+            selected_state.visited_rollouts.append(selected_rollout)
             self.expansion_phase_binary_search(selected_state, selected_rollout)
 
             # Maintenance Phase
